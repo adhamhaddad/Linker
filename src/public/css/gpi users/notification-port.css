@@ -1,0 +1,74 @@
+/*** Notification Port ***/
+div.container {
+    border: none;
+    padding: 0;
+}
+div.container div.notifi-port {
+    padding: 5px;
+    height: 100%;
+}
+div.container div.notifi-port ul li {
+    display: block;
+    border: 1px solid #fff;
+    position: relative;
+    margin: 5px 0;
+}
+div.container div.notifi-port ul li a {
+    display: block;
+    height: 70px;
+    position: relative;
+    outline: none
+}
+div.container div.notifi-port li a div.id-img {
+    width: 25%;
+    height: 100%;
+    vertical-align: top;
+    float: left;
+}
+div.container div.notifi-port ul li a div.id-name {
+    width: 75%;
+    height: 35%;
+    vertical-align: top;
+    float: left;
+}
+div.container div.notifi-port ul li a div.notifi-content {
+    width: 75%;
+    height: 65%;
+    /* overflow: hidden; */
+    text-overflow: ellipsis;
+    word-break: break-all;
+    float: right;
+}
+
+
+div.container div.notifi-port ul li a div.id-img img{
+    vertical-align: top;
+    width: 55px;
+    height: 70px;
+    font-size: 12px;
+    color: #fff;
+}
+div.container div.notifi-port ul li a div.id-name span {
+    vertical-align: top;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+}
+div.container div.notifi-port ul li a div.notifi-content span {
+    color: #fff;
+    display: inline-block;
+    background-color: #1DA1F2;
+    width: 99%;
+    height: 90%;
+    border-radius: 10px;
+    padding: 0 10px;
+    font-size: 12px;
+}
+
+/*** Media Querry ***/
+
+@media screen and (max-width: 285px) {
+    div.container div.notifi-port ul li a div.id-name span {
+        font-size: 12px;
+    }
+}

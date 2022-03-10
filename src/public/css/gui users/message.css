@@ -1,0 +1,173 @@
+/*** Frameworks ***/
+body {
+    padding: 0;
+    background-color: rgb(32,32,32);
+}
+.container {
+    background-color: transparent;
+    width: 100%;
+    height: 100vh;
+}
+
+/*** Code ***/
+div.container div.top {
+    position: relative;
+    height: 10%;
+}
+div.container div.content {
+    height: 80%;
+    position: relative;
+    overflow: auto;
+    outline: none;
+}
+div.container div.top div.back {
+    width: 40%;
+    float: left;
+    height: 100%;
+}
+div.container div.top div.back a {
+    padding: 10px 5px;
+    height: 100%;
+    outline: none;
+    display: inline-block;
+}
+div.container div.top div.back a i ,
+div.container div.top div.back a span {
+    color: #fff;
+    text-transform: capitalize;
+}
+
+div.container div.top div.status {
+    width: 60%;
+    float: right;
+    height: 100%;
+}
+div.container div.top div.status h4 {
+    padding: 10px 0;
+    height: 100%;
+    display: none;
+}
+div.container div.top div.status h4 span {
+    color: #fff;
+    text-transform: capitalize;
+}
+div.container div.top div.status h4 .test-i {
+    width: 10px;
+    height: 10px;
+    background-color: #080;
+    display: inline-block;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+/* Top & Bottom */
+div.container div.content div.top-side {
+    padding: 10px 5px;
+}
+div.container div.content div.bottom-side {
+    padding: 10px 5px;
+    direction: rtl;
+}
+div.container div.content div.top-side div.acc-friend ,
+div.container div.content div.bottom-side div.acc-user {
+    padding: 10px 15px;
+    border-radius: 5px;
+    width: 50%;
+    display: inline-block;
+    position: relative;
+}
+div.container div.content div.top-side div.acc-friend {
+    background-color: #fff;
+    color: #000;
+}
+div.container div.content div.bottom-side div.acc-user {
+    background-color: #1DA1F2;
+    color: #fff;
+    text-align: left;
+}
+div.container div.content div.top-side img ,
+div.container div.content div.bottom-side img {
+    width: 50px;
+    height: 50px;
+    vertical-align: top;
+    color: #fff;
+    font-size: 12px;
+}
+div.container div.content div.top-side div.acc-friend span ,
+div.container div.content div.bottom-side div.acc-user span {
+    word-wrap: break-word;
+}
+
+/* Send Message Inputs */
+div.container div.container-msg {
+    position: relative;
+    width: 100%;
+    height: 10%;
+}
+div.container div.container-msg form {
+    height: 100%;
+}
+div.container div.container-msg form div.input-msg {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+div.container div.container-msg form div.input-msg div.inp {
+    width: 80%;
+    height: 100%;
+}
+div.container div.container-msg form div.input-msg div.inp input {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    padding: 0 15px;
+    border: none;
+    color: #000;
+    outline: none;
+}
+div.container div.container-msg form div.input-msg div.btn {
+    width: 20%;
+    height: 100%;
+}
+div.container div.container-msg form div.input-msg div.btn button {
+    width: 100%;
+    height: 100%;
+    background-color: #1DA1F2;
+    border: none;
+    outline: none;
+    text-transform: capitalize;
+}
+
+
+/*** Media Query ***/
+
+@media screen and (max-width: 285px) {
+    div.container div.top div.back a i ,
+    div.container div.top div.back a span {
+        font-size: 14px;
+    }
+    div.container div.top div.status h4 span {
+        font-size: 14px;
+    }
+
+    div.container div.content div.top-side div.acc-friend span ,
+    div.container div.content div.bottom-side div.acc-user span {
+        font-size: 14px;
+    }
+
+    div.container div.container-msg form div.input-msg div.btn button span ,
+    div.container div.container-msg form div.input-msg div.btn button i {
+        font-size: 12px;
+    }
+    div.container div.container-msg form div.input-msg div.inp input {
+        font-size: 12px;
+    }
+}
+
+
+
+.test {
+    display: block;
+    background-color: #fff;
+    color: #000;
+}

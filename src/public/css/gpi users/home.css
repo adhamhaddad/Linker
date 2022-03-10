@@ -1,0 +1,926 @@
+/*** Frameworks ***/
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style-type: none;
+}
+.container , .container-body {
+    width: 1080px;
+    margin: 0 auto;
+    background-color: rgb(55,55,55);
+    /* background-color: #9c88ff; */
+    position: relative;
+}
+body {
+    padding: 50px 0 40px;
+}
+
+/*** body Code ***/
+/* Navbar */
+div.navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: rgb(32, 32, 32);
+    /* background-color: #5841cc; */
+    z-index: 200;
+}
+
+/* Navbar - Logo */
+div.navbar div.logo-image {
+    width: 100px;
+    height: 50px;
+    float: right;
+    font-size: 16px;
+    text-align: center;
+    color: #fff;
+}
+div.navbar img {
+    width: 100px;
+    height:50px;
+    cursor: pointer;
+}
+
+/* Navbar - Content */
+div.navbar div.content {
+    float: right;
+}
+div.navbar div.content > ul > li {
+    display: inline-block;
+    position: relative;
+}
+div.navbar div.content > ul > li > a {
+    display: block;
+    height: 50px;
+    padding: 15px 10px;
+    outline: none;
+    position: relative;
+    transition: background .7s;
+}
+div.navbar div.content > ul > li > a span ,
+div.navbar div.content > ul > li > a i {
+    color:#fff;
+    text-transform: capitalize;
+    text-align:center;
+    font-size: 15px;
+    position: relative
+}
+div.navbar div.content > ul > li > a i span {
+    background-color: #f00;
+    color: #fff;
+    padding: 1px;
+    border: 1px solid #f00;
+    border-radius: 50%;
+    top: -8.5px;
+    left: -9px;
+    position: absolute;
+    font-weight: 800;
+    font-size: 10px;
+    text-shadow: .5px .5px rgb(32, 32, 32);
+    display: none;
+}
+
+/* Message */
+div.navbar div.content > ul > li.msg > a{
+    position: relative;
+}
+div.navbar div.content > ul > li.msg > a > div.all-msg {
+    background-color: rgb(32,32,32);
+    width: 250%;
+    height: 400px;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    display: none;
+    border-bottom: 1px solid rgb(32, 32, 32);
+    border-right: 1px solid rgb(32, 32, 32);
+    border-left: 1px solid rgb(32,32,32);
+}
+div.navbar div.content > ul > li.msg > a > div.all-msg .msg-iframe {
+    width: 100%;
+    height: 100%;
+}
+
+/* Notifications */
+div.navbar div.content > ul > li.notifi > a{
+    position: relative;
+}
+div.navbar div.content > ul > li.notifi > a > div.all-notifi {
+    background-color: rgb(32, 32, 32);
+    width: 200%;
+    height: 400px;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    display: none;
+    border-bottom: 1px solid rgb(32, 32, 32);
+    border-right: 1px solid rgb(32, 32, 32);
+    border-left: 1px solid rgb(32,32,32);
+}
+div.navbar div.content > ul > li.notifi > a > div.all-notifi .notifi-iframe {
+    width: 100%;
+    height: 100%;
+}
+
+/* Settings */
+div.navbar div.content > ul > li.sett > ul {
+    width: 100%;
+    background-color: rgb(32, 32, 32);
+    position: absolute;
+    display: none;
+} 
+div.navbar div.content > ul > li.sett > ul li {
+    display: block;
+    position: relative;
+    transition: background .7s;
+}
+div.navbar div.content > ul > li.sett > ul li a {
+    display: block;
+    height: 50px;
+    padding: 15px 10px;
+    outline: none;
+    position: relative;
+    transition: background .7s;
+}
+div.navbar div.content > ul > li.sett > ul > li > a span ,
+div.navbar div.content > ul > li.sett > ul > li > a i {
+    color:#fff;
+    text-transform: capitalize;
+    text-align:center;
+    font-size: 12px;
+}
+
+/*
+** Search box (beta)
+
+div.navbar div.search-bar div.search {
+    float: right;
+    border-right: 1px solid #fff;
+    border-left: 1px solid #fff;
+    height: 50px;
+}
+div.navbar div.search-bar div.search input {
+    width: 250px;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    padding: 0 10px;
+}
+div.navbar div.search-bar div.search button {
+    height: 50px;
+    width: 50px;
+    padding: 0 10px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+*/
+
+/* Menu bar */
+div.navbar div.menu-bar {
+    display: none;
+    float: right;
+}
+div.navbar div.menu-bar i {
+    color: #fff;
+    height: 50px;
+    padding: 15px 20px;
+    transition: background .5s;
+    font-size: 20px;
+    position: relative;
+}
+div.navbar div.menu-bar i span {
+    background-color: #f00;
+    color: #fff;
+    padding: 1px;
+    border: 1px solid #f00;
+    border-radius: 50%;
+    top: 5px;
+    left: 5px;
+    position: absolute;
+    font-weight: 800;
+    font-size: 10px;
+    text-shadow: .5px .5px rgb(32, 32, 32);
+    display: block;
+    display: none;
+}
+
+
+/* Navbar - Social Links */
+div.navbar div.links {
+    float: left;
+}
+div.navbar div.links ul li {
+    display: inline-block;
+    position: relative;
+    transition: background .7s;
+}
+div.navbar div.links ul li a {
+    display: block;
+    height: 50px;
+    padding: 15px 20px;
+    outline: none;
+    transition: background .7s;
+}
+div.navbar div.links ul li a i {
+    color:#fff;
+    text-transform: capitalize;
+    text-align:center;
+    font-size: 20px;
+}
+
+/* Body Content */
+h4.hint {
+    text-transform: capitalize;
+    text-align: center;
+    font-size: 14px;
+    width: 250px;
+    background: rgb(32, 32, 32);
+    padding: 10px 15px;
+    color: #fff;
+    top: 60px;
+    left: 50%;
+    position: fixed;
+    transform: translateX(-50%);
+    z-index: 150;
+    display: none;
+}
+
+/* Posts */
+div.container-body {
+    padding: 10px;
+}
+div.container-body div.posts {
+    padding: 5px;
+    margin: 10px auto;
+    min-width: 250px;
+    max-width: 550px;
+    background-color: #fff;
+    position: relative;
+    border: 1px solid rgb(219, 219, 219);
+
+}
+div.container-body div.posts div.user-post {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    position: relative;
+    width: 100%;
+    padding: 5px 0;
+}
+div.container-body div.posts div.user-post div.user-id {
+    display: flex;
+    align-items: center;
+    width: 30%;
+}
+div.container-body div.posts div.user-post div.user-id img {
+    width: 50px;
+    height: 50px;
+    font-size: 12px;
+    text-align: center;
+}
+div.container-body div.posts div.user-post div.user-id span{
+    margin: 0 10px;
+    font-weight: 800;
+    font-size: 14px;
+}
+div.container-body div.posts div.user-post div.post-date {
+    font-size: 12px;
+}
+div.container-body div.posts div.user-post div.post-date p {
+    display: inline-block;
+    text-transform: capitalize;
+    font-size: inherit;
+}
+div.container-body div.posts div.user-post div.post-date p span.min {
+    background-color: transparent;
+    color: #000;
+    border: none;
+    font-size: inherit;
+    text-transform: lowercase;
+}
+div.container-body div.posts div.post-content {
+    border:1px solid rgb(219, 219, 219);
+    min-height: 250px;
+    max-height: 450px;
+    width: 100%;
+    position: relative;
+    margin: 5px 0;
+    padding: 5px;
+}
+div.container-body div.posts div.social {
+    bottom: 0;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+div.container-body div.posts div.social button {
+    width: 20%;
+    padding: 15px 10px;
+    background-color: transparent;
+    border: 1px solid rgb(219, 219, 219);
+    color: #000;
+    text-transform: capitalize;
+    transition-property: background , color , border;
+    transition-duration: .5s;
+}
+div.container-body div.posts div.social div.input {
+    display: inline-block;
+    border: 1px solid rgb(219, 219, 219);
+    width: 40%;
+}
+div.container-body div.posts div.social div.input input {
+    padding: 15px 10px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #000;
+    width: 80%;
+}
+
+/* Footer */
+div.footer {
+    height: 40px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    background-color: rgb(32, 32, 32);
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000;
+}
+div.footer span {
+    color: #fff;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+div.footer span a {
+    outline: none;
+    color: #fff;
+    display: inline-block;
+}
+
+/*** Effects ***/
+
+/* content */
+div.navbar div.content ul li a:hover {
+    background-color: rgb(55, 55, 55);
+    /* background-color: rgb(140, 122, 230); */
+    transition: background .7s;
+}
+div.navbar div.content > ul > li > a:after {
+    content: "";
+    display: block;
+    background-color: #fff;
+    height: 0;
+    border-radius:25px 25px 0 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: height .5s;
+}
+div.navbar div.content ul li a:focus {
+    background-color: rgb(55, 55, 55);
+    transition: background .5s;
+}
+div.navbar div.content ul li a:focus:after {
+    height: 3px;
+    transition: height .5s;
+}
+div.navbar div.content > ul > li.notifi > a:hover > i {
+    animation-name: bell;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+/* menu bar */
+div.navbar div.menu-bar i:hover {
+    background-color: rgb(55, 55, 55);
+    transition: background .5s;
+}
+
+/* links */
+div.navbar div.links ul li:hover {
+    background-color: rgb(55, 55, 55);
+    transition: background .7s;
+}
+a[title='Facebook']:hover {
+    background-color: #1976F2;
+    transition: background .7s;
+}
+a[title='Twitter']:hover {
+    background-color: #1DA1F2;
+    transition: background .7s;
+}
+a[title='Instagram']:hover {
+    background: -webkit-linear-gradient(top right,#4D58CE,#912EB9,#CF2872,#F27A1D,#F6D371);
+    background: -moz-linear-gradient(top right,#4D58CE,#912EB9,#CF2872,#F27A1D,#F6D371);
+    background: -o-linear-gradient(top right,#4D58CE,#912EB9,#CF2872,#F27A1D,#F6D371);
+    background: -ms-linear-gradient(top right,#4D58CE,#912EB9,#CF2872,#F27A1D,#F6D371);
+    background: linear-gradient(top right,#4D58CE,#912EB9,#CF2872,#F27A1D,#F6D371);
+    transition: background .7s;
+}
+
+/* posts */
+div.container-body div.posts div.social button:hover {
+    background-color: #1DA1F2;
+    color: #fff;
+    border: none;
+    transition-property: background , color , border;
+    transition-duration: .5s;
+}
+
+
+/*** Media Querry ***/
+
+/* 1080px Screens */
+@media screen and (max-width:1080px) {
+    /* Frameworks */
+    .container , .container-body {
+        width: 90%;
+    }
+}
+
+/* 790px Screens */
+@media screen and (max-width:790px) {
+    /* Navbar Content */
+    div.navbar div.content {
+        width: 250px;
+        position: absolute;
+        right: 0;
+        top: 50px;
+        background-color: rgb(32, 32, 32);
+        display: none;
+    }
+    div.navbar div.content ul {
+        float: right;
+        width: 100%;
+    }
+    div.navbar div.content ul li {
+        display: block;
+        position: relative;
+        transition: background .7s;
+    }
+    div.navbar div.content ul li a {
+        display: block;
+        height: 50px;
+        padding: 15px 20px;
+        outline: none;
+    }
+    div.navbar div.content ul li a span ,
+    div.navbar div.content ul li a i {
+        color:#fff;
+        text-transform: capitalize;
+        text-align:center;
+        font-size: 15px;
+    }
+
+
+    /*** Messages Beta ***/
+
+    /* Message */
+    div.navbar div.content > ul > li.msg > a > div.all-msg {
+        width: 200px;
+        height: 300px;
+        top: 0;
+        left: -100px;
+        /* display: none; */
+    }
+
+    /*** Settings Beta ***/
+
+    div.navbar div.content ul li.sett ul {
+        top: 0;
+        left: -150px;
+        width: 150px;
+        background-color: rgb(32, 32, 32);
+    }
+    div.navbar div.content ul li.sett ul li {
+        width:100%;
+    }
+    div.navbar div.content ul li.sett ul li a {
+        display: block;
+        height: 50px;
+        padding: 15px 20px;
+        outline: none;
+    }
+    /** * **/
+
+
+
+
+
+
+    /* Menu bar (Beta) */
+    div.navbar div.menu-bar {
+        width: 150px;
+        display: block;
+    }
+    div.navbar div.menu-bar i.fa-bars {
+        float: right;
+    }
+}
+
+/* 640px Screens */
+@media screen and (max-width:640px) {
+    /* Frameworks */
+    div.container-body {
+        padding: 5px;
+    }
+    /* Posts */
+    div.container-body div.posts {
+        min-width: 200px;
+        max-width: 500px;
+        font-size: 14px;
+    }
+    div.container-body div.posts div.user-post div.user-id {
+        width: 40%;
+    }
+    div.container-body div.posts div.post-content {
+        min-height: 180px;
+        max-height: 200px;
+    }
+    div.container-body div.posts div.social {
+        font-size: 12px;
+    }
+    div.container-body div.posts div.social button {
+        font-size: inherit;
+    }
+    div.container-body div.posts div.social div.input {
+        font-size: inherit;
+    }
+    div.container-body div.posts div.social div.input input {
+        font-size: inherit;
+    }
+}
+
+/* 550px Screens */
+@media screen and (max-width:550px) {
+    /* Frameworks */
+    body {
+        /* margin: 50px 0 20px; */
+        padding: 50px 0 25px;
+    }
+    /* Navbar - Logo */
+    div.navbar div.logo-image {
+        font-size: 14px;
+    }
+    /* Hint */
+    h4.hint {
+        font-size: 12px;
+    }
+    div.container-body {
+        width: 90%;
+    }
+    /* Posts */
+    div.container-body div.posts {
+        min-width: 90%;
+        max-width: 100%;
+        font-size: 12px;
+    }
+    div.container-body div.posts div.social button {
+        font-size: inherit;
+    }
+    div.container-body div.posts div.social div.input {
+        font-size: inherit;
+    }
+    div.container-body div.posts div.social div.input input {
+        font-size: inherit;
+    }
+    /* Footer */
+    div.footer {
+        padding: 2px 0;
+        height: 25px;
+    }
+    div.footer span {
+        font-size: 10px;
+    }
+}
+
+/* 525px Screens */
+@media screen and (max-width:525px) {
+    /* Navbar Content */
+    div.navbar div.content {
+        width: 200px;
+    }
+    /* Menu bar (Beta) */
+    div.navbar div.menu-bar {
+        width: 54px;
+        width: 100px;
+    }
+    div.navbar div.menu-bar i.fa-bars {
+        font-size: 16px;
+    }
+    /* Navbar - Social Links */
+    div.navbar div.links ul li a i {
+        font-size: 16px;
+    }
+    /* Hint */
+    h4.hint {
+        width: 200px;
+    }
+    div.container-body {
+        width: 100%;
+        padding: 5px;
+    }
+
+    /* Posts */
+    /*
+    div.container-body div.posts {
+        min-width: 80%;
+        min-width: 90%;
+        max-width: 90%;
+    }
+    */
+    div.container-body div.posts div.user-post div.user-id {
+        width: 50%;
+    }
+    div.container-body div.posts div.post-content {
+        min-height: 150px;
+    }
+
+    div.container-body div.posts div.social button {
+        padding: 10px 0;
+        font-size: inherit;
+    }
+    div.container-body div.posts div.social div.input {
+        font-size: inherit;
+    }
+    div.container-body div.posts div.social div.input input {
+        padding: 10px 5px;
+        font-size: inherit;
+    }
+}
+
+/* 362px Screens */
+@media screen and (max-width:362px) {
+    /* Navbar Content */
+    div.navbar div.content {
+        width: 180px;
+    }
+    /* Menu bar (Beta) */
+    div.navbar div.menu-bar {
+        width: 80px;
+    }
+}
+
+/* 345px Screens */
+@media screen and (max-width:345px) {
+    /* Frameworks */
+    body {
+        padding: 50px 0 0;
+    }
+    div.container-body {
+        width: 100%;
+        padding: 5px 0;
+    }
+
+    /* Navbar Logo */
+    div.navbar div.logo-image {
+        width: 35%;
+    }
+    div.navbar div.logo-image img {
+        width: 100%;
+    }
+
+    /* Navbar Content */
+    div.navbar div.content {
+        left: 0;
+        top: 50px;
+        position: absolute;
+        width: 65%;
+    }
+    div.navbar div.content ul {
+        float: none;
+        width: 100%;
+    }
+    div.navbar div.content ul li {
+        direction: ltr;
+        text-align: left;
+        display: block;
+        position: relative;
+        transition: background .7s;
+    }
+    div.navbar div.content ul li a {
+        display: block;
+        height: 50px;
+        padding: 15px 20px;
+        outline: none;
+    }
+    div.navbar div.content ul li a span ,
+    div.navbar div.content ul li a i {
+        color:#fff;
+        text-transform: capitalize;
+        text-align:center;
+        font-size: 15px;
+    }
+
+
+    /*** Messages Beta ***/
+
+    /* Message */
+    div.navbar div.content > ul > li.msg > a > div.all-msg {
+        width: 65%;
+        height: 250px;
+        top: 0;
+        left: 100%;
+        transform: translateX(0);
+        /* display: none; */
+    }
+    
+    
+    /* Settings */
+    div.navbar div.content ul li.sett ul {
+        top: 0;
+        left: 100%;
+        width: 65%;
+    }
+
+    /* Menu bar (Beta) */
+    div.navbar div.menu-bar {
+        width: 65%;
+        float: left;
+    }
+    div.navbar div.menu-bar i.fa-bars {
+        float: left;
+    }
+
+    /* Navbar Links */
+    div.navbar div.links {
+        display:none;
+        width: auto;
+        bottom: 5px;
+        left: 5px;
+        position: fixed;
+        background-color: rgb(32, 32, 32);
+    }
+    div.navbar div.links ul li {
+        display: inline-block;
+        position: relative;
+        transition: background .7s;
+    }
+    div.navbar div.links ul li a {
+        display: block;
+        height: auto;
+        padding: 10px 15px;
+        outline: none;
+        transition: background .7s;
+    }
+    div.navbar div.links ul li a i {
+        color:#fff;
+        text-transform: capitalize;
+        text-align:center;
+        font-size: 16px;
+    }
+
+    /* Hint */
+    h4.hint {
+        font-size: 10px;
+        width: 150px;
+    }
+
+    /* Posts */
+    div.container-body div.posts {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    div.container-body div.posts div.user-post div.user-id span {
+        font-size: 12px;
+    }
+    div.container-body div.posts div.user-post div.post-date {
+        font-size: 10px;
+    }
+    div.container-body div.posts div.post-content {
+        min-height: 180px;
+    }
+    div.container-body div.posts div.social {
+        font-size: 10px;
+    }
+    div.container-body div.posts div.social button {
+        font-size: inherit;
+    }
+    div.container-body div.posts div.social div.input {
+        font-size: inherit;
+    }
+    div.container-body div.posts div.social div.input input {
+        font-size: inherit;
+    }
+
+    /* Footer */
+    div.footer {
+        display: none;
+    }
+}
+
+/* JS Codes */
+
+/*
+.show
+.test1 .test2
+
+*/
+.show {
+    display: block
+}
+div.navbar div.content.show {
+    display: block
+}
+div.navbar div.menu-bar i.fa-bars.test1 {
+    float: left;
+}
+div.navbar div.menu-bar i.fa-bars.test2 {
+    float: right;
+}
+
+/* Messages */
+div.navbar div.content ul li.msg a div.all-msg.show {
+    display: block;
+}
+/* Notifications */
+div.navbar div.content ul li.notifi a div.all-notifi.show {
+    display: block;
+}
+/* Settings */
+div.navbar div.content ul li.sett ul.show {
+    display: block
+}
+
+/*** Animations ***/
+@keyframes bell{
+    0% {
+        transform: rotate(5deg);
+    }
+    10% {
+        transform: rotate(-5deg);
+    }
+    20% {
+        transform: rotate(10deg);
+    }
+    30% {
+        transform: rotate(-10deg);
+    }
+    40% {
+        transform: rotate(20deg);
+    }
+    50% {
+        transform: rotate(-20deg);
+    }
+    60% {
+        transform: rotate(30deg);
+    }
+    70% {
+        transform: rotate(-30deg);
+    }
+    80% {
+        transform: rotate(40deg);
+    }
+    90% {
+        transform: rotate(-40deg);
+    }
+}
+@keyframes bell2{
+    0% {
+        transform: rotate(5deg);
+    }
+    10% {
+        transform: rotate(-5deg);
+    }
+    20% {
+        transform: rotate(10deg);
+    }
+    30% {
+        transform: rotate(-10deg);
+    }
+    40% {
+        transform: rotate(20deg);
+    }
+    50% {
+        transform: rotate(-20deg);
+    }
+    60% {
+        transform: rotate(30deg);
+    }
+    70% {
+        transform: rotate(-30deg);
+    }
+    80% {
+        transform: rotate(40deg);
+    }
+    90% {
+        transform: rotate(-40deg);
+    }
+}
