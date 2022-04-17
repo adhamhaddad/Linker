@@ -1,47 +1,24 @@
-import express, {Request, Response, Application} from "express";
-import fs from "fs";
-import path from "path";
+import express, { Application } from "express";
 import helmet from "helmet";
+import morgan from 'morgan';
+import handler from './routes/handler';
 
+// Express App
 const app: Application = express();
-const PORT = 3000
+const port: number = 3000;
 
 
 // Middlewares
 app.use(express.static("public"));
 app.use(express.json());
 app.use(helmet());
+app.use(morgan('short'))
+app.use(express.urlencoded({extended: false}));
 
-// Requests
-app.get("/", (req: Request, res: Response) => {
-    res.status(200).json({
-        message: "Connecting Done!"
-    })
-})
-app.get("/home", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "/public/html/gpi_users/home.html"))
-})
-app.get("/profile", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "/public/html/gpi_users/home.html"))
-})
-app.get("/profile_user", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "/public/html/gpi_users/home.html"))
-})
-app.get("/notifications", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "/public/html/gpi_users/home.html"))
-})
-app.get("/messages", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "/public/html/gpi_users/home.html"))
-})
-app.get("/register", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "/public/html/gpi_users/register.html"))
-})
-app.get("/login", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "/public/html/gpi_users/login.html"))
-})
-
+// Express Handler
+app.use('/', handler)
 
 // Express Server
-app.listen(PORT, () => {
-    console.log(`Server running at port ${PORT}`);
-})
+app.listen(port, () => console.log(`Server running at port ${port}`));
+
+export default app;
