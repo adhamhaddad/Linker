@@ -1,0 +1,140 @@
+div.container-body {padding: 10px}
+div.posts {
+    padding: 5px;
+    margin: 10px auto;
+    min-width: 250px;
+    max-width: 550px;
+    background-color: #FFF;
+    position: relative;
+    border: 1px solid rgb(219, 219, 219);
+}
+div.posts div.user-post {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    position: relative;
+    width: 100%;
+    padding: 5px 0;
+}
+div.posts div.user-post div.user-id {
+    display: flex;
+    align-items: center;
+    width: 30%;
+}
+div.posts div.user-post div.user-id img {
+    width: 50px;
+    height: 50px;
+    font-size: 12px;
+    text-align: center;
+}
+div.posts div.user-post div.user-id span {
+    margin: 0 10px;
+    font-weight: 800;
+    font-size: 14px;
+}
+div.posts div.user-post div.post-date p {
+    display: inline-block;
+    text-transform: capitalize;
+    font-size: 12px;
+}
+div.posts div.post-content {
+    border:1px solid rgb(219, 219, 219);
+    min-height: 250px;
+    max-height: 450px;
+    width: 100%;
+    position: relative;
+    margin: 5px 0;
+    padding: 5px;
+}
+div.posts div.social {
+    bottom: 0;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+div.posts div.social button {
+    width: 20%;
+    padding: 15px 10px;
+    background-color: transparent;
+    border: 1px solid rgb(219, 219, 219);
+    color: #000;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition-property: background , color , border;
+    transition-duration: .5s;
+}
+div.posts div.social div.input {
+    display: inline-block;
+    border: 1px solid rgb(219, 219, 219);
+    width: 40%;
+}
+div.posts div.social div.input input {
+    padding: 15px 10px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #000;
+    width: 80%;
+}
+div.posts div.social button i {padding-right: 5px}
+/*** Effects ***/
+div.posts div.social button:hover {
+    background-color: #1DA1F2;
+    color: #FFF;
+    border: none;
+    transition-property: background , color , border;
+    transition-duration: .5s;
+}
+
+/*** Media Querry ***/
+/* 640px Screens */
+@media screen and (max-width:640px) {
+    div.posts {
+        min-width: 200px;
+        max-width: 500px;
+        font-size: 14px;
+    }
+    div.posts div.user-post div.user-id {width: 40%}
+    div.posts div.post-content {min-height: 180px; max-height: 200px}
+    div.posts div.social {font-size: 12px}
+    div.posts div.social button {font-size: inherit}
+    div.posts div.social div.input {font-size: inherit}
+    div.posts div.social div.input input {font-size: inherit}
+}
+
+/* 550px Screens */
+@media screen and (max-width:550px) {
+    div.posts {
+        min-width: 90%;
+        max-width: 100%;
+        font-size: 12px;
+    }
+    div.posts div.social button {font-size: inherit}
+    div.posts div.social div.input {font-size: inherit}
+    div.posts div.social div.input input {font-size: inherit}
+}
+
+
+/* 525px Screens */
+@media screen and (max-width: 525px) {
+    div.posts div.user-post div.user-id {width: 50%}
+    div.posts div.post-content {min-height: 150px}
+    div.posts div.social button {padding: 10px 0; font-size: inherit}
+    div.posts div.social div.input {font-size: inherit}
+    div.posts div.social div.input input {padding: 10px 5px; font-size: inherit}
+}
+
+/* 345px Screens */
+@media screen and (max-width:345px) {
+    div.posts {min-width: 100%; max-width: 100%}
+    div.posts div.user-post div.user-id span {font-size: 12px}
+    div.posts div.user-post div.post-date {font-size: 10px}
+    div.posts div.post-content {min-height: 180px}
+    div.posts div.social {font-size: 10px}
+    div.posts div.social button {font-size: inherit}
+    div.posts div.social div.input {font-size: inherit}
+    div.posts div.social div.input input {font-size: inherit}
+}

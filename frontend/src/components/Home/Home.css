@@ -1,0 +1,45 @@
+/*** body Code ***/
+/* Body Content */
+h4.hint {
+    text-transform: capitalize;
+    text-align: center;
+    font-size: 14px;
+    width: 250px;
+    background: rgb(32, 32, 32);
+    padding: 10px 15px;
+    color: #fff;
+    top: 60px;
+    left: 50%;
+    position: fixed;
+    transform: translateX(-50%);
+    z-index: 150;
+    display: none;
+}
+
+/*** Media Querry ***/
+/* 640px Screens */
+@media screen and (max-width:640px) {
+    /* Frameworks */
+    div.container-body {padding: 5px}
+}
+
+/* 550px Screens */
+@media screen and (max-width:550px) {
+    /* Hint */
+    h4.hint {font-size: 12px}
+    div.container-body {width: 90%}
+}
+
+/* 525px Screens */
+@media screen and (max-width: 525px) {
+    /* Hint */
+    h4.hint {width: 200px}
+    div.container-body {width: 100%; padding: 5px}
+}
+/* 345px Screens */
+@media screen and (max-width:345px) {
+    /* Frameworks */
+    div.container-body {width: 100%; padding: 5px 0}
+    /* Hint */
+    h4.hint {font-size: 10px; width: 150px}
+}

@@ -1,0 +1,15 @@
+{
+    "dev": {
+        "database": "network",
+        "user": "adham",
+        "host": "127.0.0.1",
+        "password": "adham123"
+    },
+
+    "test": {
+        "database": "network_test",
+        "user": "adham",
+        "host": "127.0.0.1",
+        "password": "adham123"
+    }
+}

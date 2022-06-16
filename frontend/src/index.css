@@ -1,0 +1,28 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style-type: none;
+}
+.container , .container-body {
+    width: 1080px;
+    margin: 0 auto;
+    background-color: rgb(55,55,55);
+    position: relative;
+}
+body {padding: 50px 0 40px}
+
+/* 1080px Screens */
+@media screen and (max-width:1080px) {.container , .container-body {width: 90%}}
+
+/* 550px Screens */
+@media screen and (max-width:550px) {body {padding: 50px 0 25px}}
+
+/* 345px Screens */
+@media screen and (max-width:345px) {body {padding: 50px 0 0}}

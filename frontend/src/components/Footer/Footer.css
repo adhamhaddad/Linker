@@ -1,0 +1,32 @@
+footer {
+    height: 40px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    background-color: rgb(32, 32, 32);
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000;
+    color: #FFF;
+    text-transform: capitalize;
+
+}
+footer span {font-size: 12px}
+footer span a {
+    outline: none;
+    color: #fff;
+    display: inline-block;
+    margin: 0 5px;
+}
+
+
+/*** Media Querry ***/
+/* 550px Screens */
+@media screen and (max-width:550px) {
+    footer {padding: 2px 0; height: 25px}
+    footer span {font-size: 10px}
+}
+
+/* 345px Screens */
+@media screen and (max-width: 345px) {footer {display: none}}
