@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "jasmine": "jasmine",
+    "jasmine": "jasmine dist/**/*.js",
     "dev": "nodemon src/server.ts",
     "start": "cd ../frontend && npm install && npm run build"
   },
