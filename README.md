@@ -1,6 +1,6 @@
 # Social-Network
 ## Description
-This is a Social-Networl platform that simulate `Facebook` and `LinkedIn`.
+This is a Social-Network platform that simulates `Facebook` and `LinkedIn`.
 
 ## Installation
 #
