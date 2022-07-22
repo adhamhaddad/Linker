@@ -5,23 +5,32 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
     "@types/helmet": "^4.0.0",
+    "@types/node": "^18.0.6",
     "@types/nodemon": "^1.19.1",
+    "@types/pg": "^8.6.5",
     "@types/typescript": "^2.0.0",
     "nodemon": "^2.0.16",
     "ts-node": "^10.8.1",
     "typescript": "^4.7.3"
   },
   "dependencies": {
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.2.2",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "helmet": "^5.1.0"
+    "helmet": "^5.1.0",
+    "pg": "^8.7.3"
   },
   "scripts": {
     "build": "tsc",
     "jasmine": "jasmine dist/**/*.js",
     "dev": "nodemon src/server.ts",
-    "start": "cd ../frontend && npm install && npm run build"
+    "start": "cd ../frontend && npm install && npm run build",
+    "migrate:up": "db-migrate up",
+    "migrate:down": "db-migrate up"
   },
   "engines": {
     "node": "17.6.0"

@@ -1,15 +1,17 @@
 {
     "dev": {
+        "driver": "pg",
+        "host": "127.0.0.1",
         "database": "network",
         "user": "adham",
-        "host": "127.0.0.1",
-        "password": "adham123"
+        "password": "pass123"
     },
 
     "test": {
+        "driver": "pg",
+        "host": "127.0.0.1",
         "database": "network_test",
         "user": "adham",
-        "host": "127.0.0.1",
-        "password": "adham123"
+        "password": "pass123"
     }
 }

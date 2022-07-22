@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
+import { port } from '../server';
 
-async function logger(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function logger (req: Request, _res: Response, next: NextFunction): Promise<void> {
     try {
-        console.log(`Request: ${req.method} ${req.url}`);
+        console.log(`Method: ${req.method} - ${req.protocol}://${req.hostname}:${port}${req.originalUrl}`);
         next();
-
     } catch (err) {
-        throw new Error(`Could not log Error. ${err}`);
+        throw new Error(`Error Occurred. ${err}`);
     }
 }
 

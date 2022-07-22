@@ -16,10 +16,10 @@ export  async function register(req: Request, res: Response, next: NextFunction)
             return res.send('username already exist!');
         }
     } catch (err) {
-        throw new Error(`Could not register. Error ${err}`);
+        throw new Error(`Could not register. Error ${(err as Error).message}`);
     }
 }
-
+// Login
 export async function login(req: Request, res: Response, next: NextFunction): Promise<unknown> {    
     try {
         const username = await req.body.username;
@@ -33,6 +33,6 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
             return res.send('username or password wrong.');
         }
     } catch (err) {
-        throw new Error(`Could not register. Error ${err}`);
+        throw new Error(`Could not register. Error ${(err as Error).message}`);
     }
 }

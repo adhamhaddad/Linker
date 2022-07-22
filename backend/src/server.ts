@@ -1,11 +1,11 @@
 import express, { Application } from "express";
 import helmet from "helmet";
-import handler from './routes/handler';
+import handler from './router/handler';
 import path from 'path';
 
 // Express App
 const app: Application = express();
-const port = process.env.PORT || 3001;
+export const port = process.env.PORT || 3001;
 
 // Middlewares
 app.use(express.json());
