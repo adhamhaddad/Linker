@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
-// import './ProfileUser.css';
+import img from '../../Images/profile.jpg';
 import './Profile.css';
+import './ProfileUser.css';
 
 class ProfileUser extends Component {
+    state = [
+        {
+            img: img,
+            username: 'Adham Ashraf',
+            bio: `Hi, I am Adham. I am a student at High Institute for Computers & Management Information Systems started in 2019 and I will graduate in 2023. I started my Full-Stack journey in 2019 and built many projects using many languages. I also joined Udacity Nanodegree programs and got certified as a Professional Front End Web Developer. I worked too hard to achieve this progress, it's my passion and I need an opportunity to show myself.`,
+            work: 'The Sparks Foundation',
+            relation: 'Engaged',
+            college: 'Information Systems',
+            location: 'Giza, Egypt'
+        }
+    ]
     render() {
         return (
             <div>
                 <div className='container container-flex'>
-                    <div className='user-left'>
+                    <div className='left-side'>
                         <div className='user-id'>
                             <div className='image'>
                                 <i className='fa-solid fa-camera fa-lg'></i>
-                                <img src="#" alt="Profile-Photo"/>
+                                <img src={this.state[0].img} alt="Profile-Photo"/>
                                 <input type="file"/>
                             </div>
                             <div className='name'>
@@ -23,7 +35,7 @@ class ProfileUser extends Component {
                             <ul>
                                 <li>
                                     <i className='fa-solid fa-briefcase'></i>
-                                    <span>work at</span>
+                                    <span>works at</span>
                                     <input type="text"  placeholder='Type Your Info'/>
                                     <span className='edit2'></span>
                                     <span className='edit'>+</span>
@@ -53,7 +65,7 @@ class ProfileUser extends Component {
                             </ul>
                         </div>
                     </div>
-                    <div className='user-right'>
+                    <div className='right-side'>
                         <div className='user-bio'>
                             <h3>
                                 <i className='fa-solid fa-pencil'></i>
@@ -68,7 +80,7 @@ class ProfileUser extends Component {
                                 <span>save</span>
                             </button>
                         </div>
-                        <div className='user-footer'>
+                        <div className='bottom-side'>
                             <h3>
                                 <i className='fa-solid fa-link'></i>
                                 <span>links</span>

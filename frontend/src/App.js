@@ -17,9 +17,9 @@ function App() {
     return (
         <div>
             <Header/>
-            {/* <Profile title='Profile Page'/> */}
+            <Profile title='Profile Page'/>
             {/* <Home title='Home Page'/> */}
-            <ProfileUser title='Profile-User Page'/>
+            {/* <ProfileUser title='Profile-User Page'/> */}
             <Footer/>
         </div>
     )
