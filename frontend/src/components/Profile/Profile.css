@@ -1,6 +1,6 @@
 /* User Id */
 div.container {
-    background-color: rgb(32, 32, 32);
+    background-color: var(--base-background-dark);
     position: relative;
     height: auto;
 }
@@ -10,246 +10,180 @@ div.container-flex {
     padding: 10px;
     height: 365px;
 }
-div.container div.user-left {
-    width: 50%;
-    position: relative;
-}
-div.container div.user-left div.user-id {
-    padding: 0 5px;
-}
-div.container div.user-left div.user-id img {
-    width: 130px;
-    height: 150px;
+div.container div.left-side {width: 50%; position: relative}
+div.container div.left-side div.user-id img {
+    width: 150px;
     display: block;
     cursor: pointer;
-    color: #fff;
+    color: var(--base-color-light);
     text-align: center;
 }
-div.container div.user-left div.user-id span{
+div.container div.left-side div.user-id span {
     margin: 0;
     padding: 10px 0;
     text-align: center;
     width: 130px;
     display: block;
-    color: #fff;
+    color: var(--base-color-light);
     font-weight: 800;
     font-size: 16px;
     text-transform: capitalize;
 }
 
 /* User Info */
-div.container div.user-left div.user-info {
-    padding: 0 5px;
+div.container div.left-side div.user-info {
     outline: none;
     overflow: auto;
-    height: 50%;
 }
-div.container div.user-left div.user-info h3 {
-    color:#fff;
+div.container div.left-side div.user-info h3 {
+    color: var(--base-color-light);
     text-transform: capitalize;
     font-weight: 800;
     font-size: 16px;
     padding: 10px 0;
 }
-div.container div.user-left div.user-info ul li {
-    padding: 10px 0;
-}
-div.container div.user-left div.user-info ul li span {
-    color: #fff;
-    font-size: 14px;
+
+div.container div.left-side div.user-info ul li,
+div.container div.right-side div.bottom-side ul li {padding: 10px 0; font-size: 14px}
+div.container div.left-side div.user-info ul li > span,
+div.container div.right-side div.bottom-side ul li > a > span {
+    color: var(--base-color-light);
     text-transform: capitalize;
-    padding: 0 2px;
 }
-div.container div.user-left div.user-info ul li i {
-    text-align: center;
-    width: 25px;
-    color: #fff;
-    font-size: 14px;
+div.container div.right-side div.bottom-side ul li {
+    display: inline-block;
+    padding: 0;
 }
 
-/* User Right */
-div.container-flex div.user-right{
+div.container div.left-side div.user-info ul li > i,
+div.container div.right-side div.bottom-side ul li a > i {
+    color: var(--base-color-light);
+    font-size: 14px;
+    width: 25px;
+}
+
+/* Right Side */
+div.container-flex div.right-side {
     width: 50%;
     height: 100%;
     position: relative;
 }
-div.container div.user-right div.user-bio {
-    height: 50%;
+div.container div.right-side div.user-bio {
+    height: 60%;
     width: 100%;
     overflow: auto;
-    padding: 5px;
     outline: none;
 }
-div.container div.user-right div.user-bio h3 {
-    color: #fff;
+div.container div.right-side div.user-bio h3 {
+    color: var(--base-color-light);
     text-transform: capitalize;
     text-align: center;
     font-weight: 800;
     font-size: 16px;
     padding: 10px 0;
 }
-div.container div.user-right div.user-bio p{
-    color: #fff;
+
+div.container div.right-side div.user-bio p {
+    color: var(--base-color-light);
     padding: 10px 0;
     font-size: 14px;
-    text-align: center;
+    line-height: 1.4;
+    /* text-align: center; */
     word-wrap: break-word;
     width: 100%;
 }
-/* User Footer */
-div.container div.user-right div.user-footer {
-    height: 50%;
+
+/* Bottom Side */
+div.container div.right-side div.bottom-side {
+    height: 40%;
     width: 100%;
     overflow: auto;
-    padding: 5px;
+    padding: 5px 0;
     outline: none;
     text-align: center;
 }
-div.container div.user-right div.user-footer h3{
-    color:#fff;
+div.container div.right-side div.bottom-side h3 {
+    color: var(--base-color-light);
     text-transform: capitalize;
     text-align: center;
     font-weight: 800;
     font-size: 16px;
     padding: 10px 0;
 }
-div.container div.user-right div.user-footer a {
+div.container div.right-side div.bottom-side a {
     padding: 10px;
     display: inline-block;
     outline: none;
     transition: background .7s;
 }
-div.container div.user-right div.user-footer a span ,
-div.container div.user-right div.user-footer a i {
-    color: #fff;
-    font-size: 14px;
-    text-transform: capitalize;
-    padding: 0 2px;
-}
 
+div.container div.right-side div.user-bio h3 > i,
+div.container div.right-side div.bottom-side h3 > i {padding: 0 5px;}
 
 /* Effects */
-a:hover {
-    background-color: rgb(55, 55, 55);
-    transition: background .7s;
-}
-a[title='Whatsapp']:hover {
-    background-color: #24CC63;
-}
-a[title='Linkedin']:hover {
-    background-color: #0E72A3;
-}
-a[title='Telegram']:hover {
-    background-color: #0084C6;
-}
+a:hover {background-color: var(--base-background-light); transition: background .7s}
+a[title='Whatsapp']:hover {background-color: #24CC63; transition: background .7s}
+a[title='Linkedin']:hover {background-color: #0E72A3; transition: background .7s}
+a[title='Telegram']:hover {background-color: #0084C6; transition: background .7s}
 
 
 /* Media Querry */
 @media screen and (max-width: 775px) {
     /* Frameworks */
-    div.container-flex {
-        height: 360px;
-    }
+    div.container-flex {height: 360px}
 }
 
 /* 550px Screens */
 @media screen and (max-width: 550px) {
     /* Frameworks */
-    .container {
-        width: 100%;
-    }
-    div.container-flex {
-        padding: 10px 0;
-    }
+    .container {width: 100%}
+    div.container-flex {padding: 10px 0}
     /* User Info */
-    div.container div.user-left div.user-info h3 {
-        padding: 0;
-        font-size: 14px;
-    }
-    div.container div.user-left div.user-info ul li span ,
-    div.container div.user-left div.user-info ul li i {
-        font-size: 12px;
-    }
+    div.container div.left-side div.user-info ul li,
+    div.container div.right-side div.bottom-side ul li {font-size: 12px}
+    
     /* User Bio */
-    div.container div.user-right div.user-bio {
-        text-align: left;
-    }
-    div.container div.user-right div.user-bio h3 {
+    /* Titles */
+    div.container div.left-side div.user-info h3,
+    div.container div.right-side div.user-bio h3,
+    div.container div.right-side div.bottom-side h3 {
         padding: 0;
         text-align: left;
         font-size: 14px;
     }
-    div.container div.user-right div.user-bio p{
-        font-size: 12px;
-        text-align: left;
-    }
-    /* User Footer */
-    div.container div.user-right div.user-footer {
-        text-align: left;
-    }
-    div.container div.user-right div.user-footer h3 {
-        padding: 0;
-        text-align: left;
-        font-size: 14px;
-    }
-    div.container div.user-right div.user-footer a span ,
-    div.container div.user-right div.user-footer a i {
-        font-size: 12px;
-    }
+    div.container div.right-side div.user-bio,
+    div.container div.right-side div.bottom-side {text-align: left}
+    div.container div.right-side div.user-bio p {font-size: 12px; text-align: left}
 }
 
 /* 360px Screens */
 @media screen and (max-width: 360px) {
     /* Frameworks */
-    div.container-flex {
-        display: block;
-        height: 340px;
-    }
-    div.container-flex div.user-left {
+    div.container-flex {display: block; height: 340px}
+    div.container-flex div.left-side {
         display: flex;
         width: 100%;
         height: 60%;
         justify-content: space-between;
     }
     /* User Id */
-    div.container div.user-left div.user-id span {
-        font-size: 14px;
-        text-align: left;
-    }
+    div.container div.left-side div.user-id span {font-size: 14px; text-align: left}
     /* User Info */
-    div.container div.user-left div.user-info {
-        width: 50%;
-        height: 100%;
-    }
-    div.container div.user-left div.user-info h3 {
-        font-size: 1px;
-    }
+    div.container div.left-side div.user-info {width: 50%; height: 100%}
     /* Bio */
-    div.container-flex div.user-right {
+    div.container-flex div.right-side {
         display: flex;
         width: 100%;
         height: 40%;
         justify-content: space-between;
     }
-    div.container div.user-right div.user-bio {
-        width: 50%;
-        height: 100%;
-    }
-    div.container div.user-right div.user-bio h3 {
-        font-size: 12px;
-    }
-    div.container div.user-right div.user-bio p {
-        padding: 5px;
-    }
+    div.container div.right-side div.user-bio,
+    div.container div.right-side div.bottom-side {width: 50%; height: 100%}
+    /* Titles */
+    div.container div.left-side div.user-info h3,
+    div.container div.right-side div.user-bio h3,
+    div.container div.right-side div.bottom-side h3 {font-size: 12px}
+    div.container div.right-side div.user-bio p {padding: 5px 0}
     /* User Footer */
-    div.container div.user-right div.user-footer {
-        width: 50%;
-        height: 100%;
-    }
-    div.container div.user-right div.user-footer h3 {
-        font-size: 12px;
-    }
-    div.container div.user-right div.user-footer a {
-        padding: 5px;
-    }
+    div.container div.right-side div.bottom-side ul li a {padding: 5px}
 }

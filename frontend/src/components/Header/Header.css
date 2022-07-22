@@ -122,12 +122,13 @@ nav ul > li.sett > ul > li > a i {
 
 
 /* Search bar */
-nav div.search-bar div.search {
+nav div.search-bar {
     display: flex;
     width: 300px;
     height: 50px;
+    border-bottom: 2px solid #FFF;
 }
-nav div.search-bar div.search input {
+nav div.search-bar input {
     color: #FFF;
     width: 90%;
     background-color: transparent;
@@ -135,7 +136,7 @@ nav div.search-bar div.search input {
     outline: none;
     padding: 0 10px;
 }
-nav div.search-bar div.search button {
+nav div.search-bar button {
     color: #FFF;
     width: 50px;
     padding: 0 10px;
@@ -146,10 +147,6 @@ nav div.search-bar div.search button {
     transition: .5s background ease-in-out;
 }
 
-nav div.search-bar div.search input:focus  nav div.search-bar div.search {
-    border-bottom: 3px solid #FFF;
-
-}
 /* Menu bar */
 nav div.menu-bar {display: none}
 nav div.menu-bar i {

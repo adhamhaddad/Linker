@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import Header from '../Header/Header';
-import './ProfileUser.css';
+// import './ProfileUser.css';
+import './Profile.css';
 
 class ProfileUser extends Component {
     render() {
         return (
             <div>
-                <Header/>
                 <div className='container container-flex'>
                     <div className='user-left'>
                         <div className='user-id'>
                             <div className='image'>
-                                <i className='fa fa-camera fa-lg'></i>
+                                <i className='fa-solid fa-camera fa-lg'></i>
                                 <img src="#" alt="Profile-Photo"/>
                                 <input type="file"/>
                             </div>
@@ -23,21 +22,21 @@ class ProfileUser extends Component {
                         <div className='user-info'>
                             <ul>
                                 <li>
-                                    <i className='fa fa-briefcase fa-1x'></i>
+                                    <i className='fa-solid fa-briefcase'></i>
                                     <span>work at</span>
                                     <input type="text"  placeholder='Type Your Info'/>
                                     <span className='edit2'></span>
                                     <span className='edit'>+</span>
                                 </li>
                                 <li>
-                                    <i className='fa fa-heart fa-1x'></i>
+                                    <i className='fa-solid fa-heart'></i>
                                     <span>relationship</span>
                                     <input type="text"  placeholder='Type Your Info'/>
                                     <span className='edit2'></span>
                                     <span className='edit'>+</span>
                                 </li>
                                 <li>
-                                    <i className='fa fa-graduation-cap fa-1x'></i>
+                                    <i className='fa-solid fa-graduation-cap'></i>
                                     <span>College</span>
                                     <input type="text"  placeholder='Type Your Info'/>
                                     <span className='edit2'></span>
@@ -45,7 +44,7 @@ class ProfileUser extends Component {
 
                                 </li>
                                 <li>
-                                    <i className='fa fa-home fa-1x'></i>
+                                    <i className='fa-solid fa-home'></i>
                                     <span>lives in</span>
                                     <input type="text"  placeholder='Type Your Info'/>
                                     <span className='edit2'></span>
@@ -57,7 +56,7 @@ class ProfileUser extends Component {
                     <div className='user-right'>
                         <div className='user-bio'>
                             <h3>
-                                <i className='fa fa-pencil fa-1x'></i>
+                                <i className='fa-solid fa-pencil'></i>
                                 <span>bio</span>
                             </h3>
                             <p>Type a Description about you ..</p>
@@ -71,26 +70,26 @@ class ProfileUser extends Component {
                         </div>
                         <div className='user-footer'>
                             <h3>
-                                <i className='fa fa-link fa-1x'></i>
+                                <i className='fa-solid fa-link'></i>
                                 <span>links</span>
                             </h3>
                             <a href="#" title='Facebook'>
-                                <i className='fa fa-facebook fa-1x'></i>
+                                <i className='fa-brands fa-facebook'></i>
                                 <span>+</span>
                             </a><a href="#" title='Twitter'>
-                                <i className='fa fa-twitter fa-1x'></i>
+                                <i className='fa-brands fa-twitter'></i>
                                 <span>+</span>
                             </a><a href="#" title='Instagram'>
-                                <i className='fa fa-instagram fa-1x'></i>
+                                <i className='fa-brands fa-instagram'></i>
                                 <span>+</span>
                             </a><a href="#" title='Linkedin'>
-                                <i className='fa fa-linkedin fa-1x'></i>
+                                <i className='fa-brands fa-linkedin'></i>
                                 <span>+</span>
                             </a><a href="#" title='Whatsapp'>
-                                <i className='fa fa-whatsapp fa-1x'></i>
+                                <i className='fa-brands fa-whatsapp'></i>
                                 <span>+</span>
                             </a><a href="#" title='Telegram'>
-                                <i className='fa fa-telegram fa-1x'></i>
+                                <i className='fa-brands fa-telegram'></i>
                                 <span>+</span>
                             </a>
                         </div>
@@ -106,19 +105,19 @@ class ProfileUser extends Component {
                             <div className='opt'>
                                 <span>
                                     file
-                                    <i className='fa fa-file fa-1x'></i>
+                                    <i className='fa-solid fa-file'></i>
                                 </span>
                                 <span>
                                     text
-                                    <i className='fa fa-pencil fa-1x'></i>
+                                    <i className='fa-solid fa-pencil'></i>
                                 </span>
                                 <span>
                                     photo
-                                    <i className='fa fa-image fa-1x'></i>
+                                    <i className='fa-solid fa-image'></i>
                                 </span>
                                 <span>
                                     video
-                                    <i className='fa fa-video-camera fa-1x'></i>
+                                    <i className='fa-solid fa-video-camera'></i>
                                 </span>
                             </div>
                         </div>

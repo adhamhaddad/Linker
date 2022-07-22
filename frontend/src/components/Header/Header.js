@@ -18,7 +18,7 @@ class Header extends Component {
                             <span>home</span>
                         </a>
                     </li><li>
-                        <a href='/profile-userr' title='Profile' rel='noreferrer'>
+                        <a href='/profile-user' title='Profile' rel='noreferrer'>
                             <i className='fa-solid fa-user-circle fa-1x'></i>
                             <span>profile</span>
                         </a>
@@ -79,12 +79,10 @@ class Header extends Component {
                     </i>
                 </div>
                 <div className='search-bar'>
-                    <div className='search'>
-                        <input type="search" placeholder='Type to Search ..'/>
-                        <button title='search'>
-                            <i className='fa-solid fa-search fa-1x'></i>
-                        </button>
-                    </div>
+                    <input type="search" placeholder='Type to Search ..'/>
+                    <button title='search'>
+                        <i className='fa-solid fa-search fa-1x'></i>
+                    </button>
                 </div>
 
                 <div className='links'>

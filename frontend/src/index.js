@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
-// import "../node_modules/jquery/src/jquery";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

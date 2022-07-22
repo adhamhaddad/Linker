@@ -1,3 +1,11 @@
+:root {
+    /* Background */
+    --base-background-dark: rgb(32, 32, 32);
+    --base-background-light: rgb(55,55,55);
+    /* Font Color */
+    --base-color-light: #FFF;
+    --base-color-dark: #000;
+}
 * {
     padding: 0;
     margin: 0;
@@ -13,7 +21,7 @@
 .container , .container-body {
     width: 1080px;
     margin: 0 auto;
-    background-color: rgb(55,55,55);
+    background-color: var(--base-background-light);
     position: relative;
 }
 body {padding: 50px 0 40px}
