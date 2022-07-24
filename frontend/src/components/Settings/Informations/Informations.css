@@ -1,0 +1,65 @@
+form {
+    color: var(--base-color-light);
+    position: relative;
+    overflow-y: auto;
+    height: 100%;
+    padding: 5px;
+}
+form h3 {
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: capitalize;
+    text-align: center;
+    margin: 25px 0 10px;
+}
+form h3:first-of-type {margin: 0}
+form > div {
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    line-height: 30px;
+}
+form > div > span {
+    display: inline-block;
+    text-transform: capitalize;
+    width: 80%;
+}
+form > div > span p {
+    text-transform: none;
+    width: 80%;
+    float: right;
+    font-size: 14px;
+}
+
+/* Submit Button */
+form > button,
+form > div > button {
+    display: block;
+    width: 100%;
+    height: 40px;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: none;
+    border-radius: 2px;
+    color: var(--base-color-light);
+    font-weight: bold;
+    text-transform: capitalize;
+    background-color: #3C8224;
+    cursor: pointer;
+    transition: background .5s ease-in-out;
+}
+form > button:hover,
+form > div > button:hover {
+    background-color: #225522;
+    transition: background .5s ease-in-out;
+}
+
+form > div > button {
+    margin: 0;
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    position: static;
+}

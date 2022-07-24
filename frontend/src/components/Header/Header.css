@@ -1,51 +1,43 @@
-/* nav */
 nav {
     display: flex;
     justify-content: space-evenly;
-    flex-flow: row-reverse;
-    position: fixed;
+    height: 60px;
     top: 0;
     right: 0;
     left: 0;
-    background-color: rgb(32, 32, 32);
+    position: fixed;
     z-index: 200;
+    background-color: var(--base-background-dark);
 }
-
 /* nav - Logo */
-nav div.logo-image {
-    width: 100px;
-    height: 50px;
+nav > .logo {
+    width: 150px;
     font-size: 16px;
     text-align: center;
-    color: #FFF;
+    color: var(--base-color-light);
 }
-nav img {
-    width: 100px;
-    height: 50px;
+nav > .logo > img {
+    width: 100%;
+    height: 100%;
     cursor: pointer;
 }
-
 /* nav - Content */
-nav > ul > li {display: inline-block; position: relative}
+nav > ul > li {display: inline-block}
 nav > ul > li > a {
     display: block;
-    height: 50px;
-    padding: 15px 10px;
-    outline: none;
-    position: relative;
-    transition: background .5s ease-in-out;
-}
-nav > ul > li > a span ,
-nav > ul > li > a i {
-    color: #FFF;
+    height: 100%;
+    line-height: 60px;
+    padding: 0 10px;
+    color: var(--base-color-light);
     text-transform: capitalize;
     text-align: center;
     font-size: 15px;
-    position: relative;
+    transition: background .5s ease-in-out;
 }
-nav > ul > li > a i {padding-right: 5px}
-nav > ul > li > a i span {
-    color: #FFF;
+
+nav > ul > li > a > i {padding-right: 5px}
+nav > ul > li > a > i > span {
+    color: var(--base-color-light);
     padding: 1px;
     border: 1px solid #f00;
     border-radius: 50%;
@@ -54,14 +46,14 @@ nav > ul > li > a i span {
     position: absolute;
     font-weight: 800;
     font-size: 10px;
-    text-shadow: .5px .5px rgb(32, 32, 32);
+    text-shadow: .5px .5px var(--base-background-dark);
     display: none;
 }
 
 /* Message */
-nav ul > li.msg > a {position: relative}
-nav ul > li.msg > a > div.all-msg {
-    background-color: rgb(32,32,32);
+nav > ul > li.msg > a {position: relative}
+nav > ul > li.msg > a > .all-msg {
+    background-color: var(--base-background-dark);
     width: 250%;
     height: 400px;
     top: 50px;
@@ -69,16 +61,16 @@ nav ul > li.msg > a > div.all-msg {
     transform: translateX(-50%);
     position: absolute;
     display: none;
-    border-bottom: 1px solid rgb(32, 32, 32);
-    border-right: 1px solid rgb(32, 32, 32);
-    border-left: 1px solid rgb(32,32,32);
+    border-bottom: 1px solid var(--base-background-dark);
+    border-right: 1px solid var(--base-background-dark);
+    border-left: 1px solid var(--base-background-dark);
 }
-nav ul > li.msg > a > div.all-msg .msg-iframe {width: 100%; height: 100%}
+nav > ul > li.msg > a > .all-msg .msg-iframe {width: 100%; height: 100%}
 
 /* Notifications */
-nav ul > li.notifi > a {position: relative}
-nav ul > li.notifi > a > div.all-notifi {
-    background-color: rgb(32, 32, 32);
+nav > ul > li.notifi > a {position: relative}
+nav > ul > li.notifi > a > .all-notifi {
+    background-color: var(--base-background-dark);
     width: 200%;
     height: 400px;
     top: 50px;
@@ -86,25 +78,25 @@ nav ul > li.notifi > a > div.all-notifi {
     transform: translateX(-50%);
     position: absolute;
     display: none;
-    border-bottom: 1px solid rgb(32, 32, 32);
-    border-right: 1px solid rgb(32, 32, 32);
-    border-left: 1px solid rgb(32,32,32);
+    border-bottom: 1px solid var(--base-background-dark);
+    border-right: 1px solid var(--base-background-dark);
+    border-left: 1px solid var(--base-background-dark);
 }
-nav ul > li.notifi > a > div.all-notifi .notifi-iframe {width: 100%; height: 100%}
+nav > ul > li.notifi > a > .all-notifi .notifi-iframe {width: 100%; height: 100%}
 
 /* Settings */
-nav ul > li.sett > ul {
+nav > ul > li.sett > ul {
     width: 100%;
-    background-color: rgb(32, 32, 32);
+    background-color: var(--base-background-dark);
     position: absolute;
     display: none
 }
-nav ul > li.sett > ul li {
+nav > ul > li.sett > ul li {
     display: block;
     position: relative;
     transition: .5s background ease-in-out
 }
-nav ul > li.sett > ul li a {
+nav > ul > li.sett > ul li a {
     display: block;
     height: 50px;
     padding: 15px 10px;
@@ -112,32 +104,30 @@ nav ul > li.sett > ul li a {
     position: relative;
     transition: .5s background ease-in-out
 }
-nav ul > li.sett > ul > li > a span ,
-nav ul > li.sett > ul > li > a i {
-    color: #FFF;
+nav > ul > li.sett > ul > li > a > span ,
+nav > ul > li.sett > ul > li > a > i {
+    color: var(--base-color-light);
     text-transform: capitalize;
     text-align: center;
     font-size: 12px;
 }
 
-
 /* Search bar */
-nav div.search-bar {
+nav > .search-bar {
     display: flex;
     width: 300px;
-    height: 50px;
-    border-bottom: 2px solid #FFF;
+    border-bottom: 2px solid var(--base-color-light);
 }
-nav div.search-bar input {
-    color: #FFF;
+nav > .search-bar > input {
+    color: var(--base-color-light);
     width: 90%;
     background-color: transparent;
     border: none;
     outline: none;
     padding: 0 10px;
 }
-nav div.search-bar button {
-    color: #FFF;
+nav > .search-bar > button {
+    color: var(--base-color-light);
     width: 50px;
     padding: 0 10px;
     border: none;
@@ -148,17 +138,17 @@ nav div.search-bar button {
 }
 
 /* Menu bar */
-nav div.menu-bar {display: none}
-nav div.menu-bar i {
-    color: #fff;
+nav > .menu-bar {display: none}
+nav > .menu-bar > i {
+    color: var(--base-color-light);
     height: 50px;
     padding: 15px 20px;
     transition: background .5s;
     font-size: 20px;
     position: relative;
 }
-nav div.menu-bar i span {
-    color: #fff;
+nav > .menu-bar > i > span {
+    color: var(--base-color-light);
     padding: 1px;
     border: 1px solid #F00;
     border-radius: 50%;
@@ -167,43 +157,20 @@ nav div.menu-bar i span {
     position: absolute;
     font-weight: 800;
     font-size: 10px;
-    text-shadow: .5px .5px rgb(32, 32, 32);
+    text-shadow: .5px .5px var(--base-background-dark);
     display: block;
     display: none;
 }
 
-
-/* nav - Social Links */
-nav div.links ul li {
-    display: inline-block;
-    position: relative;
-    transition: background .5s;
-}
-nav div.links ul li a {
-    display: block;
-    height: 50px;
-    padding: 15px 20px;
-    outline: none;
-    transition: background .5s;
-}
-nav div.links ul li a i {
-    color:#fff;
-    text-transform: capitalize;
-    text-align:center;
-    font-size: 20px;
-}
-
-
 /*** Effects ***/
-/* Navbar */
-nav ul > li a:hover {
-    background-color: rgb(55, 55, 55);
+nav > ul > li > a:hover {
+    background-color: var(--base-background-hovered);
     transition: .5s background ease-in-out;
 }
-nav ul > li > a:after {
+nav > ul > li > a:after {
     content: "";
     display: block;
-    background-color: #FFF;
+    background-color: var(--base-color-light);
     height: 0;
     position: absolute;
     left: 0;
@@ -211,86 +178,60 @@ nav ul > li > a:after {
     bottom: 0;
     transition: .5s height ease-in-out;
 }
-nav ul li a:focus {
-    background-color: rgb(55, 55, 55);
+nav > ul > li > a:focus {
+    background-color: var(--base-background-hovered);
     transition: .5s background ease-in-out;
 }
-nav ul li a:focus:after {
+nav > ul > li > a:focus:after {
     height: 3px;
     transition: .5s height ease-in-out;
 }
-nav ul > li.notifi > a:hover > i {
+nav > ul > li.notifi > a:hover > i {
     animation-name: bell;
     animation-duration: 1.5s;
     animation-iteration-count: infinite;
 }
 /* Menu Bar */
-nav div.menu-bar i:hover {
-    background-color: rgb(55, 55, 55);
-    transition: .5s background ease-in-out;
-}
-
-/* Links */
-nav div.links ul li:hover {
-    background-color: rgb(55, 55, 55);
-    transition: .5s background ease-in-out;
-}
-a[title='Facebook']:hover {
-    background-color: #1976F2;
-    transition: .5s background ease-in-out;
-}
-a[title='Twitter']:hover {
-    background-color: #1DA1F2;
-    transition: .5s background ease-in-out;
-}
-a[title='Instagram']:hover {
-    background: -webkit-linear-gradient(to right,#4D58CE,#912EB9,#CF2872,#F27A1D,#F6D371);
-    background: -moz-linear-gradient(to right,#4D58CE,#912EB9,#CF2872,#F27A1D,#F6D371);
-    background: -o-linear-gradient(to right,#4D58CE,#912EB9,#CF2872,#F27A1D,#F6D371);
-    background: linear-gradient(to right,#4D58CE,#912EB9,#CF2872,#F27A1D,#F6D371);
-    transition: .5s background ease-in-out;
-}
-
+nav > .menu-bar i:hover {background-color: var(--base-background-hovered); transition: .5s background ease-in-out}
 /* Search Bar */
-nav div.search-bar div.search button:hover {background-color: rgb(55, 55, 55); transition: .5s background ease-in-out}
+nav > .search-bar > .search button:hover {background-color: var(--base-background-light); transition: .5s background ease-in-out}
 
 /*** Media Querry ***/
 /* 790px Screens */
-@media screen and (max-width: 1109px) {nav div.search-bar div.search {width: 50px}}
+@media screen and (max-width: 1109px) {nav .search-bar .search {width: 50px}}
 /* 790px Screens */
 @media screen and (max-width: 790px) {
     /* Navbar Content */
-    nav ul {
+    nav > ul {
         width: 250px;
         position: absolute;
         right: 0;
         top: 50px;
-        background-color: rgb(32, 32, 32);
+        background-color: var(--base-background-dark);
         display: none;
     }
-    nav ul {float: right; width: 100%}
-    nav ul li {
+    nav > ul {float: right; width: 100%}
+    nav > ul li {
         display: block;
         position: relative;
         transition: .5s background ease-in-out;
     }
-    nav ul li a {
+    nav > ul li a {
         display: block;
         height: 50px;
         padding: 15px 20px;
         outline: none;
     }
-    nav ul li a span ,
-    nav ul li a i {
-        color:#fff;
+    nav > ul li a span ,
+    nav > ul li a i {
+        color:var(--base-color-light);
         text-transform: capitalize;
         text-align:center;
         font-size: 15px;
     }
 
     /*** Messages Beta ***/
-    /* Message */
-    nav ul > li.msg > a > div.all-msg {
+    nav > ul > li.msg > a > .all-msg {
         width: 200px;
         height: 300px;
         top: 0;
@@ -299,58 +240,58 @@ nav div.search-bar div.search button:hover {background-color: rgb(55, 55, 55); t
     }
 
     /*** Settings Beta ***/
-    nav ul li.sett ul {
+    nav > ul li.sett ul {
         top: 0;
         left: -150px;
         width: 150px;
-        background-color: rgb(32, 32, 32);
+        background-color: var(--base-background-dark);
     }
-    nav ul li.sett ul li {width:100%}
-    nav ul li.sett ul li a {
+    nav > ul li.sett ul li {width:100%}
+    nav > ul li.sett ul li a {
         display: block;
         height: 50px;
         padding: 15px 20px;
         outline: none;
     }
-    /** * **/
+
     /* Menu bar (Beta) */
-    nav div.menu-bar {width: 150px; display: block}
-    nav div.menu-bar i.fa-bars {float: right}
+    nav > .menu-bar {width: 150px; display: block}
+    nav > .menu-bar i.fa-bars {float: right}
 }
 
 /* 550px Screens */
 @media screen and (max-width:550px) {
     /* Navbar - Logo */
-    nav div.logo-image {font-size: 14px}
+    nav > .logo-image {font-size: 14px}
 }
 
 /* 525px Screens */
 @media screen and (max-width:525px) {
     /* Navbar Content */
-    nav ul {width: 200px}
+    nav > ul {width: 200px}
     /* Menu bar (Beta) */
-    nav div.menu-bar {width: 54px; width: 100px}
-    nav div.menu-bar i.fa-bars {font-size: 16px}
+    nav > .menu-bar {width: 54px; width: 100px}
+    nav > .menu-bar > i.fa-bars {font-size: 16px}
     /* Navbar - Social Links */
-    nav div.links ul li a i {font-size: 16px}
+    nav > .links > ul > li > a > i {font-size: 16px}
 }
 
 /* 362px Screens */
 @media screen and (max-width:362px) {
     /* Navbar Content */
-    nav ul {width: 180px}
+    nav > ul {width: 180px}
     /* Menu bar (Beta) */
-    nav div.menu-bar {width: 80px}
+    nav > .menu-bar {width: 80px}
 }
 
 /* 345px Screens */
 @media screen and (max-width:345px) {
     /* Navbar Logo */
-    nav div.logo-image {width: 35%}
-    nav div.logo-image img {width: 100%}
+    nav > .logo-image {width: 35%}
+    nav > .logo-image > img {width: 100%}
 
     /* Navbar Content */
-    nav ul {
+    nav > ul {
         left: 0;
         top: 50px;
         position: absolute;
@@ -358,29 +299,28 @@ nav div.search-bar div.search button:hover {background-color: rgb(55, 55, 55); t
         float: none;
         width: 100%;
     }
-    nav ul li {
+    nav > ul > li {
         direction: ltr;
         text-align: left;
         display: block;
         position: relative;
         transition: .5s background ease-in-out;
     }
-    nav ul li a {
+    nav > ul > li > a {
         display: block;
         height: 50px;
         padding: 15px 20px;
         outline: none;
     }
-    nav ul li a span ,
-    nav ul li a i {
-        color:#fff;
+    nav > ul > li > a > span ,
+    nav > ul > li > a > i {
+        color:var(--base-color-light);
         text-transform: capitalize;
         text-align:center;
         font-size: 15px;
     }
     /*** Messages Beta ***/
-    /* Message */
-    nav ul > li.msg > a > div.all-msg {
+    nav > ul > li.msg > a > .all-msg {
         width: 65%;
         height: 250px;
         top: 0;
@@ -390,55 +330,27 @@ nav div.search-bar div.search button:hover {background-color: rgb(55, 55, 55); t
     }
 
     /* Settings */
-    nav ul li.sett ul {
+    nav > ul > li.sett > ul {
         top: 0;
         left: 100%;
         width: 65%;
     }
 
     /* Menu bar (Beta) */
-    nav div.menu-bar {
+    nav > .menu-bar {
         width: 65%;
         float: left;
     }
-    nav div.menu-bar i.fa-bars {float: left}
-
-    /* Navbar Links */
-    nav div.links {
-        display: none;
-        width: auto;
-        bottom: 5px;
-        left: 5px;
-        position: fixed;
-        background-color: rgb(32, 32, 32);
-    }
-    nav div.links ul li {
-        display: inline-block;
-        position: relative;
-        transition: .5s background ease-in-out;
-    }
-    nav div.links ul li a {
-        display: block;
-        height: auto;
-        padding: 10px 15px;
-        outline: none;
-        transition: .5s background ease-in-out;
-    }
-    nav div.links ul li a i {
-        color:#fff;
-        text-transform: capitalize;
-        text-align:center;
-        font-size: 16px;
-    }
+    nav > .menu-bar > i.fa-bars {float: left}
 }
 /* 345px Screens */
 @media screen and (max-width: 345px) {
     /* Navbar Logo */
-    nav div.logo-image {width: 35%}
-    nav div.logo-image img {width: 100%}
+    nav > .logo-image {width: 35%}
+    nav > .logo-image > img {width: 100%}
 
     /* Navbar Content */
-    nav ul {
+    nav > ul {
         left: 0;
         top: 50px;
         position: absolute;
@@ -446,30 +358,29 @@ nav div.search-bar div.search button:hover {background-color: rgb(55, 55, 55); t
         float: none;
         width: 100%;
     }
-    nav ul li {
+    nav > ul > li {
         direction: ltr;
         text-align: left;
         display: block;
         position: relative;
         transition: .5s background ease-in-out;
     }
-    nav ul li a {
+    nav > ul > li > a {
         display: block;
         height: 50px;
         padding: 15px 20px;
         outline: none;
     }
-    nav ul li a span ,
-    nav ul li a i {
-        color:#fff;
+    nav > ul > li > a > span ,
+    nav > ul > li > a > i {
+        color:var(--base-color-light);
         text-transform: capitalize;
         text-align: center;
         font-size: 15px;
     }
 
     /*** Messages Beta ***/
-    /* Message */
-    nav ul > li.msg > a > div.all-msg {
+    nav > ul > li.msg > a > .all-msg {
         width: 65%;
         height: 250px;
         top: 0;
@@ -479,90 +390,43 @@ nav div.search-bar div.search button:hover {background-color: rgb(55, 55, 55); t
     }
 
     /* Settings */
-    nav ul li.sett ul {
+    nav > ul > li.sett > ul {
         top: 0;
         left: 100%;
         width: 65%;
     }
 
     /* Menu bar (Beta) */
-    nav div.menu-bar {
+    nav > .menu-bar {
         width: 65%;
         float: left;
     }
-    nav div.menu-bar i.fa-bars {float: left}
-
-    /* Navbar Links */
-    nav div.links {
-        display:none;
-        width: auto;
-        bottom: 5px;
-        left: 5px;
-        position: fixed;
-        background-color: rgb(32, 32, 32);
-    }
-    nav div.links ul li {
-        display: inline-block;
-        position: relative;
-        transition: .5s background ease-in-out;
-    }
-    nav div.links ul li a {
-        display: block;
-        height: auto;
-        padding: 10px 15px;
-        outline: none;
-        transition: .5s background ease-in-out;
-    }
-    nav div.links ul li a i {
-        color:#fff;
-        text-transform: capitalize;
-        text-align:center;
-        font-size: 16px;
-    }
+    nav > .menu-bar > i.fa-bars {float: left}
 }
 
 /* JS Codes */
 .show {display: block}
-nav ul.show {display: block}
-nav div.menu-bar i.fa-bars.test1 {float: left}
-nav div.menu-bar i.fa-bars.test2 {float: right}
+nav > ul.show {display: block}
+nav > .menu-bar i.fa-bars.test1 {float: left}
+nav > .menu-bar i.fa-bars.test2 {float: right}
 /* Messages */
-nav ul li.msg a div.all-msg.show {display: block}
+nav > ul > li.msg > a > .all-msg.show {display: block}
 /* Notifications */
-nav ul li.notifi a div.all-notifi.show {display: block}
+nav > ul > li.notifi > a > .all-notifi.show {display: block}
 /* Settings */
-nav ul li.sett ul.show {display: block}
+nav > ul > li.sett > ul.show {display: block}
 
 /*** Animations ***/
 @keyframes bell{
-    0% {
-        transform: rotate(5deg);
-    }
-    10% {
-        transform: rotate(-5deg);
-    }
-    20% {
-        transform: rotate(10deg);
-    }
-    30% {
-        transform: rotate(-10deg);
-    }
-    40% {
-        transform: rotate(20deg);
-    }
-    50% {
-        transform: rotate(-20deg);
-    }
-    60% {
-        transform: rotate(30deg);
-    }
-    70% {
-        transform: rotate(-30deg);
-    }
-    80% {
-        transform: rotate(40deg);
-    }
-    90% {
-        transform: rotate(-40deg);
-    }
+    0% {transform: rotate(5deg)}
+    10% {transform: rotate(-5deg)}
+    20% {transform: rotate(10deg)}
+    30% {transform: rotate(-10deg)}
+    40% {transform: rotate(20deg)}
+    50% {transform: rotate(-20deg)}
+    60% {transform: rotate(30deg)}
+    70% {transform: rotate(-30deg)}
+    80% {transform: rotate(40deg)}
+    90% {transform: rotate(-40deg)}
+    100% {transform: rotate(0deg)}
 }

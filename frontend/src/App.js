@@ -1,9 +1,13 @@
 import React from "react";
+import './App.css';
 import Header from "./components/Header/Header";
+// import Home from "./components/Home/Home";
+// import Profile from "./components/Profile/Profile";
+// import Posts from "./components/Posts/Posts";
+import Messages from "./components/Messages/Messages";
+// import Notifications from "./components/Notifications/Notifications";
+// import Settings from "./components/Settings/Settings";
 import Footer from "./components/Footer/Footer";
-import Home from "./components/Home/Home";
-import Profile from "./components/Profile/Profile";
-import ProfileUser from "./components/Profile/ProfileUser";
 
 function App() {
     /*
@@ -17,9 +21,7 @@ function App() {
     return (
         <div>
             <Header/>
-            <Profile title='Profile Page'/>
-            {/* <Home title='Home Page'/> */}
-            {/* <ProfileUser title='Profile-User Page'/> */}
+            <Messages title='Profile Page'/>
             <Footer/>
         </div>
     )

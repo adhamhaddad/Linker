@@ -16,29 +16,9 @@ h4.hint {
 }
 
 /*** Media Querry ***/
-/* 640px Screens */
-@media screen and (max-width: 640px) {
-    /* Frameworks */
-    div.container-body {padding: 5px}
-}
-
 /* 550px Screens */
-@media screen and (max-width: 550px) {
-    /* Hint */
-    h4.hint {font-size: 12px}
-    div.container-body {width: 90%}
-}
-
+@media screen and (max-width: 550px) {h4.hint {font-size: 12px}}
 /* 525px Screens */
-@media screen and (max-width: 525px) {
-    /* Hint */
-    h4.hint {width: 200px}
-    div.container-body {width: 100%; padding: 5px}
-}
+@media screen and (max-width: 525px) {h4.hint {width: 200px}}
 /* 345px Screens */
-@media screen and (max-width:345px) {
-    /* Frameworks */
-    div.container-body {width: 100%; padding: 5px 0}
-    /* Hint */
-    h4.hint {font-size: 10px; width: 150px}
-}
+@media screen and (max-width:345px) {h4.hint {font-size: 10px; width: 150px}}

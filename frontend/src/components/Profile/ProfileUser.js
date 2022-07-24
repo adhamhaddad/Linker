@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import img from '../../Images/profile.jpg';
 import './Profile.css';
-import './ProfileUser.css';
+// import './ProfileUser.css';
 
 class ProfileUser extends Component {
     state = [
@@ -23,7 +23,7 @@ class ProfileUser extends Component {
                         <div className='user-id'>
                             <div className='image'>
                                 <i className='fa-solid fa-camera fa-lg'></i>
-                                <img src={this.state[0].img} alt="Profile-Photo"/>
+                                <img src={this.state[0].img} alt="Profile"/>
                                 <input type="file"/>
                             </div>
                             <div className='name'>
@@ -68,10 +68,10 @@ class ProfileUser extends Component {
                     <div className='right-side'>
                         <div className='user-bio'>
                             <h3>
-                                <i className='fa-solid fa-pencil'></i>
-                                <span>bio</span>
+                                <i className='fa-solid fa-book-open'></i>
+                                <span>story</span>
                             </h3>
-                            <p>Type a Description about you ..</p>
+                            <p>Write a short story about you ..</p>
                             <input type="text" placeholder="Type a Description about you .."/>
                             <button className='edit'>
                                 <span>edit</span>
@@ -85,25 +85,39 @@ class ProfileUser extends Component {
                                 <i className='fa-solid fa-link'></i>
                                 <span>links</span>
                             </h3>
-                            <a href="#" title='Facebook'>
-                                <i className='fa-brands fa-facebook'></i>
-                                <span>+</span>
-                            </a><a href="#" title='Twitter'>
-                                <i className='fa-brands fa-twitter'></i>
-                                <span>+</span>
-                            </a><a href="#" title='Instagram'>
-                                <i className='fa-brands fa-instagram'></i>
-                                <span>+</span>
-                            </a><a href="#" title='Linkedin'>
-                                <i className='fa-brands fa-linkedin'></i>
-                                <span>+</span>
-                            </a><a href="#" title='Whatsapp'>
-                                <i className='fa-brands fa-whatsapp'></i>
-                                <span>+</span>
-                            </a><a href="#" title='Telegram'>
-                                <i className='fa-brands fa-telegram'></i>
-                                <span>+</span>
-                            </a>
+                            <ul>
+                                <li>
+                                    <a href='https://www.facebook.com/' title='Facebook'>
+                                        <i className='fa-brands fa-facebook'></i>
+                                        <span>+</span>
+                                    </a>
+                                </li><li>
+                                    <a href="https://www.twitter.com/" title='Twitter'>
+                                        <i className='fa-brands fa-twitter'></i>
+                                        <span>+</span>
+                                    </a>
+                                </li><li>
+                                    <a href="https://www.instagram.com/" title='Instagram'>
+                                        <i className='fa-brands fa-instagram'></i>
+                                        <span>+</span>
+                                    </a>
+                                </li><li>
+                                    <a href="https://www.linkedin.com/" title='Linkedin'>
+                                        <i className='fa-brands fa-linkedin'></i>
+                                        <span>+</span>
+                                    </a>
+                                </li><li>
+                                    <a href="tel:01113833449" title='Whatsapp'>
+                                        <i className='fa-brands fa-whatsapp'></i>
+                                        <span>+</span>
+                                    </a>
+                                </li><li>
+                                    <a href="https://t.me/adhamhaddad" title='Telegram'>
+                                        <i className='fa-brands fa-telegram'></i>
+                                        <span>+</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

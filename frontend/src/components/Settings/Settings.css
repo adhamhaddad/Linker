@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    height: 694px;
+}
+.container aside {
+    width: 30%;
+    height: 100%;
+    background-color: var(--base-background-white);
+}
+.container aside ul li a {
+    color: var(--base-color-dark);
+    padding: 10px 5px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-transform: capitalize;
+}
+.container aside ul li a:hover {background-color: var(--base-background-light)}
+.container aside ul li a:focus {border-left: 3px solid var(--base-color-dark)}
+.container section {width: 70%}

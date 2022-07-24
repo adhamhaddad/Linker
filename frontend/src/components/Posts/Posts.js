@@ -3,43 +3,48 @@ import './Posts.css';
 import image from '../../Images/profile.jpg'
 class Posts extends Component {
     state = {
-        userList: [{name: 'adhamhaddad', profile: image, min: 40, post: 'This is a post'}]
+        name: 'Adham Ashraf', profile: image, min: 220, post: 'this is a post'
+    }
+    postTimeClac = () => {
+        const getTime = this.state.min;
+        const houres = (this.state.min > 60 ? `${String(getTime).charAt(0)} hours` : `${getTime} minutes`);
+
+        return houres;
     }
     render() {
         return (
-            <div className='container-body'>
-                <div className='posts'>
-                    <div className='user-post'>
-                        <div className='user-id'>
-                            <img src={this.state.userList[0].profile} alt="Profile"/>
-                            <span>{this.state.userList[0].name}</span>
-                        </div>
-                        <div className='post-date'>
-                            <p>posted: {this.state.userList[0].min}</p>
-                        </div>
+            <div className='posts'>
+                <div className='post-top'>
+                    <div className='user-id'>
+                        <img src={this.state.profile} alt="Profile"/>
+                        <span>{this.state.name}</span>
                     </div>
-                    <div className='post-content'>
-                        <span>{this.state.userList[0].post}</span>
-                    </div>
-                    <div className='social'>
-                        <button className='btn' title='Like'>
-                            <i className='fa-solid fa-thumbs-up fa-lg'></i>
-                            <span>like</span>
-                        </button>
-                        <button title='Dislike'>
-                            <i className='fa-solid fa-thumbs-down fa-lg'></i>
-                            <span>dislike</span>
-                        </button>
-                        <div className='input'>
-                            <input type="text" placeholder='Comment ...' title='Comment'/>
-                            <i className='fa-solid fa-send fa-1x'></i>
-                        </div>
-                        <button title='Share'>
-                            <i className='fa-solid fa-share-square fa-lg'></i>
-                            <span>share</span>
-                        </button>
+                    <div className='post-date'>
+                        <p>posted: {this.postTimeClac()}</p>
                     </div>
                 </div>
+                <div className='post-content'>
+                    <span>{this.state.post}</span>
+                </div>
+                <div className='post-bottom'>
+                    <button className='btn' title='Like'>
+                        <i className='fa-solid fa-thumbs-up'></i>
+                        <span>like</span>
+                    </button>
+                    <button title='Dislike'>
+                        <i className='fa-solid fa-thumbs-down'></i>
+                        <span>dislike</span>
+                    </button>
+                    <div className='comment'>
+                        <input type="text" placeholder='Comment ...' title='Comment'/>
+                        <i className='fa-solid fa-paper-plane'></i>
+                    </div>
+                    <button title='Share'>
+                        <i className='fa-solid fa-share'></i>
+                        <span>share</span>
+                    </button>
+                </div>
+
             </div>
         )
     }
