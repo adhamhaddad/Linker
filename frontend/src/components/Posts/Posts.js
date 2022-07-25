@@ -3,12 +3,11 @@ import './Posts.css';
 import image from '../../Images/profile.jpg'
 class Posts extends Component {
     state = {
-        name: 'Adham Ashraf', profile: image, min: 220, post: 'this is a post'
+        name: 'Adham Ashraf', profile: image, time: 220, post: 'this is a post'
     }
     postTimeClac = () => {
-        const getTime = this.state.min;
-        const houres = (this.state.min > 60 ? `${String(getTime).charAt(0)} hours` : `${getTime} minutes`);
-
+        const getTime = this.state.time;
+        const houres = (this.state.time > 60 ? `${String(getTime).charAt(0)}h` : `${getTime}m`);
         return houres;
     }
     render() {

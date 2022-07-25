@@ -9,7 +9,13 @@ class Home extends Component {
                 <h4 className='hint'>
                     <span></span>
                 </h4>
-                <Posts/>
+                <div className="container-body">
+                    <Posts/>
+                    <Posts/>
+                    <Posts/>
+                    <Posts/>
+                    <Posts/>
+                </div>
             </main>
         )
     }

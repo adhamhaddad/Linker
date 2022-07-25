@@ -28,6 +28,7 @@
 .container .left-side .user-info {overflow: auto}
 .container .left-side .user-info ul li,
 .container .right-side .bottom-side ul li > a {
+    display: block;
     color: var(--base-color-light);
     text-transform: capitalize;
     padding: 10px 0;

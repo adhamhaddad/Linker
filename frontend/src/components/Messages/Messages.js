@@ -4,6 +4,7 @@ import img from '../../Images/profile.jpg';
 import mrym from '../../Images/mrym.png';
 class Messages extends Component {
     state = {
+        status: true
     }
     openMenu = () => {
         document.querySelector('.container > .top > .menu > li > ul').style.display = "block";
@@ -13,6 +14,12 @@ class Messages extends Component {
         document.querySelector('.container > .top > .menu > li > ul').style.display = "none"
         document.querySelector('.container > .top > .menu > li > i').className = "fa-solid fa-ellipsis-vertical";
     }
+
+    status = () => {
+        const status = this.state.status;
+        document.querySelector('.container > .top > span.status').innerHTML = (status ? 'online' : 'offline');
+    }
+
     render() {
         return (
             <div className='container'>

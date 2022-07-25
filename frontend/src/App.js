@@ -4,12 +4,16 @@ import Header from "./components/Header/Header";
 // import Home from "./components/Home/Home";
 // import Profile from "./components/Profile/Profile";
 // import Posts from "./components/Posts/Posts";
-import Messages from "./components/Messages/Messages";
 // import Notifications from "./components/Notifications/Notifications";
-// import Settings from "./components/Settings/Settings";
+// import Messages from "./components/Messages/Messages";
+import Signin from "./components/Forms/Signin";
+import Signup from "./components/Forms/Signup";
 import Footer from "./components/Footer/Footer";
 
 function App() {
+    const changeComponent = () => {
+
+    }
     /*
     const [data, setData] = React.useState(null);
     React.useEffect(() => {
@@ -19,9 +23,9 @@ function App() {
     }, []);
     */
     return (
-        <div>
+        <div className="App">
             <Header/>
-            <Messages title='Profile Page'/>
+            <Signin title='Profile Page'/>
             <Footer/>
         </div>
     )

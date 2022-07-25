@@ -1,4 +1,4 @@
-body {padding: 60px 0 40px; background-color: var(--base-background-light)}
+body {padding: 60px 0 30px; background-color: var(--base-background-light)}
 .container , .container-body {
     width: 1080px;
     margin: 0 auto;
@@ -8,9 +8,7 @@ body {padding: 60px 0 40px; background-color: var(--base-background-light)}
 
 /* 1080px Screens */
 @media screen and (max-width: 1080px) {.container, .container-body {width: 90%}}
-
 /* 550px Screens */
 @media screen and (max-width: 550px) {body {padding: 50px 0 25px}}
-
 /* 345px Screens */
-@media screen and (max-width: 345px) {body {padding: 50px 0 0}}
+@media screen and (max-width: 345px) {body {padding-bottom: 0}}

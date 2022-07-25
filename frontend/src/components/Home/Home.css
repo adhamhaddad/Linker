@@ -1,4 +1,6 @@
 /* Body Content */
+.container-body {padding: 10px}
+
 h4.hint {
     text-transform: capitalize;
     text-align: center;

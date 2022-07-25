@@ -1,6 +1,11 @@
 .container {
-    height: 87vh;
-    background-color: var(--base-background-white)
+    top: 60px;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    position: absolute;
+    background-color: var(--base-background-white);
+    filter: drop-shadow(1px 1px 2px var(--base-color-dark));
 }
 /* Top */
 .container > .top {
@@ -46,14 +51,10 @@
     position: relative;
     cursor: pointer;
 }
-.container > .top > .menu > li > i {
-    display: block;
-    line-height: 50px;
-}
+.container > .top > .menu > li > i {display: block; line-height: 50px}
 .container > .top > .menu > li > ul {
     display: none;
     width: 160px;
-    background-color: green;
     position: absolute;
     top: 50px;
     right: 0;
@@ -107,17 +108,16 @@
 .container > .conversation .user span {
     word-wrap: break-word;
     margin: 0 5px;
-    max-width: 50%;
+    max-width: 45%;
     display: inline-block;
     padding: 10px;
     height: auto;
     background-color: var(--base-background-dark);
-    filter: drop-shadow(1px 1px 2px var(--base-background-light))
+    filter: drop-shadow(1px 1px 2px var(--base-background-dark))
 }
 .container > .conversation .friend-user span {
     background-color: var(--base-background-white);
     color: var(--base-color-dark);
-    filter: drop-shadow(1px 1px 2px var(--base-background-dark))
 }
 .container > .conversation .user {
     padding: 10px 5px;

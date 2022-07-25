@@ -1,31 +1,25 @@
 footer {
-    height: 40px;
+    height: 30px;
+    line-height: 30px;
     bottom: 0;
     left: 0;
     right: 0;
     position: fixed;
-    background-color: var(--base-background-dark);
-    text-align: center;
-    padding: 10px 0;
     z-index: 1000;
-    color: var(--base-color-light);
+    text-align: center;
     text-transform: capitalize;
+    font-size: 12px;
+    color: var(--base-color-dark);
+    background-color: var(--base-background-white);
 }
-footer span {font-size: 12px}
-footer span a {
-    outline: none;
+footer p a {
     color: var(--base-color);
     display: inline-block;
     margin: 0 5px;
 }
 
-
 /*** Media Querry ***/
 /* 550px Screens */
-@media screen and (max-width: 550px) {
-    footer {padding: 2px 0; height: 25px}
-    footer span {font-size: 10px}
-}
-
+@media screen and (max-width: 550px) {footer {font-size: 10px; padding: 2px 0; height: 25px}}
 /* 345px Screens */
 @media screen and (max-width: 345px) {footer {display: none}}

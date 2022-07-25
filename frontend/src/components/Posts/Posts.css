@@ -26,15 +26,15 @@
     text-align: center;
 }
 .posts > .post-top > .user-id span {font-weight: 800; font-size: 14px}
-.posts > .post-top > .post-date p {font-size: 12px}
-
+.posts > .post-top > .post-date p {font-size: 12px; line-height: 50px}
 
 .posts .post-content {
     border: 1px solid rgb(219, 219, 219);
     min-height: 250px;
     max-height: 450px;
     width: 100%;
-    margin: 5px auto;
+    padding: 5px;
+    margin: 5px 0;
 }
 
 /* Post Bottom */
@@ -78,8 +78,6 @@
     transition-duration: .5s;
 }
 
-
-
 /*** Media Querry ***/
 /* 640px Screens */
 @media screen and (max-width: 640px) {
@@ -108,7 +106,6 @@
     .posts .post-bottom .comment {font-size: inherit}
     .posts .post-bottom .comment input {font-size: inherit}
 }
-
 
 /* 525px Screens */
 @media screen and (max-width: 525px) {
