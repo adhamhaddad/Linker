@@ -1,33 +1,28 @@
 .posts {
-    padding: 5px;
-    margin: 10px auto;
     min-width: 250px;
     max-width: 550px;
+    padding: 5px;
+    margin: 10px auto;
     background-color: var(--base-color-light);
-    position: relative;
+    color: var(--base-color-dark)
 }
-.posts > .post-top,
+.posts > .post-header,
 .posts .post-bottom {
     display: flex;
-    justify-content: space-between;
     height: 50px;
     text-transform: capitalize;
 }
-.posts > .post-top > .user-id {
-    display: flex;
-    align-items: center;
-    width: 50%;
-}
-.posts > .post-top > .user-id img {
+.posts > .post-header > img {
     width: 50px;
     height: 50px;
     margin-right: 10px;
     font-size: 12px;
     text-align: center;
 }
-.posts > .post-top > .user-id span {font-weight: 800; font-size: 14px}
-.posts > .post-top > .post-date p {font-size: 12px; line-height: 50px}
+.posts > .post-header > span {font-size: 14px; font-weight: 800}
+.posts > .post-header > p {font-size: 12px; line-height: 50px; margin-left: auto;}
 
+/* Post Content */
 .posts .post-content {
     border: 1px solid rgb(219, 219, 219);
     min-height: 250px;
@@ -42,7 +37,6 @@
     width: 100px;
     height: 100%;
     border: 1px solid rgb(219, 219, 219);
-    color: var(--base-color-dark);
     text-transform: capitalize;
     transition-property: background;
     transition-duration: .5s;
@@ -60,8 +54,6 @@
     width: 220px;
     height: 100%;
     padding: 15px 10px;
-    color: var(--base-color-dark);
-    border: none;
 }
 .posts > .post-bottom .comment i,
 .posts > .post-bottom button i {
@@ -87,7 +79,7 @@
         max-width: 500px;
         font-size: 14px;
     }
-    .posts .post-top .user-id {width: 40%}
+    .posts .post-header {width: 40%}
     .posts .post-content {min-height: 180px; max-height: 200px}
     .posts .post-bottom {font-size: 12px}
     .posts .post-bottom button {font-size: inherit}
@@ -110,7 +102,7 @@
 /* 525px Screens */
 @media screen and (max-width: 525px) {
     .container-body {padding: 5px}
-    .posts .post-top .user-id {width: 50%}
+    .posts .post-header {width: 50%}
     .posts .post-content {min-height: 150px}
     .posts .post-bottom button {padding: 10px 0; font-size: inherit}
     .posts .post-bottom .comment {font-size: inherit}
@@ -121,8 +113,8 @@
 @media screen and (max-width: 345px) {
     .container-body {padding: 5px 0}
     .posts {min-width: 100%; max-width: 100%}
-    .posts .post-top .user-id span {font-size: 12px}
-    .posts .post-top .post-date {font-size: 10px}
+    .posts .post-header span {font-size: 12px}
+    .posts .post-header .post-date {font-size: 10px}
     .posts .post-content {min-height: 180px}
     .posts .post-bottom {font-size: 10px}
     .posts .post-bottom button {font-size: inherit}

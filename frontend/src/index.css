@@ -1,9 +1,8 @@
 :root {
     /* Background */
     --base-background-dark: rgb(32, 32, 32);
+    --base-background-light: #FFF;
     --base-background-hovered: rgb(55, 55, 55);
-    --base-background-light: rgb(225, 225, 225);
-    --base-background-white: #FFF;
     /* Font Color */
     --base-color-light: #FFF;
     --base-color-dark: rgb(32, 32, 32);
@@ -22,3 +21,4 @@
     border: none;
     outline: none;
 }
+a {color: var(--base-color-light)}

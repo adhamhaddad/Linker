@@ -1,6 +1,6 @@
 nav {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     height: 60px;
     top: 0;
     right: 0;
@@ -10,18 +10,38 @@ nav {
     background-color: var(--base-background-dark);
 }
 /* nav - Logo */
-nav > .logo {
+nav > img.logo {
     width: 150px;
+    height: 100%;
     font-size: 16px;
     text-align: center;
+    cursor: pointer;
     color: var(--base-color-light);
 }
-nav > .logo > img {
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
+
+/* Search bar */
+nav > .search-bar {
+    display: flex;
+    width: 300px;
+    border-bottom: 1px solid var(--base-color-light);
 }
+nav > .search-bar > input {
+    color: var(--base-color-light);
+    width: 90%;
+    background-color: transparent;
+    padding: 0 10px;
+}
+nav > .search-bar > button {
+    color: var(--base-color-light);
+    width: 50px;
+    padding: 0 10px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: .5s background ease-in-out;
+}
+
 /* nav - Content */
+/* nav > ul {margin-left: auto} */
 nav > ul > li {display: inline-block}
 nav > ul > li > a {
     display: block;
@@ -37,7 +57,6 @@ nav > ul > li > a {
 
 nav > ul > li > a > i {padding-right: 5px}
 nav > ul > li > a > i > span {
-    color: var(--base-color-light);
     padding: 1px;
     border: 1px solid #f00;
     border-radius: 50%;
@@ -50,7 +69,7 @@ nav > ul > li > a > i > span {
     display: none;
 }
 
-/* Message */
+/* Messages */
 nav > ul > li.msg > a {position: relative}
 nav > ul > li.msg > a > .all-msg {
     background-color: var(--base-background-dark);
@@ -68,8 +87,8 @@ nav > ul > li.msg > a > .all-msg {
 nav > ul > li.msg > a > .all-msg .msg-iframe {width: 100%; height: 100%}
 
 /* Notifications */
-nav > ul > li.notifi > a {position: relative}
-nav > ul > li.notifi > a > .all-notifi {
+nav > ul > li.notifications > a {position: relative}
+nav > ul > li.notifications > a > .all-notifications {
     background-color: var(--base-background-dark);
     width: 200%;
     height: 400px;
@@ -82,59 +101,34 @@ nav > ul > li.notifi > a > .all-notifi {
     border-right: 1px solid var(--base-background-dark);
     border-left: 1px solid var(--base-background-dark);
 }
-nav > ul > li.notifi > a > .all-notifi .notifi-iframe {width: 100%; height: 100%}
+nav > ul > li.notifications > a > .all-notifications .notifications-iframe {width: 100%; height: 100%}
 
 /* Settings */
-nav > ul > li.sett > ul {
+nav > ul > li.settings > ul {
     width: 100%;
     background-color: var(--base-background-dark);
     position: absolute;
     display: none
 }
-nav > ul > li.sett > ul li {
+nav > ul > li.settings > ul li {
     display: block;
     position: relative;
     transition: .5s background ease-in-out
 }
-nav > ul > li.sett > ul li a {
+nav > ul > li.settings > ul li a {
     display: block;
     height: 50px;
     padding: 15px 10px;
-    outline: none;
+    
     position: relative;
     transition: .5s background ease-in-out
 }
-nav > ul > li.sett > ul > li > a > span ,
-nav > ul > li.sett > ul > li > a > i {
+nav > ul > li.settings > ul > li > a > span ,
+nav > ul > li.settings > ul > li > a > i {
     color: var(--base-color-light);
     text-transform: capitalize;
     text-align: center;
     font-size: 12px;
-}
-
-/* Search bar */
-nav > .search-bar {
-    display: flex;
-    width: 300px;
-    border-bottom: 2px solid var(--base-color-light);
-}
-nav > .search-bar > input {
-    color: var(--base-color-light);
-    width: 90%;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    padding: 0 10px;
-}
-nav > .search-bar > button {
-    color: var(--base-color-light);
-    width: 50px;
-    padding: 0 10px;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    cursor: pointer;
-    transition: .5s background ease-in-out;
 }
 
 /* Menu bar */
@@ -186,7 +180,7 @@ nav > ul > li > a:focus:after {
     height: 3px;
     transition: .5s height ease-in-out;
 }
-nav > ul > li.notifi > a:hover > i {
+nav > ul > li.notifications > a:hover > i {
     animation-name: bell;
     animation-duration: 1.5s;
     animation-iteration-count: infinite;
@@ -220,14 +214,10 @@ nav > .search-bar > .search button:hover {background-color: var(--base-backgroun
         display: block;
         height: 50px;
         padding: 15px 20px;
-        outline: none;
+        
     }
     nav > ul li a span ,
-    nav > ul li a i {
-        color:var(--base-color-light);
-        text-transform: capitalize;
-        text-align:center;
-        font-size: 15px;
+    nav > ul li a i {font-size: 15px;
     }
 
     /*** Messages Beta ***/
@@ -240,18 +230,18 @@ nav > .search-bar > .search button:hover {background-color: var(--base-backgroun
     }
 
     /*** Settings Beta ***/
-    nav > ul li.sett ul {
+    nav > ul li.settings ul {
         top: 0;
         left: -150px;
         width: 150px;
         background-color: var(--base-background-dark);
     }
-    nav > ul li.sett ul li {width:100%}
-    nav > ul li.sett ul li a {
+    nav > ul li.settings ul li {width:100%}
+    nav > ul li.settings ul li a {
         display: block;
         height: 50px;
         padding: 15px 20px;
-        outline: none;
+        
     }
 
     /* Menu bar (Beta) */
@@ -260,13 +250,9 @@ nav > .search-bar > .search button:hover {background-color: var(--base-backgroun
 }
 
 /* 550px Screens */
-@media screen and (max-width:550px) {
-    /* Navbar - Logo */
-    nav > .logo-image {font-size: 14px}
-}
-
+@media screen and (max-width: 550px) {nav > img.logo {font-size: 14px}}
 /* 525px Screens */
-@media screen and (max-width:525px) {
+@media screen and (max-width: 525px) {
     /* Navbar Content */
     nav > ul {width: 200px}
     /* Menu bar (Beta) */
@@ -277,7 +263,7 @@ nav > .search-bar > .search button:hover {background-color: var(--base-backgroun
 }
 
 /* 362px Screens */
-@media screen and (max-width:362px) {
+@media screen and (max-width: 362px) {
     /* Navbar Content */
     nav > ul {width: 180px}
     /* Menu bar (Beta) */
@@ -285,10 +271,9 @@ nav > .search-bar > .search button:hover {background-color: var(--base-backgroun
 }
 
 /* 345px Screens */
-@media screen and (max-width:345px) {
+@media screen and (max-width: 345px) {
     /* Navbar Logo */
-    nav > .logo-image {width: 35%}
-    nav > .logo-image > img {width: 100%}
+    nav > img.logo {width: 100%}
 
     /* Navbar Content */
     nav > ul {
@@ -296,7 +281,6 @@ nav > .search-bar > .search button:hover {background-color: var(--base-backgroun
         top: 50px;
         position: absolute;
         width: 65%;
-        float: none;
         width: 100%;
     }
     nav > ul > li {
@@ -307,17 +291,8 @@ nav > .search-bar > .search button:hover {background-color: var(--base-backgroun
         transition: .5s background ease-in-out;
     }
     nav > ul > li > a {
-        display: block;
         height: 50px;
         padding: 15px 20px;
-        outline: none;
-    }
-    nav > ul > li > a > span ,
-    nav > ul > li > a > i {
-        color:var(--base-color-light);
-        text-transform: capitalize;
-        text-align:center;
-        font-size: 15px;
     }
     /*** Messages Beta ***/
     nav > ul > li.msg > a > .all-msg {
@@ -330,7 +305,7 @@ nav > .search-bar > .search button:hover {background-color: var(--base-backgroun
     }
 
     /* Settings */
-    nav > ul > li.sett > ul {
+    nav > ul > li.settings > ul {
         top: 0;
         left: 100%;
         width: 65%;
@@ -346,8 +321,8 @@ nav > .search-bar > .search button:hover {background-color: var(--base-backgroun
 /* 345px Screens */
 @media screen and (max-width: 345px) {
     /* Navbar Logo */
-    nav > .logo-image {width: 35%}
-    nav > .logo-image > img {width: 100%}
+    nav > img.logo {width: 35%}
+    nav > img.logo {width: 100%}
 
     /* Navbar Content */
     nav > ul {
@@ -366,16 +341,11 @@ nav > .search-bar > .search button:hover {background-color: var(--base-backgroun
         transition: .5s background ease-in-out;
     }
     nav > ul > li > a {
-        display: block;
         height: 50px;
         padding: 15px 20px;
-        outline: none;
     }
     nav > ul > li > a > span ,
     nav > ul > li > a > i {
-        color:var(--base-color-light);
-        text-transform: capitalize;
-        text-align: center;
         font-size: 15px;
     }
 
@@ -390,7 +360,7 @@ nav > .search-bar > .search button:hover {background-color: var(--base-backgroun
     }
 
     /* Settings */
-    nav > ul > li.sett > ul {
+    nav > ul > li.settings > ul {
         top: 0;
         left: 100%;
         width: 65%;
@@ -412,9 +382,9 @@ nav > .menu-bar i.fa-bars.test2 {float: right}
 /* Messages */
 nav > ul > li.msg > a > .all-msg.show {display: block}
 /* Notifications */
-nav > ul > li.notifi > a > .all-notifi.show {display: block}
+nav > ul > li.notifications > a > .all-notifications.show {display: block}
 /* Settings */
-nav > ul > li.sett > ul.show {display: block}
+nav > ul > li.settings > ul.show {display: block}
 
 /*** Animations ***/
 @keyframes bell{

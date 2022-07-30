@@ -1,8 +1,8 @@
 /* User Id */
 .container-flex {
     display: flex;
-    padding: 10px;
     height: 365px;
+    padding: 10px;
     margin-bottom: 10px;
     color: var(--base-color-light);
 }

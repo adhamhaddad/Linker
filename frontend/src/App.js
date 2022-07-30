@@ -2,12 +2,8 @@ import React from "react";
 import './App.css';
 import Header from "./components/Header/Header";
 // import Home from "./components/Home/Home";
-// import Profile from "./components/Profile/Profile";
-// import Posts from "./components/Posts/Posts";
-// import Notifications from "./components/Notifications/Notifications";
-// import Messages from "./components/Messages/Messages";
-import Signin from "./components/Forms/Signin";
-import Signup from "./components/Forms/Signup";
+import Settings from "./components/Settings/Settings";
+import Profile from "./components/Profile/Profile";
 import Footer from "./components/Footer/Footer";
 
 function App() {
@@ -23,11 +19,11 @@ function App() {
     }, []);
     */
     return (
-        <div className="App">
+        <>
             <Header/>
-            <Signin title='Profile Page'/>
+            <Settings title='Profile Page'/>
             <Footer/>
-        </div>
+        </>
     )
 }
 export default App;

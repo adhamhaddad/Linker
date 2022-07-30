@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Settings.css';
-import Informations from './Informations/Informations';
+import Informations from './Information/Information';
 
 class Settings extends Component {
     render() {
@@ -11,7 +11,7 @@ class Settings extends Component {
                         <li>
                             <a href='#'>
                                 <i></i>
-                                <span>informations</span>
+                                <span>Information</span>
                             </a>
                         </li><li>
                             <a href='#'>

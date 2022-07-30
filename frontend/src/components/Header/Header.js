@@ -9,10 +9,7 @@ class Header extends Component {
     render() {
         return (
             <nav>
-                <div className='logo'>
-                    <img src={logo} alt="Logo"/>
-                </div>
-
+                <img src={logo} alt="Logo" className='logo'/>
                 <div className='menu-bar'>
                     <i className='fa-solid fa-bars' title='Menu'>
                         <span className='all-alerts'></span>
@@ -46,17 +43,17 @@ class Header extends Component {
                                 <iframe src="/message-port" title='Message' frameBorder="0" className='msg-iframe'></iframe>
                             </div>
                         </a>
-                    </li><li className='notifi'>
+                    </li><li className='notifications'>
                         <a href='/notification' title='Notification' rel='noreferrer'>
                             <i className='fa-solid fa-bell notifi'>
                                 <span></span>
                             </i>
                             <span>notifications</span>
-                            <div className='all-notifi'>
-                                <iframe src="" title='Notification' frameBorder="0" className='notifi-iframe'></iframe>
+                            <div className='all-notifications'>
+                                <iframe src="" title='Notification' frameBorder="0" className='notifications-iframe'></iframe>
                             </div>
                         </a>
-                    </li><li className='sett'>
+                    </li><li className='settings'>
                         <a href='/settings' title='Settings' rel='noreferrer'>
                             <i className='fa-solid fa-cog'></i>
                             <span>settings</span>

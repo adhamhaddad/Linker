@@ -2,19 +2,19 @@
 .container-body {padding: 10px}
 
 h4.hint {
+    display: none;
+    width: 250px;
+    padding: 10px 15px;
     text-transform: capitalize;
     text-align: center;
     font-size: 14px;
-    width: 250px;
     background: var(--base-background-dark);
-    padding: 10px 15px;
     color: #fff;
     top: 60px;
     left: 50%;
     position: fixed;
     transform: translateX(-50%);
     z-index: 150;
-    display: none;
 }
 
 /*** Media Querry ***/

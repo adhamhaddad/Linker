@@ -5,7 +5,7 @@
     transform: translate(-50%, -50%);
     width: 450px;
     padding: 50px 20px;
-    background-color: var(--base-background-white);
+    background-color: var(--base-background-light);
     /* border-left: 1px solid var(--base-color-dark); */
     /* border-right: 1px solid var(--base-color-dark); */
     filter: drop-shadow(1px 1px 5px var(--base-color-dark));

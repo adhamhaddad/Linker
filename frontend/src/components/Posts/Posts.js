@@ -13,17 +13,13 @@ class Posts extends Component {
     render() {
         return (
             <div className='posts'>
-                <div className='post-top'>
-                    <div className='user-id'>
-                        <img src={this.state.profile} alt="Profile"/>
-                        <span>{this.state.name}</span>
-                    </div>
-                    <div className='post-date'>
-                        <p>posted: {this.postTimeClac()}</p>
-                    </div>
+                <div className='post-header'>
+                    <img src={this.state.profile} alt="Profile"/>
+                    <span>{this.state.name}</span>
+                    <p>posted: {this.postTimeClac()}</p>
                 </div>
                 <div className='post-content'>
-                    <span>{this.state.post}</span>
+                    <p>{this.state.post}</p>
                 </div>
                 <div className='post-bottom'>
                     <button className='btn' title='Like'>

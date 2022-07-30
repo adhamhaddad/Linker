@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import './Informations.css';
+import './Information.css';
 
-class Informations extends Component {
+class Information extends Component {
     render() {
         return (
-            <form action='/informations' method='POST'>
-                <h3>informations</h3>
+            <form action='/Information' method='POST'>
+                <h3>information</h3>
                 <div>
                     <span>name<p>adham ashraf haddad</p></span>
                     <button>edit</button>
@@ -43,7 +43,7 @@ class Informations extends Component {
                     <button>edit</button>
                 </div>
                 <div>
-                    <span>education<p>Computer and Information Systems - B.S</p></span>
+                    <span>education<p>Computers and Information Systems - B.S</p></span>
                     <button>edit</button>
                 </div>
                 <button type='submit'>save changes</button>
@@ -51,4 +51,4 @@ class Informations extends Component {
         );
     }
 }
-export default Informations;
+export default Information;

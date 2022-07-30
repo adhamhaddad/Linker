@@ -9,11 +9,11 @@ class Footer extends Component {
     render() {
         return (
             <footer>
-                <p>
+                <small>
                     copyrights&copy; 2020 - {this.currentYear()}
                     <a href="https://www.linkedin.com/in/adhamashraf/" target='_blank' rel='noreferrer'>adham ashraf.</a>
                     all rights reserved.
-                </p>
+                </small>
             </footer>
         )
     }
