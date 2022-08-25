@@ -1,15 +1,15 @@
-import { client } from "../config";
+import { database } from "../database";
 import Reactions from "../types/Reactions.Types";
 
 class Reaction {
     async createReactions(r: Reactions): Promise<Reactions> {
         try {
-            const connection = await client.connect();
+            const connection = await database.connect();
             const sql = 'INSERT INTO reactions (likes, comments, shares) VALUES ($1, $2, $3) RETURNING *';
             const result = await connection.query(sql, [
                 r.likes,
                 r.comments,
-                r.shares,
+                r.shares
             ]);
             connection.release();
             return result.rows[0];
@@ -20,7 +20,7 @@ class Reaction {
 
     async getAllReactions(): Promise<Reactions[]> {
         try {
-            const connection = await client.connect();
+            const connection = await database.connect();
             const sql = 'SELECT * FROM reactions';
             const result = await connection.query(sql);
             connection.release();
@@ -30,9 +30,9 @@ class Reaction {
         }
     }
 
-    async getReactions(id: string): Promise<Reactions[]> {
+    async getReactions(id: string): Promise<Reactions> {
         try {
-            const connection = await client.connect();
+            const connection = await database.connect();
             const sql = 'SELECT * FROM reactions WHERE id=($1)';
             const result = await connection.query(sql, [id]);
             connection.release();
@@ -42,9 +42,9 @@ class Reaction {
         }
     }
 
-    async updateReactions(r: Reactions, id: string): Promise<Reactions[]> {
+    async updateReactions(id: string, r: Reactions): Promise<Reactions> {
         try {
-            const connection = await client.connect();
+            const connection = await database.connect();
             const sql = 'UPDATE reactions SET likes=$2, comments=$3, shares=$4 WHERE id=($1) RETURNING *';
             const result = await connection.query(sql, [
                 id,
@@ -59,9 +59,9 @@ class Reaction {
         }
     }
 
-    async deleteReactions(id: string): Promise<Reactions[]> {
+    async deleteReactions(id: string): Promise<Reactions> {
         try {
-            const connection = await client.connect();
+            const connection = await database.connect();
             const sql = 'DELETE FROM reactions * WHERE id=($1) RETURNING *';
             const result = await connection.query(sql, [id]);
             connection.release();

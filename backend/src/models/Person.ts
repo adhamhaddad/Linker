@@ -1,21 +1,31 @@
-import { client } from "../config";
+import { database } from "../database";
 import User from "../types/User.Types";
+import bcrypt from 'bcrypt';
+import { config } from '../config';
 
+const hash = (pass: string) => bcrypt.hashSync(pass + config.peper, config.salt);
+const getDate = () => {
+    const date = new Date();
+    const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
+    const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
+    const suffix = hour >= 12 ? "PM":"AM";
+    return `${day}/${month + 1}/${year} - ${hour}:${minutes}:${seconds} ${suffix}`
+}
 class Person {
     async createUser(u: User): Promise<User> {
         try {
-            const connection = await client.connect();
-            const sql = 'INSERT INTO person (fname, lname, gender, birthdate, username, email, phone, passwd, joined) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *';
+            const connection = await database.connect();
+            const sql = 'INSERT INTO person (fname, lname, username, email, phone, password, gender, birthday, joined) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *';
             const result = await connection.query(sql, [
-                u.fname,
-                u.lname,
-                u.gender,
-                u.birthdate,
-                u.username,
-                u.email,
+                u.fname.toLocaleLowerCase(),
+                u.lname.toLocaleLowerCase(),
+                u.username.toLocaleLowerCase(),
+                u.email.toLocaleLowerCase(),
                 u.phone,
-                u.passwd,
-                u.joined,
+                hash(u.password),
+                u.gender.toLocaleLowerCase(),
+                u.birthday,
+                getDate()
             ]);
             connection.release();
             return result.rows[0];
@@ -26,7 +36,7 @@ class Person {
 
     async getAllUsers(): Promise<User[]> {
         try {
-            const connection = await client.connect();
+            const connection = await database.connect();
             const sql = 'SELECT * FROM person';
             const result = await connection.query(sql);
             connection.release();
@@ -36,9 +46,9 @@ class Person {
         }
     }
 
-    async getUser(id: string): Promise<User[]> {
+    async getUser(id: string): Promise<User> {
         try {
-            const connection = await client.connect();
+            const connection = await database.connect();
             const sql = 'SELECT * FROM person WHERE id=($1)';
             const result = await connection.query(sql, [id]);
             connection.release();
@@ -48,20 +58,20 @@ class Person {
         }
     }
 
-    async updateUser(u: User, username: string): Promise<User[]> {
+    async updateUser(u: User, username: string): Promise<User> {
         try {
-            const connection = await client.connect();
-            const sql = 'UPDATE person SET fname=$2, lname=$3, gender=$4, birthdate=$5, username=$6, email=$7, phone=$8, passwd=$9 WHERE username=$($1) RETURNING *';
+            const connection = await database.connect();
+            const sql = 'UPDATE person SET fname=$2, lname=$3, username=$4, email=$5, phone=$6, password=$7, gender=$8, birthday=$9 WHERE username=$($1) RETURNING *';
             const result = await connection.query(sql, [
                 username,
                 u.fname,
                 u.lname,
-                u.gender,
-                u.birthdate,
                 u.username,
                 u.email,
                 u.phone,
-                u.passwd,
+                hash(u.password),
+                u.gender,
+                u.birthday
             ]);
             connection.release();
             return result.rows[0];
@@ -70,15 +80,39 @@ class Person {
         }
     }
 
-    async deleteUser(id: string): Promise<User[]> {
+    async deleteUser(id: string): Promise<User> {
         try {
-            const connection = await client.connect();
+            const connection = await database.connect();
             const sql = 'DELETE FROM person WHERE id=($1)';
             const result = await connection.query(sql, [id]);
             connection.release();
             return result.rows[0];
         } catch (err) {
             throw new Error(`Could not create user. Error ${(err as Error).message}`);
+        }
+    }
+
+    async authenticate (username: string, password: string): Promise<User | null> {
+        try {
+            const connection = await database.connect();
+            const sql = 'SELECT password FROM person WHERE username=($1)';
+            const result = await connection.query(sql, [username]);
+            
+            if (result.rows.length) {
+                const db_pass = result.rows[0].password;
+                const checkPass = bcrypt.compareSync(password + config.peper, db_pass)
+
+                if (checkPass) {
+                    const sql = 'SELECT id, fname, lname, username FROM person WHERE username=($1)';
+                    const result = await connection.query(sql, [username]);
+                    connection.release();
+                    return result.rows[0];
+                }
+            }
+            connection.release();
+            return null;
+        } catch (err) {
+            throw new Error(`Could not authenticate the user. Error ${(err as Error).message}`);
         }
     }
 }

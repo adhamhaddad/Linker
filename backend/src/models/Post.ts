@@ -1,14 +1,14 @@
-import { client } from "../config";
+import { database } from "../database";
 import Posts from "../types/Posts.Types";
 
 class Post {
     async createPost(p: Posts): Promise<Posts> {
         try {
-            const connection = await client.connect();
+            const connection = await database.connect();
             const sql = 'INSERT INTO posts (timedate, content) VALUES ($1, $2) RETURNING *';
             const result = await connection.query(sql, [
                 p.timedate,
-                p.content,
+                p.content
             ]);
             connection.release();
             return result.rows[0];
@@ -19,7 +19,7 @@ class Post {
 
     async getAllPosts(): Promise<Posts[]> {
         try {
-            const connection = await client.connect();
+            const connection = await database.connect();
             const sql = 'SELECT * FROM posts';
             const result = await connection.query(sql);
             connection.release();
@@ -29,9 +29,9 @@ class Post {
         }
     }
 
-    async getPost(id: string): Promise<Posts[]> {
+    async getPost(id: string): Promise<Posts> {
         try {
-            const connection = await client.connect();
+            const connection = await database.connect();
             const sql = 'SELECT * FROM posts WHERE id=($1)';
             const result = await connection.query(sql, [id]);
             connection.release();
@@ -41,9 +41,9 @@ class Post {
         }
     }
 
-    async updatePost(p: Posts, id: string): Promise<Posts[]> {
+    async updatePost(id: string, p: Posts): Promise<Posts> {
         try {
-            const connection = await client.connect();
+            const connection = await database.connect();
             const sql = 'UPDATE posts SET content=$2 WHERE id=($1) RETURNING *';
             const result = await connection.query(sql, [id, p.content]);
             connection.release();
@@ -53,9 +53,9 @@ class Post {
         }
     }
 
-    async deletePost(id: string): Promise<Posts[]> {
+    async deletePost(id: string): Promise<Posts> {
         try {
-            const connection = await client.connect();
+            const connection = await database.connect();
             const sql = 'DELETE FROM posts * WHERE id=($1) RETURNING *';
             const result = await connection.query(sql, [id]);
             connection.release();

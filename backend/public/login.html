@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+<body>
+    <div class='container'>
+        <div class='switch-box'>
+            <a href="/login">
+                <span>log in</span>
+            </a>
+            <a href="/register">
+                <span>register</span>
+            </a>
+        </div>
+        <ul class='links'>
+            <li>
+                <a href="#" rel='noreferrer'>
+                    <i class='fa-brands fa-facebook'></i>
+                </a>
+            </li><li>
+                <a href="#" rel='noreferrer'>
+                    <i class='fa-brands fa-twitter'></i>
+                </a>
+            </li><li>
+                <a href="#" rel='noreferrer'>
+                    <i class='fa-brands fa-google'></i>
+                </a>
+            </li>
+        </ul>
+        <form action="/authenticate" method="POST" autoComplete="on">
+            <input type="text" placeholder='User Name' id='user' title='User Name' name="username" required/>
+            <input type="password" placeholder='Password' minLength="8" maxLength="18" id='pass' title='Password' name="password" required/>
+            <label class="checkbox">
+                <input type="checkbox" id='check' name="check"/>
+                remember password
+            </label>
+            <button type='submit'>log in</button>
+        </form>
+    </div>
+</body>
+</html>

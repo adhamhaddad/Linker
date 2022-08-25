@@ -1,16 +1,16 @@
-import { client } from "../config";
-import Informations from "../types/Informations.Types";
+import { database } from "../database";
+import Info from "../types/Information.Types";
 
 class Information {
-    async createInfo(i: Informations): Promise<Informations> {
+    async createInfo(i: Info): Promise<Info> {
         try {
-            const connection = await client.connect();
-            const sql = 'INSERT INTO informations (work, relation, education, lives) VALUES ($1, $2, $3, $4) RETURNING *';
+            const connection = await database.connect();
+            const sql = 'INSERT INTO information (work, relation, education, lives) VALUES ($1, $2, $3, $4) RETURNING *';
             const result = await connection.query(sql, [
                 i.work,
                 i.relation,
                 i.education,
-                i.lives,
+                i.lives
             ]);
             connection.release();
             return result.rows[0];
@@ -19,22 +19,22 @@ class Information {
         }
     }
 
-    async getAllInformations(): Promise<Informations[]> {
+    async getAllInfo(): Promise<Info[]> {
         try {
-            const connection = await client.connect();
-            const sql = 'SELECT * FROM informations';
+            const connection = await database.connect();
+            const sql = 'SELECT * FROM information';
             const result = await connection.query(sql);
             connection.release();
             return result.rows;
         } catch (err) {
-            throw new Error(`Could not get all informations. Error ${(err as Error).message}`);
+            throw new Error(`Could not get all information. Error ${(err as Error).message}`);
         }
     }
 
-    async getInfo(id: string): Promise<Informations[]> {
+    async getInfo(id: string): Promise<Info> {
         try {
-            const connection = await client.connect();
-            const sql = 'SELECT * FROM informations WHERE id=($1)';
+            const connection = await database.connect();
+            const sql = 'SELECT * FROM information WHERE id=($1)';
             const result = await connection.query(sql, [id]);
             connection.release();
             return result.rows[0];
@@ -43,16 +43,16 @@ class Information {
         }
     }
 
-    async updateInfo(i: Informations, id: string): Promise<Informations[]> {
+    async updateInfo(id: string, i: Info): Promise<Info> {
         try {
-            const connection = await client.connect();
-            const sql = 'UPDATE informations SET work=$2, relation=$3, education=$4, lives=$5 WHERE id=($1) RETURNING *';
+            const connection = await database.connect();
+            const sql = 'UPDATE information SET work=$2, relation=$3, education=$4, lives=$5 WHERE id=($1) RETURNING *';
             const result = await connection.query(sql, [
                 id,
                 i.work,
                 i.relation,
                 i.education,
-                i.lives,
+                i.lives
             ]);
             connection.release();
             return result.rows[0];
@@ -61,10 +61,10 @@ class Information {
         }
     }
 
-    async deletePost(id: string): Promise<Informations[]> {
+    async deleteInfo(id: string): Promise<Info> {
         try {
-            const connection = await client.connect();
-            const sql = 'DELETE FROM informations * WHERE id=($1) RETURNING *';
+            const connection = await database.connect();
+            const sql = 'DELETE FROM information * WHERE id=($1) RETURNING *';
             const result = await connection.query(sql, [id]);
             connection.release();
             return result.rows[0];
@@ -73,4 +73,5 @@ class Information {
         }
     }
 }
+
 export default Information;

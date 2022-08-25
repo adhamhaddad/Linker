@@ -1,8 +1,8 @@
-type Informations = {
+type Info = {
     work: string;
     relation: string;
     education: string;
     lives: string;
 }
 
-export default Informations;
+export default Info;
