@@ -1,5 +1,6 @@
-import Reaction from "../models/Reactions";
 import { Request, Response, NextFunction, Application } from "express";
+import Reaction from "../models/Reactions";
+import token from '../middlewares/token';
 
 const reaction = new Reaction();
 
@@ -84,10 +85,10 @@ const deleteReactions = async (req: Request, res: Response) => {
 }
 
 const reactions_handler_routes = (app: Application, logger: NextFunction) => {
-    app.post('/reactions', logger, createReactions)
-    app.get('/reactions', logger, getAllReactions)
-    app.get('/reactions/:id', logger, getReactions)
-    app.patch('/reactions/:id', logger, updateReactions)
-    app.delete('/reactions/:id', logger, deleteReactions)
+    app.post('/reactions', logger, token, createReactions)
+    app.get('/reactions', logger, token, getAllReactions)
+    app.get('/reactions/:id', logger, token, getReactions)
+    app.patch('/reactions/:id', logger, token, updateReactions)
+    app.delete('/reactions/:id', logger, token, deleteReactions)
 }
 export default reactions_handler_routes;

@@ -1,17 +1,24 @@
 import { Request, Response, NextFunction, Application } from "express";
+import jwt from "jsonwebtoken";
 import Person from "../models/Person";
+import config from '../config';
+import token from '../middlewares/token';
 
 const user = new Person();
 
 const createUser = async (req: Request, res: Response) => {
     try {
-        await user.createUser(req.body);
-        /*res.status(201).json({
+        const response = await user.createUser(req.body);
+        const token = jwt.sign(response, config.token as string);
+
+        res
+        .status(201)
+        .json({
             status: true,
-            data: response,
+            data: {response, token},
             message: 'User created successfully!'
-        })*/
-        res.redirect('http://localhost:3000/login')
+        })
+        .redirect('http://localhost:3000/login')
     } catch (err) {
         res.status(400).json({
             status: false,
@@ -112,9 +119,9 @@ const authenticate = async (req: Request, res: Response) => {
 const user_handler_routes = (app: Application, logger: NextFunction) => {
     app.post('/user', logger, createUser)
     app.get('/user', logger, getAllUsers)
-    app.get('/user/:id', logger, getUser)
-    app.patch('/user/:id', logger, updateUser)
-    app.delete('/user/:id', logger, deleteUser)
+    app.get('/user/:id', logger, token, getUser)
+    app.patch('/user/:id', logger, token, updateUser)
+    app.delete('/user/:id', logger, token, deleteUser)
     app.post('/authenticate', logger, authenticate)
 }
 export default user_handler_routes;

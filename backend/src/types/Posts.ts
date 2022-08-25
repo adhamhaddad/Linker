@@ -1,5 +1,5 @@
 type Posts = {
-    timedate: string;
+    timedate: Date;
     content: string;
 }
 export default Posts;

@@ -6,7 +6,7 @@ type User = {
     phone: string;
     password: string;
     gender: string;
-    birthday: string;
+    birthday: Date;
     joined: string;
 }
 export default User;

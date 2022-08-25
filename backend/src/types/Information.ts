@@ -4,5 +4,4 @@ type Info = {
     education: string;
     lives: string;
 }
-
 export default Info;

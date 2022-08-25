@@ -1,5 +1,5 @@
 import { database } from "../database";
-import Posts from "../types/Posts.Types";
+import Posts from "../types/Posts";
 
 class Post {
     async createPost(p: Posts): Promise<Posts> {

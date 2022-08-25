@@ -7,6 +7,6 @@ CREATE TABLE person (
     phone VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     gender VARCHAR(255) NOT NULL,
-    birthday VARCHAR(255) NOT NULL,
+    birthday Date,
     joined text NOT NULL
 );

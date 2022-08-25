@@ -1,7 +1,7 @@
 import { database } from "../database";
-import User from "../types/User.Types";
+import User from "../types/User";
 import bcrypt from 'bcrypt';
-import { config } from '../config';
+import config from '../config';
 
 const hash = (pass: string) => bcrypt.hashSync(pass + config.peper, config.salt);
 const getDate = () => {
@@ -96,7 +96,7 @@ class Person {
         try {
             const connection = await database.connect();
             const sql = 'SELECT password FROM person WHERE username=($1)';
-            const result = await connection.query(sql, [username]);
+            const result = await connection.query(sql, [username.toLocaleLowerCase()]);
             
             if (result.rows.length) {
                 const db_pass = result.rows[0].password;
@@ -104,7 +104,7 @@ class Person {
 
                 if (checkPass) {
                     const sql = 'SELECT id, fname, lname, username FROM person WHERE username=($1)';
-                    const result = await connection.query(sql, [username]);
+                    const result = await connection.query(sql, [username.toLocaleLowerCase()]);
                     connection.release();
                     return result.rows[0];
                 }

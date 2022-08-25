@@ -1,5 +1,5 @@
 import { database } from "../database";
-import Info from "../types/Information.Types";
+import Info from "../types/Information";
 
 class Information {
     async createInfo(i: Info): Promise<Info> {

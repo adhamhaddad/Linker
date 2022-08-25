@@ -1,5 +1,6 @@
 CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
-    timedate VARCHAR(255),
-    content VARCHAR(255)
+    timedate Date NOT NULL,
+    content text,
+    user_id BIGINT REFERENCES person(id)
 );

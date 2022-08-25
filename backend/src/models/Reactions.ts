@@ -1,5 +1,5 @@
 import { database } from "../database";
-import Reactions from "../types/Reactions.Types";
+import Reactions from "../types/Reactions";
 
 class Reaction {
     async createReactions(r: Reactions): Promise<Reactions> {
