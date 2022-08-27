@@ -4,70 +4,48 @@ import img from '../../Images/profile.jpg';
 import Post from "../Post/Post";
 
 function Profile() {
+    const [user, setUser] = React.useState({})
+    
     const [information, setInfomation] = React.useState({
-        img: img,
-        story: `Hi, I am Adham. I am a student at High Institute for Computers & Management Information Systems started in 2019 and I will graduate in 2023. I started my Full-Stack journey in 2019 and built many projects using many languages. I also joined Udacity Nanodegree programs and got certified as a Professional Front End Web Developer. I worked too hard to achieve this progress, it's my passion and I need an opportunity to show myself.`,
-        work: 'The Sparks Foundation',
-        relation: 'Engaged',
-        college: 'Information Systems',
-        location: 'Giza, Egypt'
+        img: img
     })
-
-    React.useEffect(function() {
+    const [posts, setPosts] = React.useState([])
+    
+    React.useEffect(() => {
         // User
         fetch('http://localhost:3000/user/1')
         .then(res => res.json())
-        .then(data => {
+        .then(user => setUser(user.data))
+        .catch(err => console.log(err.message));
+
+        // Information
+        fetch('http://localhost:3000/information/1')
+        .then(res => res.json())
+        .then(info => {
             setInfomation(prev => {
                 return {
                     ...prev,
-                    fname: data.data.fname,
-                    lname: data.data.lname
+                    work: info.data.work,
+                    relation: info.data.relation,
+                    education: info.data.education,
+                    lives: info.data.lives,
+                    story: info.data.story
                 }
             })
         })
         .catch(err => console.log(err.message));
 
-        // Information
-        /*
-        fetch('http://localhost:3000/information/1')
-        .then(res => res.json())
-        .then(data => {
-            this.setState({
-                ...this.state,
-                profile: data.data.profile,
-                story: data.data.story,
-                work: data.data.work,
-                relation: data.data.relation,
-                college: data.data.college,
-                phone: data.data.phone,
-                telegram: data.data.telegram,
-                linkedin: data.data.linkedin,
-                instagram: data.data.instagram,
-                twitter: data.data.twitter,
-                facebook: data.data.facebook
-            })
-        })
-        .catch(err => console.log(err.message));
-        */
         // Posts
-        const posts = fetch('http://localhost:3000/posts')
+        fetch('http://localhost:3000/posts')
         .then(res => res.json())
-        .then(post => {
-            console.log(post.data)
-            return post.data;
-        })
+        .then(post => setPosts(post.data))
         .catch(err => console.log(err.message))
-        console.log(posts);
-    })
-    /*
-    const post = posts.map(post => {
+    }, []);
+
+    const userPosts = posts.map(post => {
         const time = post.timedate.split(' - ')[1];
-        console.log(post)
-        return <Post fname={this.state.fname} lname={this.state.lname} profile={this.state.img} datetime={time} content={post.content}/>
+        return <Post fname={user.fname} lname={user.lname} profile={information.img} timedate={time} content={post.content} key={post.id}/>
     })
-    */
-    //If we have 4 posts. so will map on post table and each post in the table will return its own data => [0: {data: {datetime, content}}, 1: {}, 2: {}]
     const openProfileFullSize = () => {document.querySelector('#fullImage').style.display = "block"}
     const closeProfileFullSize = () => {document.querySelector('#fullImage').style.display = "none"}
     return (
@@ -93,11 +71,11 @@ function Profile() {
                             </li>
                             <li>
                                 <i className='fa-solid fa-graduation-cap fa-1x'></i>
-                                <span>College {information.college}</span>
+                                <span>College {information.education}</span>
                             </li>
                             <li>
                                 <i className='fa-solid fa-home fa-1x'></i>
-                                <span>lives in {information.location}</span>
+                                <span>lives in {information.lives}</span>
                             </li>
                         </ul>
                     </div>
@@ -152,6 +130,7 @@ function Profile() {
                 </div>
             </div>
             <div className='container-body'>
+                {userPosts}
             </div>
         </div>
     )

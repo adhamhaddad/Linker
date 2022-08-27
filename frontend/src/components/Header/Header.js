@@ -3,11 +3,6 @@ import './Header.css';
 import logo from '../../Images/comp.png';
 
 class Header extends Component {
-    
-    hhandleFocus = () => {
-        
-    }
-    //!
     render() {
         return (
             <nav>
@@ -31,18 +26,18 @@ class Header extends Component {
                             <span>home</span>
                         </a>
                     </li><li>
-                        <a href='/profile-user' title='Profile' rel='noreferrer'>
+                        <a href='/profile' title='Profile' rel='noreferrer'>
                             <i className='fa-solid fa-user-circle'></i>
                             <span>profile</span>
                         </a>
                     </li><li className='msg'>
-                        <a href='/message' title='Messages' rel='noreferrer'>
+                        <a href='/messages' title='Messages' rel='noreferrer'>
                             <i className='fa-solid fa-comments msg'>
                                 <span></span>
                             </i>
                             <span>messages</span>
                             <div className='all-msg'>
-                                <iframe src="/message-port" title='Message' frameBorder="0" className='msg-iframe'></iframe>
+                                <iframe src="#" title='Message' frameBorder="0" className='msg-iframe'></iframe>
                             </div>
                         </a>
                     </li><li className='notifications'>

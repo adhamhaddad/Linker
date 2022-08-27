@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Notifications.css';
+import './Notification.css';
 import mrym from '../../Images/mrym.png';
 import profile from '../../Images/profile.jpg';
 import beso from '../../Images/beso1.jpg';

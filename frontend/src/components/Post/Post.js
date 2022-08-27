@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import './Post.css';
 class Post extends Component {
     postTimeClac = () => {
-        const getTime = this.state.timedate;
-        const houres = (this.state.timedate > 60 ? `${String(getTime).charAt(0)}h` : `${getTime}m`);
+        const getTime = this.props.timedate;
+        const houres = (this.props.timedate > 60 ? `${String(getTime).charAt(0)}h` : `${getTime}m`);
         return houres;
     }
     render() {
