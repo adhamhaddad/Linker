@@ -8,11 +8,10 @@ import posts_controller_routes from './controllers/Posts';
 import reactions_controller_routes from "./controllers/Reactions";
 import server_controller_routes from "./controllers/Server";
 import config from './config';
-import path from 'path';
 import cors from 'cors';
 // Express App
 const app: Application = express();
-export const port = process.env.PORT || 8080;
+export const port = config.port || 8080;
 
 const corsOptions = {
     origin: 'http://localhost:4000',
@@ -29,7 +28,6 @@ app.use(helmet());
 //     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 //     message: 'Too many requests. try again with different email or password after 30 seconds'
 // }))
-// app.use(express.static(path.resolve(__dirname, '../frontend/build', 'index.html')));
 app.use(cors(corsOptions))
 
 // Express Handler

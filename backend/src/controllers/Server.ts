@@ -55,13 +55,13 @@ const redirectLogin = (_req: Request, res: Response) => {
 const server_controller_routes = (app: Application, logger: NextFunction) => {
     app.get('/register', logger, register);
     app.get('/login', logger, login);
-    app.get('/', logger, token, main);
-    app.get('/home', logger, token, home);
-    app.get('/profile', logger, token, profile);
-    app.get('/messages', logger, token, messages);
-    app.get('/notifications', logger, token, notifications);
-    app.get('/about', logger, token, about)
-    app.get('/contact', logger, token, contact)
+    app.get('/', logger, main);
+    app.get('/home', logger, home);
+    app.get('/profile', logger, profile);
+    app.get('/messages', logger, messages);
+    app.get('/notifications', logger, notifications);
+    app.get('/about', logger, about)
+    app.get('/contact', logger, contact)
 
     app.post('/login', logger, )
     app.post('/register', logger, )

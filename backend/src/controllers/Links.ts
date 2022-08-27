@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction, Application } from 'express';
-import Information from '../models/Information';
+import Links from '../models/Links';
 
-const info = new Information();
+const link = new Links();
 
-const createInfo = async (req: Request, res: Response) => {
+const uploadLink = async (req: Request, res: Response) => {
     try {
-        const response = await info.createInfo(req.body, req.params.id);
+        const response = await link.uploadLink(req.body, req.params.id);
         res.status(201).json({
             status: true,
-            data: { ...response },
-            message: 'information created successfully!'
+            data: {...response},
+            message: 'Links uploaded successfully!'
         })
     } catch (err) {
         res.status(401).json({
@@ -19,13 +19,13 @@ const createInfo = async (req: Request, res: Response) => {
     }
 }
 
-const getInfo = async (req: Request, res: Response) => {
+const getLink = async (req: Request, res: Response) => {
     try {
-        const response = await info.getInfo(req.params.id);
+        const response = await link.getLink(req.params.id);
         res.status(200).json({
             status: true,
             data: { ...response },
-            message: 'Retrieved the information successfully!'
+            message: 'Retrieved the links successfully!'
         })
     } catch (err) {
         res.status(401).json({
@@ -35,13 +35,13 @@ const getInfo = async (req: Request, res: Response) => {
     }
 }
 
-const updateInfo = async (req: Request, res: Response) => {
+const updateLink = async (req: Request, res: Response) => {
     try {
-        const response = await info.updateInfo(req.params.id, req.body);
+        const response = await link.updateLink(req.params.id, req.body);
         res.status(201).json({
             status: true,
             data: { ...response },
-            message: 'Information updated successfully!'
+            message: 'Links updated successfully!'
         })
     } catch (err) {
         res.status(401).json({
@@ -51,12 +51,12 @@ const updateInfo = async (req: Request, res: Response) => {
     }
 }
 
-const deleteInfo = async (req: Request, res: Response) => {
+const deleteLink = async (req: Request, res: Response) => {
     try {
-        await info.deleteInfo(req.params.id);
+        await link.deleteLink(req.params.id);
         res.status(200).json({
             status: true,
-            message: 'Information deleted successfully!'
+            message: 'Links deleted successfully!'
         })
     } catch (err) {
         res.status(401).json({
@@ -67,9 +67,9 @@ const deleteInfo = async (req: Request, res: Response) => {
 }
 
 const information_controller_routes = (app: Application, logger: NextFunction) => {
-    app.post('/user/:id/information', logger, createInfo)
-    app.get('/user/:id/information', logger, getInfo)
-    app.patch('/user/:id/information', logger, updateInfo)
-    app.delete('/user/:id/information', logger, deleteInfo)
+    app.post('/user/:id/links', logger, uploadLink)
+    app.get('/user/:id/links', logger, getLink)
+    app.patch('/user/:id/links', logger, updateLink)
+    app.delete('/user/:id/links', logger, deleteLink)
 }
 export default information_controller_routes;

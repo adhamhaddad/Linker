@@ -1,4 +1,4 @@
-import { database } from "../database";
+import database from "../database";
 import Posts from "../types/Posts";
 
 const getDate = () => {
@@ -9,21 +9,23 @@ const getDate = () => {
     return `${day}/${month + 1}/${year} - ${hour}:${minutes}:${seconds} ${suffix}`
 }
 class Post {
-    async createPost(p: Posts): Promise<Posts> {
+    async createPost(p: Posts, user_id: string): Promise<Posts> {
         try {
             const connection = await database.connect();
-            const sql = 'INSERT INTO posts (timedate, content) VALUES ($1, $2) RETURNING *';
+            const sql = 'INSERT INTO posts (timedate, content, user_id) VALUES ($1, $2, $3) RETURNING *';
             const result = await connection.query(sql, [
                 getDate(),
-                p.content
+                p.content,
+                user_id
             ]);
             connection.release();
             return result.rows[0];
         } catch (err) {
-            throw new Error(`Could not create Post. Error ${(err as Error).message}`);
+            throw new Error(`Could not create the post. Error ${(err as Error).message}`);
         }
     }
 
+    //! This for home page - newsfeed. not for user
     async getAllPosts(): Promise<Posts[]> {
         try {
             const connection = await database.connect();
@@ -32,43 +34,43 @@ class Post {
             connection.release();
             return result.rows;
         } catch (err) {
-            throw new Error(`Could get all Posts. Error ${(err as Error).message}`);
+            throw new Error(`Could get all the post. Error ${(err as Error).message}`);
         }
     }
 
-    async getPost(id: string): Promise<Posts> {
+    async getPost(user_id: string): Promise<Posts> {
         try {
             const connection = await database.connect();
-            const sql = 'SELECT * FROM posts WHERE id=($1)';
-            const result = await connection.query(sql, [id]);
+            const sql = 'SELECT * FROM posts WHERE user_id=($1)';
+            const result = await connection.query(sql, [user_id]);
             connection.release();
             return result.rows[0];
         } catch (err) {
-            throw new Error(`Could not get Post. Error ${(err as Error).message}`);
+            throw new Error(`Could not get the post. Error ${(err as Error).message}`);
         }
     }
 
-    async updatePost(id: string, p: Posts): Promise<Posts> {
+    async updatePost(user_id: string, p: Posts): Promise<Posts> {
         try {
             const connection = await database.connect();
-            const sql = 'UPDATE posts SET content=$2 WHERE id=($1) RETURNING *';
-            const result = await connection.query(sql, [id, p.content]);
+            const sql = 'UPDATE posts SET content=$2 WHERE user_id=($1) RETURNING *';
+            const result = await connection.query(sql, [user_id, p.content]);
             connection.release();
             return result.rows[0];
         } catch (err) {
-            throw new Error(`Could not update Post. Error ${(err as Error).message}`);
+            throw new Error(`Could not update the post. Error ${(err as Error).message}`);
         }
     }
 
-    async deletePost(id: string): Promise<Posts> {
+    async deletePost(user_id: string): Promise<Posts> {
         try {
             const connection = await database.connect();
-            const sql = 'DELETE FROM posts * WHERE id=($1) RETURNING *';
-            const result = await connection.query(sql, [id]);
+            const sql = 'DELETE FROM posts * WHERE user_id=($1)';
+            const result = await connection.query(sql, [user_id]);
             connection.release();
             return result.rows[0];
         } catch (err) {
-            throw new Error(`Could not create Post. Error ${(err as Error).message}`);
+            throw new Error(`Could not delete the post. Error ${(err as Error).message}`);
         }
     }
 }

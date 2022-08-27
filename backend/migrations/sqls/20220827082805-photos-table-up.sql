@@ -1,6 +1,6 @@
-CREATE TABLE posts (
+CREATE TABLE photos (
     id SERIAL PRIMARY KEY,
-    timedate text NOT NULL,
-    content text,
+    cover text,
+    profile text,
     user_id BIGINT REFERENCES person(id)
 );

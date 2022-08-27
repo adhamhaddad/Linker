@@ -1,15 +1,16 @@
-import { database } from "../database";
+import database from "../database";
 import Reactions from "../types/Reactions";
 
 class Reaction {
-    async createReactions(r: Reactions): Promise<Reactions> {
+    async createReactions(r: Reactions, user_id: string): Promise<Reactions> {
         try {
             const connection = await database.connect();
-            const sql = 'INSERT INTO reactions (likes, comments, shares) VALUES ($1, $2, $3) RETURNING *';
+            const sql = 'INSERT INTO reactions (likes, comments, shares, user_id) VALUES ($1, $2, $3, $4) RETURNING *';
             const result = await connection.query(sql, [
                 r.likes,
                 r.comments,
-                r.shares
+                r.shares,
+                user_id
             ]);
             connection.release();
             return result.rows[0];
@@ -18,6 +19,7 @@ class Reaction {
         }
     }
 
+    //! This for get the count of all reacts on the post - This useless now
     async getAllReactions(): Promise<Reactions[]> {
         try {
             const connection = await database.connect();
@@ -30,11 +32,11 @@ class Reaction {
         }
     }
 
-    async getReactions(id: string): Promise<Reactions> {
+    async getReactions(user_id: string): Promise<Reactions> {
         try {
             const connection = await database.connect();
-            const sql = 'SELECT * FROM reactions WHERE id=($1)';
-            const result = await connection.query(sql, [id]);
+            const sql = 'SELECT * FROM reactions WHERE user_id=($1)';
+            const result = await connection.query(sql, [user_id]);
             connection.release();
             return result.rows[0];
         } catch (err) {
@@ -42,12 +44,12 @@ class Reaction {
         }
     }
 
-    async updateReactions(id: string, r: Reactions): Promise<Reactions> {
+    async updateReactions(user_id: string, r: Reactions): Promise<Reactions> {
         try {
             const connection = await database.connect();
-            const sql = 'UPDATE reactions SET likes=$2, comments=$3, shares=$4 WHERE id=($1) RETURNING *';
+            const sql = 'UPDATE reactions SET likes=$2, comments=$3, shares=$4 WHERE user_id=($1) RETURNING *';
             const result = await connection.query(sql, [
-                id,
+                user_id,
                 r.likes,
                 r.comments,
                 r.shares
@@ -59,11 +61,11 @@ class Reaction {
         }
     }
 
-    async deleteReactions(id: string): Promise<Reactions> {
+    async deleteReactions(user_id: string): Promise<Reactions> {
         try {
             const connection = await database.connect();
-            const sql = 'DELETE FROM reactions * WHERE id=($1) RETURNING *';
-            const result = await connection.query(sql, [id]);
+            const sql = 'DELETE FROM reactions WHERE user_id=($1)'
+            const result = await connection.query(sql, [user_id]);
             connection.release();
             return result.rows[0];
         } catch (err) {

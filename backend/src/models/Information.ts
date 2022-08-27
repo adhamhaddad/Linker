@@ -1,17 +1,22 @@
-import { database } from "../database";
+import database from "../database";
 import Info from "../types/Information";
 
 class Information {
-    async createInfo(i: Info): Promise<Info> {
+    async createInfo(i: Info, user_id: string): Promise<Info> {
         try {
             const connection = await database.connect();
-            const sql = 'INSERT INTO information (work, relation, education, lives, story) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+            const sql = 'INSERT INTO information (fname, lname, phone, birthday, work, relation, education, lives, story, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *';
             const result = await connection.query(sql, [
-                i.work,
-                i.relation,
-                i.education,
-                i.lives,
-                i.story
+                i.fname.toLowerCase(),
+                i.lname.toLowerCase(),
+                i.phone,
+                i.birthday,
+                i.work.toLowerCase(),
+                i.relation.toLowerCase(),
+                i.education.toLowerCase(),
+                i.lives.toLowerCase(),
+                i.story.toLowerCase(),
+                user_id
             ]);
             connection.release();
             return result.rows[0];
@@ -20,23 +25,11 @@ class Information {
         }
     }
 
-    async getAllInfo(): Promise<Info[]> {
+    async getInfo(user_id: string): Promise<Info> {
         try {
             const connection = await database.connect();
-            const sql = 'SELECT * FROM information';
-            const result = await connection.query(sql);
-            connection.release();
-            return result.rows;
-        } catch (err) {
-            throw new Error(`Could not get all information. Error ${(err as Error).message}`);
-        }
-    }
-
-    async getInfo(id: string): Promise<Info> {
-        try {
-            const connection = await database.connect();
-            const sql = 'SELECT * FROM information WHERE id=($1)';
-            const result = await connection.query(sql, [id]);
+            const sql = 'SELECT * FROM information WHERE user_id=($1)';
+            const result = await connection.query(sql, [user_id]);
             connection.release();
             return result.rows[0];
         } catch (err) {
@@ -44,17 +37,21 @@ class Information {
         }
     }
 
-    async updateInfo(id: string, i: Info): Promise<Info> {
+    async updateInfo(user_id: string, i: Info): Promise<Info> {
         try {
             const connection = await database.connect();
-            const sql = 'UPDATE information SET work=$2, relation=$3, education=$4, lives=$5, story=$6 WHERE id=($1) RETURNING *';
+            const sql = 'UPDATE information SET fname=$2, lname=$3, phone=$4, birthday=$5, work=$6, relation=$7, education=$8, lives=$9, story=$10 WHERE user_id=($1) RETURNING *';
             const result = await connection.query(sql, [
-                id,
-                i.work,
-                i.relation,
-                i.education,
-                i.lives,
-                i.story
+                user_id,
+                i.fname.toLowerCase(),
+                i.lname.toLowerCase(),
+                i.phone,
+                i.birthday,
+                i.work.toLowerCase(),
+                i.relation.toLowerCase(),
+                i.education.toLowerCase(),
+                i.lives.toLowerCase(),
+                i.story.toLowerCase()
             ]);
             connection.release();
             return result.rows[0];
@@ -63,15 +60,15 @@ class Information {
         }
     }
 
-    async deleteInfo(id: string): Promise<Info> {
+    async deleteInfo(user_id: string): Promise<Info> {
         try {
             const connection = await database.connect();
-            const sql = 'DELETE FROM information * WHERE id=($1)';
-            const result = await connection.query(sql, [id]);
+            const sql = 'DELETE FROM information * WHERE user_id=($1)';
+            const result = await connection.query(sql, [user_id]);
             connection.release();
             return result.rows[0];
         } catch (err) {
-            throw new Error(`Could not create Info. Error ${(err as Error).message}`);
+            throw new Error(`Could not delete Info. Error ${(err as Error).message}`);
         }
     }
 }

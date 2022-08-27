@@ -1,5 +1,5 @@
-import { database } from "../database";
-import User from "../types/User";
+import database from "../database";
+import User from "../types/Person";
 import bcrypt from 'bcrypt';
 import config from '../config';
 
@@ -15,16 +15,12 @@ class Person {
     async createUser(u: User): Promise<User> {
         try {
             const connection = await database.connect();
-            const sql = 'INSERT INTO person (fname, lname, username, email, phone, password, gender, birthday, joined) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *';
+            const sql = 'INSERT INTO person (username, email, password, gender, joined) VALUES ($1, $2, $3, $4, $5) RETURNING username, email, gender, joined';
             const result = await connection.query(sql, [
-                u.fname.toLocaleLowerCase(),
-                u.lname.toLocaleLowerCase(),
                 u.username.toLocaleLowerCase(),
                 u.email.toLocaleLowerCase(),
-                u.phone,
                 hash(u.password),
                 u.gender.toLocaleLowerCase(),
-                u.birthday,
                 getDate()
             ]);
             connection.release();
@@ -37,7 +33,7 @@ class Person {
     async getAllUsers(): Promise<User[]> {
         try {
             const connection = await database.connect();
-            const sql = 'SELECT * FROM person';
+            const sql = 'SELECT username FROM person';
             const result = await connection.query(sql);
             connection.release();
             return result.rows;
@@ -61,17 +57,13 @@ class Person {
     async updateUser(id: string, u: User): Promise<User> {
         try {
             const connection = await database.connect();
-            const sql = 'UPDATE person SET fname=$2, lname=$3, username=$4, email=$5, phone=$6, password=$7, gender=$8, birthday=$9 WHERE id=$($1) RETURNING *';
+            const sql = 'UPDATE person SET username=$2, email=$3, password=$4, gender=$5 WHERE id=$($1) RETURNING username, email, gender';
             const result = await connection.query(sql, [
                 id,
-                u.fname,
-                u.lname,
                 u.username,
                 u.email,
-                u.phone,
                 hash(u.password),
-                u.gender,
-                u.birthday
+                u.gender
             ]);
             connection.release();
             return result.rows[0];
@@ -103,7 +95,7 @@ class Person {
                 const checkPass = bcrypt.compareSync(password + config.peper, db_pass)
 
                 if (checkPass) {
-                    const sql = 'SELECT id, fname, lname, username FROM person WHERE username=($1)';
+                    const sql = 'SELECT id, username, email FROM person WHERE username=($1)';
                     const result = await connection.query(sql, [username.toLocaleLowerCase()]);
                     connection.release();
                     return result.rows[0];
