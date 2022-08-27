@@ -84,11 +84,11 @@ const deleteReactions = async (req: Request, res: Response) => {
     }
 }
 
-const reactions_handler_routes = (app: Application, logger: NextFunction) => {
+const reactions_controller_routes = (app: Application, logger: NextFunction) => {
     app.post('/reactions', logger, token, createReactions)
     app.get('/reactions', logger, token, getAllReactions)
     app.get('/reactions/:id', logger, token, getReactions)
     app.patch('/reactions/:id', logger, token, updateReactions)
     app.delete('/reactions/:id', logger, token, deleteReactions)
 }
-export default reactions_handler_routes;
+export default reactions_controller_routes;

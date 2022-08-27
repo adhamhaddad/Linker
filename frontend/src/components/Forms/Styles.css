@@ -13,13 +13,13 @@
 
 /*** Code ***/
 .container .switch-box {
-    width: 300px;
+    width: 80%;
     margin: 0 auto;
     display: flex;
     border-radius: 20px;
-    justify-content: center;
     background-color: var(--base-color-light);
     box-shadow: 1px 2px 15px var(--base-background-dark);
+    overflow: hidden;
 }
 .container .switch-box a {
     width: 50%;
@@ -28,11 +28,7 @@
     text-transform: capitalize;
     color: var(--base-color-dark);
 }
-.container .switch-box a:last-child {
-    border-radius: 20px ;
-    color: var(--base-color-light);
-    background-color: var(--base-background-dark);
-}
+
 /* Links */
 .container .links {
     margin: 10px 0;
@@ -66,15 +62,14 @@
 }
 /* alert */
 .container form .radio {margin: 15px 0}
-
 .container form .radio label,
 .container form > label {
     display: block;
     margin: 20px 10px 0 0;
     font-size: 14px;
-    text-transform: capitalize;
     color: #888;
 }
+.container form .radio label {display: inline-block; text-transform: capitalize}
 
 .container form .radio label input,
 .container form > label input {margin-right: 5px}
@@ -91,9 +86,16 @@
     cursor: pointer
 }
 
+/*! When anchor link have class active !*/
+.container .switch-box a.active {
+    border-radius: 20px ;
+    color: var(--base-color-light);
+    background-color: var(--base-background-dark);
+}
+
 /*** Effects ***/
+.container form label input:checked ~ span {color: var(--base-color-dark)}
 .container form button:hover {background-color: var(--base-background-hovered); transition: background .7s}
-.container form input:checked {color: var(--base-color-dark)}
 
 
 /*** Media Query ***/

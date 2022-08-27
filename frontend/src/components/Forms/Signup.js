@@ -7,7 +7,7 @@ class Signup extends Component {
             <div className='container'>
                 <div className='switch-box'>
                     <a href="/login">log in</a>
-                    <a href="/register" rel='noreferrer'>register</a>
+                    <a href="/register" rel='noreferrer' className={this.props.register ? 'active' : null}>register</a>
                 </div>
                 <ul className='links'>
                     <li>
@@ -24,23 +24,23 @@ class Signup extends Component {
                         </a>
                     </li>
                 </ul>
-                <form action="/login" method="POST" autocomplete="on">
+                <form action="/user" method="POST" autoComplete="on">
                     <input type="text" placeholder='User Name' id='user' title='User Name' name="username" required/>
                     <input type="email" placeholder='Email Address' id='email' title='Email Address' name="email" required/>
-                    <input type="password" placeholder='New Password' minlength="8" maxlength="18" id='pass' title='New Password' name="pass" required/>
+                    <input type="password" placeholder='New Password' minLength="8" id='pass' title='New Password' name="password" required/>
                     <div className='radio'>
-                        <label for="s1">
-                            <input type="radio" id='s1' name='sex' title='Male' required/>
-                            male
+                        <label>
+                            <input type="radio" id='male' name='gender' title='Male' value='male' required/>
+                            <span>male</span>
                         </label>
-                        <label for="s2">
-                            <input type="radio" id='s2' name='sex' title='Female' required/>
-                            female
+                        <label>
+                            <input type="radio" id='female' name='gender' title='Female' value='female' required/>
+                            <span>female</span>
                         </label>
                     </div>
                     <label className='checkbox'>
                         <input type="checkbox" name="check" required/>
-                        i agree to the terms & conditions
+                        <span>I agree to the terms & conditions</span>
                     </label>
                     <button type='submit'>sign up</button>
                 </form>

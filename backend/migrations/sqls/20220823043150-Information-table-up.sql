@@ -4,5 +4,6 @@ CREATE TABLE information (
     relation VARCHAR(255),
     education VARCHAR(255),
     lives VARCHAR(255),
+    story text,
     user_id BIGINT REFERENCES person(id)
 );

@@ -2,36 +2,42 @@ import express, { Application, NextFunction } from "express";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import logger from "./middlewares/logger";
-import information_controllers_routes from "./controllers/Information";
-import posts_controllers_routes from './controllers/Posts';
-import user_controllers_routes from "./controllers/Person";
-import reactions_controllers_routes from "./controllers/Reactions";
-import server_controllers_routes from "./controllers/Server";
+import user_controller_routes from "./controllers/Person";
+import information_controller_routes from "./controllers/Information";
+import posts_controller_routes from './controllers/Posts';
+import reactions_controller_routes from "./controllers/Reactions";
+import server_controller_routes from "./controllers/Server";
 import config from './config';
+import path from 'path';
+import cors from 'cors';
 // Express App
 const app: Application = express();
 export const port = process.env.PORT || 8080;
 
+const corsOptions = {
+    origin: 'http://localhost:4000',
+    optionsSucessStatus: 200
+}
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(helmet());
-app.use(rateLimit({
-    windowMs: 30 * 1000, // 30 seconds
-    max: 10, // Limit each IP to 100 requests per `window`
-    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-    message: 'Too many requests. try again with different email or password after 30 seconds'
-}))
+// app.use(rateLimit({
+//     windowMs: 30 * 1000, // 30 seconds
+//     max: 10, // Limit each IP to 100 requests per `window`
+//     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+//     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+//     message: 'Too many requests. try again with different email or password after 30 seconds'
+// }))
 // app.use(express.static(path.resolve(__dirname, '../frontend/build', 'index.html')));
-app.use(express.static('public'));
+app.use(cors(corsOptions))
 
 // Express Handler
-user_controllers_routes(app, logger as NextFunction);
-information_controllers_routes(app, logger as NextFunction);
-posts_controllers_routes(app, logger as NextFunction);
-reactions_controllers_routes(app, logger as NextFunction);
-server_controllers_routes(app, logger as NextFunction);
+user_controller_routes(app, logger as NextFunction);
+information_controller_routes(app, logger as NextFunction);
+posts_controller_routes(app, logger as NextFunction);
+reactions_controller_routes(app, logger as NextFunction);
+server_controller_routes(app, logger as NextFunction);
 
 // Express Server
 app.listen(port, () => {

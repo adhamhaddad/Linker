@@ -5,12 +5,13 @@ class Information {
     async createInfo(i: Info): Promise<Info> {
         try {
             const connection = await database.connect();
-            const sql = 'INSERT INTO information (work, relation, education, lives) VALUES ($1, $2, $3, $4) RETURNING *';
+            const sql = 'INSERT INTO information (work, relation, education, lives, story) VALUES ($1, $2, $3, $4, $5) RETURNING *';
             const result = await connection.query(sql, [
                 i.work,
                 i.relation,
                 i.education,
-                i.lives
+                i.lives,
+                i.story
             ]);
             connection.release();
             return result.rows[0];
@@ -46,13 +47,14 @@ class Information {
     async updateInfo(id: string, i: Info): Promise<Info> {
         try {
             const connection = await database.connect();
-            const sql = 'UPDATE information SET work=$2, relation=$3, education=$4, lives=$5 WHERE id=($1) RETURNING *';
+            const sql = 'UPDATE information SET work=$2, relation=$3, education=$4, lives=$5, story=$6 WHERE id=($1) RETURNING *';
             const result = await connection.query(sql, [
                 id,
                 i.work,
                 i.relation,
                 i.education,
-                i.lives
+                i.lives,
+                i.story
             ]);
             connection.release();
             return result.rows[0];
@@ -64,7 +66,7 @@ class Information {
     async deleteInfo(id: string): Promise<Info> {
         try {
             const connection = await database.connect();
-            const sql = 'DELETE FROM information * WHERE id=($1) RETURNING *';
+            const sql = 'DELETE FROM information * WHERE id=($1)';
             const result = await connection.query(sql, [id]);
             connection.release();
             return result.rows[0];

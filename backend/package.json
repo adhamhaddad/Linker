@@ -6,6 +6,7 @@
   "private": true,
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.12",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
     "@types/helmet": "^4.0.0",
@@ -22,6 +23,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-rate-limit": "^6.5.1",
@@ -38,8 +40,5 @@
     "migrate:reset": "db-migrate reset",
     "test": "export ENV=test && tsc && db-migrate up --env test && jasmine && db-migrate reset --env test",
     "dev": "nodemon src/server.ts"
-  },
-  "engines": {
-    "node": "16.16.0"
   }
 }

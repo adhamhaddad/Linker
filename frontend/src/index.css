@@ -6,6 +6,7 @@
     /* Font Color */
     --base-color-light: #FFF;
     --base-color-dark: rgb(32, 32, 32);
+    --base-light-gray: rgb(180, 180, 180);
 }
 * {
     padding: 0;

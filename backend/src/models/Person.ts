@@ -58,12 +58,12 @@ class Person {
         }
     }
 
-    async updateUser(u: User, username: string): Promise<User> {
+    async updateUser(id: string, u: User): Promise<User> {
         try {
             const connection = await database.connect();
-            const sql = 'UPDATE person SET fname=$2, lname=$3, username=$4, email=$5, phone=$6, password=$7, gender=$8, birthday=$9 WHERE username=$($1) RETURNING *';
+            const sql = 'UPDATE person SET fname=$2, lname=$3, username=$4, email=$5, phone=$6, password=$7, gender=$8, birthday=$9 WHERE id=$($1) RETURNING *';
             const result = await connection.query(sql, [
-                username,
+                id,
                 u.fname,
                 u.lname,
                 u.username,

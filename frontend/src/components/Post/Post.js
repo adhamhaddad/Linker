@@ -1,25 +1,21 @@
 import React, { Component } from "react";
-import './Posts.css';
-import image from '../../Images/profile.jpg'
-class Posts extends Component {
-    state = {
-        name: 'Adham Ashraf', profile: image, time: 220, post: 'this is a post'
-    }
+import './Post.css';
+class Post extends Component {
     postTimeClac = () => {
-        const getTime = this.state.time;
-        const houres = (this.state.time > 60 ? `${String(getTime).charAt(0)}h` : `${getTime}m`);
+        const getTime = this.state.timedate;
+        const houres = (this.state.timedate > 60 ? `${String(getTime).charAt(0)}h` : `${getTime}m`);
         return houres;
     }
     render() {
         return (
             <div className='posts'>
                 <div className='post-header'>
-                    <img src={this.state.profile} alt="Profile"/>
-                    <span>{this.state.name}</span>
-                    <p>posted: {this.postTimeClac()}</p>
+                    <img src={this.props.profile} alt="Profile"/>
+                    <span>{this.props.fname} {this.props.lname}</span>
+                    <p>posted: {this.props.timedate}</p>
                 </div>
                 <div className='post-content'>
-                    <p>{this.state.post}</p>
+                    <p>{this.props.content}</p>
                 </div>
                 <div className='post-bottom'>
                     <button className='btn' title='Like'>
@@ -44,4 +40,4 @@ class Posts extends Component {
         )
     }
 }
-export default Posts;
+export default Post;

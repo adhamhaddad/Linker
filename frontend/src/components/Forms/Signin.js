@@ -6,7 +6,7 @@ class Signin extends Component {
         return (
             <div className='container'>
                 <div className='switch-box'>
-                    <a href="/login">
+                    <a href="/login" className={this.props.login ? 'active' : null}>
                         <span>log in</span>
                     </a>
                     <a href="/register">
@@ -28,12 +28,12 @@ class Signin extends Component {
                         </a>
                     </li>
                 </ul>
-                <form action="/login" method="POST" autoComplete="on">
+                <form action="/authenticate" method="POST" autoComplete="on">
                     <input type="text" placeholder='User Name' id='user' title='User Name' name="username" required/>
-                    <input type="password" placeholder='Password' minLength="8" maxLength="18" id='pass' title='Password' name="pass" required/>
+                    <input type="password" placeholder='Password' minLength="8" id='pass' title='Password' name="password" required/>
                     <label className="checkbox">
                         <input type="checkbox" id='check' name="check"/>
-                        remember password
+                        <span>remember password</span>
                     </label>
                     <button type='submit'>log in</button>
                 </form>

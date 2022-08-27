@@ -9,16 +9,10 @@ const user = new Person();
 const createUser = async (req: Request, res: Response) => {
     try {
         const response = await user.createUser(req.body);
-        const token = jwt.sign(response, config.token as string);
+        const token = jwt.sign({user: response}, config.token as string);
 
-        res
-        .status(201)
-        .json({
-            status: true,
-            data: {response, token},
-            message: 'User created successfully!'
-        })
-        .redirect('http://localhost:3000/login')
+        res.status(201).json(token)
+        // .redirect('http://localhost:3000/login')
     } catch (err) {
         res.status(400).json({
             status: false,
@@ -46,7 +40,7 @@ const getAllUsers = async (_req: Request, res: Response) => {
 
 const getUser = async (req: Request, res: Response) => {
     try {
-        const response = await user.deleteUser(req.params.id);
+        const response = await user.getUser(req.params.id);
         res.status(200).json({
             status: true,
             data: response,
@@ -62,7 +56,7 @@ const getUser = async (req: Request, res: Response) => {
 
 const updateUser = async (req: Request, res: Response) => {
     try {
-        const response = await user.deleteUser(req.params.id);
+        const response = await user.updateUser(req.params.id, req.body);
         res.status(201).json({
             status: true,
             data: response,
@@ -95,6 +89,7 @@ const deleteUser = async (req: Request, res: Response) => {
 const authenticate = async (req: Request, res: Response) => {
     try {
         const response = await user.authenticate(req.body.username, req.body.password);
+        jwt.sign({user: response}, config.token as string)
         if (!response) {
             return res.status(401).json({
                 status: false,
@@ -102,11 +97,15 @@ const authenticate = async (req: Request, res: Response) => {
             })
         }
         //! Here will add res.redirect('http://localhost:3000/')
-        res.status(200).json({
+        /*
+        .json({
             status: true,
             data: response,
             message: 'User authenticated successfully!'
         })
+        */
+        res.status(200)
+        .redirect('http://localhost:3000/')
         //! ----------------------------------------------------
     } catch (err) {
         res.status(400).json({
@@ -116,12 +115,12 @@ const authenticate = async (req: Request, res: Response) => {
     }
 }
 
-const user_handler_routes = (app: Application, logger: NextFunction) => {
+const user_controller_routes = (app: Application, logger: NextFunction) => {
     app.post('/user', logger, createUser)
     app.get('/user', logger, getAllUsers)
-    app.get('/user/:id', logger, token, getUser)
+    app.get('/user/:id', logger, getUser)
     app.patch('/user/:id', logger, token, updateUser)
     app.delete('/user/:id', logger, token, deleteUser)
     app.post('/authenticate', logger, authenticate)
 }
-export default user_handler_routes;
+export default user_controller_routes;

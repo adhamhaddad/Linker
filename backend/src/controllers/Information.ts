@@ -83,11 +83,11 @@ const deleteInfo = async (req: Request, res: Response) => {
     }
 }
 
-const information_handler_routes = (app: Application, logger: NextFunction) => {
+const information_controller_routes = (app: Application, logger: NextFunction) => {
     app.post('/information', logger, createInfo)
     app.get('/information', logger, getAllInfo)
     app.get('/information/:id', logger, getInfo)
     app.patch('/information/:id', logger, updateInfo)
     app.delete('/information/:id', logger, deleteInfo)
 }
-export default information_handler_routes;
+export default information_controller_routes;

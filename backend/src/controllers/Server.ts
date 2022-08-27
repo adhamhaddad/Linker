@@ -52,7 +52,7 @@ const redirectLogin = (_req: Request, res: Response) => {
     res.redirect('/profile_user')
 };
 
-const server_controllers_routes = (app: Application, logger: NextFunction) => {
+const server_controller_routes = (app: Application, logger: NextFunction) => {
     app.get('/register', logger, register);
     app.get('/login', logger, login);
     app.get('/', logger, token, main);
@@ -66,4 +66,4 @@ const server_controllers_routes = (app: Application, logger: NextFunction) => {
     app.post('/login', logger, )
     app.post('/register', logger, )
 }
-export default server_controllers_routes;
+export default server_controller_routes;

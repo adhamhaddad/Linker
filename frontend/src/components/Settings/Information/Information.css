@@ -1,3 +1,7 @@
+:is(.username, .gender, .location, .birthday) {
+    text-transform: capitalize;
+}
+
 form {
     overflow-y: auto;
     height: 100%;

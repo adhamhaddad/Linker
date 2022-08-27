@@ -84,11 +84,11 @@ const deletePost = async (req: Request, res: Response) => {
     }
 }
 
-const posts_handler_routes = (app: Application, logger: NextFunction) => {
-    app.post('/posts', logger, token, createPost)
-    app.get('/posts', logger, token, getAllPosts)
-    app.get('/posts/:id', logger, token, getPost)
-    app.patch('/posts/:id', logger, token, updatePost)
-    app.delete('/posts/:id', logger, token, deletePost)
+const posts_controller_routes = (app: Application, logger: NextFunction) => {
+    app.post('/posts', logger, createPost)
+    app.get('/posts', logger, getAllPosts)
+    app.get('/posts/:id', logger, getPost)
+    app.patch('/posts/:id', logger, updatePost)
+    app.delete('/posts/:id', logger, deletePost)
 }
-export default posts_handler_routes;
+export default posts_controller_routes;

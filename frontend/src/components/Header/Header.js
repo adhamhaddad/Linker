@@ -3,9 +3,11 @@ import './Header.css';
 import logo from '../../Images/comp.png';
 
 class Header extends Component {
-    handleFocus = () => {
+    
+    hhandleFocus = () => {
         
     }
+    //!
     render() {
         return (
             <nav>

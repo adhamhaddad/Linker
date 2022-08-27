@@ -17,7 +17,7 @@ class Messages extends Component {
 
     status = () => {
         const status = this.state.status;
-        document.querySelector('.container > .top > span.status').innerHTML = (status ? 'online' : 'offline');
+        document.querySelector('.container > .top > span.status').textContent = status ? 'online' : 'offline';
     }
 
     render() {
