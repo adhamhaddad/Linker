@@ -20,7 +20,7 @@
     text-align: center;
 }
 .posts > .post-header > span {font-size: 14px; font-weight: 800; line-height: 50px}
-.posts > .post-header > p {font-size: 12px; line-height: 50px; margin-left: auto;}
+.posts > .post-header > p {font-size: 12px; line-height: 50px; margin-left: auto}
 
 /* Post Content */
 .posts .post-content {

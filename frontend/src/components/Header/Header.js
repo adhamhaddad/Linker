@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import './Header.css';
-import logo from '../../Images/comp.png';
 
 class Header extends Component {
     render() {
         return (
             <nav>
-                <img src={logo} alt="Logo" className='logo'/>
+                <img src='' alt="Logo" className='logo'/>
                 <div className='menu-bar'>
                     <i className='fa-solid fa-bars' title='Menu'>
                         <span className='all-alerts'></span>

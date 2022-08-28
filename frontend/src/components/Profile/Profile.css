@@ -10,6 +10,8 @@
 .container .left-side .user-id img {
     display: block;
     width: 150px;
+    height: 160.15px;
+    color: var(--base-color-dark);
     background-color: var(--base-background-light);
     cursor: pointer;
     text-align: center;
@@ -94,8 +96,8 @@
     transform: translate(-50%, -50%);
     z-index: 2000;
 }
-.container-body {padding: 10px}
-
+.container-body {padding: 10px 0}
+.hide {display: none}
 /* Effects */
 a:hover {background-color: var(--base-background-light); transition: background .7s}
 a[title='LinkedIn']:hover {background-color: #0E76A8; transition: background .7s}

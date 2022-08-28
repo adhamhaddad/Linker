@@ -59,20 +59,21 @@
     border: none;
     border-bottom: 1px solid var(--base-color-dark);
     color: var(--base-color-dark);
+    position: relative
 }
 /* alert */
-.container form .radio {margin: 15px 0}
+.container form .radio {margin: 15px 0 20px}
 .container form .radio label,
 .container form > label {
     display: block;
-    margin: 20px 10px 0 0;
+    margin-right: 10px;
     font-size: 14px;
     color: #888;
 }
 .container form .radio label {display: inline-block; text-transform: capitalize}
 
 .container form .radio label input,
-.container form > label input {margin-right: 5px}
+.container form > label.checkbox input {margin-right: 5px}
 .container form button {
     display: block;
     width: 100%;
@@ -86,13 +87,25 @@
     cursor: pointer
 }
 
+
 /*! When anchor link have class active !*/
 .container .switch-box a.active {
     border-radius: 20px ;
     color: var(--base-color-light);
     background-color: var(--base-background-dark);
 }
-
+.container form > input.passValidation::after {
+    content: 'please enter at least 8 characters';
+    background-color: red;
+    color: red;
+    width: 100%;
+    /* height: 20px; */
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+}
 /*** Effects ***/
 .container form label input:checked ~ span {color: var(--base-color-dark)}
 .container form button:hover {background-color: var(--base-background-hovered); transition: background .7s}
