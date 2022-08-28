@@ -1,6 +1,7 @@
 CREATE TABLE posts (
-    id SERIAL PRIMARY KEY,
+    id uuid DEFAULT uuid_generate_v4(),
     timedate text NOT NULL,
-    content text,
-    user_id BIGINT REFERENCES person(id)
+    content text NOT NULL,
+    user_id uuid,
+    FOREIGN KEY (user_id) REFERENCES person(id)
 );

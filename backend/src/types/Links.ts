@@ -1,4 +1,5 @@
 type Link = {
+    id?: string;
     facebook: string;
     instagram: string;
     whatsapp: string;

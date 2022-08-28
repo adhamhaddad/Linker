@@ -1,13 +1,14 @@
 CREATE TABLE information (
-    id SERIAL PRIMARY KEY,
+    id uuid DEFAULT uuid_generate_v4(),
     fname VARCHAR(255),
     lname VARCHAR(255),
-    phone integer UNIQUE,
+    phone VARCHAR UNIQUE,
     birthday Date,
     work VARCHAR(255),
     relation VARCHAR(255),
     education VARCHAR(255),
     lives VARCHAR(255),
     story text,
-    user_id BIGINT REFERENCES person(id)
+    user_id uuid,
+    FOREIGN KEY (user_id) REFERENCES person(id)
 );

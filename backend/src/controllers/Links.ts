@@ -66,10 +66,10 @@ const deleteLink = async (req: Request, res: Response) => {
     }
 }
 
-const information_controller_routes = (app: Application, logger: NextFunction) => {
+const links_controller_routes = (app: Application, logger: NextFunction) => {
     app.post('/user/:id/links', logger, uploadLink)
     app.get('/user/:id/links', logger, getLink)
     app.patch('/user/:id/links', logger, updateLink)
     app.delete('/user/:id/links', logger, deleteLink)
 }
-export default information_controller_routes;
+export default links_controller_routes;

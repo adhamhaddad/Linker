@@ -41,7 +41,6 @@ const getAllUsers = async (_req: Request, res: Response) => {
     }
 }
 
-
 const getUser = async (req: Request, res: Response) => {
     try {
         const response = await user.getUser(req.params.id);

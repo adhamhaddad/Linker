@@ -1,7 +1,8 @@
 CREATE TABLE reactions (
-    id SERIAL PRIMARY KEY,
+    id uuid DEFAULT uuid_generate_v4(),
     likes INTEGER,
     comments text,
     shares INTEGER,
-    user_id BIGINT REFERENCES person(id)
+    user_id uuid,
+    FOREIGN KEY (user_id) REFERENCES person(id)
 );

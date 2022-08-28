@@ -1,7 +1,8 @@
 type Info = {
+    id?: string;
     fname: string;
     lname: string;
-    phone: number;
+    phone: string;
     birthday: string;
     work: string;
     relation: string;

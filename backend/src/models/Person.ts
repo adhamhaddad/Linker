@@ -15,7 +15,7 @@ class Person {
     async createUser(u: User): Promise<User> {
         try {
             const connection = await database.connect();
-            const sql = 'INSERT INTO person (username, email, password, gender, joined) VALUES ($1, $2, $3, $4, $5) RETURNING username, email, gender, joined';
+            const sql = 'INSERT INTO person (username, email, password, gender, joined) VALUES ($1, $2, $3, $4, $5) RETURNING id, username, email, gender, joined';
             const result = await connection.query(sql, [
                 u.username.toLocaleLowerCase(),
                 u.email.toLocaleLowerCase(),
@@ -45,7 +45,7 @@ class Person {
     async getUser(id: string): Promise<User> {
         try {
             const connection = await database.connect();
-            const sql = 'SELECT * FROM person WHERE id=($1)';
+            const sql = 'SELECT id, username, email, gender, joined FROM person WHERE id=($1)';
             const result = await connection.query(sql, [id]);
             connection.release();
             return result.rows[0];
@@ -57,7 +57,7 @@ class Person {
     async updateUser(id: string, u: User): Promise<User> {
         try {
             const connection = await database.connect();
-            const sql = 'UPDATE person SET username=$2, email=$3, password=$4, gender=$5 WHERE id=$($1) RETURNING username, email, gender';
+            const sql = 'UPDATE person SET username=$2, email=$3, password=$4, gender=$5 WHERE id=$($1) RETURNING id, username, email, gender';
             const result = await connection.query(sql, [
                 id,
                 u.username,

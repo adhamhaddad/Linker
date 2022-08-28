@@ -29,7 +29,8 @@
     "express-rate-limit": "^6.5.1",
     "helmet": "^5.1.0",
     "jsonwebtoken": "^8.5.1",
-    "pg": "^8.7.3"
+    "pg": "^8.7.3",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "build": "tsc",
