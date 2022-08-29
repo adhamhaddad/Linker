@@ -1,108 +1,105 @@
 import React from "react";
 import './Profile.css';
-// import img from 'http://localhost:3000/images/1/profile/profile.jpg';
 import Post from "../Post/Post";
 
-function Profile() {
+function Profile(props) {
     const [photos, setPohotos] = React.useState({});
-    const [user, setUser] = React.useState({})
     const [information, setInfomation] = React.useState({})
     const [links, setLinks] = React.useState({})
     const [posts, setPosts] = React.useState([])
-    const [counter, setCounter] = React.useState(posts.length);
-    console.log(user.id)
-    // User
-    React.useEffect(() => {
-        fetch('http://localhost:3000/user/1c4f9dbb-e32b-47bb-ae60-9366e406551c')
-        .then(res => res.json())
-        .then(user => {
-            setUser(prev => {
-                return {
-                    ...prev,
-                    id: user.data.id,
-                    username: user.data.username,
-                    email: user.data.email,
-                    gender: user.data.gender,
-                    joined: user.data.joined
-                }
-            })
-        })
-        .catch(err => console.log(err.message));
-    }, []);
-    // Photos
-    React.useEffect(() => {
-        try {
-            const response = fetch(`http://localhost:3000/user/${user.id}/photos`);
-            const photo = response.json();
-            setPohotos(prev => {
-                return {
-                    ...prev,
-                    cover: photo.data.cover,
-                    profile: photo.data.profile
-                }
-            })
-        } catch (err) {
-            console.log(err.message)
-        }
-    }, []);
+    const [reactions, setReactions] = React.useState({
+        likes: ['Adham Ashraf', 'Mariam Maged'],
+        comments: ['Nice post!', 'Great job!', 'Can i shares it ?'],
+        shares: 16
+    })
     
-    // Information
     React.useEffect(() => {
-        fetch(`http://localhost:3000/user/${user.id}/information`)
-        .then(res => res.json())
-        .then(info => {
-            setInfomation(prev => {
-                return {
-                    ...prev,
-                    fname: info.data.fname,
-                    lname: info.data.lname,
-                    phone: info.data.phone,
-                    birthday: info.data.birthday,
-                    work: info.data.work,
-                    relation: info.data.relation,
-                    education: info.data.education,
-                    lives: info.data.lives,
-                    story: info.data.story
-                }
-            })
-        })
-        .catch(err => console.log(err.message));
-    }, []);
+        // Photos
+        async function getPhotos() {
+            const response = await fetch(`http://localhost:3000/user/4e5c7f44-f20d-458b-a204-5fca018c93c2/photos`);
+            const photo = await response.json();
+            try {
+                setPohotos(prev => {
+                    return {
+                        ...prev,
+                        cover: photo.data.cover,
+                        profile: photo.data.profile
+                    }
+                })
+            } catch (err) {
+                console.log(err.message)
+            }
+        }
+        getPhotos()
+        
+        // Information
+        async function getInformation() {
+            const response = await fetch(`http://localhost:3000/user/4e5c7f44-f20d-458b-a204-5fca018c93c2/information`);
+            const info = await response.json();
+            try {
+                setInfomation(prev => {
+                    return {
+                        ...prev,
+                        fname: info.data.fname,
+                        lname: info.data.lname,
+                        phone: info.data.phone,
+                        birthday: info.data.birthday,
+                        work: info.data.work,
+                        relation: info.data.relation,
+                        education: info.data.education,
+                        lives: info.data.lives,
+                        story: info.data.story
+                    }
+                })
+            } catch (err) {console.log(err.message)}
+        }
+        getInformation();
+        // Links
+        async function getLinks() {
+            const response = await fetch(`http://localhost:3000/user/4e5c7f44-f20d-458b-a204-5fca018c93c2/links`);
+            const link = await response.json();
+            try {
+                setLinks(prev => {
+                    return {
+                        ...prev,
+                        facebook: link.data.facebook,
+                        twitter: link.data.twitter,
+                        linkedin: link.data.linkedin,
+                        instagram: link.data.instagram,
+                        telegram: link.data.telegram
+                    }
+                })
+            } catch (err) {console.log(err.message)}
+        }
+        getLinks();
+        
+        
+        // // Reactions
+        // async function getReactions() {
+        //     const response = await fetch(`http://localhost:3000/user/${user.id}/posts/reactions`);
+        //     const post = await response.json();
+        //     try {
+        //         setPosts(post.data)
+        //     } catch (err) {console.log(err.message)}
+        // }
+        // getReactions();
 
-    // Links
-    React.useEffect(() => {
-        fetch(`http://localhost:3000/user/${user.id}/links`)
-        .then(res => res.json())
-        .then(link => {
-            setLinks(prev => {
-                return {
-                    ...prev,
-                    facebook: link.data.facebook,
-                    twitter: link.data.twitter,
-                    linkedin: link.data.linkedin,
-                    instagram: link.data.instagram,
-                    telegram: link.data.telegram
-                }
-            })
-        })
-    }, []);
-
-    // Posts
-    React.useEffect(() => {
-        fetch(`http://localhost:3000/user/${user.id}/posts`)
-        .then(res => res.json())
-        .then(post => {
-            setPosts(post.data)
-            setCounter(posts.length);
-        })
-        .catch(err => console.log(err.message))
-    }, []);
-
+        // Posts
+        async function getPosts() {
+            const response = await fetch(`http://localhost:3000/user/4e5c7f44-f20d-458b-a204-5fca018c93c2/posts`);
+            const post = await response.json();
+            try {
+                setPosts(post.data)
+            } catch (err) {console.log(err.message)}
+        }
+        getPosts();
+    }, [2])
+    
     const userPosts = posts.length ? posts.map(post => {
-        const time = post.timedate.split(' - ')[1];
-            return <Post fname={user.fname} lname={user.lname} profile={photos.profile} timedate={time} content={post.content} key={post.id}/>
-        })
+        return <Post fname={information.fname} lname={information.lname} profile={photos.profile} timedate={post.timedate} content={post.content} reactions={reactions} key={post.id}/>
+    })
     : null
+
     const openProfileFullSize = () => {document.querySelector('#fullImage').style.display = "block"}
     const closeProfileFullSize = () => {document.querySelector('#fullImage').style.display = "none"}
     return (

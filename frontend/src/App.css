@@ -6,7 +6,6 @@ body {padding: 60px 0 25px;}
     color: var(--base-color-light);
     background-color: var(--base-background-dark);
 }
-
 /* 1080px Screens */
 @media screen and (max-width: 1080px) {.container, .container-body {width: 90%}}
 /* 550px Screens */

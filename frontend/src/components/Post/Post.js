@@ -3,8 +3,11 @@ import './Post.css';
 
 function Post(props) {
     const postTimeClac = (timedate) => {
-        // const houres = (getTime > 60 ? `${String(getTime).charAt(0)}h` : `${getTime}m`);
-        const filter = `${timedate.split(':')[0]}:${timedate.split(':')[1]} ${timedate.split(' ')[1]}`;
+        const time = timedate.split(' - ')[1];
+        const hours = time.split(':')[0];
+        const minutes = time.split(':')[1];
+        const ampm = time.split(' ')[1];
+        const filter = `${hours}:${minutes} ${ampm}`
         return filter;
     }
     return (
@@ -17,14 +20,25 @@ function Post(props) {
             <div className='post-content'>
                 <p>{props.content}</p>
             </div>
+            <div className='post-reactions'>
+                <span className={props.reactions.likes.length ? 'active' : 'hidden'}>
+                    <img src='./images/reactions/like.png'/>
+                    {props.reactions.likes[1]} and {props.reactions.likes.length} others
+                </span>
+                <p>
+                    <span className={props.reactions.comments.length ? 'active' : 'hidden'}>
+                        {props.reactions.comments.length} comments
+                    </span>
+                    <span className={props.reactions.shares ? 'active' : 'hidden'}>
+                        <i className="fa-solid fa-circle period"></i>
+                        {props.reactions.shares} shares
+                    </span>
+                </p>
+            </div>
             <div className='post-bottom'>
                 <button className='btn' title='Like'>
                     <i className='fa-solid fa-thumbs-up'></i>
                     <span>like</span>
-                </button>
-                <button title='Dislike'>
-                    <i className='fa-solid fa-thumbs-down'></i>
-                    <span>dislike</span>
                 </button>
                 <div className='comment'>
                     <input type="text" placeholder='Comment ...' title='Comment'/>

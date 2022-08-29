@@ -2,7 +2,7 @@
     min-width: 250px;
     max-width: 550px;
     padding: 5px;
-    margin: 10px auto;
+    margin: 0 auto;
     background-color: var(--base-color-light);
     color: var(--base-color-dark)
 }
@@ -32,36 +32,77 @@
     margin: 5px 0;
 }
 
+.posts > .post-reactions {
+    color: var(--base-color-dark);
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    height: 20px
+}
+
+.posts > .post-reactions img {
+    width: 12px;
+    margin-right: 2px;
+}
+.posts > .post-reactions span:nth-of-type(1) {
+    margin-right: auto;
+}
+.posts > .post-reactions p span i.period {
+    font-size: 3px;
+    vertical-align: middle;
+    margin: 0 6px;
+    color: var(--base-color-dark)
+}
 /* Post Bottom */
-.posts > .post-bottom button {
-    width: 100px;
-    height: 100%;
+.posts > .post-bottom {
     border: 1px solid rgb(219, 219, 219);
+    display: flex;
+    /* align-items: center; */
+    height: 50px;
+}
+.posts > .post-bottom button {
+    /* border: 1px solid rgb(219, 219, 219); */
+    width: 100px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
     text-transform: capitalize;
     transition-property: background;
     transition-duration: .5s;
-    cursor: pointer;
-    font-size: 14px;
+    cursor: pointer
 }
+.posts > .post-bottom button i {margin-right: 4px}
+
 .posts > .post-bottom .comment {
     display: flex;
-    width: 250px;
-    height: 100%;
-    border: 1px solid rgb(219, 219, 219);
+    justify-content: center;
+    align-items: center;
+    height: 50px;
     font-size: 14px;
+    margin-right: auto;
 }
 .posts > .post-bottom .comment input {
-    width: 220px;
-    height: 100%;
-    padding: 15px 10px;
+    width: 300px;
+    height: 50px;
+    padding-left: 5px
 }
-.posts > .post-bottom .comment i,
-.posts > .post-bottom button i {
-    width: 30px;
+.posts > .post-bottom .comment i {
+    height: 50px;
     line-height: 50px;
-    text-align: center;
+    width: 40px;
+    text-align: center
 }
 
+/* Reaction status */
+.active {
+    display: inline-block;
+}
+.hidden {
+    display: none;
+}
 /*** Effects ***/
 .posts .post-bottom button:hover {
     background-color: var(--base-color-dark);

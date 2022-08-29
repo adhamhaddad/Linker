@@ -29,6 +29,7 @@
     font-size: 16px;
     font-weight: 500;
     color: var(--base-color-light);
+    text-transform: capitalize;
 }
 .container > .top > .status {
     height: 100%;
@@ -86,48 +87,55 @@
     position: absolute;
     overflow-y: auto;
     z-index: 100;
+    padding: 0 4px;
 }
-.container > .conversation .friend-user,
-.container > .conversation .user {
-    display: block;
-    width: 100%;
-    padding: 5px;
-    border-radius: 5px;
+.container > .conversation .receiver,
+.container > .conversation .sender {
     color: var(--base-color-light);
-    text-align: left;
     position: relative;
+    margin: 10px 0;
 }
-.container > .conversation .friend-user img,
-.container > .conversation .user img {
+.message-time {
+    color: var(--base-color-dark);
+    font-size: 12px;
+    text-align: center;
+    padding: 4px 0;
+}
+.container > .conversation .receiver .message-content,
+.container > .conversation .sender .message-content {
+    display: flex;
+}
+.container > .conversation .receiver .message-content img,
+.container > .conversation .sender .message-content img {
     width: 50px;
     height: 50px;
-    vertical-align: top;
     color: var(--base-color-light);
     font-size: 12px;
 }
-.container > .conversation .friend-user span,
-.container > .conversation .user span {
+.container > .conversation .receiver .message-content span,
+.container > .conversation .sender .message-content span {
     word-wrap: break-word;
     margin: 0 5px;
-    max-width: 45%;
+    max-width: 50%;
     display: inline-block;
+    align-self: center;
     padding: 10px;
     height: auto;
     background-color: var(--base-background-dark);
     filter: drop-shadow(1px 1px 2px var(--base-background-dark))
 }
-.container > .conversation .friend-user span {
+.container > .conversation .receiver .message-content span {
     background-color: var(--base-background-light);
     color: var(--base-color-dark);
 }
 
 /*
-.container > .conversation .user {
+.container > .conversation .sender {
     padding: 10px 5px;
     direction: rtl;
     text-align: right;
 }
-.container > .conversation .user span {direction: ltr}
+.container > .conversation .sender span {direction: ltr}
 
 #seen {
     width: 15px;
@@ -150,7 +158,8 @@
 #error {
     text-align: center;
     margin: 25px 0;
-    color: var(--base-color-dark)
+    color: var(--base-color-dark);
+    font-size: 14px;
 }
 #error a {
     text-decoration: underline;
@@ -189,8 +198,8 @@
 @media screen and (max-width: 285px) {
     .container > .top #back a i,
     .container > .top .status,
-    .container > .conversation .friend-user span,
-    .container > .conversation .user span {font-size: 14px}
+    .container > .conversation .receiver span,
+    .container > .conversation .sender span {font-size: 14px}
     
     .container > form input,
     .container > form button {font-size: 12px}

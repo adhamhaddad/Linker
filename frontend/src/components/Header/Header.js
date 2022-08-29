@@ -5,7 +5,7 @@ class Header extends Component {
     render() {
         return (
             <nav>
-                <img src='' alt="Logo" className='logo'/>
+                <img src='./images/comp.png' alt="Logo" className='logo'/>
                 <div className='menu-bar'>
                     <i className='fa-solid fa-bars' title='Menu'>
                         <span className='all-alerts'></span>
