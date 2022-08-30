@@ -25,7 +25,7 @@ function Post(props) {
       <div className='post-reactions'>
         <span className={props.reactions.likes.length ? 'active' : 'hidden'}>
           <img src='./images/reactions/like.png' />
-          {props.reactions.likes[1]} and {props.reactions.likes.length} others
+          {props.reactions.likes[props.reactions.likes.length - 1]} and {props.reactions.likes.length} others
         </span>
         <p>
           <span

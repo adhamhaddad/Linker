@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Posts from '../Posts/Posts';
+import Posts from '../Post/Post';
 import './Home.css';
 
 class Home extends Component {
@@ -9,13 +9,9 @@ class Home extends Component {
         <h4 className='hint'>
           <span></span>
         </h4>
-        <div className='container-body'>
-          <Posts />
-          <Posts />
-          <Posts />
-          <Posts />
-          <Posts />
-        </div>
+        {/* <div className={userPosts !== null ? 'container-body' : 'hide'}>
+          {userPosts}
+        </div> */}
       </main>
     );
   }
