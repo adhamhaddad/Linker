@@ -1,16 +1,17 @@
-import React from "react";
+import React from 'react';
 import './App.css';
 // import Home from "./components/Home/Home";
 // import Notification from "./components/Notification/Notification";
 // import Settings from "./components/Settings/Settings";
 // import Signup from "./components/Forms/Signup";
 // import Signin from "./components/Forms/Signin";
-import Header from "./components/Header/Header";
 // import Profile from "./components/Profile/Profile";
-import Messages from "./components/Messages/Messages";
-import Footer from "./components/Footer/Footer";
+import Header from './components/Header/Header';
+import Messages from './components/Messages/Messages';
+import Footer from './components/Footer/Footer';
 
 function App() {
+  /*
     const [user, setUser] = React.useState({})
     // User
     React.useEffect(() => {
@@ -32,12 +33,13 @@ function App() {
         }
         getUser()
     }, [])
-    return (
-        <>
-            <Header/>
-            <Messages title='Messages Page'/>
-            <Footer/>
-        {/*
+    */
+  return (
+    <>
+      <Header />
+      <Messages title='Messages Page' />
+      <Footer />
+      {/*
             <Profile title='Profile Page' user={user}/>
             <Signup title='Signup Page' register={true}/>
             <Home title='Home Page'/>
@@ -46,7 +48,7 @@ function App() {
             <Signin title='Signin Page' login={true}/>
             <Contact title='Contact Page'/>
         */}
-        </>
-    )
+    </>
+  );
 }
 export default App;

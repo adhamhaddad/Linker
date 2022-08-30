@@ -4,5 +4,7 @@ CREATE TABLE reactions (
     comments text,
     shares INTEGER,
     user_id uuid,
-    FOREIGN KEY (user_id) REFERENCES person(id)
+    post_id uuid,
+    FOREIGN KEY (user_id) REFERENCES person(id),
+    FOREIGN KEY (post_id) REFERENCES posts(id)
 );

@@ -1,6 +1,6 @@
 type Photo = {
-    id?: string;
-    cover: string;
-    profile: string;
-}
+  id?: string;
+  cover: string;
+  profile: string;
+};
 export default Photo;

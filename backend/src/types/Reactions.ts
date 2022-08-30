@@ -1,7 +1,7 @@
 type Reactions = {
-    id?: string;
-    likes: number;
-    comments: string;
-    shares: number;
-}
+  id?: string;
+  likes: number;
+  comments: string;
+  shares: number;
+};
 export default Reactions;
