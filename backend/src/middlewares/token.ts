@@ -14,7 +14,7 @@ const verify = (req: Request, res: Response, next: NextFunction) => {
   } catch (err) {
     res.status(400).json({
       status: false,
-      message: `Access denied, invalid token ${(err as Error).message}`,
+      message: `Access denied, invalid token ${(err as Error).message}`
     });
   }
 };

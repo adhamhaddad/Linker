@@ -14,6 +14,6 @@ const config = {
   token: process.env.SECRET_TOKEN,
   peper: process.env.SECRET_PEPER,
   salt: Number(process.env.SALT_ROUNDS),
-  url: process.env.URL,
+  url: process.env.URL
 };
 export default config;

@@ -9,12 +9,12 @@ const uploadLink = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response },
-      message: 'Links uploaded successfully!',
+      message: 'Links uploaded successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -25,12 +25,12 @@ const getLink = async (req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: { ...response },
-      message: 'Retrieved the links successfully!',
+      message: 'Retrieved the links successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -41,12 +41,12 @@ const updateLink = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response },
-      message: 'Links updated successfully!',
+      message: 'Links updated successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -56,12 +56,12 @@ const deleteLink = async (req: Request, res: Response) => {
     await link.deleteLink(req.params.id);
     res.status(200).json({
       status: true,
-      message: 'Links deleted successfully!',
+      message: 'Links deleted successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };

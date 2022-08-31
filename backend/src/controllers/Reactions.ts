@@ -14,12 +14,12 @@ const createReactions = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response },
-      message: 'Reactions created successfully!',
+      message: 'Reactions created successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -30,12 +30,12 @@ const getAllReactions = async (_req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: response,
-      message: 'Reactions retrieved successfully!',
+      message: 'Reactions retrieved successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -46,12 +46,12 @@ const getReactions = async (req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: { ...response },
-      message: 'Reactions retrieved successfully!',
+      message: 'Reactions retrieved successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -62,12 +62,12 @@ const updateReactions = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response },
-      message: 'Reactions updated successfully!',
+      message: 'Reactions updated successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -77,12 +77,12 @@ const deleteReactions = async (req: Request, res: Response) => {
     await reaction.deleteReactions(req.params.id);
     res.status(200).json({
       status: true,
-      message: 'Reactions deleted successfully!',
+      message: 'Reactions deleted successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };

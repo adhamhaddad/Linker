@@ -10,12 +10,12 @@ const createPost = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response },
-      message: 'Post created successfully!',
+      message: 'Post created successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -26,12 +26,12 @@ const getAllPosts = async (req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: response,
-      message: 'Posts retrieved successfully!',
+      message: 'Posts retrieved successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -42,12 +42,12 @@ const getPost = async (req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: { ...response },
-      message: 'Post retrieved successfully!',
+      message: 'Post retrieved successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -58,12 +58,12 @@ const updatePost = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response },
-      message: 'Post updated successfully!',
+      message: 'Post updated successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -73,12 +73,12 @@ const deletePost = async (req: Request, res: Response) => {
     await post.deletePost(req.params.id);
     res.status(200).json({
       status: true,
-      message: 'Post deleted successfully!',
+      message: 'Post deleted successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };

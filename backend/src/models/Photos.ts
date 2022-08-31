@@ -2,12 +2,12 @@ import database from '../database';
 import Photo from '../types/Photo';
 
 class Photos {
-  async uploadPhoto(p: Photo, user_id: string): Promise<Photo> {
+  async uploadPhoto(p: Photo, info_id: string): Promise<Photo> {
     try {
       const connection = await database.connect();
       const sql =
-        'INSERT INTO photos (cover, profile, user_id) VALUES ($1, $2, $3) RETURNING *';
-      const result = await connection.query(sql, [p.cover, p.profile, user_id]);
+        'INSERT INTO photos (cover, profile, info_id) VALUES ($1, $2, $3) RETURNING *';
+      const result = await connection.query(sql, [p.cover, p.profile, info_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -17,11 +17,11 @@ class Photos {
     }
   }
 
-  async getPhoto(user_id: string): Promise<Photo> {
+  async getPhoto(info_id: string): Promise<Photo> {
     try {
       const connection = await database.connect();
-      const sql = 'SELECT * FROM photos WHERE user_id=($1)';
-      const result = await connection.query(sql, [user_id]);
+      const sql = 'SELECT * FROM photos WHERE info_id=($1)';
+      const result = await connection.query(sql, [info_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -31,11 +31,11 @@ class Photos {
     }
   }
 
-  async updatePhoto(user_id: string, p: Photo): Promise<Photo> {
+  async updatePhoto(info_id: string, p: Photo): Promise<Photo> {
     try {
       const connection = await database.connect();
-      const sql = 'UPDATE photos SET cover=$2, profile=$3 WHERE user_id=($1)';
-      const result = await connection.query(sql, [user_id, p.cover, p.profile]);
+      const sql = 'UPDATE photos SET cover=$2, profile=$3 WHERE info_id=($1)';
+      const result = await connection.query(sql, [info_id, p.cover, p.profile]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -45,11 +45,11 @@ class Photos {
     }
   }
 
-  async deletePhoto(user_id: string): Promise<Photo> {
+  async deletePhoto(info_id: string): Promise<Photo> {
     try {
       const connection = await database.connect();
-      const sql = 'DELETE FROM photos WHERE user_id=($1)';
-      const result = await connection.query(sql, [user_id]);
+      const sql = 'DELETE FROM photos WHERE info_id=($1)';
+      const result = await connection.query(sql, [info_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {

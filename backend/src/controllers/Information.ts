@@ -9,12 +9,12 @@ const createInfo = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response },
-      message: 'information created successfully!',
+      message: 'information created successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -25,12 +25,12 @@ const getInfo = async (req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: { ...response },
-      message: 'Retrieved the information successfully!',
+      message: 'Retrieved the information successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -41,12 +41,12 @@ const updateInfo = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response },
-      message: 'Information updated successfully!',
+      message: 'Information updated successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -56,12 +56,12 @@ const deleteInfo = async (req: Request, res: Response) => {
     await info.deleteInfo(req.params.id);
     res.status(200).json({
       status: true,
-      message: 'Information deleted successfully!',
+      message: 'Information deleted successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };

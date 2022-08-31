@@ -17,7 +17,7 @@ class Information {
         i.education.toLowerCase(),
         i.lives.toLowerCase(),
         i.story,
-        user_id,
+        user_id
       ]);
       connection.release();
       return result.rows[0];
@@ -53,7 +53,7 @@ class Information {
         i.relation.toLowerCase(),
         i.education.toLowerCase(),
         i.lives.toLowerCase(),
-        i.story,
+        i.story
       ]);
       connection.release();
       return result.rows[0];

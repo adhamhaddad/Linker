@@ -1,22 +1,16 @@
 import database from '../database';
 import Posts from '../types/Posts';
 
-const getDate = () => {
+const newDate = () => {
   const date = new Date();
-  const [month, day, year] = [
-    date.getMonth(),
-    date.getDate(),
-    date.getFullYear(),
-  ];
-  const [hour, minutes, seconds] = [
-    date.getHours(),
-    date.getMinutes(),
-    date.getSeconds(),
-  ];
-  const suffix = hour >= 12 ? 'PM' : 'AM';
-  return `${day}/${
-    month + 1
-  }/${year} - ${hour}:${minutes}:${seconds} ${suffix}`;
+  return date.toLocaleString('en-US', {
+    month: '2-digit',
+    day: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
 };
 class Post {
   async createPost(p: Posts, user_id: string): Promise<Posts> {
@@ -25,9 +19,9 @@ class Post {
       const sql =
         'INSERT INTO posts (timedate, content, user_id) VALUES ($1, $2, $3) RETURNING *';
       const result = await connection.query(sql, [
-        getDate(),
+        newDate(),
         p.content,
-        user_id,
+        user_id
       ]);
       connection.release();
       return result.rows[0];

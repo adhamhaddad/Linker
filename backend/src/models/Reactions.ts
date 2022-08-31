@@ -10,13 +10,12 @@ class Reaction {
     try {
       const connection = await database.connect();
       const sql =
-        'INSERT INTO reactions (likes, comments, shares, post_id, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+        'INSERT INTO reactions (likes, comments, shares, post_id) VALUES ($1, $2, $3, $4) RETURNING *';
       const result = await connection.query(sql, [
         r.likes,
         r.comments,
         r.shares,
-        post_id,
-        user_id,
+        post_id
       ]);
       connection.release();
       return result.rows[0];
@@ -42,11 +41,11 @@ class Reaction {
     }
   }
 
-  async getReactions(user_id: string): Promise<Reactions> {
+  async getReactions(post_id: string): Promise<Reactions> {
     try {
       const connection = await database.connect();
-      const sql = 'SELECT * FROM reactions WHERE user_id=($1)';
-      const result = await connection.query(sql, [user_id]);
+      const sql = 'SELECT * FROM reactions WHERE post_id=($1)';
+      const result = await connection.query(sql, [post_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -56,16 +55,16 @@ class Reaction {
     }
   }
 
-  async updateReactions(user_id: string, r: Reactions): Promise<Reactions> {
+  async updateReactions(post_id: string, r: Reactions): Promise<Reactions> {
     try {
       const connection = await database.connect();
       const sql =
-        'UPDATE reactions SET likes=$2, comments=$3, shares=$4 WHERE user_id=($1) RETURNING *';
+        'UPDATE reactions SET likes=$2, comments=$3, shares=$4 WHERE post_id=($1) RETURNING *';
       const result = await connection.query(sql, [
-        user_id,
+        post_id,
         r.likes,
         r.comments,
-        r.shares,
+        r.shares
       ]);
       connection.release();
       return result.rows[0];
@@ -76,11 +75,11 @@ class Reaction {
     }
   }
 
-  async deleteReactions(user_id: string): Promise<Reactions> {
+  async deleteReactions(post_id: string): Promise<Reactions> {
     try {
       const connection = await database.connect();
-      const sql = 'DELETE FROM reactions WHERE user_id=($1)';
-      const result = await connection.query(sql, [user_id]);
+      const sql = 'DELETE FROM reactions WHERE post_id=($1)';
+      const result = await connection.query(sql, [post_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {

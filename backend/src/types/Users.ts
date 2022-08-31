@@ -1,4 +1,4 @@
-type User = {
+type Users = {
   id?: string;
   username: string;
   email: string;
@@ -6,4 +6,4 @@ type User = {
   gender: string;
   joined: string;
 };
-export default User;
+export default Users;

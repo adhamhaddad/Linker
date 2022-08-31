@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import jwt from 'jsonwebtoken';
-import Person from '../models/Person';
+import User from '../models/User';
 import config from '../config';
 import token from '../middlewares/token';
 
-const user = new Person();
+const user = new User();
 
 const createUser = async (req: Request, res: Response) => {
   try {
@@ -14,13 +14,13 @@ const createUser = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response, token },
-      message: 'User created successfully!',
+      message: 'User created successfully!'
     });
     // .redirect('http://localhost:3000/login')
   } catch (err) {
     res.status(400).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -31,12 +31,12 @@ const getAllUsers = async (_req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: response,
-      message: 'User retrieved successfully!',
+      message: 'User retrieved successfully!'
     });
   } catch (err) {
     res.status(400).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -47,12 +47,12 @@ const getUser = async (req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: { ...response },
-      message: 'User retrieved successfully!',
+      message: 'User retrieved successfully!'
     });
   } catch (err) {
     res.status(400).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -63,12 +63,12 @@ const updateUser = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response },
-      message: 'User updated successfully!',
+      message: 'User updated successfully!'
     });
   } catch (err) {
     res.status(400).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -78,12 +78,12 @@ const deleteUser = async (req: Request, res: Response) => {
     await user.deleteUser(req.params.id);
     res.status(200).json({
       status: true,
-      message: 'User deleted successfully!',
+      message: 'User deleted successfully!'
     });
   } catch (err) {
     res.status(400).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -98,7 +98,7 @@ const authenticate = async (req: Request, res: Response) => {
     if (!response) {
       return res.status(401).json({
         status: false,
-        message: 'Username or password incorrect',
+        message: 'Username or password incorrect'
       });
     }
     //! Here will add res.redirect('http://localhost:3000/')
@@ -114,14 +114,14 @@ const authenticate = async (req: Request, res: Response) => {
   } catch (err) {
     res.status(400).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
 
 const user_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/user', logger, createUser);
-  app.get('/user', logger, getAllUsers);
+  app.get('/users', logger, getAllUsers);
   app.get('/user/:id', logger, getUser);
   app.patch('/user/:id', logger, updateUser);
   app.delete('/user/:id', logger, deleteUser);

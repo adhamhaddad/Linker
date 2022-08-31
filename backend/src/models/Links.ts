@@ -2,11 +2,11 @@ import database from '../database';
 import Link from '../types/Links';
 
 class Links {
-  async uploadLink(l: Link, user_id: string): Promise<Link> {
+  async uploadLink(l: Link, info_id: string): Promise<Link> {
     try {
       const connection = await database.connect();
       const sql =
-        'INSERT INTO links (facebook, instagram, whatsapp, linkedin, twitter, telegram, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+        'INSERT INTO links (facebook, instagram, whatsapp, linkedin, twitter, telegram, info_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
       const result = await connection.query(sql, [
         l.facebook,
         l.instagram,
@@ -14,7 +14,7 @@ class Links {
         l.linkedin,
         l.twitter,
         l.telegram,
-        user_id,
+        info_id
       ]);
       connection.release();
       return result.rows[0];
@@ -25,11 +25,11 @@ class Links {
     }
   }
 
-  async getLink(user_id: string): Promise<Link> {
+  async getLink(info_id: string): Promise<Link> {
     try {
       const connection = await database.connect();
-      const sql = 'SELECT * FROM links WHERE user_id=($1)';
-      const result = await connection.query(sql, [user_id]);
+      const sql = 'SELECT * FROM links WHERE info_id=($1)';
+      const result = await connection.query(sql, [info_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -39,19 +39,19 @@ class Links {
     }
   }
 
-  async updateLink(user_id: string, l: Link): Promise<Link> {
+  async updateLink(info_id: string, l: Link): Promise<Link> {
     try {
       const connection = await database.connect();
       const sql =
-        'UPDATE links SET facebook=$2, instagram=$3, whatsapp=$4, linkedin=$5, twitter=$6, telegram=$7 WHERE user_id=($1)';
+        'UPDATE links SET facebook=$2, instagram=$3, whatsapp=$4, linkedin=$5, twitter=$6, telegram=$7 WHERE info_id=($1)';
       const result = await connection.query(sql, [
-        user_id,
+        info_id,
         l.facebook,
         l.instagram,
         l.whatsapp,
         l.linkedin,
         l.twitter,
-        l.telegram,
+        l.telegram
       ]);
       connection.release();
       return result.rows[0];
@@ -62,11 +62,11 @@ class Links {
     }
   }
 
-  async deleteLink(user_id: string): Promise<Link> {
+  async deleteLink(info_id: string): Promise<Link> {
     try {
       const connection = await database.connect();
-      const sql = 'DELETE FROM links WHERE user_id=($1)';
-      const result = await connection.query(sql, [user_id]);
+      const sql = 'DELETE FROM links WHERE info_id=($1)';
+      const result = await connection.query(sql, [info_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {

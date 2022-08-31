@@ -6,6 +6,6 @@ CREATE TABLE links (
     twitter VARCHAR(255),
     linkedin VARCHAR(255),
     telegram VARCHAR(255),
-    user_id uuid,
-    FOREIGN KEY (user_id) REFERENCES person(id)
+    info_id uuid,
+    FOREIGN KEY (info_id) REFERENCES information(id) ON DELETE CASCADE ON UPDATE CASCADE
 );

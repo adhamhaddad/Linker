@@ -6,6 +6,6 @@ const database = new Pool({
   port: Number(config.db_port),
   database: config.db_dev,
   user: config.db_user,
-  password: config.db_password,
+  password: config.db_password
 });
 export default database;

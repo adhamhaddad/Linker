@@ -1,39 +1,34 @@
 import database from '../database';
-import User from '../types/Person';
+import Users from '../types/Users';
 import bcrypt from 'bcrypt';
 import config from '../config';
 
 const hash = (pass: string) =>
   bcrypt.hashSync(pass + config.peper, config.salt);
-const getDate = () => {
+
+const newDate = () => {
   const date = new Date();
-  const [month, day, year] = [
-    date.getMonth(),
-    date.getDate(),
-    date.getFullYear(),
-  ];
-  const [hour, minutes, seconds] = [
-    date.getHours(),
-    date.getMinutes(),
-    date.getSeconds(),
-  ];
-  const suffix = hour >= 12 ? 'PM' : 'AM';
-  return `${day}/${
-    month + 1
-  }/${year} - ${hour}:${minutes}:${seconds} ${suffix}`;
+  return date.toLocaleString('en-US', {
+    month: '2-digit',
+    day: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
 };
-class Person {
-  async createUser(u: User): Promise<User> {
+class User {
+  async createUser(u: Users): Promise<Users> {
     try {
       const connection = await database.connect();
       const sql =
-        'INSERT INTO person (username, email, password, gender, joined) VALUES ($1, $2, $3, $4, $5) RETURNING id, username, email, gender, joined';
+        'INSERT INTO users (username, email, password, gender, joined) VALUES ($1, $2, $3, $4, $5) RETURNING id, username, email, gender, joined';
       const result = await connection.query(sql, [
         u.username.toLocaleLowerCase(),
         u.email.toLocaleLowerCase(),
         hash(u.password),
         u.gender.toLocaleLowerCase(),
-        getDate(),
+        newDate()
       ]);
       connection.release();
       return result.rows[0];
@@ -42,10 +37,10 @@ class Person {
     }
   }
 
-  async getAllUsers(): Promise<User[]> {
+  async getAllUsers(): Promise<Users[]> {
     try {
       const connection = await database.connect();
-      const sql = 'SELECT username FROM person';
+      const sql = 'SELECT id, username FROM users';
       const result = await connection.query(sql);
       connection.release();
       return result.rows;
@@ -54,11 +49,11 @@ class Person {
     }
   }
 
-  async getUser(id: string): Promise<User> {
+  async getUser(id: string): Promise<Users> {
     try {
       const connection = await database.connect();
       const sql =
-        'SELECT id, username, email, gender, joined FROM person WHERE id=($1)';
+        'SELECT id, username, email, gender, joined FROM users WHERE id=($1)';
       const result = await connection.query(sql, [id]);
       connection.release();
       return result.rows[0];
@@ -67,17 +62,17 @@ class Person {
     }
   }
 
-  async updateUser(id: string, u: User): Promise<User> {
+  async updateUser(id: string, u: Users): Promise<Users> {
     try {
       const connection = await database.connect();
       const sql =
-        'UPDATE person SET username=$2, email=$3, password=$4, gender=$5 WHERE id=$($1) RETURNING id, username, email, gender';
+        'UPDATE users SET username=$2, email=$3, password=$4, gender=$5 WHERE id=$($1) RETURNING id, username, email, gender';
       const result = await connection.query(sql, [
         id,
         u.username,
         u.email,
         hash(u.password),
-        u.gender,
+        u.gender
       ]);
       connection.release();
       return result.rows[0];
@@ -86,24 +81,27 @@ class Person {
     }
   }
 
-  async deleteUser(id: string): Promise<User> {
+  async deleteUser(id: string): Promise<Users> {
     try {
       const connection = await database.connect();
-      const sql = 'DELETE FROM person WHERE id=($1)';
+      const sql = 'DELETE FROM users WHERE id=($1)';
       const result = await connection.query(sql, [id]);
       connection.release();
       return result.rows[0];
     } catch (err) {
-      throw new Error(`Could not create user. Error ${(err as Error).message}`);
+      throw new Error(`Could not delete user. Error ${(err as Error).message}`);
     }
   }
 
-  async authenticate(username: string, password: string): Promise<User | null> {
+  async authenticate(
+    username: string,
+    password: string
+  ): Promise<Users | null> {
     try {
       const connection = await database.connect();
-      const sql = 'SELECT password FROM person WHERE username=($1)';
+      const sql = 'SELECT password FROM users WHERE username=($1)';
       const result = await connection.query(sql, [
-        username.toLocaleLowerCase(),
+        username.toLocaleLowerCase()
       ]);
 
       if (result.rows.length) {
@@ -112,9 +110,9 @@ class Person {
 
         if (checkPass) {
           const sql =
-            'SELECT id, username, email FROM person WHERE username=($1)';
+            'SELECT id, username, email FROM users WHERE username=($1)';
           const result = await connection.query(sql, [
-            username.toLocaleLowerCase(),
+            username.toLocaleLowerCase()
           ]);
           connection.release();
           return result.rows[0];
@@ -129,4 +127,4 @@ class Person {
     }
   }
 }
-export default Person;
+export default User;

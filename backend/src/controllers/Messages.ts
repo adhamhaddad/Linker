@@ -9,12 +9,12 @@ const newMessage = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response },
-      message: 'Message sent successfully!',
+      message: 'Message sent successfully!'
     });
   } catch (err) {
     res.status(400).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -25,12 +25,12 @@ const getAllMessages = async (req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: response,
-      message: 'Messages received successfully!',
+      message: 'Messages received successfully!'
     });
   } catch (err) {
     res.status(400).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -41,12 +41,12 @@ const updateMessage = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response },
-      message: 'Message updated successfully!',
+      message: 'Message updated successfully!'
     });
   } catch (err) {
     res.status(400).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -56,12 +56,12 @@ const deleteMessage = async (req: Request, res: Response) => {
     const response = await message.deleteMessage(req.params.id);
     res.status(200).json({
       status: true,
-      message: 'Message deleted successfully!',
+      message: 'Message deleted successfully!'
     });
   } catch (err) {
     res.status(400).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };

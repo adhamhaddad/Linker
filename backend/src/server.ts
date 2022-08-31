@@ -2,7 +2,7 @@ import express, { Application, NextFunction } from 'express';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import logger from './middlewares/logger';
-import user_controller_routes from './controllers/Person';
+import user_controller_routes from './controllers/User';
 import information_controller_routes from './controllers/Information';
 import posts_controller_routes from './controllers/Posts';
 import reactions_controller_routes from './controllers/Reactions';
@@ -18,7 +18,7 @@ export const port = config.port || 8080;
 
 const corsOptions = {
   origin: 'http://localhost:4000',
-  optionsSucessStatus: 200,
+  optionsSucessStatus: 200
 };
 // Middlewares
 app.use(express.json());

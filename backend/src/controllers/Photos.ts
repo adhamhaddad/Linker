@@ -9,12 +9,12 @@ const uploadPhoto = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response },
-      message: 'Photo uploaded successfully!',
+      message: 'Photo uploaded successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -25,12 +25,12 @@ const getPhoto = async (req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: { ...response },
-      message: 'Retrieved the photos successfully!',
+      message: 'Retrieved the photos successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -41,12 +41,12 @@ const updatePhoto = async (req: Request, res: Response) => {
     res.status(201).json({
       status: true,
       data: { ...response },
-      message: 'Photo updated successfully!',
+      message: 'Photo updated successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
@@ -56,12 +56,12 @@ const deletePhoto = async (req: Request, res: Response) => {
     await photo.deletePhoto(req.params.id);
     res.status(200).json({
       status: true,
-      message: 'Photo deleted successfully!',
+      message: 'Photo deleted successfully!'
     });
   } catch (err) {
     res.status(401).json({
       status: false,
-      message: (err as Error).message,
+      message: (err as Error).message
     });
   }
 };
