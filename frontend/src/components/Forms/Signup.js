@@ -7,7 +7,7 @@ function Signup(props) {
     email: '',
     password: '',
     gender: '',
-    check: false,
+    check: false
   });
   console.log(formData);
 
@@ -16,7 +16,7 @@ function Signup(props) {
     setFormData((prev) => {
       return {
         ...prev,
-        [name]: type === 'checkbox' ? checked : value,
+        [name]: type === 'checkbox' ? checked : value
       };
     });
   };

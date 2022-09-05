@@ -2,31 +2,60 @@ import React from 'react';
 import './Post.css';
 
 function Post(props) {
-  const postTimeClac = (timedate) => {
-    const time = timedate.split(' - ')[1];
-    const hours = time.split(':')[0];
-    const minutes = time.split(':')[1];
-    const ampm = time.split(' ')[1];
-    const filter = `${hours}:${minutes} ${ampm}`;
-    return filter;
+  const validateTime = (timedate) => {
+    const getDateNow = new Date()
+      .toLocaleString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      })
+      .split(',')[1]
+      .split(':', 2)
+      .join(':');
+    const time = new Date(timedate)
+      .toLocaleString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      })
+      .split(',')[1];
+    return `${time.split(':', 2).join(':')} ${time.split(' ')[2]}`;
   };
   return (
     <div className='posts'>
       <div className='post-header'>
         <img src={props.profile} alt='Profile' />
-        <span>
-          {props.fname} {props.lname}
-        </span>
-        <p>posted: {postTimeClac(props.timedate)}</p>
+        <p>
+          <span>
+            {props.fname} {props.lname}
+          </span>
+          <span>
+            {validateTime(props.timedate)}
+            <i className='fa-solid fa-earth-africa'></i>
+          </span>
+        </p>
       </div>
       <div className='post-content'>
         <p>{props.content}</p>
       </div>
       <div className='post-reactions'>
-        <span className={props.reactions.likes.length ? 'active' : 'hidden'}>
-          <img src='./images/reactions/like.png' />
-          {props.reactions.likes[props.reactions.likes.length - 1]} and {props.reactions.likes.length} others
-        </span>
+        <p className={props.reactions.likes.length ? 'active' : 'hidden'}>
+          <span>
+            <img src='./images/reactions/like.png' />
+            {props.reactions.likes[props.reactions.likes.length - 1]}
+          </span>
+          <span
+            className={props.reactions.likes.length > 1 ? 'active' : 'hidden'}
+          >
+            and {props.reactions.likes.length - 1} others
+          </span>
+        </p>
         <p>
           <span
             className={props.reactions.comments.length ? 'active' : 'hidden'}
@@ -35,7 +64,7 @@ function Post(props) {
           </span>
           <span className={props.reactions.shares ? 'active' : 'hidden'}>
             <i className='fa-solid fa-circle period'></i>
-            {props.reactions.shares} shares
+            {props.reactions.shares.length} shares
           </span>
         </p>
       </div>

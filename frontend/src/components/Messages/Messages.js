@@ -10,18 +10,18 @@ function Messages() {
     messages: [
       {
         time: '12:16:10 AM',
-        message: 'Who are you!!?',
+        message: 'Who are you!!?'
       },
       {
         time: '12:17:40 AM',
         message:
-          'shshshsh i dont asking about your fuckin story.. i asked about why you texting me!?',
+          'shshshsh i dont asking about your fuckin story.. i asked about why you texting me!?'
       },
       {
         time: '12:17:50 AM',
-        message: 'No I hate you. bye',
-      },
-    ],
+        message: 'No I hate you. bye'
+      }
+    ]
   });
   const [senderUser, setSenderUser] = React.useState({
     name: 'adham ashraf',
@@ -29,21 +29,21 @@ function Messages() {
     messages: [
       {
         time: '12:15:20 AM',
-        message: 'Hellooooooooooooooo',
+        message: 'Hellooooooooooooooo'
       },
       {
         time: '12:17:30 AM',
-        message: 'I am adham. Iam a student ..',
+        message: 'I am adham. Iam a student ..'
       },
       {
         time: '12:17:45 AM',
-        message: 'I love youu ❤️',
+        message: 'I love youu ❤️'
       },
       {
         time: '12:18:01 AM',
-        message: 'I cant stop loving youu .. ❤️',
-      },
-    ],
+        message: 'I cant stop loving youu .. ❤️'
+      }
+    ]
   });
 
   const timeFormat = (time) => {

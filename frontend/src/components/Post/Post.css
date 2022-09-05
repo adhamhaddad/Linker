@@ -2,7 +2,7 @@
     min-width: 250px;
     max-width: 550px;
     padding: 5px;
-    margin: 0 auto;
+    margin: 10px auto;
     background-color: var(--base-color-light);
     color: var(--base-color-dark)
 }
@@ -11,6 +11,7 @@
     display: flex;
     height: 50px;
     text-transform: capitalize;
+    font-size: 12px;
 }
 .posts > .post-header > img {
     width: 50px;
@@ -19,9 +20,13 @@
     font-size: 12px;
     text-align: center;
 }
-.posts > .post-header > span {font-size: 14px; font-weight: 800; line-height: 50px}
-.posts > .post-header > p {font-size: 12px; line-height: 50px; margin-left: auto}
-
+.posts > .post-header > p span:nth-child(1) {
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    display: block;
+}
+.posts > .post-header > p span i.fa-earth-africa {margin-left: 4px}
 /* Post Content */
 .posts .post-content {
     border: 1px solid rgb(219, 219, 219);
@@ -33,38 +38,34 @@
 }
 
 .posts > .post-reactions {
-    color: var(--base-color-dark);
-    font-size: 12px;
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    /* background-color: green; */
     margin: 5px 0;
-    height: 20px
+    height: 20px;
+}
+/* Like section */
+.posts > .post-reactions p {display: flex}
+.posts > .post-reactions > p span {display: flex; align-items: center}
+.posts > .post-reactions > p span img {width: 12px; margin-right: 2px}
+/* Comments & Share section */
+.posts > .post-reactions p > span i.period {
+    font-size: 2.5px;
+    margin: 0 6px;
+    vertical-align: middle;
 }
 
-.posts > .post-reactions img {
-    width: 12px;
-    margin-right: 2px;
-}
-.posts > .post-reactions span:nth-of-type(1) {
-    margin-right: auto;
-}
-.posts > .post-reactions p span i.period {
-    font-size: 3px;
-    vertical-align: middle;
-    margin: 0 6px;
-    color: var(--base-color-dark)
-}
 /* Post Bottom */
 .posts > .post-bottom {
     border: 1px solid rgb(219, 219, 219);
     display: flex;
-    /* align-items: center; */
     height: 50px;
 }
 .posts > .post-bottom button {
     /* border: 1px solid rgb(219, 219, 219); */
     width: 100px;
-    height: 50px;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -72,7 +73,8 @@
     text-transform: capitalize;
     transition-property: background;
     transition-duration: .5s;
-    cursor: pointer
+    cursor: pointer;
+    background-color: #FFF;
 }
 .posts > .post-bottom button i {margin-right: 4px}
 
@@ -80,14 +82,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50px;
+    height: 100%;
+    background-color: #FFF;
     font-size: 14px;
     margin-right: auto;
+    border-right: 1px solid rgb(219, 219, 219);
+    border-left: 1px solid rgb(219, 219, 219);
 }
 .posts > .post-bottom .comment input {
     width: 300px;
-    height: 50px;
-    padding-left: 5px
+    height: 100%;
+    padding-left: 5px;
+    align-self: center;
 }
 .posts > .post-bottom .comment i {
     height: 50px;

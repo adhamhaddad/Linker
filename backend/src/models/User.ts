@@ -28,7 +28,7 @@ class User {
         u.email.toLocaleLowerCase(),
         hash(u.password),
         u.gender.toLocaleLowerCase(),
-        newDate()
+        new Date()
       ]);
       connection.release();
       return result.rows[0];

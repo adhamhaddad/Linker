@@ -19,7 +19,7 @@ class Post {
       const sql =
         'INSERT INTO posts (timedate, content, user_id) VALUES ($1, $2, $3) RETURNING *';
       const result = await connection.query(sql, [
-        newDate(),
+        new Date(),
         p.content,
         user_id
       ]);

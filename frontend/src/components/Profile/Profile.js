@@ -1,20 +1,14 @@
 import React from 'react';
-import './Profile.css';
 import Post from '../Post/Post';
+import './Profile.css';
 
 function Profile(props) {
-  /*
-  const date = props.user.joined.toLocaleString('en-US', {
-    month: '2-digit',
-    day: '2-digit',
-    year: '2-digit',
-  });
-  const time = props.user.joined.toLocaleString('en-US').split(',')[1];
-    props.user.joined.toLocaleString('en-US').split(',')[1]
-  );
-  const filter = Date(props.user.joined.toLocaleString('en-US', { month: '2-digit' })).split(' ');
-  */
-
+  const openProfileFullSize = () => {
+    document.querySelector('#fullImage').style.display = 'block';
+  };
+  const closeProfileFullSize = () => {
+    document.querySelector('#fullImage').style.display = 'none';
+  };
   const userPosts = props.posts.length
     ? props.posts.map((post) => {
         return (
@@ -24,18 +18,12 @@ function Profile(props) {
             profile={props.photos.profile}
             timedate={post.timedate}
             content={post.content}
-            reactions={props.reactions}
+            reactions={props.reactions[0]}
             key={post.id}
           />
         );
       })
     : null;
-  const openProfileFullSize = () => {
-    document.querySelector('#fullImage').style.display = 'block';
-  };
-  const closeProfileFullSize = () => {
-    document.querySelector('#fullImage').style.display = 'none';
-  };
   return (
     <div>
       <div id='fullImage' onClick={closeProfileFullSize}>
@@ -61,12 +49,12 @@ function Profile(props) {
                 <span>works at {props.information.work}</span>
               </li>
               <li>
-                <i className='fa-solid fa-heart fa-1x'></i>
-                <span>relationship {props.information.relation}</span>
-              </li>
-              <li>
                 <i className='fa-solid fa-graduation-cap fa-1x'></i>
                 <span>College {props.information.education}</span>
+              </li>
+              <li>
+                <i className='fa-solid fa-heart fa-1x'></i>
+                <span>relationship {props.information.relation}</span>
               </li>
               <li>
                 <i className='fa-solid fa-home fa-1x'></i>
@@ -90,13 +78,13 @@ function Profile(props) {
             </h3>
             <ul>
               <li>
-                <a href={props.links.facebook} title='Facebook' target='_blank'>
+                <a href={props.links.facebook} title='Facebook' target='_blank' rel="noreferrer">
                   <i className='fa-brands fa-facebook fa-1x'></i>
                   <span>facebook</span>
                 </a>
               </li>
               <li>
-                <a href={props.links.twitter} title='Twitter' target='_blank'>
+                <a href={props.links.twitter} title='Twitter' target='_blank' rel="noreferrer">
                   <i className='fa-brands fa-twitter fa-1x'></i>
                   <span>twitter</span>
                 </a>
@@ -105,14 +93,14 @@ function Profile(props) {
                 <a
                   href={props.links.instagram}
                   title='Instagram'
-                  target='_blank'
+                  target='_blank' rel="noreferrer"
                 >
                   <i className='fa-brands fa-instagram fa-1x'></i>
                   <span>instagram</span>
                 </a>
               </li>
               <li>
-                <a href={props.links.linkedin} title='LinkedIn' target='_blank'>
+                <a href={props.links.linkedin} title='LinkedIn' target='_blank' rel="noreferrer">
                   <i className='fa-brands fa-linkedin fa-1x'></i>
                   <span>linkedIn</span>
                 </a>
@@ -121,14 +109,14 @@ function Profile(props) {
                 <a
                   href={`tel:${props.information.phone}`}
                   title='Whatsapp'
-                  target='_blank'
+                  target='_blank' rel="noreferrer"
                 >
                   <i className='fa-brands fa-whatsapp fa-1x'></i>
                   <span>whatsapp</span>
                 </a>
               </li>
               <li>
-                <a href={props.links.telegram} title='Telegram' target='_blank'>
+                <a href={props.links.telegram} title='Telegram' target='_blank' rel="noreferrer">
                   <i className='fa-brands fa-telegram fa-1x'></i>
                   <span>telegram</span>
                 </a>

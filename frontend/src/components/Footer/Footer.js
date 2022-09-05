@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Footer.css';
 class Footer extends Component {
   currentYear = () => {
-    let years = new Date().getFullYear();
+    const years = new Date().getFullYear();
     return years;
   };
 

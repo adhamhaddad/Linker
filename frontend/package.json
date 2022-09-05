@@ -13,6 +13,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "lint": "eslint src/**/*.js --fix",
     "format": "prettier --write src/components/**/*.js && prettier --write src/*.js",
     "start": "PORT=4000 react-scripts start",
     "build": "react-scripts build",
@@ -38,6 +39,10 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.6",
     "prettier": "^2.7.1"
   }
 }

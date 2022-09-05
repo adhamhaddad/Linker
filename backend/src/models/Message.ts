@@ -19,7 +19,7 @@ class Message {
       const sql =
         'INSERT INTO messages (time, message, user_id) VALUES ($1, $2, $3) RETURNING *';
       const result = await connection.query(sql, [
-        newDate(),
+        new Date(),
         m.message,
         user_id
       ]);

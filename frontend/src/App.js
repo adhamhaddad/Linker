@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 // import Home from './components/Home/Home';
 // import Notification from './components/Notification/Notification';
@@ -11,21 +11,117 @@ import Profile from './components/Profile/Profile';
 import Footer from './components/Footer/Footer';
 
 function App() {
-  const [user, setUser] = React.useState({});
-  const [photos, setPohotos] = React.useState({});
-  const [information, setInfomation] = React.useState({});
-  const [links, setLinks] = React.useState({});
-  const [posts, setPosts] = React.useState([]);
-  const [reactions, setReactions] = React.useState({
-    likes: ['Adham Ashraf', 'Mariam Maged'],
-    comments: ['Nice post!', 'Great job!', 'Can i shares it ?'],
-    shares: 16,
-  });
+  const [user, setUser] = useState({});
+  const [photos, setPohotos] = useState({});
+  const [information, setInfomation] = useState({});
+  const [links, setLinks] = useState({});
+  const [posts, setPosts] = useState([]);
+  // const postSQL = 'SELECT id, content, timedate FROM posts WHERE id=user_id';
+  // const id = postSQL.data.id;
+  // const reactionsSql = 'SELECT likes, comments, shares FROM reaction WHERE post_id=id';
+  const [reactions, setReactions] = useState([
+    {
+      likes: ['Adham Ashraf', 'Ahmed Emad', 'Simba', 'Bassem Hamada', 'Mariam Maged'],
+      comments: ['Nice post!', 'Great job!', 'Can i shares it ?', 'Fuck you'],
+      shares: ['Simba', 'Ahmed', 'Bassem']
+    },
+    {
+      likes: ['Adham Ashraf', 'Ahmed Emad'],
+      comments: ['Nice post!', 'Great job!', 'Can i shares it ?'],
+      shares: ['Simba', 'Ahmed', 'Bassem']
+    },
+    {
+      likes: ['Adham Ashraf', 'Ahmed Emad', 'Simba'],
+      comments: ['Nice post!', 'Great job!'],
+      shares: ['Simba', 'Ahmed', 'Bassem']
+    },
+    {
+      likes: ['Adham Ashraf', 'Ahmed Emad', 'Simba', 'Bassem Hamada'],
+      comments: ['Nice post!', 'Great job!', 'Can i shares it ?', 'Fuck you'],
+      shares: ['Simba', 'Ahmed', 'Bassem']
+    }
+  ]);
 
+  useEffect(() => {
+    setUser((prev) => {
+      return {
+        ...prev,
+        id: '1',
+        username: 'adhamhaddad',
+        email: 'adham@gmail.com',
+        gender: 'male',
+        joined: '08/31/2022, 09:48:16 AM'
+      };
+    });
+
+    setPohotos((prev) => {
+      return {
+        ...prev,
+        cover: './images/ae177f7f-8928-4a1b-afab-6957d5aeb1c3/cover/linked.png',
+        profile:
+          './images/ae177f7f-8928-4a1b-afab-6957d5aeb1c3/profile/profile.jpg'
+      };
+    });
+
+    setInfomation((prev) => {
+      return {
+        ...prev,
+        fname: 'adham',
+        lname: 'ashraf',
+        phone: '01113833449',
+        birthday: '08/02/2002',
+        work: 'the sparks foundation',
+        relation: 'single',
+        education: 'information systems',
+        lives: 'giza, egypt',
+        story:
+          'Hi, I am Adham. I am a student at High Institute for Computers & Management Information Systems started in 2019 and I will graduate in 2023. I started my Full-Stack journey in 2019 and built many projects using many languages. I also joined Udacity Nanodegree programs and got certified as a Professional Front End Web Developer and Advanced Full-Stack Web Developer. I worked too hard to achieve this progress, it\'s my passion and I need an opportunity to show myself.'
+      };
+    });
+    setLinks((prev) => {
+      return {
+        ...prev,
+        telegram: 'https://t.me/adhamhaddad',
+        linkedin: 'https://www.linkedin.com/in/adhamashraf/',
+        twitter: 'https://twitter.com/AdhamHaddad_'
+      };
+    });
+    setPosts((prev) => {
+      return [
+        ...prev,
+        {
+          id: 1,
+          timedate: 'Fri Sep 02 2022 14:12:31 GMT+0200 (Eastern European Standard Time)',
+          content: 'Hello again. its me with another post!'
+        },
+        {
+          id: 2,
+          timedate: '08/31/2022, 10:02:30 AM',
+          content: 'Hello Everyone!. its me again with a new post for test'
+        },
+        {
+          id: 3,
+          timedate: '08/31/2022, 12:29:55 PM',
+          content:
+            'Okay i will say it .. i cant ignore mariam . i love her so much!!❤️ ..'
+        }
+      ];
+    });
+  }, []);
+
+  /*
+  setReactions(prev => {
+    return {
+      ...prev,
+
+    }
+  })
+  */
+  /*
   // User
   React.useEffect(() => {
     function getUser() {
-      fetch('http://localhost:3000/user/4e5c7f44-f20d-458b-a204-5fca018c93c2')
+      fetch('http://localhost:3000/user/29becb51-fa37-467e-b37f-74b85b2a1018')
         .then((res) => res.json())
         .then((user) => {
           setUser((prev) => {
@@ -35,7 +131,7 @@ function App() {
               username: user.data.username,
               email: user.data.email,
               gender: user.data.gender,
-              joined: user.data.joined,
+              joined: user.data.joined
             };
           });
         })
@@ -48,7 +144,7 @@ function App() {
     // Photos
     async function getPhotos() {
       const response = await fetch(
-        `http://localhost:3000/user/4e5c7f44-f20d-458b-a204-5fca018c93c2/photos`
+        `http://localhost:3000/user/29becb51-fa37-467e-b37f-74b85b2a1018/photos`
       );
       const photo = await response.json();
       try {
@@ -56,7 +152,7 @@ function App() {
           return {
             ...prev,
             cover: photo.data.cover,
-            profile: photo.data.profile,
+            profile: photo.data.profile
           };
         });
       } catch (err) {
@@ -68,7 +164,7 @@ function App() {
     // Information
     async function getInformation() {
       const response = await fetch(
-        `http://localhost:3000/user/4e5c7f44-f20d-458b-a204-5fca018c93c2/information`
+        `http://localhost:3000/user/29becb51-fa37-467e-b37f-74b85b2a1018/information`
       );
       const info = await response.json();
       try {
@@ -83,7 +179,7 @@ function App() {
             relation: info.data.relation,
             education: info.data.education,
             lives: info.data.lives,
-            story: info.data.story,
+            story: info.data.story
           };
         });
       } catch (err) {
@@ -94,7 +190,7 @@ function App() {
     // Links
     async function getLinks() {
       const response = await fetch(
-        `http://localhost:3000/user/4e5c7f44-f20d-458b-a204-5fca018c93c2/links`
+        `http://localhost:3000/user/29becb51-fa37-467e-b37f-74b85b2a1018/links`
       );
       const link = await response.json();
       try {
@@ -105,7 +201,7 @@ function App() {
             twitter: link.data.twitter,
             linkedin: link.data.linkedin,
             instagram: link.data.instagram,
-            telegram: link.data.telegram,
+            telegram: link.data.telegram
           };
         });
       } catch (err) {
@@ -116,13 +212,11 @@ function App() {
 
     // Reactions
     async function getReactions() {
-      /*
         const response = await fetch(`http://localhost:3000/user/${user.id}/posts/reactions`);
         const reactions = await response.json();
         try {
             setReactions(reactions.data)
         } catch (err) {console.log(err.message)}
-      */
       const response = {
         comments: ['Good Job', 'Awesome Job!'],
         likes: ['Beso Emad', 'Bassem Hamada', 'Simba', 'Mariam Maged'],
@@ -135,7 +229,7 @@ function App() {
     // Posts
     async function getPosts() {
       const response = await fetch(
-        `http://localhost:3000/user/4e5c7f44-f20d-458b-a204-5fca018c93c2/posts`
+        `http://localhost:3000/user/29becb51-fa37-467e-b37f-74b85b2a1018/posts`
       );
       const post = await response.json();
       try {
@@ -146,7 +240,7 @@ function App() {
     }
     getPosts();
   }, []);
-
+  */
   return (
     <>
       <Header />
