@@ -74,6 +74,13 @@
 
 .container form .radio label input,
 .container form > label.checkbox input {margin-right: 5px}
+.container form > label.checkbox {
+    margin: 25px 0;
+}
+.container form > label.checkbox span {
+    font-size: 12px;
+    text-transform: capitalize;
+}
 .container form button {
     display: block;
     width: 100%;
@@ -87,7 +94,12 @@
     cursor: pointer
 }
 
-
+.container form button:disabled {
+    cursor: not-allowed;
+}
+.error {
+    border: 2px solid red
+}
 /*! When anchor link have class active !*/
 .container .switch-box a.active {
     border-radius: 20px ;
