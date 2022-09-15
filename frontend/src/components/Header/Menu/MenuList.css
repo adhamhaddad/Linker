@@ -1,0 +1,151 @@
+.menu-list {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-left: auto;
+    font-size: 14px;
+}
+.menu-list > li {height: 100%}
+.menu-list > li > a {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    text-transform: capitalize;
+    position: relative;
+    color: var(--base-color-light);
+    transition: background .5s ease-in-out;
+}
+.menu-list > li > a > span {
+    height: 20px;
+    line-height: 24px;
+}
+.menu-list > li > a > i {
+    margin-right: 5px;
+    position: relative;
+}
+
+.menu-list > li > a > i > span {
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    line-height: 18px;
+    border-radius: 50%;
+    top: -8.5px;
+    left: -9px;
+    position: absolute;
+    font-weight: 800;
+    font-size: 10px;
+    text-shadow: .5px .5px var(--base-background-dark);
+    background-color: #F00;
+    display: block;
+}
+
+/* Notifications */
+.menu-list > .notifications > a > .all-notifications {
+    background-color: var(--base-background-dark);
+    width: 220%;
+    height: 400px;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    display: none;
+    border-bottom: 1px solid var(--base-background-dark);
+    border-right: 1px solid var(--base-background-dark);
+    border-left: 1px solid var(--base-background-dark);
+}
+.menu-list > .notifications > a > .all-notifications .notifications-iframe {width: 100%; height: 100%}
+
+/* Settings */
+.menu-list > .settings > ul {
+    width: 100%;
+    background-color: var(--base-background-dark);
+    position: absolute;
+    display: none
+}
+.menu-list > .settings > ul li {
+    display: block;
+    position: relative;
+    transition: .5s background ease-in-out
+}
+.menu-list > .settings > ul li a {
+    display: block;
+    height: 50px;
+    padding: 15px 10px;
+    position: relative;
+    transition: .5s background ease-in-out
+}
+.menu-list > .settings > ul > li > a > span,
+.menu-list > .settings > ul > li > a > i {
+    color: var(--base-color-light);
+    text-transform: capitalize;
+    text-align: center;
+    font-size: 12px;
+}
+
+/*** Effects ***/
+.menu-list > li > a:hover {
+    background-color: var(--base-background-hovered);
+    transition: .5s background ease-in-out;
+}
+.menu-list > li > a:after {
+    content: "";
+    display: block;
+    background-color: var(--base-color-light);
+    height: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: .5s height ease-in-out;
+}
+.menu-list > li > a:focus {
+    background-color: var(--base-background-hovered);
+    transition: .5s background ease-in-out;
+}
+.menu-list > li > a:focus:after {
+    height: 3px;
+    transition: .5s height ease-in-out;
+}
+.menu-list > .notifications > a:hover > i {
+    animation-name: bell;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+
+
+/*** Animations ***/
+@keyframes bell{
+    0% {transform: rotate(5deg)}
+    10% {transform: rotate(-5deg)}
+    20% {transform: rotate(10deg)}
+    30% {transform: rotate(-10deg)}
+    40% {transform: rotate(20deg)}
+    50% {transform: rotate(-20deg)}
+    60% {transform: rotate(30deg)}
+    70% {transform: rotate(-30deg)}
+    80% {transform: rotate(40deg)}
+    90% {transform: rotate(-40deg)}
+    100% {transform: rotate(0deg)}
+}
+
+@media only screen and (max-width: 600px) {
+    .header .container > .menu-list {
+        width: 100%;
+    }
+    .header .container > .menu-list > li {
+        flex-grow: 1;
+    }
+    .header .container > .menu-list > li > a {
+        height: 60px;
+    }
+    .header .container > .menu-list > li > a > span {
+        display: none;
+    }
+    .header .container > .menu-list > li > a > i {
+        margin: 0;
+        font-size: 20px;
+    }
+}

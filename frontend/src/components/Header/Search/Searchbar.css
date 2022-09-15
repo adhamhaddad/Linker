@@ -1,0 +1,32 @@
+/* Search bar */
+.search-bar {
+    display: flex;
+    margin: 0 10px;
+    border-bottom: 0.1px solid rgb(219, 219, 219);
+    color: var(--base-color-light);
+    background-color: var(--base-color-dark);
+}
+
+.search-bar > input {
+    color: var(--base-color-light);
+    width: 300px;
+    padding: 0 10px;
+}
+.search-bar > button {
+    width: 40px;
+    border-radius: 50%;
+    padding: 0 10px;
+    cursor: pointer;
+    color: var(--base-color-light);
+    background-color: var(--base-color-dark);
+    transition-property: background, color;
+    transition-duration: .5s;
+    transition-timing-function: ease-in-out;
+}
+.search-bar > button:hover {
+    color: var(--base-color-dark);
+    background-color: var(--base-color-light);
+    transition-property: background, color;
+    transition-duration: .5s;
+    transition-timing-function: ease-in-out;
+}

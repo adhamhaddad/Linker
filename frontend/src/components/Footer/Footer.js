@@ -1,27 +1,21 @@
-import React, { Component } from 'react';
-import './Footer.css';
-class Footer extends Component {
-  currentYear = () => {
-    const years = new Date().getFullYear();
-    return years;
-  };
+import React from 'react';
+import classes from './Footer.module.css';
 
-  render() {
-    return (
-      <footer>
-        <small>
-          copyrights&copy; 2020 - {this.currentYear()}
-          <a
-            href='https://www.linkedin.com/in/adhamashraf/'
-            target='_blank'
-            rel='noreferrer'
-          >
-            adham ashraf.
-          </a>
-          all rights reserved.
-        </small>
-      </footer>
-    );
-  }
+function Footer() {
+  return (
+    <footer className={classes.footer}>
+      <small>
+        copyrights&copy; 2020 - {new Date().getFullYear()}
+        <a
+          href='https://www.linkedin.com/in/adhamashraf/'
+          target='_blank'
+          rel='noreferrer'
+        >
+          adham ashraf.
+        </a>
+        all rights reserved.
+      </small>
+    </footer>
+  );
 }
 export default Footer;

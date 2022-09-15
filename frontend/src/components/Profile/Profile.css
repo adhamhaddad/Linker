@@ -1,13 +1,14 @@
-/* User Id */
 .container-flex {
     display: flex;
-    height: 365px;
+    flex-flow: row wrap;
+    justify-content: space-between;
     padding: 10px;
-    margin-bottom: 10px;
     color: var(--base-color-light);
 }
-.container .left-side {width: 50%}
-.container .left-side .user-id img {
+.container-flex .left-side {
+    flex-grow: 0;
+}
+.container-flex .left-side .user-id img {
     display: block;
     width: 150px;
     height: 160.15px;
@@ -16,8 +17,7 @@
     cursor: pointer;
     text-align: center;
 }
-.container .left-side .user-id span,
-.container .left-side .user-info h3 {
+.container-flex .left-side .user-id span {
     display: block;
     width: 150px;
     padding: 10px 0;
@@ -26,84 +26,35 @@
     font-weight: 800;
 }
 
-/* User Info */
-.container .left-side .user-info {overflow: auto}
-.container .left-side .user-info ul li,
-.container .right-side .bottom-side ul li > a {
-    display: block;
-    color: var(--base-color-light);
-    text-transform: capitalize;
-    padding: 10px 0;
-    font-size: 14px;
-    transition: background .7s;
-}
-.container .right-side .bottom-side ul li {display: inline-block}
-.container .left-side .user-info ul li > i,
-.container .right-side .bottom-side ul li a > i {width: 25px}
-
 /* Right Side */
 .container-flex .right-side {
-    width: 50%;
-    height: 100%;
-}
-.container .right-side .user-bio {
-    width: 100%;
-    height: 60%;
-    /* overflow: auto; */
+    width: 400px;
+    flex-grow: 0.2;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
-.container .right-side .user-bio h3,
-.container .right-side .bottom-side h3 {
+
+.links-section h3,
+.story h3 {
     text-transform: capitalize;
     text-align: center;
     font-weight: 800;
     font-size: 16px;
     padding: 10px 0;
 }
-.container .right-side .user-bio h3 > i,
-.container .right-side .bottom-side h3 > i {margin: 0 5px}
 
-.container .right-side .user-bio p {
-    width: 100%;
-    height: 100px;
-    font-size: 14px;
-    line-height: 1.5;
-    word-wrap: break-word;
-    overflow-y: auto;
-    height: 100%;
 
+button.create-post {
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0 0 10px 0;
 }
 
-/* Bottom Side */
-.container .right-side .bottom-side {
-    height: 40%;
-    width: 100%;
-    overflow: auto;
-    padding: 5px 0;
-    text-align: center;
-}
-.container .right-side .bottom-side ul li > a {padding: 10px 5px}
-#fullImage  {
-    display: none;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: fixed;
-    z-index: 1500;
-    background-color: rgba(0, 0, 0, 0.7);
-}
-#fullImage > img {
-    width: 500px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2000;
-}
-.container-body {padding: 10px 0}
-.hide {display: none}
 /* Effects */
 a:hover {background-color: var(--base-background-light); transition: background .7s}
 a[title='LinkedIn']:hover {background-color: #0E76A8; transition: background .7s}
@@ -112,33 +63,62 @@ a[title='Twitter']:hover {background-color: #00ACEE; transition: background .7s}
 a[title='Whatsapp']:hover {background-color: #24CC63; transition: background .7s}
 a[title='Telegram']:hover {background-color: #0084C6; transition: background .7s}
 
-/* Media Querry */
-@media screen and (max-width: 775px) {.container-flex {height: 360px}}
-@media screen and (max-width: 640px) {.container {width: 100%}}
-/* 550px Screens */
-@media screen and (max-width: 550px) {
-    .container-flex {padding: 10px; background-color: red}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 1080px) {
+   
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
     /* User Info */
     .container .left-side .user-info ul li,
-    .container .right-side .bottom-side ul li {font-size: 12px}
+    .container .right-side .links-section ul li {font-size: 12px}
     
-    /* User Bio */
     /* Titles */
     .container .left-side .user-info h3,
-    .container .right-side .user-bio h3,
-    .container .right-side .bottom-side h3 {
-        padding: 0;
+    .container .right-side .story h3,
+    .container .right-side .links-section h3 {
         text-align: left;
         font-size: 14px;
     }
-    .container .right-side .user-bio,
-    .container .right-side .bottom-side {text-align: left}
-    .container .right-side .user-bio p {font-size: 12px; text-align: left}
+
+    .container .right-side .story,
+    .container .right-side .links-section ul li a {font-size: 12px}
+    .container .right-side .story p {font-size: 12px}
+    .container .right-side .links-section {
+        height: auto;
+        padding: 0;
+    }
+    .container .right-side .links-section ul {
+        text-align: left;
+    }
+    .container .right-side .links-section ul li a {
+        padding: 5px 0;
+        margin: 0 5px 0 0;
+    }
 }
 
-/* 360px Screens */
+/*
+* Media Querry
+@media screen and (max-width: 775px) {.container-flex {height: 360px}}
+@media screen and (max-width: 640px) {.container {width: 100%}}
+* 550px Screens
+@media screen and (max-width: 550px) {
+
+}
+
+* 360px Screens
 @media screen and (max-width: 360px) {
-    /* Frameworks */
+    * Frameworks
     .container-flex {display: block; height: 340px}
     .container-flex .left-side {
         display: flex;
@@ -146,11 +126,11 @@ a[title='Telegram']:hover {background-color: #0084C6; transition: background .7s
         height: 60%;
         justify-content: space-between;
     }
-    /* User Id */
+    * User Id
     .container .left-side .user-id span {font-size: 14px; text-align: left}
-    /* User Info */
+    * User Info
     .container .left-side .user-info {width: 50%; height: 100%}
-    /* Bio */
+    * Bio
     .container-flex .right-side {
         display: flex;
         width: 100%;
@@ -158,12 +138,13 @@ a[title='Telegram']:hover {background-color: #0084C6; transition: background .7s
         justify-content: space-between;
     }
     .container .right-side .user-bio,
-    .container .right-side .bottom-side {width: 50%; height: 100%}
-    /* Titles */
+    .container .right-side .links-section {width: 50%; height: 100%}
+    * Titles
     .container .left-side .user-info h3,
     .container .right-side .user-bio h3,
-    .container .right-side .bottom-side h3 {font-size: 12px}
+    .container .right-side .links-section h3 {font-size: 12px}
     .container .right-side .user-bio p {padding: 5px 0}
-    /* User Footer */
-    .container .right-side .bottom-side ul li a {padding: 5px}
+    * User Footer
+    .container .right-side .links-section ul li a {padding: 5px}
 }
+*/

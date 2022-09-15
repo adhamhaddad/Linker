@@ -1,0 +1,80 @@
+.post-header .post-controller {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.post-controller > button {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: var(--base-color-light);
+    transition: background .5s ease-in-out;
+}
+
+.post-controller > button:hover {
+    background-color: rgb(219, 219, 219);
+    transition: background .5s ease-in-out;
+}
+
+.post-controller ul {
+    display: block;
+    position: absolute;
+    top: -10px;
+    right: -210px;
+    width: 200px;
+    border-radius: 5px;
+    filter: drop-shadow(0 0 10px var(--base-color-dark));
+    background-color: var(--base-color-light);
+}
+
+.post-controller ul li {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px;
+    text-transform: capitalize;
+    font-weight: bold;
+    border-bottom: 1px solid rgb(219, 219, 219);
+    cursor: pointer;
+    transition: background .5s ease-in-out;
+}
+.post-controller ul li:hover {
+    background-color: rgb(219, 219, 219);
+    transition: background .5s ease-in-out;
+}
+.post-controller ul li:last-of-type {
+    border-bottom: none;
+}
+
+
+/*** Media Querry ***/
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 1080px) {
+   
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+    .post-controller ul {
+        top: 50px;
+        right: 0;
+
+    }
+}
+@media only screen and (max-width: 420px) {
+    
+}

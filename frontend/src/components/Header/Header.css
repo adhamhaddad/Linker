@@ -1,17 +1,23 @@
-nav {
-    display: flex;
-    justify-content: space-around;
+.header {
     height: 60px;
+    display: flex;
+    align-items: center;
     top: 0;
     right: 0;
     left: 0;
     position: fixed;
-    z-index: 200;
+    z-index: 1200;
     background-color: var(--base-background-dark);
 }
-/* nav - Logo */
-nav > img.logo {
-    width: 150px;
+/* .header - Logo */
+.header > .container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    border: none;
+}
+.header > .container .logo {
+    width: 100px;
     height: 100%;
     font-size: 16px;
     text-align: center;
@@ -19,384 +25,58 @@ nav > img.logo {
     color: var(--base-color-light);
 }
 
-/* Search bar */
-nav > .search-bar {
-    display: flex;
-    width: 300px;
-    border-bottom: 1px solid var(--base-color-light);
-}
-nav > .search-bar > input {
-    color: var(--base-color-light);
-    width: 90%;
-    background-color: transparent;
-    padding: 0 10px;
-}
-nav > .search-bar > button {
-    color: var(--base-color-light);
-    width: 50px;
-    padding: 0 10px;
-    background-color: transparent;
-    cursor: pointer;
-    transition: .5s background ease-in-out;
-}
-
-/* nav - Content */
-/* nav > ul {margin-left: auto} */
-nav > ul > li {display: inline-block}
-nav > ul > li > a {
-    display: block;
-    height: 100%;
-    line-height: 60px;
-    padding: 0 10px;
-    color: var(--base-color-light);
-    text-transform: capitalize;
-    text-align: center;
-    font-size: 15px;
-    transition: background .5s ease-in-out;
-}
-
-nav > ul > li > a > i {padding-right: 5px}
-nav > ul > li > a > i > span {
-    padding: 1px;
-    border: 1px solid #f00;
-    border-radius: 50%;
-    top: -8.5px;
-    left: -9px;
-    position: absolute;
-    font-weight: 800;
-    font-size: 10px;
-    text-shadow: .5px .5px var(--base-background-dark);
-    display: none;
-}
-
-/* Messages */
-nav > ul > li.msg > a {position: relative}
-nav > ul > li.msg > a > .all-msg {
-    background-color: var(--base-background-dark);
-    width: 250%;
-    height: 400px;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    position: absolute;
-    display: none;
-    border-bottom: 1px solid var(--base-background-dark);
-    border-right: 1px solid var(--base-background-dark);
-    border-left: 1px solid var(--base-background-dark);
-}
-nav > ul > li.msg > a > .all-msg .msg-iframe {width: 100%; height: 100%}
-
-/* Notifications */
-nav > ul > li.notifications > a {position: relative}
-nav > ul > li.notifications > a > .all-notifications {
-    background-color: var(--base-background-dark);
-    width: 200%;
-    height: 400px;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    position: absolute;
-    display: none;
-    border-bottom: 1px solid var(--base-background-dark);
-    border-right: 1px solid var(--base-background-dark);
-    border-left: 1px solid var(--base-background-dark);
-}
-nav > ul > li.notifications > a > .all-notifications .notifications-iframe {width: 100%; height: 100%}
-
-/* Settings */
-nav > ul > li.settings > ul {
-    width: 100%;
-    background-color: var(--base-background-dark);
-    position: absolute;
-    display: none
-}
-nav > ul > li.settings > ul li {
-    display: block;
-    position: relative;
-    transition: .5s background ease-in-out
-}
-nav > ul > li.settings > ul li a {
-    display: block;
-    height: 50px;
-    padding: 15px 10px;
-    
-    position: relative;
-    transition: .5s background ease-in-out
-}
-nav > ul > li.settings > ul > li > a > span ,
-nav > ul > li.settings > ul > li > a > i {
-    color: var(--base-color-light);
-    text-transform: capitalize;
-    text-align: center;
-    font-size: 12px;
-}
-
-/* Menu bar */
-nav > .menu-bar {display: none}
-nav > .menu-bar > i {
-    color: var(--base-color-light);
-    height: 50px;
-    padding: 15px 20px;
-    transition: background .5s;
-    font-size: 20px;
-    position: relative;
-}
-nav > .menu-bar > i > span {
-    color: var(--base-color-light);
-    padding: 1px;
-    border: 1px solid #F00;
-    border-radius: 50%;
-    top: 5px;
-    left: 5px;
-    position: absolute;
-    font-weight: 800;
-    font-size: 10px;
-    text-shadow: .5px .5px var(--base-background-dark);
-    display: block;
-    display: none;
-}
-
-/*** Effects ***/
-nav > ul > li > a:hover {
-    background-color: var(--base-background-hovered);
-    transition: .5s background ease-in-out;
-}
-nav > ul > li > a:after {
-    content: "";
-    display: block;
-    background-color: var(--base-color-light);
-    height: 0;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    transition: .5s height ease-in-out;
-}
-nav > ul > li > a:focus {
-    background-color: var(--base-background-hovered);
-    transition: .5s background ease-in-out;
-}
-nav > ul > li > a:focus:after {
-    height: 3px;
-    transition: .5s height ease-in-out;
-}
-nav > ul > li.notifications > a:hover > i {
-    animation-name: bell;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-}
-/* Menu Bar */
-nav > .menu-bar i:hover {background-color: var(--base-background-hovered); transition: .5s background ease-in-out}
-/* Search Bar */
-nav > .search-bar > .search button:hover {background-color: var(--base-background-light); transition: .5s background ease-in-out}
 
 /*** Media Querry ***/
-/* 790px Screens */
-@media screen and (max-width: 1109px) {nav .search-bar .search {width: 50px}}
-/* 790px Screens */
-@media screen and (max-width: 790px) {
-    /* Navbar Content */
-    nav > ul {
-        width: 250px;
-        position: absolute;
-        right: 0;
-        top: 50px;
-        background-color: var(--base-background-dark);
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 1080px) {
+    .header > .container .search-bar > input {
+        width: 220px;
+        background-color: transparent;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 890px) {
+    .header > .container .search-bar > input {
         display: none;
     }
-    nav > ul {float: right; width: 100%}
-    nav > ul li {
-        display: block;
-        position: relative;
-        transition: .5s background ease-in-out;
-    }
-    nav > ul li a {
-        display: block;
-        height: 50px;
-        padding: 15px 20px;
-        
-    }
-    nav > ul li a span ,
-    nav > ul li a i {font-size: 15px;
-    }
-
-    /*** Messages Beta ***/
-    nav > ul > li.msg > a > .all-msg {
-        width: 200px;
-        height: 300px;
-        top: 0;
-        left: -100px;
-        /* display: none; */
-    }
-
-    /*** Settings Beta ***/
-    nav > ul li.settings ul {
-        top: 0;
-        left: -150px;
-        width: 150px;
-        background-color: var(--base-background-dark);
-    }
-    nav > ul li.settings ul li {width:100%}
-    nav > ul li.settings ul li a {
-        display: block;
-        height: 50px;
-        padding: 15px 20px;
-        
-    }
-
-    /* Menu bar (Beta) */
-    nav > .menu-bar {width: 150px; display: block}
-    nav > .menu-bar i.fa-bars {float: right}
 }
 
-/* 550px Screens */
-@media screen and (max-width: 550px) {nav > img.logo {font-size: 14px}}
-/* 525px Screens */
-@media screen and (max-width: 525px) {
-    /* Navbar Content */
-    nav > ul {width: 200px}
-    /* Menu bar (Beta) */
-    nav > .menu-bar {width: 54px; width: 100px}
-    nav > .menu-bar > i.fa-bars {font-size: 16px}
-    /* Navbar - Social Links */
-    nav > .links > ul > li > a > i {font-size: 16px}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+
 }
 
-/* 362px Screens */
-@media screen and (max-width: 362px) {
-    /* Navbar Content */
-    nav > ul {width: 180px}
-    /* Menu bar (Beta) */
-    nav > .menu-bar {width: 80px}
-}
-
-/* 345px Screens */
-@media screen and (max-width: 345px) {
-    /* Navbar Logo */
-    nav > img.logo {width: 100%}
-
-    /* Navbar Content */
-    nav > ul {
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+    .header {
+        top: auto;
         left: 0;
-        top: 50px;
-        position: absolute;
-        width: 65%;
-        width: 100%;
+        right: 0;
+        bottom: 0;
     }
-    nav > ul > li {
-        direction: ltr;
-        text-align: left;
-        display: block;
-        position: relative;
-        transition: .5s background ease-in-out;
+    .header .container > .logo {
+        display: none;
     }
-    nav > ul > li > a {
-        height: 50px;
-        padding: 15px 20px;
-    }
-    /*** Messages Beta ***/
-    nav > ul > li.msg > a > .all-msg {
-        width: 65%;
-        height: 250px;
+    .header .container > .search-bar {
+        margin: 0;
         top: 0;
-        left: 100%;
-        transform: translateX(0);
-        /* display: none; */
-    }
-
-    /* Settings */
-    nav > ul > li.settings > ul {
-        top: 0;
-        left: 100%;
-        width: 65%;
-    }
-
-    /* Menu bar (Beta) */
-    nav > .menu-bar {
-        width: 65%;
-        float: left;
-    }
-    nav > .menu-bar > i.fa-bars {float: left}
-}
-/* 345px Screens */
-@media screen and (max-width: 345px) {
-    /* Navbar Logo */
-    nav > img.logo {width: 35%}
-    nav > img.logo {width: 100%}
-
-    /* Navbar Content */
-    nav > ul {
         left: 0;
-        top: 50px;
-        position: absolute;
-        width: 65%;
-        float: none;
-        width: 100%;
+        right: 0;
+        position: fixed;
+        height: 40px;
     }
-    nav > ul > li {
-        direction: ltr;
-        text-align: left;
+    .header > .container .search-bar > input {
         display: block;
-        position: relative;
-        transition: .5s background ease-in-out;
+        flex-grow: 1;
     }
-    nav > ul > li > a {
-        height: 50px;
-        padding: 15px 20px;
-    }
-    nav > ul > li > a > span ,
-    nav > ul > li > a > i {
-        font-size: 15px;
-    }
-
-    /*** Messages Beta ***/
-    nav > ul > li.msg > a > .all-msg {
-        width: 65%;
-        height: 250px;
-        top: 0;
-        left: 100%;
-        transform: translateX(0);
-        /* display: none; */
-    }
-
-    /* Settings */
-    nav > ul > li.settings > ul {
-        top: 0;
-        left: 100%;
-        width: 65%;
-    }
-
-    /* Menu bar (Beta) */
-    nav > .menu-bar {
-        width: 65%;
-        float: left;
-    }
-    nav > .menu-bar > i.fa-bars {float: left}
+    
+    
 }
-
-/* JS Codes */
-.show {display: block}
-nav > ul.show {display: block}
-nav > .menu-bar i.fa-bars.test1 {float: left}
-nav > .menu-bar i.fa-bars.test2 {float: right}
-/* Messages */
-nav > ul > li.msg > a > .all-msg.show {display: block}
-/* Notifications */
-nav > ul > li.notifications > a > .all-notifications.show {display: block}
-/* Settings */
-nav > ul > li.settings > ul.show {display: block}
-
-/*** Animations ***/
-@keyframes bell{
-    0% {transform: rotate(5deg)}
-    10% {transform: rotate(-5deg)}
-    20% {transform: rotate(10deg)}
-    30% {transform: rotate(-10deg)}
-    40% {transform: rotate(20deg)}
-    50% {transform: rotate(-20deg)}
-    60% {transform: rotate(30deg)}
-    70% {transform: rotate(-30deg)}
-    80% {transform: rotate(40deg)}
-    90% {transform: rotate(-40deg)}
-    100% {transform: rotate(0deg)}
+@media only screen and (max-width: 420px) {
 }

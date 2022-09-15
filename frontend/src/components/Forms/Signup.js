@@ -1,30 +1,37 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import './Styles.css';
 
 function Signup(props) {
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
     gender: '',
     check: false
   });
-  console.log(formData);
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => {
-      return {
-        ...prev,
-        [name]: type === 'checkbox' ? checked : value
-      };
-    });
+  // const [username, email, password, gender, check] = useRef();
+  const loginChangeHandler = (e) => {
+    e.preventDefault();
+    props.switchForm(false);
   };
+  // console.log(username, email, password, gender, check);
 
+  // const handleChange = (e) => {
+  //   const { name, value, type, checked } = e.target;
+  //   setFormData((prev) => {
+  //     return {
+  //       ...prev,
+  //       [name]: type === 'checkbox' ? checked : value
+  //     };
+  //   });
+  // };
+  
   return (
-    <div className='container'>
+    <div className='container form'>
       <div className='switch-box'>
-        <a href='/login'>log in</a>
+        <a href='/login' onClick={loginChangeHandler}>
+          log in
+        </a>
         <a
           href='/register'
           rel='noreferrer'
@@ -57,8 +64,9 @@ function Signup(props) {
           id='user'
           title='User Name'
           name='username'
-          value={formData.username}
-          onChange={handleChange}
+          // ref={username}
+          // value={formData.username}
+          // onChange={handleChange}
           required
         />
         <input
@@ -67,8 +75,9 @@ function Signup(props) {
           id='email'
           title='Email Address'
           name='email'
-          value={formData.email}
-          onChange={handleChange}
+          // ref={email}
+          // value={formData.email}
+          // onChange={handleChange}
           required
         />
         <input
@@ -77,9 +86,10 @@ function Signup(props) {
           minLength='8'
           id='pass'
           title='New Password'
-          value={formData.password}
           name='password'
-          onChange={handleChange}
+          // ref={password}
+          // value={formData.password}
+          // onChange={handleChange}
           required
         />
         <div className='radio'>
@@ -90,7 +100,8 @@ function Signup(props) {
               name='gender'
               title='Male'
               value='male'
-              onChange={handleChange}
+              // ref={gender}
+              // onChange={handleChange}
               required
             />
             <span>male</span>
@@ -102,7 +113,8 @@ function Signup(props) {
               name='gender'
               title='Female'
               value='female'
-              onChange={handleChange}
+              // ref={gender}
+              // onChange={handleChange}
               required
             />
             <span>female</span>
@@ -112,8 +124,9 @@ function Signup(props) {
           <input
             type='checkbox'
             name='check'
-            checked={formData.check}
-            onChange={handleChange}
+            // ref={check}
+            // checked={formData.check}
+            // onChange={handleChange}
             required
           />
           <span>I agree to the terms & conditions</span>

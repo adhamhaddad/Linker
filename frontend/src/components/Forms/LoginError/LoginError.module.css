@@ -1,0 +1,10 @@
+.error {
+    background-color: var(--base-color-dark);
+    color: var(--base-color-light);
+    font-size: 12px;
+    padding: 5px 0;
+    text-align: center;
+}
+.hide {
+    display: none;
+}

@@ -1,0 +1,65 @@
+.post-likes {
+    width: 340px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    border-radius: 4px;
+    background-color: var(--base-color-light);
+}
+.post-likes .likes-header {
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(219, 219, 219);
+}
+.post-likes .likes-header button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: var(--base-color-light);
+    transition: background .4s ease-in-out;
+    cursor: pointer;
+}
+.post-likes .likes-header button:hover {
+    background-color: rgb(219, 219, 219);
+    transition: background .4s ease-in-out;
+}
+.post-likes .likes-list {
+    padding: 5px 10px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+.post-likes .likes-list li {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.post-likes .likes-list li:last-of-type {
+    margin-bottom: 0;
+}
+.post-likes .likes-list li a {
+    height: 100%;
+}
+.post-likes .likes-list li a img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid var(--base-color-dark);
+}
+
+.post-likes .likes-list li a h4 {
+    width: 200px;
+    line-height: 50px;
+    padding: 0 10px;
+    font-size: 14px;
+    color: var(--base-color-dark);
+}

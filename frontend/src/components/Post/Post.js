@@ -1,87 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
+import CommentsController from './ReactionsController/Comments/CommentsController';
+import Reactions from './Reactions/Reactions';
+import PostContent from './Content/PostContent';
+import PostHeader from './Header/PostHeader';
+import PostBottom from './Bottom/PostBottom';
+import LikesController from './ReactionsController/Likes/LikesController';
+import SharesController from './ReactionsController/Shares/SharesController';
 import './Post.css';
 
 function Post(props) {
-  const validateTime = (timedate) => {
-    const getDateNow = new Date()
-      .toLocaleString('en-US', {
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      })
-      .split(',')[1]
-      .split(':', 2)
-      .join(':');
-    const time = new Date(timedate)
-      .toLocaleString('en-US', {
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      })
-      .split(',')[1];
-    return `${time.split(':', 2).join(':')} ${time.split(' ')[2]}`;
+  const [commentsList, setCommentsList] = useState(false);
+  const [likesList, setLikesList] = useState(false);
+  const [sharesList, setSharesList] = useState(false);
+  const [addComment, setAddComment] = useState('');
+  const [addLike, setAddLike] = useState('');
+
+  const showLikesHandler = () => {
+    setLikesList((prev) => {
+      return prev ? false : true;
+    });
   };
+  const showCommentsHandler = () => {
+    setCommentsList((prev) => {
+      return prev ? false : true;
+    });
+  };
+  const showSharesHandler = () => {
+    setSharesList((prev) => {
+      return prev ? false : true;
+    });
+  };
+
+  const addCommentsHandler = (e) => {
+    setAddComment(e.target.value);
+  };
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    props.setReactions(e.target.children);
+    setAddComment('');
+  };
+
   return (
     <div className='posts'>
-      <div className='post-header'>
-        <img src={props.profile} alt='Profile' />
-        <p>
-          <span>
-            {props.fname} {props.lname}
-          </span>
-          <span>
-            {validateTime(props.timedate)}
-            <i className='fa-solid fa-earth-africa'></i>
-          </span>
-        </p>
-      </div>
-      <div className='post-content'>
-        <p>{props.content}</p>
-      </div>
-      <div className='post-reactions'>
-        <p className={props.reactions.likes.length ? 'active' : 'hidden'}>
-          <span>
-            <img src='./images/reactions/like.png' />
-            {props.reactions.likes[props.reactions.likes.length - 1]}
-          </span>
-          <span
-            className={props.reactions.likes.length > 1 ? 'active' : 'hidden'}
-          >
-            and {props.reactions.likes.length - 1} others
-          </span>
-        </p>
-        <p>
-          <span
-            className={props.reactions.comments.length ? 'active' : 'hidden'}
-          >
-            {props.reactions.comments.length} comments
-          </span>
-          <span className={props.reactions.shares ? 'active' : 'hidden'}>
-            <i className='fa-solid fa-circle period'></i>
-            {props.reactions.shares.length} shares
-          </span>
-        </p>
-      </div>
-      <div className='post-bottom'>
-        <button className='btn' title='Like'>
-          <i className='fa-solid fa-thumbs-up'></i>
-          <span>like</span>
-        </button>
-        <div className='comment'>
-          <input type='text' placeholder='Comment ...' title='Comment' />
-          <i className='fa-solid fa-paper-plane'></i>
-        </div>
-        <button title='Share'>
-          <i className='fa-solid fa-share'></i>
-          <span>share</span>
-        </button>
-      </div>
+      <PostHeader
+        profile={props.profile}
+        fname={props.fname}
+        lname={props.lname}
+        timedate={props.timedate}
+      />
+      <PostContent content={props.content} />
+      <Reactions
+        reactions={props.reactions}
+        showLikesHandler={showLikesHandler}
+        showCommentsHandler={showCommentsHandler}
+        showSharesHandler={showSharesHandler}
+      />
+      <PostBottom
+        onSubmitHandler={onSubmitHandler}
+        addComment={addComment}
+        addCommentsHandler={addCommentsHandler}
+      />
+      {likesList && (
+        <LikesController
+          likes={props.reactions.likes}
+          hideLikes={showLikesHandler}
+        />
+      )}
+      {commentsList && (
+        <CommentsController
+          comments={props.reactions.comments}
+          hideComments={showCommentsHandler}
+        />
+      )}
+      {sharesList && (
+        <SharesController
+          shares={props.reactions.shares}
+          hideShares={showSharesHandler}
+        />
+      )}
     </div>
   );
 }

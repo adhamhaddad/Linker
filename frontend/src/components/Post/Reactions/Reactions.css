@@ -1,0 +1,28 @@
+.posts > .post-reactions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    margin: 5px 0;
+    height: 20px;
+    background-color: var(--base-color-light);
+}
+/* Like section */
+.posts > .post-reactions > p {
+    display: flex;
+    align-items: center;
+}
+.posts > .post-reactions > p span {
+    height: 12px;
+    cursor: pointer;
+}
+.posts > .post-reactions > p img {
+    width: 12px;
+    height: 12px;
+    margin-right: 2px;
+}
+.posts > .post-reactions p > span i.period {
+    font-size: 2.5px;
+    margin: 0 6px;
+    vertical-align: middle;
+}

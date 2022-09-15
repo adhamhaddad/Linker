@@ -1,34 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import Post from '../Post/Post';
+import AddPost from '../Post/AddPost/AddPost';
+import ProfileInformation from './Information/ProfileInformation';
+import ProfileStory from './Story/ProfileStory';
+import ProfileLinks from './Links/ProfileLinks';
+import Backdrop from '../Backdrop/Backdrop';
+import Overlay from '../Overlay/Overlay';
 import './Profile.css';
 
 function Profile(props) {
-  const openProfileFullSize = () => {
-    document.querySelector('#fullImage').style.display = 'block';
+  const [fPP, setFPP] = useState(false);
+  const [newPost, setNewPost] = useState(false);
+
+  const profileFullSizeHandler = () => {
+    setFPP((prev) => (prev ? false : true));
   };
-  const closeProfileFullSize = () => {
-    document.querySelector('#fullImage').style.display = 'none';
+  const posts = props.posts.length ? (
+    props.posts.map((post) => {
+      return (
+        <Post
+          fname={props.information.fname}
+          lname={props.information.lname}
+          profile={props.photos.profile}
+          timedate={post.timedate}
+          content={post.content}
+          reactions={post.reactions}
+          setReactions={props.setReactions}
+          key={post.id}
+        />
+      );
+    })
+  ) : (
+    <p style={{ 'text-align': 'center' }}>No posts found!</p>
+  );
+  const createPostHandler = () => {
+    setNewPost(true);
   };
-  const userPosts = props.posts.length
-    ? props.posts.map((post) => {
-        return (
-          <Post
-            fname={props.information.fname}
-            lname={props.information.lname}
-            profile={props.photos.profile}
-            timedate={post.timedate}
-            content={post.content}
-            reactions={props.reactions[0]}
-            key={post.id}
-          />
-        );
-      })
-    : null;
+  const closePostHandler = () => {
+    setNewPost(false);
+  };
+  
+  
   return (
-    <div>
-      <div id='fullImage' onClick={closeProfileFullSize}>
-        <img src={props.photos.profile} alt='Profile' />
-      </div>
+    <>
+      {fPP && (
+        <>
+          {ReactDOM.createPortal(
+            <Backdrop onClicked={profileFullSizeHandler} />,
+            document.getElementById('backdrop-root')
+          )}
+
+          {ReactDOM.createPortal(
+            <Overlay>
+              <img src={props.photos.profile} alt='Profile' />
+            </Overlay>,
+            document.getElementById('overlay-root')
+          )}
+        </>
+      )}
+
       <div className='container container-flex'>
         <div className='left-side'>
           <div className='user-id'>
@@ -36,100 +67,38 @@ function Profile(props) {
               src={props.photos.profile}
               id='profile'
               alt='Profile'
-              onClick={openProfileFullSize}
+              onClick={profileFullSizeHandler}
             />
             <span>
               {props.information.fname} {props.information.lname}
             </span>
           </div>
-          <div className='user-info'>
-            <ul>
-              <li>
-                <i className='fa-solid fa-briefcase fa-1x'></i>
-                <span>works at {props.information.work}</span>
-              </li>
-              <li>
-                <i className='fa-solid fa-graduation-cap fa-1x'></i>
-                <span>College {props.information.education}</span>
-              </li>
-              <li>
-                <i className='fa-solid fa-heart fa-1x'></i>
-                <span>relationship {props.information.relation}</span>
-              </li>
-              <li>
-                <i className='fa-solid fa-home fa-1x'></i>
-                <span>lives in {props.information.lives}</span>
-              </li>
-            </ul>
-          </div>
+          <ProfileInformation information={props.information} />
         </div>
         <div className='right-side'>
-          <div className='user-bio'>
-            <h3>
-              <i className='fa-solid fa-book-open fa-1x'></i>
-              <span>story</span>
-            </h3>
-            <p>{props.information.story}</p>
-          </div>
-          <div className='bottom-side'>
-            <h3>
-              <i className='fa-solid fa-link fa-1x'></i>
-              <span>links</span>
-            </h3>
-            <ul>
-              <li>
-                <a href={props.links.facebook} title='Facebook' target='_blank' rel="noreferrer">
-                  <i className='fa-brands fa-facebook fa-1x'></i>
-                  <span>facebook</span>
-                </a>
-              </li>
-              <li>
-                <a href={props.links.twitter} title='Twitter' target='_blank' rel="noreferrer">
-                  <i className='fa-brands fa-twitter fa-1x'></i>
-                  <span>twitter</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={props.links.instagram}
-                  title='Instagram'
-                  target='_blank' rel="noreferrer"
-                >
-                  <i className='fa-brands fa-instagram fa-1x'></i>
-                  <span>instagram</span>
-                </a>
-              </li>
-              <li>
-                <a href={props.links.linkedin} title='LinkedIn' target='_blank' rel="noreferrer">
-                  <i className='fa-brands fa-linkedin fa-1x'></i>
-                  <span>linkedIn</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`tel:${props.information.phone}`}
-                  title='Whatsapp'
-                  target='_blank' rel="noreferrer"
-                >
-                  <i className='fa-brands fa-whatsapp fa-1x'></i>
-                  <span>whatsapp</span>
-                </a>
-              </li>
-              <li>
-                <a href={props.links.telegram} title='Telegram' target='_blank' rel="noreferrer">
-                  <i className='fa-brands fa-telegram fa-1x'></i>
-                  <span>telegram</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+          <ProfileStory story={props.information.story} />
+          <ProfileLinks links={props.links} />
         </div>
       </div>
-
-      <div className={userPosts !== null ? 'container-body' : 'hide'}>
-        {userPosts}
+      
+      <div className='container'>
+        {/*
+        <button className='create-post' onClick={createPostHandler}>
+          Create a new post
+        </button>
+        */}
+        {newPost && (
+          <AddPost
+            addNewPost={props.addNewPost}
+            information={props.information}
+            photos={props.photos}
+            closePostHandler={closePostHandler}
+          />
+        )}
+        {posts}
       </div>
-    </div>
+     
+    </>
   );
 }
 export default Profile;

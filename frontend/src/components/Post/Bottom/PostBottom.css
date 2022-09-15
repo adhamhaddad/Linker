@@ -1,0 +1,101 @@
+.post-bottom {
+    border: 1px solid rgb(219, 219, 219);
+    text-transform: capitalize;
+}
+
+/* Buttons Section */
+.post-bottom button {
+    width: 100px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    text-transform: capitalize;
+    transition-property: background;
+    transition-duration: .5s;
+    cursor: pointer;
+    background-color: transparent;
+}
+.post-bottom button span {
+    height: 30px;
+    line-height: 30px;
+}
+.post-bottom button i {
+    margin-right: 4px;
+    height: 30px;
+    line-height: 28px;
+}
+
+/* Comment Section */
+.post-bottom .comment {
+    display: flex;
+    height: 100%;
+    font-size: 14px;
+    border-right: 1px solid rgb(219, 219, 219);
+    border-left: 1px solid rgb(219, 219, 219);
+    background-color: transparent;
+}
+.post-bottom .comment form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+.post-bottom .comment form input {
+    width: 300px;
+    height: 100%;
+    padding-left: 5px;
+    align-self: center;
+    font-size: inherit;
+    background-color: transparent;
+}
+.post-bottom .comment form i {
+    height: 50px;
+    line-height: 50px;
+    width: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+
+/*** Effects ***/
+.posts .post-bottom button:hover {
+    background-color: var(--base-color-dark);
+    color: var(--base-color-light);
+    transition-property: background;
+    transition-duration: .5s;
+}
+
+/*** Media Querry ***/
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 1080px) {
+   
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+    .post-bottom button {
+        flex-grow: 1;
+    }
+    .post-bottom .comment form input {
+        width: auto;
+    }
+}
+@media only screen and (max-width: 420px) {
+    .post-bottom button {
+        font-size: 12px;
+    }
+    /* Comment Section */
+    .post-bottom .comment {
+        font-size: 12px;
+    }
+}

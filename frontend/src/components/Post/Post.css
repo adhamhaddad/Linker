@@ -4,123 +4,44 @@
     padding: 5px;
     margin: 10px auto;
     background-color: var(--base-color-light);
-    color: var(--base-color-dark)
+    color: var(--base-color-dark);
 }
 .posts > .post-header,
 .posts .post-bottom {
     display: flex;
     height: 50px;
-    text-transform: capitalize;
     font-size: 12px;
 }
-.posts > .post-header > img {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-    font-size: 12px;
-    text-align: center;
+.posts:last-of-type {
+    margin-bottom: 0;
 }
-.posts > .post-header > p span:nth-child(1) {
-    font-size: 14px;
-    font-weight: 800;
-    margin-bottom: 4px;
-    display: block;
-}
-.posts > .post-header > p span i.fa-earth-africa {margin-left: 4px}
-/* Post Content */
-.posts .post-content {
-    border: 1px solid rgb(219, 219, 219);
-    min-height: 250px;
-    max-height: 450px;
-    width: 100%;
-    padding: 5px;
-    margin: 5px 0;
-}
-
-.posts > .post-reactions {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    /* background-color: green; */
-    margin: 5px 0;
-    height: 20px;
-}
-/* Like section */
-.posts > .post-reactions p {display: flex}
-.posts > .post-reactions > p span {display: flex; align-items: center}
-.posts > .post-reactions > p span img {width: 12px; margin-right: 2px}
-/* Comments & Share section */
-.posts > .post-reactions p > span i.period {
-    font-size: 2.5px;
-    margin: 0 6px;
-    vertical-align: middle;
-}
-
-/* Post Bottom */
-.posts > .post-bottom {
-    border: 1px solid rgb(219, 219, 219);
-    display: flex;
-    height: 50px;
-}
-.posts > .post-bottom button {
-    /* border: 1px solid rgb(219, 219, 219); */
-    width: 100px;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    text-transform: capitalize;
-    transition-property: background;
-    transition-duration: .5s;
-    cursor: pointer;
-    background-color: #FFF;
-}
-.posts > .post-bottom button i {margin-right: 4px}
-
-.posts > .post-bottom .comment {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    background-color: #FFF;
-    font-size: 14px;
-    margin-right: auto;
-    border-right: 1px solid rgb(219, 219, 219);
-    border-left: 1px solid rgb(219, 219, 219);
-}
-.posts > .post-bottom .comment input {
-    width: 300px;
-    height: 100%;
-    padding-left: 5px;
-    align-self: center;
-}
-.posts > .post-bottom .comment i {
-    height: 50px;
-    line-height: 50px;
-    width: 40px;
-    text-align: center
-}
-
-/* Reaction status */
-.active {
-    display: inline-block;
-}
-.hidden {
-    display: none;
-}
-/*** Effects ***/
-.posts .post-bottom button:hover {
-    background-color: var(--base-color-dark);
-    color: var(--base-color-light);
-    transition-property: background;
-    transition-duration: .5s;
-}
-
 /*** Media Querry ***/
-/* 640px Screens */
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 1080px) {
+   
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+
+}
+
+
+
+
+
+/* 
+* 640px Screens
 @media screen and (max-width: 640px) {
-    .container-body {padding: 5px; width: 100%;}
     .posts {
         min-width: 200px;
         max-width: 500px;
@@ -134,7 +55,7 @@
     .posts .post-bottom .comment input {font-size: inherit}
 }
 
-/* 550px Screens */
+* 550px Screens
 @media screen and (max-width: 550px) {
     .posts {
         min-width: 90%;
@@ -146,7 +67,7 @@
     .posts .post-bottom .comment input {font-size: inherit}
 }
 
-/* 525px Screens */
+* 525px Screens
 @media screen and (max-width: 525px) {
     .container-body {padding: 5px}
     .posts .post-header {width: 50%}
@@ -155,16 +76,4 @@
     .posts .post-bottom .comment {font-size: inherit}
     .posts .post-bottom .comment input {padding: 10px 5px; font-size: inherit}
 }
-
-/* 345px Screens */
-@media screen and (max-width: 345px) {
-    .container-body {padding: 5px 0}
-    .posts {min-width: 100%; max-width: 100%}
-    .posts .post-header span {font-size: 12px}
-    .posts .post-header .post-date {font-size: 10px}
-    .posts .post-content {min-height: 180px}
-    .posts .post-bottom {font-size: 10px}
-    .posts .post-bottom button {font-size: inherit}
-    .posts .post-bottom .comment {font-size: inherit}
-    .posts .post-bottom .comment input {font-size: inherit}
-}
+*/
