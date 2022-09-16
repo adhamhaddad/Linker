@@ -5,15 +5,17 @@
     padding: 5px 0;
     text-align: center;
     cursor: default;
+
 }
 .links-section ul li {display: inline-block}
 .links-section ul li > a {
     display: block;
-    color: var(--base-color-light);
     text-transform: capitalize;
     padding: 10px;
+    color: var(--base-color-light);
     font-size: 14px;
     transition: background .7s;
 }
-.links-section h3 > i,
-.links-section ul li a > i {margin-right: 5px}
+.links-section ul li > a i {
+    margin-right: 5px;
+}

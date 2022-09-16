@@ -1,0 +1,20 @@
+.main {
+    left: 0;
+    right: 0;
+    top: 60px;
+    bottom: 25px;
+    position: fixed;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+@media only screen and (max-width: 600px) {
+    .main {
+        top: 40px;
+        bottom: 60px;
+    }
+    .main.chat, .main.settings {
+        top: 0;
+    }
+}

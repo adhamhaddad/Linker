@@ -44,8 +44,12 @@
     padding: 10px 0;
 }
 
+.user-info ul li > i,
+.story h3 > i,
+.links-section h3 > i {width: 25px}
 
-button.create-post {
+
+button.create-post-btn {
     width: 200px;
     height: 40px;
     line-height: 40px;
@@ -80,28 +84,35 @@ a[title='Telegram']:hover {background-color: #0084C6; transition: background .7s
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
     /* User Info */
-    .container .left-side .user-info ul li,
-    .container .right-side .links-section ul li {font-size: 12px}
+    .container-flex {
+        padding: 5px;
+    }
+    .container-flex .left-side .user-info ul li,
+    .container-flex .right-side .links-section ul li {font-size: 12px}
     
     /* Titles */
-    .container .left-side .user-info h3,
-    .container .right-side .story h3,
-    .container .right-side .links-section h3 {
+    .container-flex .left-side .user-info h3,
+    .container-flex .right-side .story h3,
+    .container-flex .right-side .links-section h3 {
         text-align: left;
         font-size: 14px;
     }
-
-    .container .right-side .story,
-    .container .right-side .links-section ul li a {font-size: 12px}
-    .container .right-side .story p {font-size: 12px}
-    .container .right-side .links-section {
+    .user-info ul li > i,
+    .links-section h3 > i,
+    .story h3 > i
+     {width: 22px}
+    
+    .container-flex .right-side .story,
+    .container-flex .right-side .links-section ul li a {font-size: 12px}
+    .container-flex .right-side .story p {font-size: 12px}
+    .container-flex .right-side .links-section {
         height: auto;
         padding: 0;
     }
-    .container .right-side .links-section ul {
+    .container-flex .right-side .links-section ul {
         text-align: left;
     }
-    .container .right-side .links-section ul li a {
+    .container-flex .right-side .links-section ul li a {
         padding: 5px 0;
         margin: 0 5px 0 0;
     }

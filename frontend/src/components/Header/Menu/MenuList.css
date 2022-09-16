@@ -60,31 +60,32 @@
 
 /* Settings */
 .menu-list > .settings > ul {
-    width: 100%;
-    background-color: var(--base-background-dark);
+    filter: drop-shadow(1px 1px 5px var(--base-color-dark));
+    width: 180px;
     position: absolute;
-    display: none
+    right: 0;
+    background-color: var(--base-background-light);
+    display: none;
 }
 .menu-list > .settings > ul li {
     display: block;
     position: relative;
-    transition: .5s background ease-in-out
 }
 .menu-list > .settings > ul li a {
     display: block;
     height: 50px;
     padding: 15px 10px;
     position: relative;
-    transition: .5s background ease-in-out
-}
-.menu-list > .settings > ul > li > a > span,
-.menu-list > .settings > ul > li > a > i {
-    color: var(--base-color-light);
     text-transform: capitalize;
-    text-align: center;
     font-size: 12px;
+    font-weight: bold;
+    color: var(--base-color-dark);
+    transition: .5s background ease-in-out;
 }
-
+.menu-list > .settings > ul > li > a > i {
+    width: 20px;
+    text-align: left;
+}
 /*** Effects ***/
 .menu-list > li > a:hover {
     background-color: var(--base-background-hovered);
@@ -101,20 +102,22 @@
     bottom: 0;
     transition: .5s height ease-in-out;
 }
-.menu-list > li > a:focus {
+/* .menu-list > li > a:focus {
     background-color: var(--base-background-hovered);
     transition: .5s background ease-in-out;
 }
 .menu-list > li > a:focus:after {
     height: 3px;
     transition: .5s height ease-in-out;
-}
+} */
 .menu-list > .notifications > a:hover > i {
     animation-name: bell;
     animation-duration: 1.5s;
     animation-iteration-count: infinite;
 }
-
+.menu-list > li > a.active {
+    background-color: var(--base-background-hovered);
+}
 
 /*** Animations ***/
 @keyframes bell{

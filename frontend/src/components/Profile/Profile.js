@@ -53,7 +53,7 @@ function Profile(props) {
 
           {ReactDOM.createPortal(
             <Overlay>
-              <img src={props.photos.profile} alt='Profile' />
+              <img src={props.photos.profile} alt='Profile' className='profile-picture'/>
             </Overlay>,
             document.getElementById('overlay-root')
           )}
@@ -67,6 +67,7 @@ function Profile(props) {
               src={props.photos.profile}
               id='profile'
               alt='Profile'
+              className='profile-picture'
               onClick={profileFullSizeHandler}
             />
             <span>
@@ -82,11 +83,11 @@ function Profile(props) {
       </div>
       
       <div className='container'>
-        {/*
-        <button className='create-post' onClick={createPostHandler}>
+        
+        <button className='create-post-btn' onClick={createPostHandler}>
           Create a new post
         </button>
-        */}
+       
         {newPost && (
           <AddPost
             addNewPost={props.addNewPost}

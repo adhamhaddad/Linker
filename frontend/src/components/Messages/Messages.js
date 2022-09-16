@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Messages.css';
 
 function Messages() {
-  const [status, setStatus] = React.useState(true);
-
+  const [status, setStatus] = useState(true);
+  const [menuState, setMenuState] = useState(false);
   const [receiverUser, setReceiverUser] = React.useState({
     name: 'mariam maged',
     profile: './images/mrym.png',
@@ -58,19 +58,9 @@ function Messages() {
     const final = filter.split(' ')[0];
     return Number(final);
   };
-  const openMenu = () => {
-    document.querySelector(
-      '.container > .top > .menu > li > ul'
-    ).style.display = 'block';
-    document.querySelector('.container > .top > .menu > li > i').className =
-      'fa-solid fa-ellipsis';
-  };
-  const closeMenu = () => {
-    document.querySelector(
-      '.container > .top > .menu > li > ul'
-    ).style.display = 'none';
-    document.querySelector('.container > .top > .menu > li > i').className =
-      'fa-solid fa-ellipsis-vertical';
+
+  const toggleMenu = () => {
+    setMenuState((prev) => (prev ? false : true));
   };
   /*
     React.useEffect(() => {
@@ -129,60 +119,64 @@ function Messages() {
   const final = [...sender, ...receiver].sort((a, b) => a.key - b.key);
 
   return (
-    <div className='container'>
-      <div className='top'>
-        <a href='#' id='back'>
+    <div className='container chat'>
+      <div className='chat-header'>
+        <button>
           <i className='fa fa-arrow-circle-left'></i>
-        </a>
+        </button>
+
         <h3>
           <a href='mariam'>{receiverUser.name}</a>
         </h3>
+
         <span className='status'>{status ? 'online' : 'offline'}</span>
-        <ul className='menu'>
+
+        <button onClick={toggleMenu}>
+          <i
+            className={
+              menuState
+                ? 'fa-solid fa-ellipsis'
+                : 'fa-solid fa-ellipsis-vertical'
+            }
+          ></i>
+        </button>
+
+        <ul className={`menu ${menuState && 'active'}`}>
           <li>
-            <i
-              className='fa-solid fa-ellipsis-vertical'
-              id='menu-icon'
-              onClick={openMenu}
-            ></i>
-            <ul onBlur={closeMenu}>
-              <li>
-                <a href='#'>
-                  <i className='fa-solid fa-phone'></i>
-                  <span>call</span>
-                </a>
-              </li>
-              <li>
-                <a href='#'>
-                  <i className='fa-solid fa-bell-slash'></i>
-                  <span>mute</span>
-                </a>
-              </li>
-              <li>
-                <a href='#'>
-                  <i className='fa-solid fa-rectangle-xmark'></i>
-                  <span>close</span>
-                </a>
-              </li>
-              <li>
-                <a href='#'>
-                  <i className='fa-solid fa-circle-exclamation'></i>
-                  <span>report</span>
-                </a>
-              </li>
-            </ul>
+            <a href='#'>
+              <i className='fa-solid fa-phone'></i>
+              <span>call</span>
+            </a>
+          </li>
+          <li>
+            <a href='#'>
+              <i className='fa-solid fa-bell-slash'></i>
+              <span>mute</span>
+            </a>
+          </li>
+          <li>
+            <a href='#'>
+              <i className='fa-solid fa-rectangle-xmark'></i>
+              <span>close</span>
+            </a>
+          </li>
+          <li>
+            <a href='#'>
+              <i className='fa-solid fa-circle-exclamation'></i>
+              <span>report</span>
+            </a>
           </li>
         </ul>
       </div>
-      <div className='conversation'>
+      <div className='chat-conversation'>
         {final}
         {/*
-                <div className='user'>
-                    <img src={img} alt="Profile"/>
-                    <span>I cant stop loving youu .. ❤️</span>
-                    <img src={mrym} alt="Profile" id="seen"/>
-                </div>
-                */}
+        <div className='user'>
+            <img src={img} alt="Profile"/>
+            <span>I cant stop loving youu .. ❤️</span>
+            <img src={mrym} alt="Profile" id="seen"/>
+        </div>
+        */}
         <p id='error'>
           This user closed the conversation. <a href='#'>learn more</a>
         </p>
@@ -196,10 +190,10 @@ function Messages() {
       </form>
 
       {/*
-            <i className='fa-solid fa-circle-check'></i>
-            <i className='fa-regular fa-circle-check'></i>
-            <i className='fa-regular fa-circle'></i>
-            */}
+      <i className='fa-solid fa-circle-check'></i>
+      <i className='fa-regular fa-circle-check'></i>
+      <i className='fa-regular fa-circle'></i>
+      */}
     </div>
   );
 }

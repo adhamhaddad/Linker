@@ -1,4 +1,7 @@
 import React, { useRef } from 'react';
+import ReactDOM from 'react-dom';
+import Backdrop from '../../Backdrop/Backdrop';
+import Overlay from '../../Overlay/Overlay';
 import './AddPost.css';
 
 function AddPost(props) {
@@ -27,35 +30,51 @@ function AddPost(props) {
 
     props.closePostHandler();
   };
+
   return (
     <>
-      <div className='layer'>
-        <div className='create-post'>
-          <div className='header'>
-            <img src={props.photos.profile} alt='profile' className='profile' />
-            <h4 className='username'>
-              {props.information.fname} {props.information.lname}
-            </h4>
-            <button className='discard' onClick={props.closePostHandler}>
-              discard
-            </button>
+      {ReactDOM.createPortal(
+        <Backdrop />,
+        document.getElementById('backdrop-root')
+      )}
+      {ReactDOM.createPortal(
+        <Overlay>
+          <div className='create-post'>
+            <div className='create-post__header'>
+              <div className='create-post__user-info'>
+                <img
+                  src={props.photos.profile}
+                  alt='profile'
+                  className='profile'
+                />
+                <h4 className='username'>
+                  {props.information.fname} {props.information.lname}
+                </h4>
+              </div>
+              <button className='discard' onClick={props.closePostHandler}>
+                discard
+              </button>
+            </div>
+
+            <form onSubmit={postFormHandler}>
+              <div className='create-post__content'>
+                <textarea
+                  type='text'
+                  placeholder='What do you want to talk about?'
+                  ref={caption}
+                ></textarea>
+                <input type='file' name='video' ref={img} />
+                <input type='file' ref={video} />
+              </div>
+
+              <div className='create-post__footer'>
+                <button type='submit'>Post</button>
+              </div>
+            </form>
           </div>
-          <form onSubmit={postFormHandler}>
-            <div className='content'>
-              <textarea
-                type='text'
-                placeholder='What do you want to talk about?'
-                ref={caption}
-              ></textarea>
-              <input type='file' name='video' ref={img} />
-              <input type='file' ref={video} />
-            </div>
-            <div className='footer'>
-              <button type='submit'>Post</button>
-            </div>
-          </form>
-        </div>
-      </div>
+        </Overlay>,
+        document.getElementById('backdrop-root')
+      )}
     </>
   );
 }

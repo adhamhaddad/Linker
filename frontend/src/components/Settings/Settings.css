@@ -1,23 +1,67 @@
-.container {
-    display: flex;
-    top: 60px;
-    bottom: 25px;
-    left: 0;
-    right: 0;
-    position: absolute;
-    text-transform: capitalize;
-}
-.container aside {
-    width: 25%;
+.container.settings {
     height: 100%;
-    border-right: 1px solid var(--base-background-hovered);
+    display: flex;
+    flex-direction: row;
+    position: relative;
 }
-.container aside ul li a {
+.container.settings > aside {
+    height: 100%;
+}
+.container.settings > aside ul {
+    width: 250px;
+}
+.container.settings > aside ul li {
+    display: block;
+}
+.container.settings > aside ul li a,
+.logout-btn {
+    text-transform: capitalize;
     display: block;
     width: 100%;
-    height: 100%;
-    padding: 10px 5px;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 5px;
 }
-.container aside ul li a:hover {background-color: var(--base-background-light); color: var(--base-color-dark)}
-.container aside ul li a:focus {border-left: 3px solid var(--base-color-light)}
-.container section {width: 75%}
+.container.settings > aside ul li a:hover {background-color: var(--base-background-light); color: var(--base-color-dark)}
+.container.settings > aside ul li a:focus {border-left: 3px solid var(--base-color-light)}
+.container.settings > aside ul li a > i {
+    width: 25px;
+}
+.container.settings > .information-section {
+    overflow-y: auto; 
+}
+
+
+/*** Media Querry ***/
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 1080px) {
+   
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 890px) {
+    .container.settings > aside ul {
+        width: 200px;
+    }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+    .container.settings > aside {
+        width: 100%;
+    }
+    .container.settings > aside ul {
+        width: 100%;
+    }
+    .container.settings > .information-section {
+        display: none;
+    }
+}

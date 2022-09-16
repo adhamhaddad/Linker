@@ -26,29 +26,18 @@
     -o-tap-highlight-color: transparent;
     -ms-tap-highlight-color: transparent;
 }
-body {
-    padding-top: 60px;
-    padding-bottom: 25px;
-}
+
 .container {
     width: 1080px;
     margin: auto;
     position: relative;
     color: var(--base-color-light);
     background-color: var(--base-background-dark);
-    border: 0.01px solid var(--base-color-dark);
 }
 a {color: var(--base-color-light)}
-
 
 @media only screen and (max-width: 1080px) {
     .container {
         width: 100%;
-    }
-}
-@media only screen and (max-width: 600px) {
-    body {
-        padding-top: 40px;
-        padding-bottom: 60px;
     }
 }

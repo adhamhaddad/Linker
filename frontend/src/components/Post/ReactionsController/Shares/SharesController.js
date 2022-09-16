@@ -1,4 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import Backdrop from '../../../Backdrop/Backdrop';
+import Overlay from '../../../Overlay/Overlay';
 import './SharesController.css';
 
 function SharesController(props) {
@@ -15,17 +18,26 @@ function SharesController(props) {
     );
   });
   return (
-    <div className='layer'>
-      <div className='post-shares'>
-        <div className='shares-header'>
-          <h3>Shares</h3>
-          <button onClick={props.hideShares}>
-            <i className='fa-solid fa-xmark'></i>
-          </button>
-        </div>
-        <ul className='shares-list'>{sharesList}</ul>
-      </div>
-    </div>
+    <>
+      {ReactDOM.createPortal(
+        <Backdrop />,
+        document.getElementById('backdrop-root')
+      )}
+      {ReactDOM.createPortal(
+        <Overlay>
+          <div className='post-shares'>
+            <div className='shares-header'>
+              <h3>Shares</h3>
+              <button onClick={props.hideShares}>
+                <i className='fa-solid fa-xmark'></i>
+              </button>
+            </div>
+            <ul className='shares-list'>{sharesList}</ul>
+          </div>
+        </Overlay>,
+        document.getElementById('overlay-root')
+      )}
+    </>
   );
 }
 export default SharesController;

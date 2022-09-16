@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
-// import Home from './components/Home/Home';
-// import Notification from './components/Notification/Notification';
-// import Settings from './components/Settings/Settings';
-// import Messages from './components/Messages/Messages';
+import React, { useState, useEffect } from 'react';
 import Signup from './components/Forms/Signup';
 import Signin from './components/Forms/Signin';
 import Header from './components/Header/Header';
-import Profile from './components/Profile/Profile';
+import Main from './components/Main/Main';
 import Footer from './components/Footer/Footer';
 
 function App() {
+  const [componentState, setComponentState] = useState('PROFILE');
   const [switchForm, setSwitchForm] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginError, setLoginError] = useState(false);
-  const [title, setTitle] = useState('');
   const [user, setUser] = useState({
     id: '1',
     username: 'adhamhaddad',
@@ -188,37 +184,44 @@ function App() {
   const switchFormHandler = (e) => {
     setSwitchForm(e);
   };
+
+  useEffect(() => {
+    const loggedInCheck = localStorage.getItem('isLoggedIn');
+
+    if (loggedInCheck == '1') {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const loginHandler = (e, p) => {
     if (e !== 'adham' || p !== 'adham123') {
       setLoginError(true);
       return;
     }
+    localStorage.setItem('isLoggedIn', '1');
     setIsLoggedIn(true);
   };
 
+  const logoutHandler = () => {
+    localStorage.removeItem('isLoggedIn')
+    setIsLoggedIn(false);
+  }
+  useEffect(() => {
+    const currentComponent = localStorage.getItem('currentComponent');
+    setComponentState(currentComponent);
+  }, []);
+
+  const changeComponents = (e) => {
+    localStorage.setItem('currentComponent', e.toUpperCase());
+    setComponentState(e.toUpperCase());
+  };
   return (
     <>
-      {switchForm ? (
-        <Signup
-          title='Signup Page'
-          register={true}
-          switchForm={switchFormHandler}
-        />
-      ) : (
-        <Signin
-          title='Signin Page'
-          login={true}
-          error={loginError}
-          switchForm={switchFormHandler}
-          loginValidate={loginHandler}
-        />
-      )}
-
-      {isLoggedIn && (
+      {isLoggedIn ? (
         <>
-          <Header />
-          <Profile
-            title='Profile-Page'
+          <Header changeComponents={changeComponents} logoutHandler={logoutHandler}/>
+          <Main
+            componentState={componentState}
             user={user}
             posts={posts}
             photos={photos}
@@ -226,21 +229,30 @@ function App() {
             links={links}
             setReactions={setReactions}
             addNewPost={addNewPost}
+            logoutHandler={logoutHandler}
           />
+        </>
+      ) : (
+        <>
+          {switchForm ? (
+            <Signup
+              title='Signup Page'
+              register={true}
+              switchForm={switchFormHandler}
+            />
+          ) : (
+            <Signin
+              title='Signin Page'
+              login={true}
+              error={loginError}
+              switchForm={switchFormHandler}
+              loginValidate={loginHandler}
+            />
+          )}
         </>
       )}
       <Footer />
     </>
-
-    /*
-    {
-    <Messages title='Messages Page' />
-    <Home title='Home Page'/>
-    <Notification title='Notification Page'/>
-    <Settings title='Settings Page'/>
-    <Contact title='Contact Page'/>
-    }
-    */
   );
 }
 export default App;

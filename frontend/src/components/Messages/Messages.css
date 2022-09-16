@@ -1,43 +1,51 @@
-.container {
-    top: 60px;
-    bottom: 25px;
-    left: 0;
-    right: 0;
-    position: absolute;
+.container.chat {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     background-color: var(--base-background-light);
     border-right: 1px solid var(--base-light-gray);
     border-left: 1px solid var(--base-light-gray);
 }
-/* Top */
-.container > .top {
+/* messages-header */
+.container.chat > .chat-header {
     height: 50px;
-    line-height: 50px;
     display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
     background-color: var(--base-background-dark);
     color: var(--base-color-light);
 }
-.container > .top > #back {
-    width: 30px;
-    height: 100%;
-    text-align: center;
+.container.chat > .chat-header > button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 5px;
+    background-color: var(--base-background-dark);
     color: var(--base-color-light);
-    margin-right: 10px;
+    transition-property: background, color;
+    transition-duration: .4s;
+    transition-timing-function: ease-in-out;
 }
-.container > .top > h3 > a {
-    display: block;
-    width: 100%;
+.container.chat > .chat-header > button:hover {
+    background-color: var(--base-background-light);
+    color: var(--base-color-dark);
+    transition-property: background, color;
+    transition-duration: .4s;
+    transition-timing-function: ease-in-out;
+}
+
+.container.chat > .chat-header > h3 > a {
     font-size: 16px;
     font-weight: 500;
-    color: var(--base-color-light);
     text-transform: capitalize;
+    color: var(--base-color-light);
 }
-.container > .top > .status {
-    height: 100%;
+.container.chat > .chat-header > .status {
     text-transform: capitalize;
-    color: var(--base-color-light);
     margin: 0 auto;
 }
-.container > .top > .status::after {
+.container.chat > .chat-header > .status::after {
     content: '';
     display: inline-block;
     width: 10px;
@@ -46,24 +54,29 @@
     background-color: rgb(44, 141, 44);
     margin-left: 10px;
 }
-.container > .top > .menu > li {
-    width: 30px;
-    height: 100%;
+
+.container.chat > .chat-header > .menu {
+    display: none;
+    width: 160px;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1000;
+}
+.container.chat > .chat-header > .menu.active {
+    display: block;
+}
+.container.chat > .chat-header > .menu > li {
+    display: block;
     text-align: center;
     position: relative;
     cursor: pointer;
 }
-.container > .top > .menu > li > i {display: block; line-height: 50px}
-.container > .top > .menu > li > ul {
-    display: none;
-    width: 160px;
-    position: absolute;
-    top: 50px;
-    right: 0;
-    z-index: 1000;
-}
-.container > .top > .menu > li > ul li a {
+.container.chat > .chat-header > .menu > li > a {
     display: block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
     padding: 0 10px;
     color: var(--base-color-light);
     background-color: var(--base-background-dark);
@@ -72,25 +85,21 @@
     transition: background .5s ease-in-out;
     text-transform: capitalize;
 }
-.container > .top > .menu > li > ul li a:hover {
+.container.chat > .chat-header > .menu > li > a:hover {
     background-color: var(--base-background-hovered);
     transition: background .5s ease-in-out;
 }
-.container > .top > .menu > li > ul li a i {width: 25px;}
+.container.chat > .chat-header > .menu > li > a > i {width: 25px}
 
-/* Conversation */
-.container > .conversation {
-    top: 50px;
-    right: 0;
-    bottom: 50px;
-    left: 0;
-    position: absolute;
+
+/* chat-Conversation */
+.container.chat > .chat-conversation {
+    /* height: 300px; */
     overflow-y: auto;
-    z-index: 100;
     padding: 0 4px;
 }
-.container > .conversation .receiver,
-.container > .conversation .sender {
+.container.chat > .chat-conversation .receiver,
+.container.chat > .chat-conversation .sender {
     color: var(--base-color-light);
     position: relative;
     margin: 10px 0;
@@ -101,19 +110,19 @@
     text-align: center;
     padding: 4px 0;
 }
-.container > .conversation .receiver .message-content,
-.container > .conversation .sender .message-content {
+.container.chat > .chat-conversation .receiver .message-content,
+.container.chat > .chat-conversation .sender .message-content {
     display: flex;
 }
-.container > .conversation .receiver .message-content img,
-.container > .conversation .sender .message-content img {
+.container.chat > .chat-conversation .receiver .message-content img,
+.container.chat > .chat-conversation .sender .message-content img {
     width: 50px;
     height: 50px;
     color: var(--base-color-light);
     font-size: 12px;
 }
-.container > .conversation .receiver .message-content span,
-.container > .conversation .sender .message-content span {
+.container.chat > .chat-conversation .receiver .message-content span,
+.container.chat > .chat-conversation .sender .message-content span {
     word-wrap: break-word;
     margin: 0 5px;
     max-width: 50%;
@@ -124,18 +133,18 @@
     background-color: var(--base-background-dark);
     filter: drop-shadow(1px 1px 2px var(--base-background-dark))
 }
-.container > .conversation .receiver .message-content span {
+.container.chat > .chat-conversation .receiver .message-content span {
     background-color: var(--base-background-light);
     color: var(--base-color-dark);
 }
 
 /*
-.container > .conversation .sender {
+.container.chat > .chat-conversation .sender {
     padding: 10px 5px;
     direction: rtl;
     text-align: right;
 }
-.container > .conversation .sender span {direction: ltr}
+.container.chat > .chat-conversation .sender span {direction: ltr}
 
 #seen {
     width: 15px;
@@ -167,7 +176,7 @@
 }
 
 /* Send Message Inputs */
-.container > form {
+.container.chat > form {
     display: flex;
     width: 100%;
     height: 50px;
@@ -177,14 +186,14 @@
     position: absolute;
     background-color: var(--base-background-dark);
 }
-.container > form input {
+.container.chat > form input {
     width: 100%;
     padding: 0 15px;
     border-top: 1px solid var(--base-light-gray);
     color: var(--base-color-dark);
     background-color: var(--base-color-light);
 }
-.container > form button {
+.container.chat > form button {
     width: 100px;
     height: 100%;
     text-transform: capitalize;
@@ -192,15 +201,36 @@
     color: var(--base-color-light);
     background-color: var(--base-background-dark);
 }
-.container > form button i {width: 30px}
+.container.chat > form button i {width: 30px}
 
-/*** Media Query ***/
-@media screen and (max-width: 285px) {
-    .container > .top #back a i,
-    .container > .top .status,
-    .container > .conversation .receiver span,
-    .container > .conversation .sender span {font-size: 14px}
-    
-    .container > form input,
-    .container > form button {font-size: 12px}
+/*** Media Querry ***/
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 1080px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 890px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+    .container.chat > .chat-conversation .receiver .message-content span,
+    .container.chat > .chat-conversation .sender .message-content span {
+        max-width: 80%;
+        padding: 5px;
+        align-self: flex-start;
+    }
+}
+@media only screen and (max-width: 420px) {
 }
