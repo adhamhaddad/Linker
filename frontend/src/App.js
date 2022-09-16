@@ -203,8 +203,9 @@ function App() {
   };
 
   const logoutHandler = () => {
-    localStorage.removeItem('isLoggedIn')
     localStorage.removeItem('currentComponent')
+    localStorage.removeItem('isLoggedIn')
+    setComponentState('PROFILE');
     setIsLoggedIn(false);
   }
   useEffect(() => {
