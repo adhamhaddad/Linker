@@ -6,17 +6,18 @@ import Profile from '../Profile/Profile';
 import Messages from '../Messages/Messages';
 import Notification from '../Notification/Notification';
 import Settings from '../Settings/Settings';
+import TopNavbar from '../Header/TopNavbar/TopNavbar';
 import './Main.css';
 
 function Main(props) {
-  if (props.switchComponent === 'HOME') {
+  if (localStorage.getItem('currentComponent') === 'HOME') {
     return (
       <main className='main'>
         {window.innerWidth <= '600' && (
-          <div className='top-container'>
+          <TopNavbar>
             <Logo />
             <SearchBar />
-          </div>
+          </TopNavbar>
         )}
         <Home
           user={props.user}
@@ -28,15 +29,14 @@ function Main(props) {
         />
       </main>
     );
-  }
-  else if (props.switchComponent === 'PROFILE') {
+  } else if (localStorage.getItem('currentComponent') === 'PROFILE') {
     return (
       <main className='main'>
         {window.innerWidth <= '600' && (
-          <div className='top-container'>
+          <TopNavbar>
             <Logo />
             <SearchBar />
-          </div>
+          </TopNavbar>
         )}
         <Profile
           title='Profile-Page'
@@ -50,8 +50,7 @@ function Main(props) {
         />
       </main>
     );
-  }
-  else if (props.switchComponent === 'MESSAGES') {
+  } else if (localStorage.getItem('currentComponent') === 'MESSAGES') {
     return (
       <main className='main chat'>
         <Messages
@@ -62,21 +61,19 @@ function Main(props) {
         />
       </main>
     );
-  }
-  else if (props.switchComponent === 'NOTIFICATIONS') {
+  } else if (localStorage.getItem('currentComponent') === 'NOTIFICATIONS') {
     return (
       <main className='main notifications'>
         {window.innerWidth <= '600' && (
-          <div className='top-container'>
+          <TopNavbar>
             <Logo />
             <SearchBar />
-          </div>
+          </TopNavbar>
         )}
         <Notification title='Notification Page' />
       </main>
     );
-  }
-  else if (props.switchComponent === 'SETTINGS') {
+  } else if (localStorage.getItem('currentComponent') === 'SETTINGS') {
     return (
       <main className='main settings'>
         <Settings />
@@ -86,10 +83,10 @@ function Main(props) {
     return (
       <main className='main'>
         {window.innerWidth <= '600' && (
-          <div className='top-container'>
+          <TopNavbar>
             <Logo />
             <SearchBar />
-          </div>
+          </TopNavbar>
         )}
         <Profile
           title='Profile-Page'

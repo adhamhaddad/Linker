@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import NotificationDate from '../Post/Validation/NotificationDate';
+import Container from '../UI/Container/Container';
 import './Notification.css';
 
 function Notifications() {
@@ -24,8 +25,7 @@ function Notifications() {
       username: 'Bassem Hamada',
       profile: './images/bassem.jpg',
       time: 'Fri Sep 10 2022 12:30:31 GMT+0200 (Eastern European Standard Time)',
-      content:
-        'has commented on your post'
+      content: 'has commented on your post'
     },
     {
       id: 4,
@@ -73,16 +73,16 @@ function Notifications() {
               className={sliders ? 'fa-solid fa-xmark' : 'fa-solid fa-sliders'}
             ></i>
           </button>
-          <NotificationDate time={notification.time}/>
+          <NotificationDate time={notification.time} />
         </div>
       </li>
     );
   });
 
   return (
-    <div className='container notifications'>
+    <Container className='notifications'>
       <ul className='notifications-list'>{notificationList}</ul>
-    </div>
+    </Container>
   );
 }
 export default Notifications;

@@ -91,19 +91,19 @@
 }
 
 @media only screen and (max-width: 600px) {
-    .header .container > .menu-list {
+    .menu-list {
         width: 100%;
     }
-    .header .container > .menu-list > li {
+    .menu-list > li {
         flex-grow: 1;
     }
-    .header .container > .menu-list > li > a {
+    .menu-list > li > a {
         height: 60px;
     }
-    .header .container > .menu-list > li > a > span {
+    .menu-list > li > a > span {
         display: none;
     }
-    .header .container > .menu-list > li > a > i {
+    .menu-list > li > a > i {
         margin: 0;
         font-size: 20px;
     }

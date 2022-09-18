@@ -1,0 +1,45 @@
+.container {
+    width: 1080px;
+    margin: auto;
+    position: relative;
+    color: var(--base-color-light);
+    background-color: var(--base-background-dark);
+}
+
+.container.header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.container.profile {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding: 10px;
+    color: var(--base-color-light);
+}
+
+.container.notifications {
+    height: 100%;
+}
+
+.container.settings {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+@media only screen and (max-width: 1080px) {
+    .container {
+        width: 100%;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+    .container.profile {
+        padding: 5px;
+    }
+}

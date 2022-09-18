@@ -1,9 +1,3 @@
-.container.settings {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    position: relative;
-}
 .container.settings > aside {
     height: 100%;
 }
@@ -37,16 +31,6 @@
 
 
 /*** Media Querry ***/
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (max-width: 1080px) {
-   
-}
-
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 890px) {
     .container.settings > aside ul {

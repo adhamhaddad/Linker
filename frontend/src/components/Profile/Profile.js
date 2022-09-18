@@ -7,6 +7,7 @@ import ProfileStory from './Story/ProfileStory';
 import ProfileLinks from './Links/ProfileLinks';
 import Backdrop from '../Backdrop/Backdrop';
 import Overlay from '../Overlay/Overlay';
+import Container from '../UI/Container/Container';
 import './Profile.css';
 
 function Profile(props) {
@@ -40,8 +41,7 @@ function Profile(props) {
   const closePostHandler = () => {
     setNewPost(false);
   };
-  
-  
+
   return (
     <>
       {fPP && (
@@ -53,14 +53,18 @@ function Profile(props) {
 
           {ReactDOM.createPortal(
             <Overlay>
-              <img src={props.photos.profile} alt='Profile' className='profile-picture'/>
+              <img
+                src={props.photos.profile}
+                alt='Profile'
+                className='profile-picture'
+              />
             </Overlay>,
             document.getElementById('overlay-root')
           )}
         </>
       )}
 
-      <div className='container container-flex'>
+      <Container className='profile'>
         <div className='left-side'>
           <div className='user-id'>
             <img
@@ -80,14 +84,13 @@ function Profile(props) {
           <ProfileStory story={props.information.story} />
           <ProfileLinks links={props.links} />
         </div>
-      </div>
-      
-      <div className='container'>
-        
+      </Container>
+
+      <Container>
         <button className='create-post-btn' onClick={createPostHandler}>
           Create a new post
         </button>
-       
+
         {newPost && (
           <AddPost
             addNewPost={props.addNewPost}
@@ -97,8 +100,7 @@ function Profile(props) {
           />
         )}
         {posts}
-      </div>
-     
+      </Container>
     </>
   );
 }

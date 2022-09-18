@@ -1,22 +1,16 @@
-.container.notifications {
-    height: 100%;
-    /* border: 1px solid rgb(219, 219, 219); */
-}
-
-.container .notifications-list .notification-card {
+.notifications .notifications-list .notification-card {
     display: flex;
-    /* align-items: center; */
     flex-direction: row;
     color: var(--base-color-dark);
     padding: 10px 5px;
     border-bottom: 1px solid rgb(219, 219, 219);
     background-color: var(--base-background-light);
 }
-.container .notifications-list .notification-card > .notification-profile {
+.notifications .notifications-list .notification-card > .notification-profile {
     display: flex;
     align-items: center;
 }
-.container .notifications-list .notification-card > .notification-profile > a {
+.notifications .notifications-list .notification-card > .notification-profile > a {
     display: block;
     border: 1px solid var(--base-color-dark);
     width: 60px;
@@ -24,49 +18,49 @@
     border-radius: 50%;
     overflow: hidden;
 }
-.container .notifications-list .notification-card > .notification-profile > a > img {
+.notifications .notifications-list .notification-card > .notification-profile > a > img {
     width: 100%;
     height: 100%;
 }
 
-.container .notifications-list .notification-card > .notification-content {
+.notifications .notifications-list .notification-card > .notification-content {
     width: 100%;
     padding: 10px;
     overflow: hidden;
     font-size: 14px;
     word-wrap: break-word;
 }
-.container .notifications-list .notification-card > .notification-content > a {
+.notifications .notifications-list .notification-card > .notification-content > a {
     font-weight: bold;
 }
-.container .notifications-list .notification-card > .notification-controller {
+.notifications .notifications-list .notification-card > .notification-controller {
     display: flex;
     flex-direction: column;
 }
-.container .notifications-list .notification-card > .notification-controller > button {
+.notifications .notifications-list .notification-card > .notification-controller > button {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     line-height: 40px;
     background-color: transparent;
 }
-.container .notifications-list .notification-card > .notification-controller > .notification-time {
+.notifications .notifications-list .notification-card > .notification-controller > .notification-time {
     font-size: 12px;
     text-align: center
 }
 
 /* 
-.container .notifications-list li a {
+.notifications .notifications-list li a {
     display: block;
     height: 90px;
     display: flex;
     color: var(--base-color-dark);
     margin-bottom: 10px;
 }
-.container .notifications-list li a > .image {
+.notifications .notifications-list li a > .image {
     width: 50px;
 }
-.container .notifications-list li a > .content {
+.notifications .notifications-list li a > .content {
     width: 100%;
     height: 100%;
     padding: 10px;
@@ -74,7 +68,7 @@
     text-overflow: ellipsis;
     word-break: break-all;
 }
-.container .notifications-list li a > .time {
+.notifications .notifications-list li a > .time {
     width: 50px;
     line-height: 85px;
     text-align: center;
@@ -82,7 +76,7 @@
 } */
 
 /* Idea Here !!
-.container .notifications-list li a:visited {
+.notifications .notifications-list li a:visited {
     background-color: var(--base-background-dark);
     color: var(--base-color-light)
 }
@@ -91,7 +85,7 @@
 
 /*** Media Querry ***/
 @media only screen and (max-width: 600px) {
-    .container .notifications-list .notification-card > .notification-profile > a {
+    .notifications .notifications-list .notification-card > .notification-profile > a {
         width: 50px;
         height: 50px;
     }

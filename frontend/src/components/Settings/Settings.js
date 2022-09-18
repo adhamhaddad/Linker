@@ -1,16 +1,17 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import Informations from './Information/Information';
 import Authenticate from '../../Authentication/auth';
 import Button from '../UI/Button/Button';
+import Container from '../UI/Container/Container';
 import './Settings.css';
 
 function Settings() {
-  const ctx = useContext(Authenticate)
+  const ctx = useContext(Authenticate);
   const settingsClickHandler = (e) => {
     e.preventDefault();
-  }
+  };
   return (
-    <div className='container settings'>
+    <Container className='settings'>
       <aside>
         <ul>
           <li>
@@ -56,12 +57,14 @@ function Settings() {
             </a>
           </li>
         </ul>
-        <Button onClick={ctx.onLogout} className='logout-btn'>logout</Button>
+        <Button onClick={ctx.onLogout} className='logout-btn'>
+          logout
+        </Button>
       </aside>
       <section className='information-section'>
         <Informations />
       </section>
-    </div>
+    </Container>
   );
 }
 export default Settings;

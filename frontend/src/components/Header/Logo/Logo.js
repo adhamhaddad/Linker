@@ -4,7 +4,9 @@ import './Logo.css';
 function Logo() {
   return (
     <div className='app-logo'>
-      <i className='fa-solid fa-link logo'></i>
+      <span className='logo'>
+        <i className='fa-solid fa-link'></i>
+      </span>
     </div>
   );
 }

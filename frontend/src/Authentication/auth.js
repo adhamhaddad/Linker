@@ -4,7 +4,7 @@ const Authenticate = createContext({
   isLoggedIn: false,
   onLogout: () => {},
   onLogin: (email, password) => {},
-  onAuthError: {authError: false, setAuthError: () => {}}
+  onAuthError: { authError: false, setAuthError: () => {} }
 });
 
 export function Authentication(props) {
@@ -23,7 +23,7 @@ export function Authentication(props) {
     //   return;
     // }
     localStorage.setItem('isLoggedIn', '1');
-    localStorage.setItem('currentComponent', 'PROFILE')
+    localStorage.setItem('currentComponent', 'PROFILE');
     setIsLoggedIn(true);
   };
 
@@ -32,14 +32,14 @@ export function Authentication(props) {
     localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(false);
   };
-  
+
   return (
     <Authenticate.Provider
       value={{
         isLoggedIn: isLoggedIn,
         onLogin: loginHandler,
         onLogout: logoutHandler,
-        onAuthError: {authError: authError, setAuthError: setAuthError}
+        onAuthError: { authError: authError, setAuthError: setAuthError }
       }}
     >
       {props.children}

@@ -1,4 +1,4 @@
-.header {
+.navbar {
     height: 60px;
     display: flex;
     top: 0;
@@ -8,26 +8,13 @@
     z-index: 1200;
     background-color: var(--banse-background-dark);
 }
-/* .header - Logo */
-.header > .container.header {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between
-}
-
 /*** Media Querry ***/
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-    .header {
+    .navbar {
         top: auto;
         left: 0;
         right: 0;
         bottom: 0;
-    }
-    .header .container.header > .app-logo {
-        display: none;
-    }
-    .header .container.header > .search-bar {
-        display: none;
     }
 }

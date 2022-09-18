@@ -8,7 +8,7 @@ import Authenticate from './Authentication/auth';
 
 function App() {
   const ctx = useContext(Authenticate);
-  const [switchComponent, setSwitchComponent] = useState('PROFILE');
+  const [switchComponent, setSwitchComponent] = useState('');
   const [switchForm, setSwitchForm] = useState(false);
 
   // API DUMMY DATA
@@ -187,7 +187,7 @@ function App() {
   const switchFormHandler = (e) => {
     setSwitchForm(e);
   };
-
+  
   const changeComponent = (e) => {
     localStorage.setItem('currentComponent', e.toUpperCase());
     setSwitchComponent(e.toUpperCase());

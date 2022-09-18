@@ -1,14 +1,7 @@
-.container-flex {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    padding: 10px;
-    color: var(--base-color-light);
-}
-.container-flex .left-side {
+.profile .left-side {
     flex-grow: 0;
 }
-.container-flex .left-side .user-id img {
+.profile .left-side .user-id img {
     display: block;
     width: 150px;
     height: 160.15px;
@@ -17,7 +10,7 @@
     cursor: pointer;
     text-align: center;
 }
-.container-flex .left-side .user-id span {
+.profile .left-side .user-id span {
     display: block;
     width: 150px;
     padding: 10px 0;
@@ -27,7 +20,7 @@
 }
 
 /* Right Side */
-.container-flex .right-side {
+.profile .right-side {
     width: 400px;
     flex-grow: 0.2;
     display: flex;
@@ -83,17 +76,13 @@ a[title='Telegram']:hover {background-color: #0084C6; transition: background .7s
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-    /* User Info */
-    .container-flex {
-        padding: 5px;
-    }
-    .container-flex .left-side .user-info ul li,
-    .container-flex .right-side .links-section ul li {font-size: 12px}
+    .container.profile .left-side .user-info ul li,
+    .container.profile .right-side .links-section ul li {font-size: 12px}
     
     /* Titles */
-    .container-flex .left-side .user-info h3,
-    .container-flex .right-side .story h3,
-    .container-flex .right-side .links-section h3 {
+    .container.profile .left-side .user-info h3,
+    .container.profile .right-side .story h3,
+    .container.profile .right-side .links-section h3 {
         text-align: left;
         font-size: 14px;
     }
@@ -101,26 +90,29 @@ a[title='Telegram']:hover {background-color: #0084C6; transition: background .7s
     .links-section h3 > i,
     .story h3 > i
      {width: 22px}
-    
-    .container-flex .right-side .story,
-    .container-flex .right-side .links-section ul li a {font-size: 12px}
-    .container-flex .right-side .story p {font-size: 12px}
-    .container-flex .right-side .links-section {
+
+    .container.profile .right-side .story,
+    .container.profile .right-side .links-section ul li a {font-size: 12px}
+    .container.profile .right-side .story p {font-size: 12px}
+    .container.profile .right-side .links-section {
         height: auto;
         padding: 0;
     }
-    .container-flex .right-side .links-section ul {
+    .container.profile .right-side .links-section ul {
         text-align: left;
     }
-    .container-flex .right-side .links-section ul li a {
+    .container.profile .right-side .links-section ul li a {
         padding: 5px 0;
         margin: 0 5px 0 0;
+    }
+    button.create-post-btn {
+        margin: 5px;
     }
 }
 
 /*
 * Media Querry
-@media screen and (max-width: 775px) {.container-flex {height: 360px}}
+@media screen and (max-width: 775px) {.profile {height: 360px}}
 @media screen and (max-width: 640px) {.container {width: 100%}}
 * 550px Screens
 @media screen and (max-width: 550px) {
@@ -130,8 +122,8 @@ a[title='Telegram']:hover {background-color: #0084C6; transition: background .7s
 * 360px Screens
 @media screen and (max-width: 360px) {
     * Frameworks
-    .container-flex {display: block; height: 340px}
-    .container-flex .left-side {
+    .profile {display: block; height: 340px}
+    .profile .left-side {
         display: flex;
         width: 100%;
         height: 60%;
@@ -142,7 +134,7 @@ a[title='Telegram']:hover {background-color: #0084C6; transition: background .7s
     * User Info
     .container .left-side .user-info {width: 50%; height: 100%}
     * Bio
-    .container-flex .right-side {
+    .profile .right-side {
         display: flex;
         width: 100%;
         height: 40%;

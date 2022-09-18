@@ -4,6 +4,7 @@ import './Reactions.css';
 function Reactions(props) {
   let dott = <></>;
   let reactionBar = <></>;
+
   if (
     props.reactions.comments.length !== 0 &&
     props.reactions.shares.length !== 0
@@ -47,7 +48,9 @@ function Reactions(props) {
           )}
           {dott}
           {props.reactions.shares.length > 0 && (
-            <span onClick={props.showSharesHandler}>{props.reactions.shares.length} shares</span>
+            <span onClick={props.showSharesHandler}>
+              {props.reactions.shares.length} shares
+            </span>
           )}
         </p>
       </div>
