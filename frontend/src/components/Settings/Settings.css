@@ -27,6 +27,7 @@
 }
 .container.settings > .information-section {
     overflow-y: auto;
+    background-color: orange;
 }
 
 
@@ -37,10 +38,6 @@
         width: 200px;
     }
 }
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 768px) {
-
-}
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
     .container.settings > aside {
@@ -48,8 +45,5 @@
     }
     .container.settings > aside ul {
         width: 100%;
-    }
-    .container.settings > .information-section {
-        display: none;
     }
 }

@@ -1,12 +1,10 @@
 .settings-form {
-
     height: 100%;
     padding: 5px;
 }
 .settings-form > h3 {
     margin: 25px 0 10px;
     font-size: 18px;
-    font-weight: 600;
     text-align: center;
     text-transform: capitalize;
 }
@@ -14,15 +12,18 @@
 .settings-form > div {
     display: flex;
     margin: 15px 0;
-    justify-content: space-between;
-    line-height: 30px;
+    line-height: 1.5;
 }
-.settings-form > div > span {width: 80%}
-.settings-form > div > span p {
+.settings-form > div > span {
+    width: 80%;
+    text-transform: capitalize;
+    font-weight: bold;
+    font-size: 14px
+}
+.settings-form > div > p {
     width: 85%;
     font-size: 14px;
-    text-transform: none;
-    float: right;
+    padding: 10px 0;
 }
 
 /* Submit Button */
@@ -52,4 +53,24 @@
 .settings-form > div > button:hover {
     background-color: rgb(45, 45, 45);
     transition: background .5s ease-in-out;
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+    .settings-form > div {
+        display: flex;
+        flex-direction: column;
+        margin: 10px 0;
+    }
+    .settings-form > div > span {
+        width: 100%;
+    }
+    .settings-form > div > p {
+        width: 100%;
+    }
+    .settings-form > div button {
+        width: 100%;
+    }
+    .settings-form > button {
+        margin-top: 10px;
+    }
 }

@@ -7,6 +7,7 @@ import Messages from '../Messages/Messages';
 import Notification from '../Notification/Notification';
 import Settings from '../Settings/Settings';
 import TopNavbar from '../Header/TopNavbar/TopNavbar';
+import Information from '../Settings/Information/Information';
 import './Main.css';
 
 function Main(props) {
@@ -76,7 +77,48 @@ function Main(props) {
   } else if (localStorage.getItem('currentComponent') === 'SETTINGS') {
     return (
       <main className='main settings'>
-        <Settings />
+        <Settings changeComponent={props.changeComponent} />
+      </main>
+    );
+  } else if (localStorage.getItem('currentComponent') === 'INFORMATION') {
+    return (
+      <main className='main'>
+        {window.innerWidth <= '600' && (
+          <TopNavbar>
+            <button
+              style={{
+                color: '#FFF',
+                width: '30px',
+                height: '30px',
+                borderRadius: '50%',
+                marginRight: '5px',
+                backgroundColor: 'var(--base-color-dark)'
+              }}
+            >
+              <i className='fa-solid fa-circle-chevron-left'></i>
+            </button>
+            <p
+              style={{
+                color: '#FFF'
+              }}
+            >
+              Settings
+            </p>
+          </TopNavbar>
+        )}
+        <Information />
+      </main>
+    );
+  } else if (localStorage.getItem('currentComponent') === 'PRIVACY') {
+    return (
+      <main className='main'>
+        <Information />
+      </main>
+    );
+  } else if (localStorage.getItem('currentComponent') === 'ACCOUNT') {
+    return (
+      <main className='main'>
+        <Information />
       </main>
     );
   } else {

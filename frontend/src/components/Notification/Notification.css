@@ -4,7 +4,6 @@
     color: var(--base-color-dark);
     padding: 10px 5px;
     border-bottom: 1px solid rgb(219, 219, 219);
-    background-color: var(--base-background-light);
 }
 .notifications .notifications-list .notification-card > .notification-profile {
     display: flex;

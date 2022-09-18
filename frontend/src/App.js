@@ -189,6 +189,7 @@ function App() {
   };
   
   const changeComponent = (e) => {
+    console.log(e.toUpperCase())
     localStorage.setItem('currentComponent', e.toUpperCase());
     setSwitchComponent(e.toUpperCase());
   };
@@ -205,7 +206,7 @@ function App() {
           links={links}
           setReactions={setReactions}
           addNewPost={addNewPost}
-          switchComponent={switchComponent}
+          changeComponent={changeComponent}
         />
         <Footer />
       </>

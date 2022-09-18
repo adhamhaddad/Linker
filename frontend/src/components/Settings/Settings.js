@@ -5,25 +5,27 @@ import Button from '../UI/Button/Button';
 import Container from '../UI/Container/Container';
 import './Settings.css';
 
-function Settings() {
+function Settings(props) {
   const ctx = useContext(Authenticate);
   const settingsClickHandler = (e) => {
     e.preventDefault();
+    props.changeComponent(e.target.title);
   };
+
   return (
     <Container className='settings'>
       <aside>
         <ul>
           <li>
-            <a href='#' onClick={settingsClickHandler}>
-              <i className='fa-solid fa-circle-info'></i>
-              <span>information</span>
+            <a href='#' onClick={settingsClickHandler} title='Information'>
+              <i className='fa-solid fa-circle-info' title='Information'></i>
+              <span title='Information'>information</span>
             </a>
           </li>
           <li>
-            <a href='#' onClick={settingsClickHandler}>
-              <i className='fa-solid fa-shield-halved'></i>
-              <span>privacy & security</span>
+            <a href='#' onClick={settingsClickHandler} title='Privacy'>
+              <i className='fa-solid fa-shield-halved' title='Privacy'></i>
+              <span title='Privacy'>privacy & security</span>
             </a>
           </li>
           <li>
@@ -45,9 +47,9 @@ function Settings() {
             </a>
           </li>
           <li>
-            <a href='#' onClick={settingsClickHandler}>
-              <i className='fa-solid fa-circle-user'></i>
-              <span>account</span>
+            <a href='#' onClick={settingsClickHandler} title='Account'>
+              <i className='fa-solid fa-circle-user' title='Account'></i>
+              <span title='Account'>account</span>
             </a>
           </li>
           <li>
@@ -61,9 +63,11 @@ function Settings() {
           logout
         </Button>
       </aside>
-      <section className='information-section'>
-        <Informations />
-      </section>
+      {window.innerWidth > '600' && (
+        <section className='information-section'>
+          <Informations />
+        </section>
+      )}
     </Container>
   );
 }
