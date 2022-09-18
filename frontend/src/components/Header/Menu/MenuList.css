@@ -42,50 +42,6 @@
     display: block;
 }
 
-/* Notifications */
-.menu-list > .notifications > a > .all-notifications {
-    background-color: var(--base-background-dark);
-    width: 220%;
-    height: 400px;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    position: absolute;
-    display: none;
-    border-bottom: 1px solid var(--base-background-dark);
-    border-right: 1px solid var(--base-background-dark);
-    border-left: 1px solid var(--base-background-dark);
-}
-.menu-list > .notifications > a > .all-notifications .notifications-iframe {width: 100%; height: 100%}
-
-/* Settings */
-.menu-list > .settings > ul {
-    filter: drop-shadow(1px 1px 5px var(--base-color-dark));
-    width: 180px;
-    position: absolute;
-    right: 0;
-    background-color: var(--base-background-light);
-    display: none;
-}
-.menu-list > .settings > ul li {
-    display: block;
-    position: relative;
-}
-.menu-list > .settings > ul li a {
-    display: block;
-    height: 50px;
-    padding: 15px 10px;
-    position: relative;
-    text-transform: capitalize;
-    font-size: 12px;
-    font-weight: bold;
-    color: var(--base-color-dark);
-    transition: .5s background ease-in-out;
-}
-.menu-list > .settings > ul > li > a > i {
-    width: 20px;
-    text-align: left;
-}
 /*** Effects ***/
 .menu-list > li > a:hover {
     background-color: var(--base-background-hovered);

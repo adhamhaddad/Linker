@@ -168,15 +168,17 @@ function Messages() {
           </li>
         </ul>
       </div>
+      
+      
       <div className='chat-conversation'>
         {final}
-        {/*
+      {/*         
         <div className='user'>
             <img src={img} alt="Profile"/>
             <span>I cant stop loving youu .. ❤️</span>
             <img src={mrym} alt="Profile" id="seen"/>
-        </div>
-        */}
+        </div> */}
+       
         <p id='error'>
           This user closed the conversation. <a href='#'>learn more</a>
         </p>

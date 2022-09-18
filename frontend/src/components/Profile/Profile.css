@@ -53,10 +53,10 @@ button.create-post-btn {
     width: 200px;
     height: 40px;
     line-height: 40px;
-    border-radius: 20px;
+    /* border-radius: 20px; */
     font-weight: bold;
     cursor: pointer;
-    margin: 0 0 10px 0;
+    margin: 10px;
 }
 
 /* Effects */

@@ -2,7 +2,7 @@
     background-color: var(--base-color-dark);
     color: var(--base-color-light);
     font-size: 12px;
-    padding: 5px 0;
+    padding: 5px;
     text-align: center;
 }
 .hide {

@@ -1,29 +1,19 @@
 .header {
     height: 60px;
     display: flex;
-    align-items: center;
     top: 0;
     right: 0;
     left: 0;
     position: fixed;
     z-index: 1200;
-    background-color: var(--base-background-dark);
+    background-color: var(--banse-background-dark);
 }
 /* .header - Logo */
-.header > .container {
+.header > .container.header {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: space-between
 }
-.header > .container .logo {
-    width: 100px;
-    height: 100%;
-    font-size: 16px;
-    text-align: center;
-    cursor: pointer;
-    color: var(--base-color-light);
-}
-
 
 /*** Media Querry ***/
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -34,10 +24,10 @@
         right: 0;
         bottom: 0;
     }
-    .header .container > .logo {
+    .header .container.header > .app-logo {
         display: none;
     }
-    .header .container > .search-bar {
+    .header .container.header > .search-bar {
         display: none;
     }
 }

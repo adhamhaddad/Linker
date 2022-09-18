@@ -8,9 +8,6 @@ function PostController(props) {
       return prev ? false : true;
     });
   };
-  useEffect(() => {
-    
-  }, [sliders])
   return (
     <div className='post-controller'>
       <button onClick={slidersHandler}>

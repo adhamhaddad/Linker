@@ -81,22 +81,9 @@
     font-size: 12px;
     text-transform: capitalize;
 }
-.container.form form button {
-    display: block;
-    width: 100%;
-    height: 35px;
-    border-radius: 20px;
-    margin: 20px auto 0;
-    text-transform: capitalize;
-    transition: background .7s;
-    background-color: var(--base-background-dark);
-    color: var(--base-color-light);
-    cursor: pointer
-}
 
-.container.form form button:disabled {
-    cursor: not-allowed;
-}
+
+
 .error {
     border: 2px solid red
 }
@@ -142,11 +129,5 @@
     .container.form .links ul li a i {
         color: var(--base-color-light);
         font-size: 14px;
-    }
-    .container.form form button {
-        width: 50%;
-    }
-    .footer {
-        display: block;
     }
 }

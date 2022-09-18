@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import Signup from './components/Forms/Signup';
 import Signin from './components/Forms/Signin';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 import Footer from './components/Footer/Footer';
+import Authenticate from './Authentication/auth';
 
 function App() {
-  const [componentState, setComponentState] = useState('PROFILE');
+  const ctx = useContext(Authenticate);
+  const [switchComponent, setSwitchComponent] = useState('PROFILE');
   const [switchForm, setSwitchForm] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loginError, setLoginError] = useState(false);
+
+  // API DUMMY DATA
   const [user, setUser] = useState({
     id: '1',
     username: 'adhamhaddad',
@@ -54,7 +56,7 @@ function App() {
           { profile: './images/profile.jpg', username: 'Adham Ashraf' },
           { profile: './images/beso.jpg', username: 'Ahmed Emad' },
           { profile: './images/bassem.jpg', username: 'Bassem Hamada' },
-          { profile: './images/simba.jpeg', username: 'Simba Khaled' }
+          { profile: './images/simba.jpeg', username: 'Mohamed Khaled' }
         ],
         comments: [
           {
@@ -66,7 +68,7 @@ function App() {
           },
           {
             id: '1',
-            username: 'Simba Khaled',
+            username: 'Mohamed Khaled',
             profile: './images/simba.jpeg',
             content: '❤️❤️',
             time: 'Tue Sep 13 2022 17:35:31 GMT+0200 (Eastern European Standard Time)'
@@ -74,7 +76,7 @@ function App() {
         ],
         shares: [
           { profile: './images/beso.jpg', username: 'Ahmed Emad' },
-          { profile: './images/simba.jpeg', username: 'Simba Khaled' }
+          { profile: './images/simba.jpeg', username: 'Mohamed Khaled' }
         ]
       }
     },
@@ -92,7 +94,7 @@ function App() {
         likes: [
           { profile: './images/profile.jpg', username: 'Adham Ashraf' },
           { profile: './images/beso.jpg', username: 'Ahmed Emad' },
-          { profile: './images/simba.jpeg', username: 'Simba Khaled' },
+          { profile: './images/simba.jpeg', username: 'Mohamed Khaled' },
           { profile: './images/bassem.jpg', username: 'Bassem Hamada' }
         ],
         comments: [
@@ -127,7 +129,7 @@ function App() {
         likes: [
           { profile: './images/profile.jpg', username: 'Adham Ashraf' },
           { profile: './images/beso.jpg', username: 'Ahmed Emad' },
-          { profile: './images/simba.jpeg', username: 'Simba Khaled' },
+          { profile: './images/simba.jpeg', username: 'Mohamed Khaled' },
           { profile: './images/bassem.jpg', username: 'Bassem Hamada' },
           { profile: './images/mrym.png', username: 'Mariam Maged' },
           { profile: './images/coffee.jpg', username: 'Cup Coffee' }
@@ -150,7 +152,7 @@ function App() {
         ],
         shares: [
           { profile: './images/beso.jpg', username: 'Ahmed Emad' },
-          { profile: './images/simba.jpeg', username: 'Simba Khaled' },
+          { profile: './images/simba.jpeg', username: 'Mohamed Khaled' },
           { profile: './images/bassem.jpg', username: 'Bassem Hamada' }
         ]
       }
@@ -181,80 +183,52 @@ function App() {
       ];
     });
   };
+
   const switchFormHandler = (e) => {
     setSwitchForm(e);
   };
 
-  useEffect(() => {
-    const loggedInCheck = localStorage.getItem('isLoggedIn');
-
-    if (loggedInCheck == '1') {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const loginHandler = (e, p) => {
-    if (e !== 'adham' || p !== 'adham123') {
-      setLoginError(true);
-      return;
-    }
-    localStorage.setItem('isLoggedIn', '1');
-    setIsLoggedIn(true);
-  };
-
-  const logoutHandler = () => {
-    localStorage.removeItem('currentComponent')
-    localStorage.removeItem('isLoggedIn')
-    setComponentState('PROFILE');
-    setIsLoggedIn(false);
-  }
-  useEffect(() => {
-    const currentComponent = localStorage.getItem('currentComponent');
-    setComponentState(currentComponent);
-  }, []);
-
-  const changeComponents = (e) => {
+  const changeComponent = (e) => {
     localStorage.setItem('currentComponent', e.toUpperCase());
-    setComponentState(e.toUpperCase());
+    setSwitchComponent(e.toUpperCase());
   };
-  return (
-    <>
-      {isLoggedIn ? (
-        <>
-          <Header changeComponents={changeComponents} logoutHandler={logoutHandler}/>
-          <Main
-            componentState={componentState}
-            user={user}
-            posts={posts}
-            photos={photos}
-            information={information}
-            links={links}
-            setReactions={setReactions}
-            addNewPost={addNewPost}
-            logoutHandler={logoutHandler}
+
+  if (ctx.isLoggedIn) {
+    return (
+      <>
+        <Header changeComponent={changeComponent} />
+        <Main
+          user={user}
+          posts={posts}
+          photos={photos}
+          information={information}
+          links={links}
+          setReactions={setReactions}
+          addNewPost={addNewPost}
+          switchComponent={switchComponent}
+        />
+        <Footer />
+      </>
+    );
+  } else {
+    return (
+      <>
+        {switchForm ? (
+          <Signup
+            title='Signup Page'
+            register={true}
+            switchForm={switchFormHandler}
           />
-        </>
-      ) : (
-        <>
-          {switchForm ? (
-            <Signup
-              title='Signup Page'
-              register={true}
-              switchForm={switchFormHandler}
-            />
-          ) : (
-            <Signin
-              title='Signin Page'
-              login={true}
-              error={loginError}
-              switchForm={switchFormHandler}
-              loginValidate={loginHandler}
-            />
-          )}
-        </>
-      )}
-      <Footer />
-    </>
-  );
+        ) : (
+          <Signin
+            title='Signin Page'
+            login={true}
+            onError={ctx.onAuthError}
+            switchForm={switchFormHandler}
+          />
+        )}
+      </>
+    );
+  }
 }
 export default App;

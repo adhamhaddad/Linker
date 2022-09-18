@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Informations from './Information/Information';
+import Authenticate from '../../Authentication/auth';
+import Button from '../UI/Button/Button';
 import './Settings.css';
 
-function Settings(props) {
+function Settings() {
+  const ctx = useContext(Authenticate)
   const settingsClickHandler = (e) => {
     e.preventDefault();
   }
@@ -19,7 +22,7 @@ function Settings(props) {
           <li>
             <a href='#' onClick={settingsClickHandler}>
               <i className='fa-solid fa-shield-halved'></i>
-              <span>privacy</span>
+              <span>privacy & security</span>
             </a>
           </li>
           <li>
@@ -46,8 +49,14 @@ function Settings(props) {
               <span>account</span>
             </a>
           </li>
+          <li>
+            <a href='#' onClick={settingsClickHandler}>
+              <i className='fa-solid fa-circle-question'></i>
+              <span>help</span>
+            </a>
+          </li>
         </ul>
-        <button onClick={props.logoutHandler} className='logout-btn'>logout</button>
+        <Button onClick={ctx.onLogout} className='logout-btn'>logout</Button>
       </aside>
       <section className='information-section'>
         <Informations />

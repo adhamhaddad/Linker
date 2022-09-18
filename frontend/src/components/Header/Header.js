@@ -1,4 +1,5 @@
 import React from 'react';
+import Logo from './Logo/Logo';
 import SearchBar from './Search/Searchbar';
 import MenuList from './Menu/MenuList';
 import './Header.css';
@@ -6,10 +7,12 @@ import './Header.css';
 function Header(props) {
   return (
     <nav className='header'>
-      <div className='container'>
-        <img src='./images/comp.png' alt='Logo' className='logo' />
+      <div className='container header'>
+        <Logo />
         <SearchBar />
-        <MenuList changeComponents={props.changeComponents} logoutHandler={props.logoutHandler}/>
+        <MenuList
+          changeComponent={props.changeComponent}
+        />
       </div>
     </nav>
   );

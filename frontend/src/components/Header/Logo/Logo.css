@@ -1,0 +1,32 @@
+.app-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    align-self: center;
+    border: 3px solid var(--base-color-light);
+    margin: 0 5px;
+}
+.app-logo .logo {
+    text-align: center;
+    color: var(--base-color-light);
+    font-size: 20px;
+    width: 100%;
+    height: 100%;
+    line-height: 55px;
+}
+
+/*** Media Querry ***/
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+    .top-container .app-logo {
+        margin: 0;
+        width: 35px;
+        height: 35px;
+        border: 2px solid var(--base-color-light);
+    }
+    .top-container .app-logo .logo {
+        line-height: 32.5px;
+        font-size: 14px;
+    }
+}

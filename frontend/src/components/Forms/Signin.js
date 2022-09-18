@@ -1,8 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import LoginError from './LoginError/LoginError';
+import Authenticate from '../../Authentication/auth';
+import Button from '../UI/Button/Button';
 import './Styles.css';
 
 function Signin(props) {
+  const ctx = useContext(Authenticate);
   const [enableLogin, setEnableLogin] = useState(false);
   const [validateForm, setValidateForm] = useState({
     username: '',
@@ -43,7 +46,7 @@ function Signin(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    props.loginValidate(validateForm.username, validateForm.password);
+    ctx.onLogin(validateForm.username, validateForm.password);
     setValidateForm({
       username: '',
       password: '',
@@ -84,7 +87,7 @@ function Signin(props) {
         autoComplete='on'
         onSubmit={submitHandler}
       >
-        {props.error && <LoginError status={true}/>}
+        {ctx.onAuthError.authError && <LoginError />}
 
         <input
           type='text'
@@ -117,9 +120,9 @@ function Signin(props) {
           />
           <span>remember me</span>
         </label>
-        <button type='submit' disabled={enableLogin}>
+        <Button className='btn-login' type='submit' disabled={enableLogin}>
           log in
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { useEffect } from 'react';
+import Authenticate from '../../../Authentication/auth';
 import classes from './LoginError.module.css';
 
-const LoginError = (props) => {
-  const [status, setStatus] = useState(false);
+const LoginError = () => {
+  const ctx = useContext(Authenticate);
 
-  props.status &&
-    setTimeout(() => {
-      setStatus(true);
-    }, 1000);
+  useEffect(() => {
+    console.log('Error');
+    const err = setTimeout(() => {
+      ctx.onAuthError.setAuthError(false);
+    }, 3500);
+
+    return () => {
+      console.log('Cleanup');
+      clearTimeout(err);
+    };
+  }, [ctx.onAuthError.authError]);
+
   return (
-    <div className={status ? classes.hide : classes.error}>
-      <p>Username or password doesn't match</p>
+    <div className={ctx.onAuthError.authError ? classes.error : classes.hide}>
+      <p>
+        Sorry, username or password authentication didn't work. Please try
+        again.
+      </p>
     </div>
   );
 };

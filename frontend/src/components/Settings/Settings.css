@@ -21,14 +21,18 @@
     height: 50px;
     line-height: 50px;
     padding: 0 5px;
+    color: var(--base-color-light)
 }
 .container.settings > aside ul li a:hover {background-color: var(--base-background-light); color: var(--base-color-dark)}
 .container.settings > aside ul li a:focus {border-left: 3px solid var(--base-color-light)}
 .container.settings > aside ul li a > i {
     width: 25px;
 }
+.container.settings > aside button {
+    color: var(--base-color-dark)
+}
 .container.settings > .information-section {
-    overflow-y: auto; 
+    overflow-y: auto;
 }
 
 
