@@ -11,6 +11,8 @@
 * {
     padding: 0;
     margin: 0;
+    border: none;
+    outline: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -19,8 +21,6 @@
     box-sizing: border-box;
     text-decoration: none;
     list-style-type: none;
-    border: none;
-    outline: 0;
     -moz-tap-highlight-color: transparent;
     -webkit-tap-highlight-color: transparent;
     -o-tap-highlight-color: transparent;

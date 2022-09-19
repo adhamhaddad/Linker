@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Container from '../UI/Container/Container';
+import ChatHeader from './ChatHeader/ChatHeader';
+import ChatForm from './ChatForm/ChatForm';
+import Conversation from './Conversation/Conversation';
+import MessageCard from './MessageCard/MessageCard';
 import './Messages.css';
 
 function Messages() {
-  const [status, setStatus] = useState(true);
-  const [menuState, setMenuState] = useState(false);
   // const [receiverUser, setReceiverUser] = React.useState({
   //   name: 'mariam maged',
   //   profile: './images/mrym.png',
@@ -47,20 +49,20 @@ function Messages() {
   //   ]
   // });
 
-  const [receiverUser, setReceiverUser] = React.useState({
+  const [receiverUser, setReceiverUser] = useState({
     name: 'mariam maged',
     profile: './images/mrym.png',
     messages: [
       {
-        time: '12:16:10 AM',
+        time: 'Tue Sep 20 2022 12:31:32 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       },
       {
-        time: '12:17:40 AM',
+        time: 'Tue Sep 20 2022 12:32:37 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       },
       {
-        time: '12:17:50 AM',
+        time: 'Tue Sep 20 2022 12:32:45 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       }
     ]
@@ -70,139 +72,60 @@ function Messages() {
     profile: './images/profile.jpg',
     messages: [
       {
-        time: '12:15:20 AM',
+        time: 'Tue Sep 20 2022 12:31:31 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       },
       {
-        time: '12:17:30 AM',
+        time: 'Tue Sep 20 2022 12:32:35 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       },
       {
-        time: '12:17:45 AM',
+        time: 'Tue Sep 20 2022 12:32:41 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       },
       {
-        time: '12:18:01 AM',
+        time: 'Tue Sep 20 2022 12:36:31 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       }
     ]
   });
 
-  const timeFormat = (time) => {
-    const hours = time.split(':')[0];
-    const minutes = time.split(':')[1];
-    return `${hours}:${minutes} ${time.split(' ')[1]}`;
-  };
-  const getTime = (time) => {
-    const filter = `${time.split(':')[0]}${time.split(':')[1]}${
-      time.split(':')[2]
-    }`;
-    const final = filter.split(' ')[0];
-    return Number(final);
-  };
-
-  const toggleMenu = () => {
-    setMenuState((prev) => (prev ? false : true));
-  };
-
   const receiver = receiverUser.messages.map((msg) => {
     return (
-      <div className='receiver message-container' key={getTime(msg.time)}>
-        <img src={receiverUser.profile} alt='Profile' />
-        <div className='message-info'>
-          <span className='message-content'>{msg.message}</span>
-          <span className='message-time'>{timeFormat(msg.time)}</span>
-        </div>
-      </div>
+      <MessageCard
+        className='receiver'
+        profile={receiverUser.profile}
+        message={msg.message}
+        time={msg.time}
+        key={new Date(msg.time).getTime()}
+      />
     );
   });
+
   const sender = senderUser.messages.map((msg) => {
     return (
-      // 171640
-      <div className='sender message-container' key={getTime(msg.time)}>
-        <img src={senderUser.profile} alt='Profile' />
-        <div className='message-info'>
-          <span className='message-content'>{msg.message}</span>
-          <span className='message-time'>{timeFormat(msg.time)}</span>
-        </div>
-      </div>
+      <MessageCard
+        className='sender'
+        profile={senderUser.profile}
+        message={msg.message}
+        time={msg.time}
+        key={new Date(msg.time).getTime()}
+      />
     );
   });
   const final = [...sender, ...receiver].sort((a, b) => a.key - b.key);
 
   return (
     <Container className='chat'>
-      <div className='chat-header'>
-        <button>
-          <i className='fa fa-arrow-circle-left'></i>
-        </button>
-
-        <h3>
-          <a href='mariam'>{receiverUser.name}</a>
-        </h3>
-
-        <span className='status'>{status ? 'online' : 'offline'}</span>
-
-        <button onClick={toggleMenu}>
-          <i
-            className={
-              menuState
-                ? 'fa-solid fa-ellipsis'
-                : 'fa-solid fa-ellipsis-vertical'
-            }
-          ></i>
-        </button>
-
-        <ul className={`menu ${menuState && 'active'}`}>
-          <li>
-            <a href='#'>
-              <i className='fa-solid fa-phone'></i>
-              <span>call</span>
-            </a>
-          </li>
-          <li>
-            <a href='#'>
-              <i className='fa-solid fa-bell-slash'></i>
-              <span>mute</span>
-            </a>
-          </li>
-          <li>
-            <a href='#'>
-              <i className='fa-solid fa-rectangle-xmark'></i>
-              <span>close</span>
-            </a>
-          </li>
-          <li>
-            <a href='#'>
-              <i className='fa-solid fa-circle-exclamation'></i>
-              <span>report</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div className='chat-conversation'>
+      <ChatHeader username={receiverUser.name} />
+      <Conversation>
         {final}
-        {/*         
-        <div className='user'>
-            <img src={img} alt="Profile"/>
-            <span>I cant stop loving youu .. ❤️</span>
-            <img src={mrym} alt="Profile" id="seen"/>
-        </div> */}
 
         <p id='error'>
-          {/* You closed the conversation. <a href='#'>learn more</a> */}
           Mariam closed the conversation. <a href='#'>learn more</a>
         </p>
-      </div>
-      <form action='/sendMessage' method='POST'>
-        <input type='text' placeholder='Type Message ..' name='message' />
-        <button type='submit'>
-          send
-          <i className='fa fa-paper-plane'></i>
-        </button>
-      </form>
-
+      </Conversation>
+      <ChatForm />
       {/*
       <i className='fa-solid fa-circle-check'></i>
       <i className='fa-regular fa-circle-check'></i>

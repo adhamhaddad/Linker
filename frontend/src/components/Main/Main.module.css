@@ -14,7 +14,7 @@
         top: 40px;
         bottom: 60px;
     }
-    .main.chat, .main.settings {
+    .main-chat, .main-settings {
         top: 0;
     }
 }

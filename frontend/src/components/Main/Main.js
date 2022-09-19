@@ -8,12 +8,12 @@ import Notification from '../Notification/Notification';
 import Settings from '../Settings/Settings';
 import TopNavbar from '../Header/TopNavbar/TopNavbar';
 import Information from '../Settings/Information/Information';
-import './Main.css';
+import classes from './Main.module.css';
 
 function Main(props) {
   if (localStorage.getItem('currentComponent') === 'HOME') {
     return (
-      <main className='main'>
+      <main className={classes.main}>
         {window.innerWidth <= '600' && (
           <TopNavbar>
             <Logo />
@@ -32,7 +32,7 @@ function Main(props) {
     );
   } else if (localStorage.getItem('currentComponent') === 'PROFILE') {
     return (
-      <main className='main'>
+      <main className={classes.main}>
         {window.innerWidth <= '600' && (
           <TopNavbar>
             <Logo />
@@ -53,7 +53,7 @@ function Main(props) {
     );
   } else if (localStorage.getItem('currentComponent') === 'MESSAGES') {
     return (
-      <main className='main chat'>
+      <main className={`${classes.main} ${classes['main-chat']}`}>
         <Messages
           title='Messages-Page'
           user={props.user}
@@ -76,13 +76,13 @@ function Main(props) {
     );
   } else if (localStorage.getItem('currentComponent') === 'SETTINGS') {
     return (
-      <main className='main settings'>
+      <main className={`${classes.main} ${classes['main-settings']}`}>
         <Settings changeComponent={props.changeComponent} />
       </main>
     );
   } else if (localStorage.getItem('currentComponent') === 'INFORMATION') {
     return (
-      <main className='main'>
+      <main className={classes.main}>
         {window.innerWidth <= '600' && (
           <TopNavbar>
             <button
@@ -111,19 +111,19 @@ function Main(props) {
     );
   } else if (localStorage.getItem('currentComponent') === 'PRIVACY') {
     return (
-      <main className='main'>
+      <main className={classes.main}>
         <Information />
       </main>
     );
   } else if (localStorage.getItem('currentComponent') === 'ACCOUNT') {
     return (
-      <main className='main'>
+      <main className={classes.main}>
         <Information />
       </main>
     );
   } else {
     return (
-      <main className='main'>
+      <main className={classes.main}>
         {window.innerWidth <= '600' && (
           <TopNavbar>
             <Logo />
