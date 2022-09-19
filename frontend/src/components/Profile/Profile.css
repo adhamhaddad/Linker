@@ -9,6 +9,7 @@
     background-color: var(--base-background-light);
     cursor: pointer;
     text-align: center;
+    border: 2px solid var(--base-color-light)
 }
 .profile .left-side .user-id span {
     display: block;

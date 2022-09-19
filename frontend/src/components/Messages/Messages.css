@@ -86,29 +86,38 @@
 
 /* chat-Conversation */
 .container.chat > .chat-conversation {
-    /* height: 300px; */
     overflow-y: auto;
-    padding: 0 4px;
+    height: 100%;
 }
 .container.chat > .chat-conversation .receiver,
 .container.chat > .chat-conversation .sender {
     color: var(--base-color-light);
     position: relative;
     margin: 10px 0;
+    display: flex;
+}
+
+.message-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0px 10px 10px 10px;
+    width: auto;
+    max-width: 90%;
+    overflow: hidden;
+    background-color: var(--base-background-dark);
 }
 .message-time {
-    color: var(--base-color-dark);
-    font-size: 12px;
-    text-align: center;
-    padding: 4px 0;
+    color: var(--base-color-light);
+    font-size: 10px;
+    padding: 5px 10px;
 }
-.container.chat > .chat-conversation .receiver .message-content,
-.container.chat > .chat-conversation .sender .message-content {
-    display: flex;
-    align-items: center
+.message-content {
+    font-size: 14px;
+    word-wrap: break-word;
+    padding: 10px;
 }
-.container.chat > .chat-conversation .receiver .message-content img,
-.container.chat > .chat-conversation .sender .message-content img {
+.message-container > img {
     margin-right: 5px;
     width: 50px;
     height: 50px;
@@ -118,20 +127,14 @@
     align-self: flex-start;
     color: var(--base-color-light);
 }
-.container.chat > .chat-conversation .receiver .message-content span,
-.container.chat > .chat-conversation .sender .message-content span {
-    word-wrap: break-word;
-    max-width: 50%;
-    padding: 10px;
-    background-color: var(--base-background-dark);
-    border-radius: 0px 10px 10px 10px;
-}
-.container.chat > .chat-conversation .receiver .message-content span {
+.receiver > .message-info {
     border: 1px solid rgb(219, 219, 219);
     background-color: var(--base-background-light);
     color: var(--base-color-dark);
 }
-
+.receiver > .message-info > .message-time {
+    color: var(--base-color-dark);
+}
 /*
 .container.chat > .chat-conversation .sender {
     padding: 10px 5px;
@@ -201,11 +204,7 @@
 /*** Media Querry ***/
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-    .container.chat > .chat-conversation .receiver .message-content span,
-    .container.chat > .chat-conversation .sender .message-content span {
-        max-width: 80%;
-        padding: 5px;
-    }
+
 }
 @media only screen and (max-width: 420px) {
 }

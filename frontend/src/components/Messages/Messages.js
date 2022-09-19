@@ -47,51 +47,46 @@ function Messages() {
   //   ]
   // });
 
-
-
   const [receiverUser, setReceiverUser] = React.useState({
-      name: 'mariam maged',
-      profile: './images/mrym.png',
-      messages: [
-        {
-          time: '12:16:10 AM',
-          message: 'Hellooooooooooooooo'
-        },
-        {
-          time: '12:17:40 AM',
-          message:
-            'Hellooooooooooooooo'
-        },
-        {
-          time: '12:17:50 AM',
-          message: 'Hellooooooooooooooo'
-        }
-      ]
-    });
-    const [senderUser, setSenderUser] = React.useState({
-      name: 'adham ashraf',
-      profile: './images/profile.jpg',
-      messages: [
-        {
-          time: '12:15:20 AM',
-          message: 'Hellooooooooooooooo'
-        },
-        {
-          time: '12:17:30 AM',
-          message: 'Hellooooooooooooooo'
-        },
-        {
-          time: '12:17:45 AM',
-          message: 'Hellooooooooooooooo'
-        },
-        {
-          time: '12:18:01 AM',
-          message: 'Hellooooooooooooooo'
-        }
-      ]
-    });
-
-
+    name: 'mariam maged',
+    profile: './images/mrym.png',
+    messages: [
+      {
+        time: '12:16:10 AM',
+        message: 'Hellooooooooooooooo'
+      },
+      {
+        time: '12:17:40 AM',
+        message: 'Hellooooooooooooooo'
+      },
+      {
+        time: '12:17:50 AM',
+        message: 'Hellooooooooooooooo'
+      }
+    ]
+  });
+  const [senderUser, setSenderUser] = React.useState({
+    name: 'adham ashraf',
+    profile: './images/profile.jpg',
+    messages: [
+      {
+        time: '12:15:20 AM',
+        message: 'Hellooooooooooooooo'
+      },
+      {
+        time: '12:17:30 AM',
+        message: 'Hellooooooooooooooo'
+      },
+      {
+        time: '12:17:45 AM',
+        message: 'Hellooooooooooooooo'
+      },
+      {
+        time: '12:18:01 AM',
+        message: 'Hellooooooooooooooo'
+      }
+    ]
+  });
 
   const timeFormat = (time) => {
     const hours = time.split(':')[0];
@@ -112,11 +107,11 @@ function Messages() {
 
   const receiver = receiverUser.messages.map((msg) => {
     return (
-      <div className='receiver' key={getTime(msg.time)}>
-        <p className='message-time'>{timeFormat(msg.time)}</p>
-        <div className='message-content'>
-          <img src={receiverUser.profile} alt='Profile' />
-          <span>{msg.message}</span>
+      <div className='receiver message-container' key={getTime(msg.time)}>
+        <img src={receiverUser.profile} alt='Profile' />
+        <div className='message-info'>
+          <span className='message-content'>{msg.message}</span>
+          <span className='message-time'>{timeFormat(msg.time)}</span>
         </div>
       </div>
     );
@@ -124,11 +119,11 @@ function Messages() {
   const sender = senderUser.messages.map((msg) => {
     return (
       // 171640
-      <div className='sender' key={getTime(msg.time)}>
-        <p className='message-time'>{timeFormat(msg.time)}</p>
-        <div className='message-content'>
-          <img src={senderUser.profile} alt='Profile' />
-          <span>{msg.message}</span>
+      <div className='sender message-container' key={getTime(msg.time)}>
+        <img src={senderUser.profile} alt='Profile' />
+        <div className='message-info'>
+          <span className='message-content'>{msg.message}</span>
+          <span className='message-time'>{timeFormat(msg.time)}</span>
         </div>
       </div>
     );
@@ -196,7 +191,8 @@ function Messages() {
         </div> */}
 
         <p id='error'>
-          This user closed the conversation. <a href='#'>learn more</a>
+          {/* You closed the conversation. <a href='#'>learn more</a> */}
+          Mariam closed the conversation. <a href='#'>learn more</a>
         </p>
       </div>
       <form action='/sendMessage' method='POST'>
