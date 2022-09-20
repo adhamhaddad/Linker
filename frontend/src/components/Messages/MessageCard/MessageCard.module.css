@@ -1,12 +1,11 @@
 .message-container {
-    color: var(--base-color-light);
+    /* color: var(--base-color-light); */
     position: relative;
     margin: 10px 0;
     display: flex;
+    padding: 0 5px;
 }
-
-.message-container > img {
-    margin-right: 5px;
+.profile {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -15,31 +14,74 @@
     align-self: flex-end;
     color: var(--base-color-light);
 }
-.message-container > .message-info {
+.message-info {
     display: flex;
     flex-direction: column;
-    max-width: 80%;
+    max-width: 60%;
     border-radius: 12px 12px 12px 0px;
     overflow: hidden;
     background-color: var(--base-background-dark);
 }
-.message-container > .message-info > .message-content {
+.message-info > .message-content {
     font-size: 14px;
     word-wrap: break-word;
     padding: 10px;
 }
-.message-container > .message-info > .message-time {
+.message-info > .message-time {
     color: var(--base-color-light);
     font-size: 10px;
     padding: 5px 10px;
 }
 
+/* Sender */
+.message-container.sender {
+    direction: rtl;
+}
+.message-container.sender > .profile {
+    margin-left: 5px;
+}
+.message-container.sender > .message-info {
+    border-radius: 12px 12px 0px 12px;
+    direction: ltr;
+}
+.message-container.sender > .message-info > .message-time {
+    text-align: right;
+}
+
 /* Receiver */
+.message-container.receiver > .profile {
+    margin-right: 5px;
+}
 .message-container.receiver > .message-info {
     border: 1px solid rgb(219, 219, 219);
-    background-color: var(--base-background-light);
     color: var(--base-color-dark);
+    background-color: var(--base-background-light);
 }
 .message-container.receiver > .message-info > .message-time {
     color: var(--base-color-dark);
 }
+
+.message-status {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    bottom: 0;
+    left: 5px;
+    position: absolute;
+    overflow: hidden;
+    display: none;
+}
+.message-status.seen {
+
+}
+.message-status.sent {
+
+}
+.message-status > img {
+    width: 100%;
+    height: 100%;
+}
+/* 
+.message-container.sender .message-status {
+    display: block;
+} */

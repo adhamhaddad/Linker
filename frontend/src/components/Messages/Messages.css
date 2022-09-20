@@ -1,11 +1,4 @@
 /*
-.container.chat > .chat-conversation .sender {
-    padding: 10px 5px;
-    direction: rtl;
-    text-align: right;
-}
-.container.chat > .chat-conversation .sender span {direction: ltr}
-
 #seen {
     width: 15px;
     height: 15px;
