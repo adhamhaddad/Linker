@@ -10,21 +10,37 @@ function MenuList(props) {
   return (
     <ul className={classes['menu-list']}>
       <li>
-        <a id='HOME' title='Home' onClick={navClickHandler}>
+        <a
+          className={props.activeComponent === 'HOME' ? classes.active : null}
+          title='Home'
+          onClick={navClickHandler}
+        >
           <i className='fa-solid fa-home' title='Home'></i>
           <span title='Home'>home</span>
         </a>
       </li>
 
       <li>
-        <a title='Profile' onClick={navClickHandler}>
+        <a
+          className={
+            props.activeComponent === 'PROFILE' ? classes.active : null
+          }
+          title='Profile'
+          onClick={navClickHandler}
+        >
           <i className='fa-solid fa-user-circle' title='Profile'></i>
           <span title='Profile'>profile</span>
         </a>
       </li>
 
       <li>
-        <a title='Messages' onClick={navClickHandler}>
+        <a
+          className={
+            props.activeComponent === 'MESSAGES' ? classes.active : null
+          }
+          title='Messages'
+          onClick={navClickHandler}
+        >
           <i className='fa-solid fa-comments' title='Messages'>
             {/* <span title='Messages'>4</span> */}
           </i>
@@ -34,8 +50,10 @@ function MenuList(props) {
 
       <li>
         <a
+          className={`${classes.notifications} ${
+            props.activeComponent === 'NOTIFICATIONS' ? classes.active : null
+          }`}
           title='Notifications'
-          className={classes.notifications}
           onClick={navClickHandler}
         >
           <i className='fa-solid fa-bell' title='Notifications'>
@@ -46,7 +64,13 @@ function MenuList(props) {
       </li>
 
       <li>
-        <a title='Settings' onClick={navClickHandler}>
+        <a
+          className={
+            props.activeComponent === 'SETTINGS' ? classes.active : null
+          }
+          title='Settings'
+          onClick={navClickHandler}
+        >
           <i className='fa-solid fa-cog' title='Settings'></i>
           <span title='Settings'>settings</span>
         </a>

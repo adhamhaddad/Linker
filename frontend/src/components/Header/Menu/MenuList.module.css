@@ -16,6 +16,7 @@
     position: relative;
     color: var(--base-color-light);
     transition: background .5s ease-in-out;
+    cursor: pointer;
 }
 .menu-list > li > a > span {
     height: 20px;
@@ -43,15 +44,18 @@
 }
 
 /*** Effects ***/
-.menu-list > li > a:focus {
+.menu-list > li > a:hover {
     background-color: var(--base-background-hovered);
+    transition: background .5s ease-in-out;
 }
 .notifications > a:hover > i {
     animation-name: bell;
     animation-duration: 1.5s;
     animation-iteration-count: infinite;
 }
-
+.active {
+    background-color: var(--base-background-hovered);
+}
 /*** Animations ***/
 @keyframes bell{
     0% {transform: rotate(5deg)}

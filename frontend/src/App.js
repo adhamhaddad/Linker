@@ -286,7 +286,10 @@ function App() {
   if (ctx.isLoggedIn) {
     return (
       <>
-        <Header changeComponent={changeComponent} />
+        <Header
+          changeComponent={changeComponent}
+          activeComponent={localStorage.getItem('currentComponent')}
+        />
         <Main
           user={user}
           posts={posts}

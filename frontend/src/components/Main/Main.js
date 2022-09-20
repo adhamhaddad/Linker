@@ -13,7 +13,6 @@ import classes from './Main.module.css';
 
 function Main(props) {
   if (localStorage.getItem('currentComponent') === 'HOME') {
-    <Header Home={localStorage.getItem('currentComponent')} />
     return (
       <main className={classes.main}>
         {window.innerWidth <= '600' && (

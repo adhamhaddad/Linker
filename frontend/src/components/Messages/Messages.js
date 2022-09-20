@@ -36,7 +36,10 @@ function Messages(props) {
   return (
     <Container className='chat'>
       <ChatHeader username={props.receiver.username} />
-      <Conversation>{final}</Conversation>
+      <Conversation>
+        {/* <p>Conversation started at ... End-To-End Encryption</p> */}
+        {final}
+        </Conversation>
       <ChatForm addNewMessageHandler={props.addNewMessageHandler} />
     </Container>
   );
