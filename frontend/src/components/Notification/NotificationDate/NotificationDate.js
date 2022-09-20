@@ -1,8 +1,9 @@
 import React from 'react';
-import { TimeDiff, DateDiff } from './DateControllers';
+import { DateDiff, TimeDiff } from '../../Post/Validation/DateControllers';
+import classes from './NotificationDate.module.css';
 
 function NotificationDate(props) {
-  const notificationDate = (time) => {
+  const dateFormat = (time) => {
     if (TimeDiff.inSeconds(time) <= 60) {
       return `${TimeDiff.inSeconds(time)} sec`;
     }
@@ -26,8 +27,6 @@ function NotificationDate(props) {
       return `${DateDiff.inYears(time)} y`;
     }
   };
-  return (
-    <span className='notification-time'>{notificationDate(props.time)}</span>
-  );
+  return <span className={classes['notification-time']}>{dateFormat(props.time)}</span>;
 }
 export default NotificationDate;

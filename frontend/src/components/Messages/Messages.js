@@ -50,46 +50,57 @@ function Messages() {
   // });
 
   const [receiverUser, setReceiverUser] = useState({
-    name: 'mariam maged',
+    username: 'mariam maged',
     profile: './images/mrym.png',
     messages: [
       {
-        time: 'Tue Sep 20 2022 12:31:32 GMT+0200 (Eastern European Standard Time)',
+        time: 'Tue Sep 20 2022 04:31:32 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       },
       {
-        time: 'Tue Sep 20 2022 12:32:37 GMT+0200 (Eastern European Standard Time)',
+        time: 'Tue Sep 20 2022 04:32:37 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       },
       {
-        time: 'Tue Sep 20 2022 12:32:45 GMT+0200 (Eastern European Standard Time)',
+        time: 'Tue Sep 20 2022 04:32:45 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       }
     ]
   });
   const [senderUser, setSenderUser] = React.useState({
-    name: 'adham ashraf',
+    username: 'adham ashraf',
     profile: './images/profile.jpg',
     messages: [
       {
-        time: 'Tue Sep 20 2022 12:31:31 GMT+0200 (Eastern European Standard Time)',
+        time: 'Tue Sep 20 2022 04:31:31 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       },
       {
-        time: 'Tue Sep 20 2022 12:32:35 GMT+0200 (Eastern European Standard Time)',
+        time: 'Tue Sep 20 2022 04:32:35 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       },
       {
-        time: 'Tue Sep 20 2022 12:32:41 GMT+0200 (Eastern European Standard Time)',
+        time: 'Tue Sep 20 2022 04:32:41 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       },
       {
-        time: 'Tue Sep 20 2022 12:36:31 GMT+0200 (Eastern European Standard Time)',
+        time: 'Tue Sep 20 2022 04:36:31 GMT+0200 (Eastern European Standard Time)',
         message: 'Hellooooooooooooooo'
       }
     ]
   });
 
+  const addMessageHandler = (e) => {
+    setSenderUser(prev => {
+      return {
+        ...prev,
+        messages: [
+          ...prev.messages,
+          e          
+        ]
+      }
+    });
+  };
   const receiver = receiverUser.messages.map((msg) => {
     return (
       <MessageCard
@@ -117,20 +128,14 @@ function Messages() {
 
   return (
     <Container className='chat'>
-      <ChatHeader username={receiverUser.name} />
+      <ChatHeader username={receiverUser.username} />
       <Conversation>
         {final}
-
-        <p id='error'>
+        {/* <p id='error'>
           Mariam closed the conversation. <a href='#'>learn more</a>
-        </p>
+        </p> */}
       </Conversation>
-      <ChatForm />
-      {/*
-      <i className='fa-solid fa-circle-check'></i>
-      <i className='fa-regular fa-circle-check'></i>
-      <i className='fa-regular fa-circle'></i>
-      */}
+      <ChatForm addMessageHandler={addMessageHandler}/>
     </Container>
   );
 }
