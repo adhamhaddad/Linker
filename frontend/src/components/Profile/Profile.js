@@ -36,10 +36,7 @@ function Profile(props) {
     <p style={{ 'text-align': 'center' }}>No posts found!</p>
   );
   const createPostHandler = () => {
-    setNewPost(true);
-  };
-  const closePostHandler = () => {
-    setNewPost(false);
+    setNewPost((prev) => (prev ? false : true));
   };
 
   return (
@@ -96,7 +93,7 @@ function Profile(props) {
             addNewPost={props.addNewPost}
             information={props.information}
             photos={props.photos}
-            closePostHandler={closePostHandler}
+            closePostHandler={createPostHandler}
           />
         )}
         {posts}

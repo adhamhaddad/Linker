@@ -1,10 +1,10 @@
 import React from 'react';
-import './Logo.css';
+import classes from './Logo.module.css';
 
 function Logo() {
   return (
-    <div className='app-logo'>
-      <span className='logo'>
+    <div className={classes['app-logo']}>
+      <span className={classes.logo}>
         <i className='fa-solid fa-link'></i>
       </span>
     </div>

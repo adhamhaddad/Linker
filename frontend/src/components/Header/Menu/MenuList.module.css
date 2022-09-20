@@ -43,36 +43,13 @@
 }
 
 /*** Effects ***/
-.menu-list > li > a:hover {
+.menu-list > li > a:focus {
     background-color: var(--base-background-hovered);
-    transition: .5s background ease-in-out;
 }
-.menu-list > li > a:after {
-    content: "";
-    display: block;
-    background-color: var(--base-color-light);
-    height: 0;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    transition: .5s height ease-in-out;
-}
-/* .menu-list > li > a:focus {
-    background-color: var(--base-background-hovered);
-    transition: .5s background ease-in-out;
-}
-.menu-list > li > a:focus:after {
-    height: 3px;
-    transition: .5s height ease-in-out;
-} */
-.menu-list > .notifications > a:hover > i {
+.notifications > a:hover > i {
     animation-name: bell;
     animation-duration: 1.5s;
     animation-iteration-count: infinite;
-}
-.menu-list > li > a.active {
-    background-color: var(--base-background-hovered);
 }
 
 /*** Animations ***/

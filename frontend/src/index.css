@@ -26,3 +26,6 @@
     -o-tap-highlight-color: transparent;
     -ms-tap-highlight-color: transparent;
 }
+a:hover {
+    background-color: inherit;
+}

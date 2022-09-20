@@ -15,7 +15,7 @@ function Header(props) {
             <SearchBar />
           </>
         )}
-        <MenuList changeComponent={props.changeComponent} />
+        <MenuList changeComponent={props.changeComponent} Home={props.Home}/>
       </Container>
     </nav>
   );

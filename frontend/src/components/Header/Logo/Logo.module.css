@@ -3,19 +3,20 @@
     width: 60px;
     height: 100%;
     align-items: center;
+    justify-content: center;
 }
-.app-logo .logo {
+.logo {
     display: block;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     border: 3px solid var(--base-color-light);
     overflow: hidden;
 }
-.app-logo .logo i {
+.logo i {
     width: 100%;
     height: 100%;
-    line-height: 55px;
+    line-height: 45px;
     font-size: 20px;
     text-align: center;
     color: var(--base-color-light);
@@ -26,12 +27,12 @@
     .app-logo {
         width: 40px;
     }
-    .app-logo .logo {
+    .logo {
         width: 35px;
         height: 35px;
         border: 2px solid var(--base-color-light);
     }
-    .app-logo .logo i {
+    .logo i {
         line-height: 32.5px;
         font-size: 14px;
     }

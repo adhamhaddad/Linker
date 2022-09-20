@@ -279,7 +279,6 @@ function App() {
   };
 
   const changeComponent = (e) => {
-    console.log(e.toUpperCase());
     localStorage.setItem('currentComponent', e.toUpperCase());
     setSwitchComponent(e.toUpperCase());
   };

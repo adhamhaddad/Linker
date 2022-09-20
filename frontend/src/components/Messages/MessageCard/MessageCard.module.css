@@ -82,14 +82,9 @@
     overflow: hidden;
     align-self: flex-end;
 }
-.message-status.seen {
-
-}
-.message-status.sent {
-
-}
 .message-status > img {
     width: 16px;
     height: 16px;
     border-radius: 50%;
+    display: none;
 }

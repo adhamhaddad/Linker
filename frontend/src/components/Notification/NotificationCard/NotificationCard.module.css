@@ -4,6 +4,8 @@
     color: var(--base-color-dark);
     padding: 10px 5px;
     border-bottom: 1px solid rgb(219, 219, 219);
+    border-left: 1px solid rgb(219, 219, 219);
+    border-right: 1px solid rgb(219, 219, 219);
     background-color: var(--base-color-light);
 }
 .notification-profile {

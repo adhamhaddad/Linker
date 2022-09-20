@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from '../Header/Header';
 import Logo from '../Header/Logo/Logo';
 import SearchBar from '../Header/Search/Searchbar';
 import Home from '../Home/Home';
@@ -12,6 +13,7 @@ import classes from './Main.module.css';
 
 function Main(props) {
   if (localStorage.getItem('currentComponent') === 'HOME') {
+    <Header Home={localStorage.getItem('currentComponent')} />
     return (
       <main className={classes.main}>
         {window.innerWidth <= '600' && (
