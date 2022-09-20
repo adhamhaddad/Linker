@@ -28,16 +28,18 @@ function MessageCard(props) {
     >
       <img src={props.profile} alt='Profile' className={classes.profile} />
       <div className={classes['message-info']}>
-        <span className={classes['message-content']}>{props.message}</span>
+        <span className={classes['message-content']} lang={props.lang}>
+          {props.message}
+        </span>
         <span className={classes['message-time']}>{format(props.time)}</span>
       </div>
-      <span className={classes['message-status']}>
+      <div className={classes['message-status']}>
         <img
           src='./images/mrym.png'
           alt=''
           className={messageStatus ? 'active' : 'sent'}
         />
-      </span>
+      </div>
     </div>
   );
 }

@@ -57,21 +57,26 @@ function Main(props) {
         <Messages
           title='Messages-Page'
           user={props.user}
-          posts={props.posts}
           photos={props.photos}
+          receiver={props.receiverUser}
+          sender={props.senderUser}
+          addNewMessageHandler={props.addNewMessageHandler}
         />
       </main>
     );
   } else if (localStorage.getItem('currentComponent') === 'NOTIFICATIONS') {
     return (
-      <main className='main notifications'>
+      <main className={`${classes.main} ${classes['main-notification']}`}>
         {window.innerWidth <= '600' && (
           <TopNavbar>
             <Logo />
             <SearchBar />
           </TopNavbar>
         )}
-        <Notification title='Notification Page' />
+        <Notification
+          title='Notification Page'
+          notificationsList={props.notificationsList}
+        />
       </main>
     );
   } else if (localStorage.getItem('currentComponent') === 'SETTINGS') {

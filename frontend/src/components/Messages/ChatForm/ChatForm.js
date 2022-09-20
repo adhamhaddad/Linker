@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import classes from './ChatForm.module.css';
 
 function ChatForm(props) {
@@ -10,7 +10,7 @@ function ChatForm(props) {
       return;
     }
 
-    props.addMessageHandler({
+    props.addNewMessageHandler({
       time: new Date(),
       message: newMesasge.current.value
     });
@@ -18,14 +18,22 @@ function ChatForm(props) {
   };
 
   return (
-    <form onSubmit={submitFormHandler} className={classes.form}>
-      <input
+    <form
+      autoComplete='off'
+      accessKey='off'
+      autoSave='off'
+      onSubmit={submitFormHandler}
+      className={classes.form}
+    >
+      <textarea
         ref={newMesasge}
         type='text'
-        placeholder='Type Message ..'
+        placeholder='Type a Message ..'
         name='message'
+        accessKey='off'
+        className={classes.input}
       />
-      <button type='submit'>
+      <button>
         send
         <i className='fa fa-paper-plane'></i>
       </button>

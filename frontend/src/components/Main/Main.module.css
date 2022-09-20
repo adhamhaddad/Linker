@@ -8,7 +8,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: pink;
 }
 @media only screen and (max-width: 600px) {
     .main {

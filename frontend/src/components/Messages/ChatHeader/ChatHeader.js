@@ -4,10 +4,10 @@ import classes from './ChatHeader.module.css';
 function ChatHeader(props) {
   const [status, setStatus] = useState(true);
   const [menuState, setMenuState] = useState(false);
-
   const toggleMenu = () => {
     setMenuState((prev) => (prev ? false : true));
   };
+
   return (
     <div className={classes['chat-header']}>
       <button>
@@ -17,8 +17,7 @@ function ChatHeader(props) {
       <span className={classes.username}>
         <a href='mariam'>{props.username}</a>
       </span>
-
-      <span className={classes.status}>{status ? 'online' : 'offline'}</span>
+      <span className={classes.status}></span>
 
       <button onClick={toggleMenu}>
         <i

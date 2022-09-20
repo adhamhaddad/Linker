@@ -104,13 +104,6 @@ function App() {
             profile: './images/beso.jpg',
             content: 'HAHAHA my stomack hurts',
             time: 'Sun Sep 11 2022 13:12:31 GMT+0200 (Eastern European Standard Time)'
-          },
-          {
-            id: '1',
-            username: 'Bassem Hamada',
-            profile: './images/bassem.jpg',
-            content: 'هات كارت الالفا',
-            time: 'Mon Sep 10 2022 12:12:31 GMT+0200 (Eastern European Standard Time)'
           }
         ],
         shares: [{ profile: './images/beso.jpg', username: 'Ahmed Emad' }]
@@ -158,6 +151,103 @@ function App() {
       }
     }
   ]);
+  // Notification Part
+  const [notificationsList, setNotificationsList] = useState([
+    {
+      id: 1,
+      username: 'Mariam Maged',
+      profile: './images/mrym.png',
+      time: 'Tue Sep 20 2022 12:30:32 GMT+0200 (Eastern European Standard Time)',
+      content: 'has liked on your post'
+    },
+    {
+      id: 2,
+      username: 'Mohamed Khaled',
+      profile: './images/simba.jpeg',
+      time: 'Tue Sep 20 2022 12:31:32 GMT+0200 (Eastern European Standard Time)',
+      content: 'has liked on your post'
+    },
+    {
+      id: 3,
+      username: 'Bassem Hamada',
+      profile: './images/bassem.jpg',
+      time: 'Tue Sep 20 2022 12:32:32 GMT+0200 (Eastern European Standard Time)',
+      content: 'has commented on your post'
+    },
+    {
+      id: 4,
+      username: 'Ahmed Emad',
+      profile: './images/beso.jpg',
+      time: 'Tue Sep 20 2022 12:33:32 GMT+0200 (Eastern European Standard Time)',
+      content: 'shared your post'
+    },
+    {
+      id: 5,
+      username: 'Cup Coffee',
+      profile: './images/coffee.jpg',
+      time: 'Tue Sep 20 2022 12:34:32 GMT+0200 (Eastern European Standard Time)',
+      content: 'shared your post'
+    }
+  ]);
+
+  // Chat - Messages Part
+  const [receiverUser, setReceiverUser] = useState({
+    username: 'mariam maged',
+    profile: './images/mrym.png',
+    messages: [
+      {
+        time: 'Tue Sep 20 2022 04:31:32 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      },
+      {
+        time: 'Tue Sep 20 2022 04:32:37 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      },
+      {
+        time: 'Tue Sep 20 2022 04:32:45 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      }
+    ]
+  });
+
+  const [senderUser, setSenderUser] = useState({
+    username: 'adham ashraf',
+    profile: './images/profile.jpg',
+    messages: [
+      {
+        time: 'Tue Sep 20 2022 04:31:31 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      },
+      {
+        time: 'Tue Sep 20 2022 04:32:35 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      },
+      {
+        time: 'Tue Sep 20 2022 04:32:41 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      },
+      {
+        time: 'Tue Sep 20 2022 04:36:31 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      }
+    ]
+  });
+
+  const addNewMessageHandler = (e) => {
+    setSenderUser((prev) => {
+      return {
+        ...prev,
+        messages: [...prev.messages, e]
+      };
+    });
+  };
 
   const addNewPost = (e) => {
     setPosts((prev) => {
@@ -187,9 +277,9 @@ function App() {
   const switchFormHandler = (e) => {
     setSwitchForm(e);
   };
-  
+
   const changeComponent = (e) => {
-    console.log(e.toUpperCase())
+    console.log(e.toUpperCase());
     localStorage.setItem('currentComponent', e.toUpperCase());
     setSwitchComponent(e.toUpperCase());
   };
@@ -207,6 +297,10 @@ function App() {
           setReactions={setReactions}
           addNewPost={addNewPost}
           changeComponent={changeComponent}
+          receiverUser={receiverUser}
+          senderUser={senderUser}
+          notificationsList={notificationsList}
+          addNewMessageHandler={addNewMessageHandler}
         />
         <Footer />
       </>
