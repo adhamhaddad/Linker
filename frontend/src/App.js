@@ -20,8 +20,8 @@ function App() {
     joined: '08/31/2022, 09:48:16 AM'
   });
   const [photos, setPohotos] = useState({
-    cover: './images/ae177f7f-8928-4a1b-afab-6957d5aeb1c3/cover/linked.png',
-    profile: './images/ae177f7f-8928-4a1b-afab-6957d5aeb1c3/profile/profile.jpg'
+    cover: '',
+    profile: './images/profile.jpg'
   });
   const [information, setInfomation] = useState({
     fname: 'adham',
@@ -124,17 +124,9 @@ function App() {
           { profile: './images/beso.jpg', username: 'Ahmed Emad' },
           { profile: './images/simba.jpeg', username: 'Mohamed Khaled' },
           { profile: './images/bassem.jpg', username: 'Bassem Hamada' },
-          { profile: './images/mrym.png', username: 'Mariam Maged' },
           { profile: './images/coffee.jpg', username: 'Cup Coffee' }
         ],
         comments: [
-          {
-            id: '2',
-            username: 'Mariam Maged',
-            profile: './images/mrym.png',
-            content: 'Congrats Adham',
-            time: 'Mon Sep 12 2022 12:12:31 GMT+0200 (Eastern European Standard Time)'
-          },
           {
             id: '1',
             username: 'Cup Coffee',
@@ -155,8 +147,8 @@ function App() {
   const [notificationsList, setNotificationsList] = useState([
     {
       id: 1,
-      username: 'Mariam Maged',
-      profile: './images/mrym.png',
+      username: 'Ahmed Emad',
+      profile: './images/beso.jpg',
       time: 'Tue Sep 20 2022 12:30:32 GMT+0200 (Eastern European Standard Time)',
       content: 'has liked on your post'
     },
@@ -176,13 +168,6 @@ function App() {
     },
     {
       id: 4,
-      username: 'Ahmed Emad',
-      profile: './images/beso.jpg',
-      time: 'Tue Sep 20 2022 12:33:32 GMT+0200 (Eastern European Standard Time)',
-      content: 'shared your post'
-    },
-    {
-      id: 5,
       username: 'Cup Coffee',
       profile: './images/coffee.jpg',
       time: 'Tue Sep 20 2022 12:34:32 GMT+0200 (Eastern European Standard Time)',
@@ -192,8 +177,8 @@ function App() {
 
   // Chat - Messages Part
   const [receiverUser, setReceiverUser] = useState({
-    username: 'mariam maged',
-    profile: './images/mrym.png',
+    username: 'Ahmed Emad',
+    profile: './images/beso.jpg',
     messages: [
       {
         time: 'Tue Sep 20 2022 04:31:32 GMT+0200 (Eastern European Standard Time)',
