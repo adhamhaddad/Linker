@@ -47,7 +47,7 @@ function App() {
         'Tue Sep 13 2022 17:30:31 GMT+0200 (Eastern European Standard Time)',
       content: {
         caption:
-          'In our memories will always remember that day after the last final exam in 2nd secondary year on the first of Ramadan month with Simba and Ahmed we laughed so much at this day.',
+          'In our memories will always remember that day after the last final exam in 2nd secondary year on the first of Ramadan month (2017) with Simba and Ahmed we laughed so much at this day.',
         img: './posts/brothers.jpg',
         video: ''
       },
@@ -86,7 +86,7 @@ function App() {
         'Fri Sep 10 2022 12:30:31 GMT+0200 (Eastern European Standard Time)',
       content: {
         caption:
-          'In the cinema with some one we dont know him but its a great day with mohanad that always laugh on anything and hema wants to kill him',
+          'In the cinema with some one we dont know him but its a great day with mohanad, beso & other friends.',
         img: './posts/beso2.jpg',
         video: ''
       },
