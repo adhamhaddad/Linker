@@ -14,7 +14,6 @@
 }
 .notification-profile > a {
     display: block;
-    border: 1px solid var(--base-color-dark);
     width: 60px;
     height: 60px;
     border-radius: 50%;

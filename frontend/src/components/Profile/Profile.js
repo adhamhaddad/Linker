@@ -83,7 +83,7 @@ function Profile(props) {
         </div>
       </Container>
 
-      <Container>
+      <Container className='profile-feed'>
         <button className='create-post-btn' onClick={createPostHandler}>
           Create a new post
         </button>

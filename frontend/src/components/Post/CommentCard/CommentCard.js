@@ -4,7 +4,7 @@ import './CommentCard.css';
 
 function CommentCard(props) {
   return (
-    <div className='comment-card'>
+    <li className='comment-card'>
       <div className='comment-header'>
         <a
           href={`http://www.network.com/${props.comment.username}`}
@@ -25,7 +25,7 @@ function CommentCard(props) {
         <i className='fa-solid fa-circle period'></i>
         <button>reply</button>
       </div>
-    </div>
+    </li>
   );
 }
 export default CommentCard;

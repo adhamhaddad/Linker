@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CommentCard from '../../CommentCard/CommentCard';
 import './CommentsController.css';
 
@@ -8,6 +8,21 @@ function CommentsController(props) {
     props.comments.map((comment) => {
       return <CommentCard comment={comment} key={comment.id} />;
     });
+
+  useEffect(() => {
+    props.hideComments
+      ? document.querySelector('main').scrollTo({
+          top:
+            document.querySelector('.post-comments').offsetTop +
+            document.querySelector('.post-comments').offsetHeight,
+          behavior: 'smooth'
+        })
+      : document.querySelector('main').scrollTo({
+          top: document.querySelector('.post-bottom').offsetTop,
+          behavior: 'smooth'
+        });
+  }, []);
+
   return (
     <div className='post-comments'>
       <div className='comments-controller'>
@@ -15,7 +30,7 @@ function CommentsController(props) {
         <button onClick={props.hideComments}>hide comments</button>
       </div>
 
-      <div className='comments-list'>{comments}</div>
+      <ul className='comments-list'>{comments}</ul>
     </div>
   );
 }
