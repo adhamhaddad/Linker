@@ -18,10 +18,10 @@ export function Authentication(props) {
   }, []);
 
   const loginHandler = (e, p) => {
-    // if (e !== 'adhamhaddad' || p !== 'adham123') {
-    //     setAuthError(true);
-    //   return;
-    // }
+    if (e !== 'adhamhaddad' || p !== 'adham123') {
+      setAuthError(true);
+      return;
+    }
     localStorage.setItem('isLoggedIn', '1');
     localStorage.setItem('currentComponent', 'PROFILE');
     setIsLoggedIn(true);

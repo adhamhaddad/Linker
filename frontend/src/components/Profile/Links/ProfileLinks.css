@@ -1,11 +1,9 @@
 .links-section {
-    max-height: 40%;
     width: 100%;
     overflow: auto;
     padding: 5px 0;
     text-align: center;
     cursor: default;
-
 }
 .links-section ul li {display: inline-block}
 .links-section ul li > a {

@@ -4,7 +4,7 @@ import { TimeDiff, DateDiff } from './DateControllers';
 function PostDate(props) {
   const postDate = (time) => {
     if (TimeDiff.inSeconds(time) <= 60) {
-      return 'now';
+      return 'just now';
     }
     if (TimeDiff.inMinutes(time) <= 60) {
       return `${TimeDiff.inMinutes(time)} min`;
@@ -29,6 +29,7 @@ function PostDate(props) {
       return `${DateDiff.inYears(time)} ${years}`;
     }
   };
+
   return <>{postDate(props.timedate)}</>;
 }
 

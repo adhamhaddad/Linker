@@ -4,32 +4,32 @@
     width: 500px;
     border-radius: 4px;
     overflow: hidden;
-    border: 1px solid var(--base-color-light);
-    background-color: var(--base-color-light);
+    /* border: 1px solid var(--base-color-light); */
+    box-shadow: 1px 1px 5px var(--base-color-dark);
     color: var(--base-color-dark);
 }
-.create-post > .create-post__header {
+.create-post__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: var(--base-color-dark);
 }
-.create-post > .create-post__header > .create-post__user-info {
+.create-post__user-info {
     display: flex;
     align-items: center;
 }
-.create-post > .create-post__header > .create-post__user-info > .profile {
+.profile {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     border: 1px solid var(--base-color-dark)
 }
-.create-post > .create-post__header > .create-post__user-info > .username {
+.username {
     color: var(--base-color-light);
     text-transform: capitalize;
     margin-left: 10px;
 }
-.create-post > .create-post__header > .discard {
+.discard {
     height: 40px;
     padding: 5px 10px;
     border-radius: 4px;
@@ -39,7 +39,10 @@
     background-color: var(--base-color-light);
     color: var(--base-color-dark);
 }
-.create-post > form > .create-post__content > textarea {
+.create-post__content {
+    background-color: var(--base-color-light);
+}
+.create-post__content > textarea {
     width: 100%;
     height: 140px;
     padding: 20px 5px;
@@ -47,12 +50,12 @@
     border: 1px solid rgb(219, 219, 219);
     background-color: transparent;
 }
-.create-post > form > .create-post__content > input[type='file'] {
+input[type='file'] {
     width: 100px;
     border: none;
 }
 
-.create-post > form > .create-post__footer > button {
+.post-button {
     width: 100%;
     height: 40px;
     font-weight: bold;

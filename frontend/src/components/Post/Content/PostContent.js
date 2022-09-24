@@ -21,11 +21,13 @@ function PostContent(props) {
 
           {ReactDOM.createPortal(
             <Overlay>
-              <img
-                src={props.content.img}
-                alt='content'
-                onClick={viewContent}
-              />
+              {props.content.img.trim().length > 0 && (
+                <img
+                  src={props.content.img}
+                  alt='content'
+                  onClick={viewContent}
+                />
+              )}
             </Overlay>,
             document.getElementById('backdrop-root')
           )}
@@ -33,8 +35,13 @@ function PostContent(props) {
       )}
 
       <div className='post-content'>
-        <p>{props.content.caption}</p>
-        {props.content.img.length > 0 && (
+        <p>
+          {props.content.caption !== null &&
+            props.content.caption.trim().length > 0 &&
+            props.content.caption}
+          {props.content.caption == null && 'Null for now'}
+        </p>
+        {props.content.img !== null && props.content.img.trim().length > 0 && (
           <img src={props.content.img} alt='content' onClick={viewContent} />
         )}
       </div>

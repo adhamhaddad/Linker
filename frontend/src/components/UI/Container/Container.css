@@ -1,6 +1,6 @@
 .container {
     width: 1080px;
-    margin: auto;
+    margin: 0 auto;
     position: relative;
     color: var(--base-color-light);
     background-color: var(--base-background-dark);
@@ -19,6 +19,7 @@
     justify-content: space-between;
     padding: 10px;
     color: var(--base-color-light);
+    background-color: var(--base-color-dark);
 }
 
 .container.notifications {

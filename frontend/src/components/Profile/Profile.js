@@ -18,15 +18,15 @@ function Profile(props) {
     setFPP((prev) => (prev ? false : true));
   };
   const posts = props.posts.length ? (
-    props.posts.map((post) => {
+    props.posts.reverse().map((post) => {
       return (
         <Post
           fname={props.information.fname}
           lname={props.information.lname}
-          profile={props.photos.profile}
+          profile={props.information.profile}
           timedate={post.timedate}
           content={post.content}
-          reactions={post.reactions}
+          reactions={props.reactions}
           setReactions={props.setReactions}
           key={post.id}
         />
@@ -51,7 +51,7 @@ function Profile(props) {
           {ReactDOM.createPortal(
             <Overlay>
               <img
-                src={props.photos.profile}
+                src={props.information.profile}
                 alt='Profile'
                 className='profile-picture'
               />
@@ -65,7 +65,7 @@ function Profile(props) {
         <div className='left-side'>
           <div className='user-id'>
             <img
-              src={props.photos.profile}
+              src={props.information.profile}
               id='profile'
               alt='Profile'
               className='profile-picture'
@@ -79,7 +79,7 @@ function Profile(props) {
         </div>
         <div className='right-side'>
           <ProfileStory story={props.information.story} />
-          <ProfileLinks links={props.links} />
+          <ProfileLinks links={props.information} />
         </div>
       </Container>
 
@@ -92,7 +92,6 @@ function Profile(props) {
           <AddPost
             addNewPost={props.addNewPost}
             information={props.information}
-            photos={props.photos}
             closePostHandler={createPostHandler}
           />
         )}

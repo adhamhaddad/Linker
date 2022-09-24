@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import Signup from './components/Forms/Signup';
 import Signin from './components/Forms/Signin';
 import Header from './components/Header/Header';
@@ -8,256 +8,167 @@ import Authenticate from './Authentication/auth';
 
 function App() {
   const ctx = useContext(Authenticate);
+  const [isError, setIsError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [switchComponent, setSwitchComponent] = useState('');
   const [switchForm, setSwitchForm] = useState(false);
-
-  // API DUMMY DATA
-  const [user, setUser] = useState({
-    id: '1',
-    username: 'adhamhaddad',
-    email: 'adham@gmail.com',
-    gender: 'male',
-    joined: '08/31/2022, 09:48:16 AM'
-  });
-  const [photos, setPohotos] = useState({
-    cover: '',
-    profile: './images/profile.jpg'
-  });
-  const [information, setInfomation] = useState({
-    fname: 'adham',
-    lname: 'ashraf',
-    phone: '01113833449',
-    birthday: '08/02/2002',
-    work: 'the sparks foundation',
-    relation: 'single',
-    education: 'information systems',
-    lives: 'giza, egypt',
-    story:
-      'Hi, I am Adham. I am a student at High Institute for Computers & Management Information Systems started in 2019 and I will graduate in 2023. I started my Full-Stack journey in 2019 and built many projects using many languages. I also joined Udacity Nanodegree programs and got certified as a Professional Front End Web Developer and Advanced Full-Stack Web Developer. I worked too hard to achieve this progress, its my passion and I need an opportunity to show myself.'
-  });
-  const [links, setLinks] = useState({
-    telegram: 'https://t.me/adhamhaddad',
-    linkedin: 'https://www.linkedin.com/in/adhamashraf/',
-    twitter: 'https://twitter.com/AdhamHaddad_'
-  });
-  const [posts, setPosts] = useState([
-    {
-      id: 3,
-      timedate:
-        'Tue Sep 13 2022 17:30:31 GMT+0200 (Eastern European Standard Time)',
-      content: {
-        caption:
-          'In our memories will always remember that day after the last final exam in 2nd secondary year on the first of Ramadan month (2017) with Simba and Ahmed we laughed so much at this day.',
-        img: './posts/brothers.jpg',
-        video: ''
+  const [user, setUser] = useState({});
+  const [information, setInformation] = useState({});
+  const [posts, setPosts] = useState([]);
+  const [reactions, setReactions] = useState({
+    likes: [
+      { profile: './images/profile.jpg', username: 'Adham Ashraf' },
+      { profile: './images/beso.jpg', username: 'Ahmed Emad' },
+      { profile: './images/bassem.jpg', username: 'Bassem Hamada' },
+      { profile: './images/simba.jpeg', username: 'Mohamed Khaled' }
+    ],
+    comments: [
+      {
+        id: '2',
+        username: 'Ahmed Emad',
+        profile: './images/beso.jpg',
+        content: '❤️❤️',
+        time: 'Tue Sep 13 2022 17:40:31 GMT+0200 (Eastern European Standard Time)'
       },
-      reactions: {
-        likes: [
-          { profile: './images/profile.jpg', username: 'Adham Ashraf' },
-          { profile: './images/beso.jpg', username: 'Ahmed Emad' },
-          { profile: './images/bassem.jpg', username: 'Bassem Hamada' },
-          { profile: './images/simba.jpeg', username: 'Mohamed Khaled' }
-        ],
-        comments: [
-          {
-            id: '2',
-            username: 'Ahmed Emad',
-            profile: './images/beso.jpg',
-            content: '❤️❤️',
-            time: 'Tue Sep 13 2022 17:40:31 GMT+0200 (Eastern European Standard Time)'
+      {
+        id: '1',
+        username: 'Mohamed Khaled',
+        profile: './images/simba.jpeg',
+        content: '❤️❤️',
+        time: 'Tue Sep 13 2022 17:35:31 GMT+0200 (Eastern European Standard Time)'
+      }
+    ],
+    shares: [
+      { profile: './images/beso.jpg', username: 'Ahmed Emad' },
+      { profile: './images/simba.jpeg', username: 'Mohamed Khaled' }
+    ]
+  });
+  const [messages, setMessages] = useState([]);
+  const [notificationsList, setNotificationsList] = useState([]);
+
+  const getUser = useCallback(async () => {
+    setIsLoading(true);
+    setIsError(null);
+
+    try {
+      const response = await fetch(
+        'http://localhost:3000/user/39479323-e205-4746-b575-939a02d06191'
+      );
+      if (!response.ok) {
+        throw new Error('Could not get the user');
+      }
+      const data = await response.json();
+      setUser(data.data);
+    } catch (error) {
+      setIsError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const getInformation = useCallback(async () => {
+    setIsLoading(true);
+    setIsError(null);
+
+    try {
+      const response = await fetch(
+        'http://localhost:3000/user/39479323-e205-4746-b575-939a02d06191/information'
+      );
+      if (!response.ok) {
+        throw new Error('Could not get the user information');
+      }
+      const data = await response.json();
+      setInformation(data.data);
+    } catch (error) {
+      setIsError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const getPosts = useCallback(async () => {
+    setIsLoading(true);
+    setIsError(null);
+
+    try {
+      const response = await fetch(
+        'http://localhost:3000/user/39479323-e205-4746-b575-939a02d06191/posts'
+      );
+      if (!response.ok) {
+        throw new Error('Could not get the posts');
+      }
+      const data = await response.json();
+      const transformPost = await data.data.map((post) => {
+        return {
+          id: post.post_id,
+          timedate: post.timedate,
+          content: {
+            caption: post.caption,
+            img: post.img,
+            video: post.video
           },
-          {
-            id: '1',
-            username: 'Mohamed Khaled',
-            profile: './images/simba.jpeg',
-            content: '❤️❤️',
-            time: 'Tue Sep 13 2022 17:35:31 GMT+0200 (Eastern European Standard Time)'
-          }
-        ],
-        shares: [
-          { profile: './images/beso.jpg', username: 'Ahmed Emad' },
-          { profile: './images/simba.jpeg', username: 'Mohamed Khaled' }
-        ]
-      }
-    },
-    {
-      id: 2,
-      timedate:
-        'Fri Sep 10 2022 12:30:31 GMT+0200 (Eastern European Standard Time)',
-      content: {
-        caption:
-          'In the cinema with some one we dont know him but its a great day with mohanad, beso & other friends.',
-        img: './posts/beso2.jpg',
-        video: ''
-      },
-      reactions: {
-        likes: [
-          { profile: './images/profile.jpg', username: 'Adham Ashraf' },
-          { profile: './images/beso.jpg', username: 'Ahmed Emad' },
-          { profile: './images/simba.jpeg', username: 'Mohamed Khaled' },
-          { profile: './images/bassem.jpg', username: 'Bassem Hamada' }
-        ],
-        comments: [
-          {
-            id: '2',
-            username: 'Ahmed Emad',
-            profile: './images/beso.jpg',
-            content: 'HAHAHA my stomack hurts',
-            time: 'Sun Sep 11 2022 13:12:31 GMT+0200 (Eastern European Standard Time)'
-          }
-        ],
-        shares: [{ profile: './images/beso.jpg', username: 'Ahmed Emad' }]
-      }
-    },
-    {
-      id: 1,
-      timedate:
-        'Fri Sep 10 2022 14:12:31 GMT+0200 (Eastern European Standard Time)',
-      content: {
-        caption: 'I love you so much. I will never cheat you my lovely coffee!',
-        img: './posts/girlfriend.jpg',
-        video: ''
-      },
-      reactions: {
-        likes: [
-          { profile: './images/profile.jpg', username: 'Adham Ashraf' },
-          { profile: './images/beso.jpg', username: 'Ahmed Emad' },
-          { profile: './images/simba.jpeg', username: 'Mohamed Khaled' },
-          { profile: './images/bassem.jpg', username: 'Bassem Hamada' },
-          { profile: './images/coffee.jpg', username: 'Cup Coffee' }
-        ],
-        comments: [
-          {
-            id: '1',
-            username: 'Cup Coffee',
-            profile: './images/coffee.jpg',
-            content: 'My baby so cute. I love you more ❤️❤️❤️',
-            time: 'Fri Sep 10 2022 14:12:31 GMT+0200 (Eastern European Standard Time)'
-          }
-        ],
-        shares: [
-          { profile: './images/beso.jpg', username: 'Ahmed Emad' },
-          { profile: './images/simba.jpeg', username: 'Mohamed Khaled' },
-          { profile: './images/bassem.jpg', username: 'Bassem Hamada' }
-        ]
-      }
+          user_id: post.user_id
+        };
+      });
+      setPosts(transformPost);
+    } catch (error) {
+      setIsError(error.message);
+    } finally {
+      setIsLoading(false);
     }
-  ]);
-  // Notification Part
-  const [notificationsList, setNotificationsList] = useState([
-    {
-      id: 1,
-      username: 'Ahmed Emad',
-      profile: './images/beso.jpg',
-      time: 'Tue Sep 20 2022 12:30:32 GMT+0200 (Eastern European Standard Time)',
-      content: 'has liked on your post'
-    },
-    {
-      id: 2,
-      username: 'Mohamed Khaled',
-      profile: './images/simba.jpeg',
-      time: 'Tue Sep 20 2022 12:31:32 GMT+0200 (Eastern European Standard Time)',
-      content: 'has liked on your post'
-    },
-    {
-      id: 3,
-      username: 'Bassem Hamada',
-      profile: './images/bassem.jpg',
-      time: 'Tue Sep 20 2022 12:32:32 GMT+0200 (Eastern European Standard Time)',
-      content: 'has commented on your post'
-    },
-    {
-      id: 4,
-      username: 'Cup Coffee',
-      profile: './images/coffee.jpg',
-      time: 'Tue Sep 20 2022 12:34:32 GMT+0200 (Eastern European Standard Time)',
-      content: 'shared your post'
+  }, []);
+
+  const getReactions = useCallback(async () => {
+    setIsLoading(true);
+    setIsError(null);
+
+    try {
+      const response = await fetch(
+        'http://localhost:3000/user/404ac217-9ed3-4555-b9c0-a6177ca3f850/reactions'
+      );
+      if (!response.ok) {
+        throw new Error('Could not get the post reactions');
+      }
+      const data = await response.json();
+      const transformPost = await data.data.map((post) => {
+        return {
+          id: post.post_id,
+          timedate: post.timedate,
+          content: {
+            caption: post.caption,
+            img: post.img,
+            video: post.video
+          },
+          user_id: post.user_id
+        };
+      });
+      setPosts(transformPost);
+    } catch (error) {
+      setIsError(error.message);
+    } finally {
+      setIsLoading(false);
     }
-  ]);
+  }, []);
 
-  // Chat - Messages Part
-  const [receiverUser, setReceiverUser] = useState({
-    username: 'Ahmed Emad',
-    profile: './images/beso.jpg',
-    messages: [
-      {
-        time: 'Tue Sep 20 2022 04:31:32 GMT+0200 (Eastern European Standard Time)',
-        message: 'Hellooooooooooooooo',
-        lang: 'en'
-      },
-      {
-        time: 'Tue Sep 20 2022 04:32:37 GMT+0200 (Eastern European Standard Time)',
-        message: 'Hellooooooooooooooo',
-        lang: 'en'
-      },
-      {
-        time: 'Tue Sep 20 2022 04:32:45 GMT+0200 (Eastern European Standard Time)',
-        message: 'Hellooooooooooooooo',
-        lang: 'en'
+  const getMessages = useCallback(async () => {
+    setIsLoading(true);
+    setIsError(null);
+
+    try {
+      const response = await fetch(
+        'http://localhost:3000/user/902d8043-1c0e-4171-b975-0924b8dd7678/message'
+      );
+      if (!response.ok) {
+        throw new Error('Could not get the messages');
       }
-    ]
-  });
-
-  const [senderUser, setSenderUser] = useState({
-    username: 'adham ashraf',
-    profile: './images/profile.jpg',
-    messages: [
-      {
-        time: 'Tue Sep 20 2022 04:31:31 GMT+0200 (Eastern European Standard Time)',
-        message: 'Hellooooooooooooooo',
-        lang: 'en'
-      },
-      {
-        time: 'Tue Sep 20 2022 04:32:35 GMT+0200 (Eastern European Standard Time)',
-        message: 'Hellooooooooooooooo',
-        lang: 'en'
-      },
-      {
-        time: 'Tue Sep 20 2022 04:32:41 GMT+0200 (Eastern European Standard Time)',
-        message: 'Hellooooooooooooooo',
-        lang: 'en'
-      },
-      {
-        time: 'Tue Sep 20 2022 04:36:31 GMT+0200 (Eastern European Standard Time)',
-        message: 'Hellooooooooooooooo',
-        lang: 'en'
-      }
-    ]
-  });
-
-  const addNewMessageHandler = (e) => {
-    setSenderUser((prev) => {
-      return {
-        ...prev,
-        messages: [...prev.messages, e]
-      };
-    });
-  };
-
-  const addNewPost = (e) => {
-    setPosts((prev) => {
-      return [e, ...prev];
-    });
-  };
-  const setReactions = (e) => {
-    setPosts((prev) => {
-      return [
-        posts,
-        {
-          comments: [
-            posts.reactions.comments,
-            {
-              id: new Date().getTime(),
-              username: 'Mariam Maged',
-              profile: './images/mrym.png',
-              content: e,
-              time: new Date().toLocaleString('en-US')
-            }
-          ]
-        }
-      ];
-    });
-  };
+      const data = await response.json();
+      setMessages(data.data);
+    } catch (error) {
+      setIsError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   const switchFormHandler = (e) => {
     setSwitchForm(e);
@@ -268,6 +179,44 @@ function App() {
     setSwitchComponent(e.toUpperCase());
   };
 
+  const addNewPost = async (e) => {
+    await fetch(
+      'http://localhost:3000/user/39479323-e205-4746-b575-939a02d06191/posts',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(e)
+      }
+    );
+  };
+
+  const addNewMessageHandler = async (e) => {
+    await fetch(
+      'http://localhost:3000/user/39479323-e205-4746-b575-939a02d06191/message',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: e
+      }
+    );
+  };
+  const setPostReactions = async (e) => {
+    await fetch(
+      'http://localhost:3000/user/posts/39479323-e205-4746-b575-939a02d06191',
+      {
+        method: 'POST',
+        'Content-Type': 'application/json',
+        body: e
+      }
+    );
+  };
+
+  useEffect(() => {
+    getUser();
+    getInformation();
+    getPosts();
+  }, [getUser, getInformation, getPosts]);
+
   if (ctx.isLoggedIn) {
     return (
       <>
@@ -275,20 +224,26 @@ function App() {
           changeComponent={changeComponent}
           activeComponent={localStorage.getItem('currentComponent')}
         />
-        <Main
-          user={user}
-          posts={posts}
-          photos={photos}
-          information={information}
-          links={links}
-          setReactions={setReactions}
-          addNewPost={addNewPost}
-          changeComponent={changeComponent}
-          receiverUser={receiverUser}
-          senderUser={senderUser}
-          notificationsList={notificationsList}
-          addNewMessageHandler={addNewMessageHandler}
-        />
+        {isError && <p>Error happend. ${isError}</p>}
+        {isLoading ? (
+          <p className='loading'>Loading..</p>
+        ) : (
+          <Main
+            changeComponent={changeComponent}
+            error={isError}
+            loading={isLoading}
+            user={user}
+            information={information}
+            posts={posts}
+            reactions={reactions}
+            notificationsList={notificationsList}
+            setReactions={setPostReactions}
+            addNewPost={addNewPost}
+            // receiverUser={receiverUser}
+            // senderUser={senderUser}
+            addNewMessageHandler={addNewMessageHandler}
+          />
+        )}
         <Footer />
       </>
     );

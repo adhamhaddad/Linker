@@ -18,7 +18,7 @@
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
-    border: 1px solid var(--base-color-dark)
+    /* border: 1px solid var(--base-color-dark) */
 }
 .comment-card .comment-header .profile img {
     width: 40px;

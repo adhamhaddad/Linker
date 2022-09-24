@@ -29,3 +29,9 @@
 a:hover {
     background-color: inherit;
 }
+.loading {
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute
+}

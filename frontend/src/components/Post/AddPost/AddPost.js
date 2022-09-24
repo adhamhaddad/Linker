@@ -2,30 +2,29 @@ import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
 import Backdrop from '../../Backdrop/Backdrop';
 import Overlay from '../../Overlay/Overlay';
-import './AddPost.css';
+import classes from './AddPost.module.css';
 
 function AddPost(props) {
-  const caption = useRef();
-  const img = useRef();
-  const video = useRef();
+  const caption = useRef('');
+  const img = useRef('');
+  const video = useRef('');
 
   const postFormHandler = (e) => {
     e.preventDefault();
     const captionValue = caption.current.value;
     const imgValue = img.current.value;
     const videoValue = video.current.value;
-    if (captionValue.trim().length == 0) {
+    if (
+      captionValue.trim().length == 0 &&
+      img.trim().length == 0 &&
+      video.trim().length == 0
+    ) {
       return;
     }
     props.addNewPost({
-      id: new Date().getTime(),
-      content: { caption: captionValue, img: imgValue, video: videoValue },
-      timedate: new Date(),
-      reactions: {
-        likes: [],
-        comments: [],
-        shares: []
-      }
+      caption: captionValue,
+      img: imgValue,
+      video: videoValue
     });
 
     props.closePostHandler();
@@ -39,25 +38,28 @@ function AddPost(props) {
       )}
       {ReactDOM.createPortal(
         <Overlay>
-          <div className='create-post'>
-            <div className='create-post__header'>
-              <div className='create-post__user-info'>
+          <div className={classes['create-post']}>
+            <div className={classes['create-post__header']}>
+              <div className={classes['create-post__user-info']}>
                 <img
-                  src={props.photos.profile}
+                  src={props.information.profile}
                   alt='profile'
-                  className='profile'
+                  className={classes.profile}
                 />
-                <h4 className='username'>
+                <h4 className={classes.username}>
                   {props.information.fname} {props.information.lname}
                 </h4>
               </div>
-              <button className='discard' onClick={props.closePostHandler}>
+              <button
+                className={classes.discard}
+                onClick={props.closePostHandler}
+              >
                 discard
               </button>
             </div>
 
-            <form onSubmit={postFormHandler}>
-              <div className='create-post__content'>
+            <form method='POST' onSubmit={postFormHandler}>
+              <div className={classes['create-post__content']}>
                 <textarea
                   type='text'
                   placeholder='What do you want to talk about?'
@@ -67,8 +69,8 @@ function AddPost(props) {
                 <input type='file' ref={video} />
               </div>
 
-              <div className='create-post__footer'>
-                <button type='submit'>Post</button>
+              <div className={classes['create-post__footer']}>
+                <button type='submit' className={classes['post-button']}>Post</button>
               </div>
             </form>
           </div>

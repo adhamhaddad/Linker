@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../Header/Header';
 import Logo from '../Header/Logo/Logo';
 import SearchBar from '../Header/Search/Searchbar';
 import Home from '../Home/Home';
@@ -40,13 +39,13 @@ function Main(props) {
             <SearchBar />
           </TopNavbar>
         )}
+
         <Profile
           title='Profile-Page'
           user={props.user}
-          posts={props.posts}
-          photos={props.photos}
           information={props.information}
-          links={props.links}
+          posts={props.posts}
+          reactions={props.reactions}
           setReactions={props.setReactions}
           addNewPost={props.addNewPost}
         />
