@@ -5,12 +5,9 @@ import logger from './middlewares/logger';
 import user_controller_routes from './controllers/User';
 import information_controller_routes from './controllers/Information';
 import posts_controller_routes from './controllers/Posts';
-import reactions_controller_routes from './controllers/Reactions';
 import server_controller_routes from './controllers/Server';
-import photos_controller_routes from './controllers/Photos';
 import config from './config';
 import cors from 'cors';
-import links_controller_routes from './controllers/Links';
 import messages_controller_routes from './controllers/Messages';
 // Express App
 const app: Application = express();
@@ -35,12 +32,9 @@ app.use(cors(corsOptions));
 
 // Express Handler
 user_controller_routes(app, logger as NextFunction);
-photos_controller_routes(app, logger as NextFunction);
 information_controller_routes(app, logger as NextFunction);
 posts_controller_routes(app, logger as NextFunction);
-reactions_controller_routes(app, logger as NextFunction);
 server_controller_routes(app, logger as NextFunction);
-links_controller_routes(app, logger as NextFunction);
 messages_controller_routes(app, logger as NextFunction);
 // Express Server
 app.listen(port, () => {

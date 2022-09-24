@@ -1,7 +1,6 @@
 type Reactions = {
-  id?: string;
-  likes: number;
-  comments: string;
-  shares: number;
-};
+    timedate: string;
+    username: string;
+    comment: string;
+}
 export default Reactions;

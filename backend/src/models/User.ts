@@ -6,23 +6,12 @@ import config from '../config';
 const hash = (pass: string) =>
   bcrypt.hashSync(pass + config.peper, config.salt);
 
-const newDate = () => {
-  const date = new Date();
-  return date.toLocaleString('en-US', {
-    month: '2-digit',
-    day: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  });
-};
 class User {
   async createUser(u: Users): Promise<Users> {
     try {
       const connection = await database.connect();
       const sql =
-        'INSERT INTO users (username, email, password, gender, joined) VALUES ($1, $2, $3, $4, $5) RETURNING id, username, email, gender, joined';
+        'INSERT INTO users (username, email, password, gender, joined) VALUES ($1, $2, $3, $4, $5) RETURNING user_id, username, email, gender, joined';
       const result = await connection.query(sql, [
         u.username.toLocaleLowerCase(),
         u.email.toLocaleLowerCase(),
@@ -40,7 +29,7 @@ class User {
   async getAllUsers(): Promise<Users[]> {
     try {
       const connection = await database.connect();
-      const sql = 'SELECT id, username FROM users';
+      const sql = 'SELECT user_id, username FROM users';
       const result = await connection.query(sql);
       connection.release();
       return result.rows;
@@ -53,7 +42,7 @@ class User {
     try {
       const connection = await database.connect();
       const sql =
-        'SELECT id, username, email, gender, joined FROM users WHERE id=($1)';
+        'SELECT user_id, username, email, gender, joined FROM users WHERE user_id=($1)';
       const result = await connection.query(sql, [id]);
       connection.release();
       return result.rows[0];
@@ -66,7 +55,7 @@ class User {
     try {
       const connection = await database.connect();
       const sql =
-        'UPDATE users SET username=$2, email=$3, password=$4, gender=$5 WHERE id=$($1) RETURNING id, username, email, gender';
+        'UPDATE users SET username=$2, email=$3, password=$4, gender=$5 WHERE user_id=$($1) RETURNING user_id, username, email, gender';
       const result = await connection.query(sql, [
         id,
         u.username,
@@ -84,7 +73,7 @@ class User {
   async deleteUser(id: string): Promise<Users> {
     try {
       const connection = await database.connect();
-      const sql = 'DELETE FROM users WHERE id=($1)';
+      const sql = 'DELETE FROM users WHERE user_id=($1)';
       const result = await connection.query(sql, [id]);
       connection.release();
       return result.rows[0];
@@ -110,7 +99,7 @@ class User {
 
         if (checkPass) {
           const sql =
-            'SELECT id, username, email FROM users WHERE username=($1)';
+            'SELECT user_id, username, email FROM users WHERE username=($1)';
           const result = await connection.query(sql, [
             username.toLocaleLowerCase()
           ]);

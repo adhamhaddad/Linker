@@ -39,6 +39,7 @@ const getAllPosts = async (req: Request, res: Response) => {
 const getPost = async (req: Request, res: Response) => {
   try {
     const response = await post.getPost(req.params.id);
+    console.log(response)
     res.status(200).json({
       status: true,
       data: { ...response },
@@ -86,8 +87,8 @@ const deletePost = async (req: Request, res: Response) => {
 const posts_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/user/:id/posts', logger, createPost);
   app.get('/user/:id/posts', logger, getAllPosts);
-  app.get('/user/:id/posts', logger, getPost);
-  app.patch('/user/:id/posts', logger, updatePost);
-  app.delete('/user/:id/posts', logger, deletePost);
+  app.get('/user/posts/:id', logger, getPost);
+  app.patch('/user/posts/:id', logger, updatePost);
+  app.delete('/user/posts/:id', logger, deletePost);
 };
 export default posts_controller_routes;

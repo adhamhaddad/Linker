@@ -1,26 +1,16 @@
 import database from '../database';
 import Posts from '../types/Posts';
-
-const newDate = () => {
-  const date = new Date();
-  return date.toLocaleString('en-US', {
-    month: '2-digit',
-    day: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  });
-};
 class Post {
   async createPost(p: Posts, user_id: string): Promise<Posts> {
     try {
       const connection = await database.connect();
       const sql =
-        'INSERT INTO posts (timedate, content, user_id) VALUES ($1, $2, $3) RETURNING *';
+        'INSERT INTO posts (timedate, caption, img, video, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *';
       const result = await connection.query(sql, [
         new Date(),
-        p.content,
+        p.caption,
+        p.img,
+        p.video,
         user_id
       ]);
       connection.release();
@@ -47,11 +37,11 @@ class Post {
     }
   }
 
-  async getPost(user_id: string): Promise<Posts> {
+  async getPost(post_id: string): Promise<Posts> {
     try {
       const connection = await database.connect();
-      const sql = 'SELECT * FROM posts WHERE user_id=($1)';
-      const result = await connection.query(sql, [user_id]);
+      const sql = 'SELECT * FROM posts WHERE post_id=($1)';
+      const result = await connection.query(sql, [post_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -61,11 +51,11 @@ class Post {
     }
   }
 
-  async updatePost(user_id: string, p: Posts): Promise<Posts> {
+  async updatePost(post_id: string, p: Posts): Promise<Posts> {
     try {
       const connection = await database.connect();
-      const sql = 'UPDATE posts SET content=$2 WHERE user_id=($1) RETURNING *';
-      const result = await connection.query(sql, [user_id, p.content]);
+      const sql = 'UPDATE posts SET caption=$2 WHERE post_id=($1) RETURNING *';
+      const result = await connection.query(sql, [post_id, p.caption]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -75,11 +65,11 @@ class Post {
     }
   }
 
-  async deletePost(user_id: string): Promise<Posts> {
+  async deletePost(post_id: string): Promise<Posts> {
     try {
       const connection = await database.connect();
-      const sql = 'DELETE FROM posts * WHERE user_id=($1)';
-      const result = await connection.query(sql, [user_id]);
+      const sql = 'DELETE FROM posts * WHERE post_id=($1)';
+      const result = await connection.query(sql, [post_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {

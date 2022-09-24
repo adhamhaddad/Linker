@@ -1,6 +1,8 @@
 type Posts = {
   id?: string;
   timedate: string;
-  content: string;
+  caption: string;
+  img: string;
+  video: string;
 };
 export default Posts;

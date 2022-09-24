@@ -1,0 +1,21 @@
+CREATE TABLE Information (
+    info_id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    profile text,
+    fname VARCHAR(255),
+    lname VARCHAR(255),
+    phone VARCHAR(50) UNIQUE,
+    birthday text,
+    work VARCHAR(255),
+    relation VARCHAR(100),
+    education VARCHAR(255),
+    lives VARCHAR(255),
+    story text,
+    facebook VARCHAR(255),
+    instagram VARCHAR(255),
+    whatsapp VARCHAR(255),
+    twitter VARCHAR(255),
+    linkedin VARCHAR(255),
+    telegram VARCHAR(255),
+    user_id uuid,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+);

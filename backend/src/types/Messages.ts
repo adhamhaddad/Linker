@@ -1,6 +1,6 @@
 type Messages = {
   id?: string;
-  time: string;
-  message: string;
+  timedate: Date;
+  content: string;
 };
 export default Messages;

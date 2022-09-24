@@ -1,26 +1,14 @@
 import database from '../database';
 import Messages from '../types/Messages';
-
-const newDate = () => {
-  const date = new Date();
-  return date.toLocaleString('en-US', {
-    month: '2-digit',
-    day: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  });
-};
 class Message {
   async newMessage(m: Messages, user_id: string): Promise<Messages> {
     try {
       const connection = await database.connect();
       const sql =
-        'INSERT INTO messages (time, message, user_id) VALUES ($1, $2, $3) RETURNING *';
+        'INSERT INTO messages (timedate, content, user_id) VALUES ($1, $2, $3) RETURNING *';
       const result = await connection.query(sql, [
         new Date(),
-        m.message,
+        m.content,
         user_id
       ]);
       connection.release();
@@ -49,8 +37,8 @@ class Message {
   async updateMessage(m: Messages, user_id: string): Promise<Messages> {
     try {
       const connection = await database.connect();
-      const sql = 'UPDATE messages SET message=$2 WHERE user_id=$1 RETURNING *';
-      const result = await connection.query(sql, [user_id, m.message]);
+      const sql = 'UPDATE messages SET content=$2 WHERE user_id=$1 RETURNING *';
+      const result = await connection.query(sql, [user_id, m.content]);
       connection.release();
       return result.rows[0];
     } catch (err) {

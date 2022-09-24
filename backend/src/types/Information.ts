@@ -1,5 +1,6 @@
 type Info = {
   id?: string;
+  profile: string;
   fname: string;
   lname: string;
   phone: string;
@@ -9,5 +10,11 @@ type Info = {
   education: string;
   lives: string;
   story: string;
+  facebook: string;
+  instagram: string;
+  whatsapp: string;
+  linkedin: string;
+  twitter: string;
+  telegram: string;
 };
 export default Info;
