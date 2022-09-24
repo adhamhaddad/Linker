@@ -1,0 +1,15 @@
+{
+    "scripts": {
+        "frontend:install": "cd Linker/frontend && npm install -f",
+        "frontend:start": "cd Linker/frontend && npm run start",
+        "frontend:lint": "cd Linker/frontend && npm run lint",
+        "frontend:build": "cd Linker/frontend && npm run build",
+        "frontend:test": "cd Linker/frontend && npm run test",
+        "frontend:deploy": "cd Linker/frontend && npm run deploy",
+        "backend:install": "cd Linker/backend && npm install .",
+        "backend:start": "cd Linker/backend && npm run dev",
+        "backend:build": "cd Linker/backend && npm run build",
+        "backend:deploy": "cd Linker/backend && npm run deploy",
+        "deploy": "npm run backend:deploy && npm run frontend:deploy"
+    }
+}
