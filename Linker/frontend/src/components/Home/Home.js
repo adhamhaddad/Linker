@@ -8,17 +8,17 @@ function Home(props) {
         <Post
           fname={props.information.fname}
           lname={props.information.lname}
-          profile={props.photos.profile}
+          profile={props.information.profile}
           timedate={post.timedate}
           content={post.content}
-          reactions={post.reactions}
+          reactions={props.reactions}
           setReactions={props.setReactions}
           key={post.id}
         />
       );
     })
   ) : (
-    <p style={{ 'text-align': 'center' }}>No posts found!</p>
+    <p style={{ textAlign: 'center' }}>No posts found!</p>
   );
   return <div className='container'>{posts}</div>;
 }

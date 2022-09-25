@@ -44,8 +44,86 @@ function App() {
     ]
   });
   const [messages, setMessages] = useState([]);
-  const [notificationsList, setNotificationsList] = useState([]);
+  // Notification Part
+  const [notificationsList, setNotificationsList] = useState([
+    {
+      id: 1,
+      username: 'Ahmed Emad',
+      profile: './images/beso.jpg',
+      time: 'Tue Sep 20 2022 12:30:32 GMT+0200 (Eastern European Standard Time)',
+      content: 'has liked on your post'
+    },
+    {
+      id: 2,
+      username: 'Mohamed Khaled',
+      profile: './images/simba.jpeg',
+      time: 'Tue Sep 20 2022 12:31:32 GMT+0200 (Eastern European Standard Time)',
+      content: 'has liked on your post'
+    },
+    {
+      id: 3,
+      username: 'Bassem Hamada',
+      profile: './images/bassem.jpg',
+      time: 'Tue Sep 20 2022 12:32:32 GMT+0200 (Eastern European Standard Time)',
+      content: 'has commented on your post'
+    },
+    {
+      id: 4,
+      username: 'Cup Coffee',
+      profile: './images/coffee.jpg',
+      time: 'Tue Sep 20 2022 12:34:32 GMT+0200 (Eastern European Standard Time)',
+      content: 'shared your post'
+    }
+  ]);
 
+  // Chat - Messages Part
+  const [receiverUser, setReceiverUser] = useState({
+    username: 'Ahmed Emad',
+    profile: './images/beso.jpg',
+    messages: [
+      {
+        time: 'Tue Sep 20 2022 04:31:32 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      },
+      {
+        time: 'Tue Sep 20 2022 04:32:37 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      },
+      {
+        time: 'Tue Sep 20 2022 04:32:45 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      }
+    ]
+  });
+  const [senderUser, setSenderUser] = useState({
+    username: 'adham ashraf',
+    profile: './images/profile.jpg',
+    messages: [
+      {
+        time: 'Tue Sep 20 2022 04:31:31 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      },
+      {
+        time: 'Tue Sep 20 2022 04:32:35 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      },
+      {
+        time: 'Tue Sep 20 2022 04:32:41 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      },
+      {
+        time: 'Tue Sep 20 2022 04:36:31 GMT+0200 (Eastern European Standard Time)',
+        message: 'Hellooooooooooooooo',
+        lang: 'en'
+      }
+    ]
+  });
   const getUser = useCallback(async () => {
     setIsLoading(true);
     setIsError(null);
@@ -196,7 +274,7 @@ function App() {
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: e
+        body: JSON.stringify(e)
       }
     );
   };
@@ -206,7 +284,7 @@ function App() {
       {
         method: 'POST',
         'Content-Type': 'application/json',
-        body: e
+        body: JSON.stringify(e)
       }
     );
   };
@@ -239,8 +317,8 @@ function App() {
             notificationsList={notificationsList}
             setReactions={setPostReactions}
             addNewPost={addNewPost}
-            // receiverUser={receiverUser}
-            // senderUser={senderUser}
+            receiverUser={receiverUser}
+            senderUser={senderUser}
             addNewMessageHandler={addNewMessageHandler}
           />
         )}

@@ -26,6 +26,7 @@ function Main(props) {
           photos={props.photos}
           information={props.information}
           links={props.links}
+          reactions={props.reactions}
           setReactions={props.setReactions}
         />
       </main>
