@@ -52,7 +52,7 @@ function App() {
 
     try {
       const response = await fetch(
-        'http://localhost:3000/user/39479323-e205-4746-b575-939a02d06191'
+        'http://192.168.1.6:3000/user/39479323-e205-4746-b575-939a02d06191'
       );
       if (!response.ok) {
         throw new Error('Could not get the user');
@@ -72,7 +72,7 @@ function App() {
 
     try {
       const response = await fetch(
-        'http://localhost:3000/user/39479323-e205-4746-b575-939a02d06191/information'
+        'http://192.168.1.6:3000/user/39479323-e205-4746-b575-939a02d06191/information'
       );
       if (!response.ok) {
         throw new Error('Could not get the user information');
@@ -92,7 +92,7 @@ function App() {
 
     try {
       const response = await fetch(
-        'http://localhost:3000/user/39479323-e205-4746-b575-939a02d06191/posts'
+        'http://192.168.1.6:3000/user/39479323-e205-4746-b575-939a02d06191/posts'
       );
       if (!response.ok) {
         throw new Error('Could not get the posts');
@@ -124,7 +124,7 @@ function App() {
 
     try {
       const response = await fetch(
-        'http://localhost:3000/user/404ac217-9ed3-4555-b9c0-a6177ca3f850/reactions'
+        'http://192.168.1.6:3000/user/404ac217-9ed3-4555-b9c0-a6177ca3f850/reactions'
       );
       if (!response.ok) {
         throw new Error('Could not get the post reactions');
@@ -156,7 +156,7 @@ function App() {
 
     try {
       const response = await fetch(
-        'http://localhost:3000/user/902d8043-1c0e-4171-b975-0924b8dd7678/message'
+        'http://192.168.1.6:3000/user/902d8043-1c0e-4171-b975-0924b8dd7678/message'
       );
       if (!response.ok) {
         throw new Error('Could not get the messages');
@@ -181,7 +181,7 @@ function App() {
 
   const addNewPost = async (e) => {
     await fetch(
-      'http://localhost:3000/user/39479323-e205-4746-b575-939a02d06191/posts',
+      'http://192.168.1.6:3000/user/39479323-e205-4746-b575-939a02d06191/posts',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -192,7 +192,7 @@ function App() {
 
   const addNewMessageHandler = async (e) => {
     await fetch(
-      'http://localhost:3000/user/39479323-e205-4746-b575-939a02d06191/message',
+      'http://192.168.1.6:3000/user/39479323-e205-4746-b575-939a02d06191/message',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -202,7 +202,7 @@ function App() {
   };
   const setPostReactions = async (e) => {
     await fetch(
-      'http://localhost:3000/user/posts/39479323-e205-4746-b575-939a02d06191',
+      'http://192.168.1.6:3000/user/posts/39479323-e205-4746-b575-939a02d06191',
       {
         method: 'POST',
         'Content-Type': 'application/json',
