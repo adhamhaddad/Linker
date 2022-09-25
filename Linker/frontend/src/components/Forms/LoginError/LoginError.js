@@ -12,6 +12,7 @@ const LoginError = () => {
       ctx.onAuthError.setAuthError(false);
     }, 3500);
 
+    
     return () => {
       console.log('Cleanup');
       clearTimeout(err);
@@ -21,7 +22,7 @@ const LoginError = () => {
   return (
     <div className={ctx.onAuthError.authError ? classes.error : classes.hide}>
       <p>
-        Sorry, username or password authentication didn't work. Please try
+        Sorry, username or password authentication didnt work. Please try
         again.
       </p>
     </div>
