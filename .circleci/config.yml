@@ -57,7 +57,7 @@ jobs:
           command: |
             npm run deploy
 workflows:
-  udagram:
+  Social-Network:
     jobs:
       - build
       - hold:
