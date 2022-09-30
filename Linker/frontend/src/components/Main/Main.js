@@ -8,9 +8,17 @@ import Notification from '../Notification/Notification';
 import Settings from '../Settings/Settings';
 import TopNavbar from '../Header/TopNavbar/TopNavbar';
 import Information from '../Settings/Information/Information';
+import Loading from '../Loading/Loading';
 import classes from './Main.module.css';
 
 function Main(props) {
+  if (props.loading) {
+    return (
+      <main className={classes.main}>
+        <Loading />
+      </main>
+    );
+  }
   if (localStorage.getItem('currentComponent') === 'HOME') {
     return (
       <main className={classes.main}>
@@ -22,7 +30,7 @@ function Main(props) {
         )}
         <Home
           user={props.user}
-          posts={props.posts}
+          allPosts={props.allPosts}
           photos={props.photos}
           information={props.information}
           links={props.links}
@@ -45,10 +53,11 @@ function Main(props) {
           title='Profile-Page'
           user={props.user}
           information={props.information}
-          posts={props.posts}
+          userPosts={props.userPosts}
           reactions={props.reactions}
           setReactions={props.setReactions}
           addNewPost={props.addNewPost}
+          deletePostHandler={props.deletePostHandler}
         />
       </main>
     );

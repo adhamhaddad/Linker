@@ -22,7 +22,6 @@ class Post {
     }
   }
 
-  //! This for home page - newsfeed. not for user
   async getAllPosts(): Promise<Posts[]> {
     try {
       const connection = await database.connect();
@@ -37,16 +36,16 @@ class Post {
     }
   }
 
-  async getPost(post_id: string): Promise<Posts> {
+  async getUserPosts(user_id: string): Promise<Posts[]> {
     try {
       const connection = await database.connect();
-      const sql = 'SELECT * FROM posts WHERE post_id=($1)';
-      const result = await connection.query(sql, [post_id]);
+      const sql = 'SELECT * FROM posts WHERE user_id=($1)';
+      const result = await connection.query(sql, [user_id]);
       connection.release();
-      return result.rows[0];
+      return result.rows;
     } catch (err) {
       throw new Error(
-        `Could not get the post. Error ${(err as Error).message}`
+        `Could not get the user posts. Error ${(err as Error).message}`
       );
     }
   }
@@ -68,7 +67,7 @@ class Post {
   async deletePost(post_id: string): Promise<Posts> {
     try {
       const connection = await database.connect();
-      const sql = 'DELETE FROM posts * WHERE post_id=($1)';
+      const sql = 'DELETE FROM posts WHERE post_id=$1';
       const result = await connection.query(sql, [post_id]);
       connection.release();
       return result.rows[0];

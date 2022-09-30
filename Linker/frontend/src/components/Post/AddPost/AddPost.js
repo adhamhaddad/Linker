@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
 import Backdrop from '../../Backdrop/Backdrop';
-import Overlay from '../../Overlay/Overlay';
+import Overlay from '../../Modal/Modal';
 import classes from './AddPost.module.css';
 
 function AddPost(props) {
@@ -34,7 +34,7 @@ function AddPost(props) {
     <>
       {ReactDOM.createPortal(
         <Backdrop />,
-        document.getElementById('backdrop-root')
+        document.getElementById('overlay')
       )}
       {ReactDOM.createPortal(
         <Overlay>
@@ -75,7 +75,7 @@ function AddPost(props) {
             </form>
           </div>
         </Overlay>,
-        document.getElementById('backdrop-root')
+        document.getElementById('overlay')
       )}
     </>
   );

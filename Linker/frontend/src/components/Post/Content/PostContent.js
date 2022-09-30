@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
-import Backdrop from '../../Backdrop/Backdrop';
-import Overlay from '../../Overlay/Overlay';
+import Modal from '../../Modal/Modal';
 import './PostContent.css';
 
 function PostContent(props) {
@@ -14,23 +12,14 @@ function PostContent(props) {
     <>
       {contentStatus && (
         <>
-          {ReactDOM.createPortal(
-            <Backdrop onClicked={viewContent} />,
-            document.getElementById('backdrop-root')
-          )}
-
-          {ReactDOM.createPortal(
-            <Overlay>
-              {props.content.img.trim().length > 0 && (
-                <img
-                  src={props.content.img}
-                  alt='content'
-                  onClick={viewContent}
-                />
-              )}
-            </Overlay>,
-            document.getElementById('backdrop-root')
-          )}
+          <Modal onClick={viewContent}>
+            {props.content.img.trim().length > 0 && (
+              <img
+                src={props.content.img}
+                alt='content'
+              />
+            )}
+          </Modal>
         </>
       )}
 
@@ -41,8 +30,14 @@ function PostContent(props) {
             props.content.caption}
           {props.content.caption == null && 'Null for now'}
         </p>
-        {props.content.img !== null && props.content.img.trim().length > 0 && (
+        {props.content.img.trim().length > 0 && (
           <img src={props.content.img} alt='content' onClick={viewContent} />
+        )}
+        {props.content.video.trim().length > 0 && (
+          <video controls>
+            <source src={props.content.video} onClick={viewContent} />
+            content
+          </video>
         )}
       </div>
     </>

@@ -4,10 +4,13 @@ const Authenticate = createContext({
   isLoggedIn: false,
   onLogout: () => {},
   onLogin: (email, password) => {},
-  onAuthError: { authError: false, setAuthError: () => {} }
+  onSignup: (data) => {},
+  onAuthError: { authError: false, setAuthError: () => {} },
+  user: {}
 });
 
 export function Authentication(props) {
+  const [user, setUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authError, setAuthError] = useState(false);
 
@@ -17,11 +20,18 @@ export function Authentication(props) {
     }
   }, []);
 
-  const loginHandler = (e, p) => {
-    if (e !== 'adhamhaddad' || p !== 'adham123') {
+  const loginHandler = async (e, p) => {
+    const response = await fetch('http://192.168.1.6:3000/authenticate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: e, password: p })
+    });
+    const data = await response.json();
+    if (!data.status) {
       setAuthError(true);
       return;
     }
+    localStorage.setItem('user_id', data.data.user_id);
     localStorage.setItem('isLoggedIn', '1');
     localStorage.setItem('currentComponent', 'PROFILE');
     setIsLoggedIn(true);
@@ -33,13 +43,29 @@ export function Authentication(props) {
     setIsLoggedIn(false);
   };
 
+  const signupHandler = async (user) => {
+    const response = await fetch('http://192.168.1.6:3000/user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user)
+    });
+    const data = await response.json();
+
+    if (!data.status) {
+      setAuthError(true);
+      return;
+    }
+  };
+
   return (
     <Authenticate.Provider
       value={{
         isLoggedIn: isLoggedIn,
         onLogin: loginHandler,
         onLogout: logoutHandler,
-        onAuthError: { authError: authError, setAuthError: setAuthError }
+        onSignup: signupHandler,
+        onAuthError: { authError: authError, setAuthError: setAuthError },
+        user: user
       }}
     >
       {props.children}

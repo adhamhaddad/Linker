@@ -5,5 +5,5 @@ CREATE TABLE Posts (
     img text,
     video text,
     user_id uuid,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );

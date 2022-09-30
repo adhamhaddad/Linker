@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import LoginError from './LoginError/LoginError';
 import Authenticate from '../../Authentication/auth';
 import Button from '../UI/Button/Button';
@@ -82,7 +82,6 @@ function Signin(props) {
         </li>
       </ul>
       <form
-        action='/authenticate'
         method='POST'
         autoComplete='on'
         onSubmit={submitHandler}

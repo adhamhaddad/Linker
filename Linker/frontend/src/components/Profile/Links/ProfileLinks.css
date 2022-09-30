@@ -5,6 +5,15 @@
     text-align: center;
     cursor: default;
 }
+.links-section h3 {
+    text-transform: capitalize;
+    text-align: center;
+    font-weight: 800;
+    font-size: 16px;
+    padding: 10px 0;
+}
+.links-section h3 > i {width: 25px}
+
 .links-section ul li {display: inline-block}
 .links-section ul li > a {
     display: block;
@@ -16,4 +25,24 @@
 }
 .links-section ul li > a i {
     margin-right: 5px;
+}
+@media only screen and (max-width: 600px) {
+    .links-section {
+        height: auto;
+        padding: 0;
+    }
+    .links-section h3 {
+        text-align: left;
+        font-size: 14px;
+    }
+    .links-section h3 > i {width: 22px}
+    .links-section ul {
+        text-align: left;
+    }
+    .links-section ul li {font-size: 12px}
+    .links-section ul li a {
+        font-size: 12px;
+        padding: 5px 0;
+        margin: 0 5px 0 0;
+    }
 }

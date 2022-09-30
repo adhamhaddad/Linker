@@ -47,6 +47,8 @@ function Post(props) {
         fname={props.fname}
         lname={props.lname}
         timedate={props.timedate}
+        id={props.id}
+        deletePostHandler={props.deletePostHandler}
       />
       <PostContent content={props.content} />
       <Reactions

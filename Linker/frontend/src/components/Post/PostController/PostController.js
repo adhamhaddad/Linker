@@ -4,9 +4,11 @@ import './PostController.css';
 function PostController(props) {
   const [sliders, setSliders] = useState(false);
   const slidersHandler = () => {
-    setSliders((prev) => {
-      return prev ? false : true;
-    });
+    setSliders((prev) => (prev ? false : true));
+  };
+
+  const onDeleteHandler = () => {
+    props.deletePostHandler({ id: props.post_id });
   };
   return (
     <div className='post-controller'>
@@ -16,10 +18,16 @@ function PostController(props) {
         ></i>
       </button>
       {sliders && (
-        <ul onBlurCapture={slidersHandler}>
-          <li onClick={props.deletePostHandler}>delete post</li>
-          <li onClick={props.editPostHandler}>edit post</li>
-        </ul>
+        <div onBlurCapture={slidersHandler}>
+          <button onClick={onDeleteHandler}>
+            <i className='fa-solid fa-trash'></i>
+            <span>delete post</span>
+          </button>
+          <button onClick={props.editPostHandler}>
+            <i className='fa-solid fa-pencil'></i>
+            <span>edit post</span>
+          </button>
+        </div>
       )}
     </div>
   );

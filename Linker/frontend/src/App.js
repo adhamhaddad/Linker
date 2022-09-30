@@ -14,7 +14,11 @@ function App() {
   const [switchForm, setSwitchForm] = useState(false);
   const [user, setUser] = useState({});
   const [information, setInformation] = useState({});
-  const [posts, setPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
+  const [allPosts, setAllPosts] = useState([]);
+  const userData = {
+    id: localStorage.getItem('user_id')
+  };
   const [reactions, setReactions] = useState({
     likes: [
       { profile: './images/profile.jpg', username: 'Adham Ashraf' },
@@ -124,14 +128,17 @@ function App() {
       }
     ]
   });
+
   const getUser = useCallback(async () => {
     setIsLoading(true);
     setIsError(null);
 
     try {
-      const response = await fetch(
-        'http://192.168.1.6:3000/user/39479323-e205-4746-b575-939a02d06191'
-      );
+      const response = await fetch('http://192.168.1.6:3000/user', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: userData.id })
+      });
       if (!response.ok) {
         throw new Error('Could not get the user');
       }
@@ -149,9 +156,11 @@ function App() {
     setIsError(null);
 
     try {
-      const response = await fetch(
-        'http://192.168.1.6:3000/user/39479323-e205-4746-b575-939a02d06191/information'
-      );
+      const response = await fetch('http://192.168.1.6:3000/user/information', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: userData.id })
+      });
       if (!response.ok) {
         throw new Error('Could not get the user information');
       }
@@ -164,14 +173,16 @@ function App() {
     }
   }, []);
 
-  const getPosts = useCallback(async () => {
+  const getUserPosts = useCallback(async () => {
     setIsLoading(true);
     setIsError(null);
 
     try {
-      const response = await fetch(
-        'http://192.168.1.6:3000/user/39479323-e205-4746-b575-939a02d06191/posts'
-      );
+      const response = await fetch('http://192.168.1.6:3000/user/posts', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: userData.id })
+      });
       if (!response.ok) {
         throw new Error('Could not get the posts');
       }
@@ -188,7 +199,7 @@ function App() {
           user_id: post.user_id
         };
       });
-      setPosts(transformPost);
+      setUserPosts(transformPost);
     } catch (error) {
       setIsError(error.message);
     } finally {
@@ -196,16 +207,18 @@ function App() {
     }
   }, []);
 
-  const getReactions = useCallback(async () => {
+  const getAllPosts = useCallback(async () => {
     setIsLoading(true);
     setIsError(null);
 
     try {
-      const response = await fetch(
-        'http://192.168.1.6:3000/user/404ac217-9ed3-4555-b9c0-a6177ca3f850/reactions'
-      );
+      const response = await fetch('http://192.168.1.6:3000/posts', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: userData.id })
+      });
       if (!response.ok) {
-        throw new Error('Could not get the post reactions');
+        throw new Error('Could not get the posts');
       }
       const data = await response.json();
       const transformPost = await data.data.map((post) => {
@@ -220,27 +233,7 @@ function App() {
           user_id: post.user_id
         };
       });
-      setPosts(transformPost);
-    } catch (error) {
-      setIsError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  const getMessages = useCallback(async () => {
-    setIsLoading(true);
-    setIsError(null);
-
-    try {
-      const response = await fetch(
-        'http://192.168.1.6:3000/user/902d8043-1c0e-4171-b975-0924b8dd7678/message'
-      );
-      if (!response.ok) {
-        throw new Error('Could not get the messages');
-      }
-      const data = await response.json();
-      setMessages(data.data);
+      setAllPosts(transformPost);
     } catch (error) {
       setIsError(error.message);
     } finally {
@@ -258,42 +251,44 @@ function App() {
   };
 
   const addNewPost = async (e) => {
-    await fetch(
-      'http://192.168.1.6:3000/user/39479323-e205-4746-b575-939a02d06191/posts',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(e)
-      }
-    );
+    await fetch('http://192.168.1.6:3000/user/posts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(e)
+    });
   };
 
   const addNewMessageHandler = async (e) => {
-    await fetch(
-      'http://192.168.1.6:3000/user/39479323-e205-4746-b575-939a02d06191/message',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(e)
-      }
-    );
+    await fetch('http://192.168.1.6:3000/user/message', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(e)
+    });
   };
+
   const setPostReactions = async (e) => {
-    await fetch(
-      'http://192.168.1.6:3000/user/posts/39479323-e205-4746-b575-939a02d06191',
-      {
-        method: 'POST',
-        'Content-Type': 'application/json',
-        body: JSON.stringify(e)
-      }
-    );
+    await fetch('http://192.168.1.6:3000/user/posts', {
+      method: 'POST',
+      'Content-Type': 'application/json',
+      body: JSON.stringify(e)
+    });
+  };
+
+  const deletePostHandler = async (e) => {
+    await fetch('http://192.168.1.6:3000/user/post', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(e)
+    });
+    console.log(JSON.stringify(e));
   };
 
   useEffect(() => {
     getUser();
     getInformation();
-    getPosts();
-  }, [getUser, getInformation, getPosts]);
+    getUserPosts();
+    getAllPosts();
+  }, [getUser, getInformation, getUserPosts, getAllPosts]);
 
   if (ctx.isLoggedIn) {
     return (
@@ -302,9 +297,8 @@ function App() {
           changeComponent={changeComponent}
           activeComponent={localStorage.getItem('currentComponent')}
         />
-        {isError && <p>Error happend. ${isError}</p>}
         {isLoading ? (
-          <p className='loading'>Loading..</p>
+          <Main loading={isLoading} />
         ) : (
           <Main
             changeComponent={changeComponent}
@@ -312,7 +306,8 @@ function App() {
             loading={isLoading}
             user={user}
             information={information}
-            posts={posts}
+            userPosts={userPosts}
+            allPosts={allPosts}
             reactions={reactions}
             notificationsList={notificationsList}
             setReactions={setPostReactions}
@@ -320,7 +315,9 @@ function App() {
             receiverUser={receiverUser}
             senderUser={senderUser}
             addNewMessageHandler={addNewMessageHandler}
+            deletePostHandler={deletePostHandler}
           />
+         
         )}
         <Footer />
       </>

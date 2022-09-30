@@ -22,7 +22,7 @@
     transition: background .5s ease-in-out;
 }
 
-.post-controller ul {
+.post-controller > div {
     display: block;
     position: absolute;
     top: -10px;
@@ -33,21 +33,26 @@
     background-color: var(--base-color-light);
 }
 
-.post-controller ul li {
+.post-controller div button {
+    display: block;
+    text-align: left;
+    width: 100%;
     height: 40px;
     line-height: 40px;
-    padding: 0 10px;
     text-transform: capitalize;
-    font-weight: bold;
     border-bottom: 1px solid rgb(219, 219, 219);
-    cursor: pointer;
     transition: background .5s ease-in-out;
+    cursor: pointer;
 }
-.post-controller ul li:hover {
+.post-controller div button i {
+    width: 30px;
+    text-align: center;
+}
+.post-controller div button:hover {
     background-color: rgb(219, 219, 219);
     transition: background .5s ease-in-out;
 }
-.post-controller ul li:last-of-type {
+.post-controller div button:last-of-type {
     border-bottom: none;
 }
 
@@ -69,7 +74,7 @@
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-    .post-controller ul {
+    .post-controller div {
         top: 50px;
         right: 0;
 

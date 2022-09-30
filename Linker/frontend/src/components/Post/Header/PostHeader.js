@@ -18,7 +18,7 @@ function PostHeader(props) {
           </span>
         </div>
       </div>
-      <PostController />
+      <PostController post_id={props.id} deletePostHandler={props.deletePostHandler}/>
     </div>
   );
 }

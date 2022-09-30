@@ -84,7 +84,16 @@ input[type='file'] {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-
+    .create-post {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        border-radius: 4px;
+        overflow: hidden;
+        /* border: 1px solid var(--base-color-light); */
+        box-shadow: 1px 1px 5px var(--base-color-dark);
+        color: var(--base-color-dark);
+    }
 }
 
 @media only screen and (max-width: 420px) {

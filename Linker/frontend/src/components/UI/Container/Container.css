@@ -22,6 +22,13 @@
     background-color: var(--base-color-dark);
 }
 
+.container.profile.loading {
+    animation-name: loading;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
 .container.notifications {
     height: 100%;
 }
@@ -34,9 +41,10 @@
 }
 .container.chat {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    /* margin: 10px auto; */
     height: 100%;
-    background-color: var(--base-background-light)
+    background-color: var(--base-background-light);
 }
 
 
@@ -50,5 +58,17 @@
 @media only screen and (max-width: 600px) {
     .container.profile {
         padding: 5px;
+    }
+}
+
+@keyframes loading {
+    0% {
+        background-color: rgb(200, 200, 200);
+    }
+    50% {
+        background-color: rgb(230, 230, 230);
+    }
+    100% {
+        background-color: rgb(200, 200, 200);
     }
 }

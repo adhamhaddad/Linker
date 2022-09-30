@@ -51,13 +51,13 @@ class User {
     }
   }
 
-  async updateUser(id: string, u: Users): Promise<Users> {
+  async updateUser(u: Users): Promise<Users> {
     try {
       const connection = await database.connect();
       const sql =
         'UPDATE users SET username=$2, email=$3, password=$4, gender=$5 WHERE user_id=$($1) RETURNING user_id, username, email, gender';
       const result = await connection.query(sql, [
-        id,
+        u.id,
         u.username,
         u.email,
         hash(u.password),
@@ -73,7 +73,7 @@ class User {
   async deleteUser(id: string): Promise<Users> {
     try {
       const connection = await database.connect();
-      const sql = 'DELETE FROM users WHERE user_id=($1)';
+      const sql = 'DELETE FROM users WHERE user_id=$1';
       const result = await connection.query(sql, [id]);
       connection.release();
       return result.rows[0];

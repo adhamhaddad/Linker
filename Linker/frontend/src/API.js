@@ -1,16 +1,11 @@
 // API DUMMY DATA
-const [user, setUser] = useState({
+export const user = {
   id: '1',
   username: 'adhamhaddad',
   email: 'adham@gmail.com',
   gender: 'male',
-  joined: '08/31/2022, 09:48:16 AM'
-});
-const [photos, setPohotos] = useState({
-  cover: '',
-  profile: './images/profile.jpg'
-});
-const [information, setInfomation] = useState({
+  joined: '08/31/2022, 09:48:16 AM',
+  profile: './images/profile.jpg',
   fname: 'adham',
   lname: 'ashraf',
   phone: '01113833449',
@@ -20,14 +15,14 @@ const [information, setInfomation] = useState({
   education: 'information systems',
   lives: 'giza, egypt',
   story:
-    'Hi, I am Adham. I am a student at High Institute for Computers & Management Information Systems started in 2019 and I will graduate in 2023. I started my Full-Stack journey in 2019 and built many projects using many languages. I also joined Udacity Nanodegree programs and got certified as a Professional Front End Web Developer and Advanced Full-Stack Web Developer. I worked too hard to achieve this progress, its my passion and I need an opportunity to show myself.'
-});
-const [links, setLinks] = useState({
+    'Hi, I am Adham. I am a student at High Institute for Computers & Management Information Systems started in 2019 and I will graduate in 2023. I started my Full-Stack journey in 2019 and built many projects using many languages. I also joined Udacity Nanodegree programs and got certified as a Professional Front End Web Developer and Advanced Full-Stack Web Developer. I worked too hard to achieve this progress, its my passion and I need an opportunity to show myself.',
   telegram: 'https://t.me/adhamhaddad',
   linkedin: 'https://www.linkedin.com/in/adhamashraf/',
   twitter: 'https://twitter.com/AdhamHaddad_'
-});
-const [posts, setPosts] = useState([
+};
+
+// POSTS
+export const userPosts = [
   {
     id: 3,
     timedate:
@@ -129,9 +124,144 @@ const [posts, setPosts] = useState([
       ]
     }
   }
-]);
+];
+
+// ALL POSTS
+export const allPosts = [
+  {
+    id: 3,
+    timedate:
+      'Tue Sep 13 2022 17:30:31 GMT+0200 (Eastern European Standard Time)',
+    content: {
+      caption:
+        'In our memories will always remember that day after the last final exam in 2nd secondary year on the first of Ramadan month (2017) with Simba and Ahmed we laughed so much at this day.',
+      img: './posts/brothers.jpg',
+      video: ''
+    },
+    reactions: {
+      likes: [
+        { profile: './images/profile.jpg', username: 'Adham Ashraf' },
+        { profile: './images/beso.jpg', username: 'Ahmed Emad' },
+        { profile: './images/bassem.jpg', username: 'Bassem Hamada' },
+        { profile: './images/simba.jpeg', username: 'Mohamed Khaled' }
+      ],
+      comments: [
+        {
+          id: '2',
+          username: 'Ahmed Emad',
+          profile: './images/beso.jpg',
+          content: '❤️❤️',
+          time: 'Tue Sep 13 2022 17:40:31 GMT+0200 (Eastern European Standard Time)'
+        },
+        {
+          id: '1',
+          username: 'Mohamed Khaled',
+          profile: './images/simba.jpeg',
+          content: '❤️❤️',
+          time: 'Tue Sep 13 2022 17:35:31 GMT+0200 (Eastern European Standard Time)'
+        }
+      ],
+      shares: [
+        { profile: './images/beso.jpg', username: 'Ahmed Emad' },
+        { profile: './images/simba.jpeg', username: 'Mohamed Khaled' }
+      ]
+    }
+  },
+  {
+    id: 2,
+    timedate:
+      'Fri Sep 10 2022 12:30:31 GMT+0200 (Eastern European Standard Time)',
+    content: {
+      caption:
+        'In the cinema with some one we dont know him but its a great day with mohanad, beso & other friends.',
+      img: './posts/beso2.jpg',
+      video: ''
+    },
+    reactions: {
+      likes: [
+        { profile: './images/profile.jpg', username: 'Adham Ashraf' },
+        { profile: './images/beso.jpg', username: 'Ahmed Emad' },
+        { profile: './images/simba.jpeg', username: 'Mohamed Khaled' },
+        { profile: './images/bassem.jpg', username: 'Bassem Hamada' }
+      ],
+      comments: [
+        {
+          id: '2',
+          username: 'Ahmed Emad',
+          profile: './images/beso.jpg',
+          content: 'HAHAHA my stomack hurts',
+          time: 'Sun Sep 11 2022 13:12:31 GMT+0200 (Eastern European Standard Time)'
+        }
+      ],
+      shares: [{ profile: './images/beso.jpg', username: 'Ahmed Emad' }]
+    }
+  },
+  {
+    id: 1,
+    timedate:
+      'Fri Sep 10 2022 14:12:31 GMT+0200 (Eastern European Standard Time)',
+    content: {
+      caption: 'I love you so much. I will never cheat you my lovely coffee!',
+      img: './posts/girlfriend.jpg',
+      video: ''
+    },
+    reactions: {
+      likes: [
+        { profile: './images/profile.jpg', username: 'Adham Ashraf' },
+        { profile: './images/beso.jpg', username: 'Ahmed Emad' },
+        { profile: './images/simba.jpeg', username: 'Mohamed Khaled' },
+        { profile: './images/bassem.jpg', username: 'Bassem Hamada' },
+        { profile: './images/coffee.jpg', username: 'Cup Coffee' }
+      ],
+      comments: [
+        {
+          id: '1',
+          username: 'Cup Coffee',
+          profile: './images/coffee.jpg',
+          content: 'My baby so cute. I love you more ❤️❤️❤️',
+          time: 'Fri Sep 10 2022 14:12:31 GMT+0200 (Eastern European Standard Time)'
+        }
+      ],
+      shares: [
+        { profile: './images/beso.jpg', username: 'Ahmed Emad' },
+        { profile: './images/simba.jpeg', username: 'Mohamed Khaled' },
+        { profile: './images/bassem.jpg', username: 'Bassem Hamada' }
+      ]
+    }
+  }
+];
+
+export const reactions = {
+  likes: [
+    { profile: './images/profile.jpg', username: 'Adham Ashraf' },
+    { profile: './images/beso.jpg', username: 'Ahmed Emad' },
+    { profile: './images/bassem.jpg', username: 'Bassem Hamada' },
+    { profile: './images/simba.jpeg', username: 'Mohamed Khaled' }
+  ],
+  comments: [
+    {
+      id: '2',
+      username: 'Ahmed Emad',
+      profile: './images/beso.jpg',
+      content: '❤️❤️',
+      time: 'Tue Sep 13 2022 17:40:31 GMT+0200 (Eastern European Standard Time)'
+    },
+    {
+      id: '1',
+      username: 'Mohamed Khaled',
+      profile: './images/simba.jpeg',
+      content: '❤️❤️',
+      time: 'Tue Sep 13 2022 17:35:31 GMT+0200 (Eastern European Standard Time)'
+    }
+  ],
+  shares: [
+    { profile: './images/beso.jpg', username: 'Ahmed Emad' },
+    { profile: './images/simba.jpeg', username: 'Mohamed Khaled' }
+  ]
+};
+
 // Notification Part
-const [notificationsList, setNotificationsList] = useState([
+export const notificationsList = [
   {
     id: 1,
     username: 'Ahmed Emad',
@@ -160,11 +290,11 @@ const [notificationsList, setNotificationsList] = useState([
     time: 'Tue Sep 20 2022 12:34:32 GMT+0200 (Eastern European Standard Time)',
     content: 'shared your post'
   }
-]);
+];
 
 // Chat - Messages Part
-const [receiverUser, setReceiverUser] = useState({
-  username: 'Ahmed Emad',
+export const receiverUser = {
+  username: 'ahmed emad',
   profile: './images/beso.jpg',
   messages: [
     {
@@ -183,16 +313,8 @@ const [receiverUser, setReceiverUser] = useState({
       lang: 'en'
     }
   ]
-});
-const addNewMessageHandler = (e) => {
-  setSenderUser((prev) => {
-    return {
-      ...prev,
-      messages: [...prev.messages, e]
-    };
-  });
 };
-const [senderUser, setSenderUser] = useState({
+export const senderUser = {
   username: 'adham ashraf',
   profile: './images/profile.jpg',
   messages: [
@@ -217,27 +339,4 @@ const [senderUser, setSenderUser] = useState({
       lang: 'en'
     }
   ]
-});
-
-const setReactions = (e) => {
-  setPosts((prev) => {
-    return [
-      posts,
-      {
-        comments: [
-          posts.reactions.comments,
-          {
-            id: new Date().getTime(),
-            username: 'Mariam Maged',
-            profile: './images/mrym.png',
-            content: e,
-            time: new Date().toLocaleString('en-US')
-          }
-        ]
-      }
-    ];
-  });
 };
-setPosts((prev) => {
-    return [e, ...prev];
-  });

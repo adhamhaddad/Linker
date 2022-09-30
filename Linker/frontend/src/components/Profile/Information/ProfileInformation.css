@@ -7,3 +7,15 @@
     transition: background .7s ease-in-out;
     cursor: default;
 }
+.user-info ul li > i {width: 25px}
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+    .user-info h3 {
+        text-align: left;
+        font-size: 14px;
+    }
+    .user-info ul li {font-size: 12px}
+    .user-info ul li > i {width: 22px}
+}

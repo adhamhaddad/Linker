@@ -5,7 +5,7 @@ const info = new Information();
 
 const createInfo = async (req: Request, res: Response) => {
   try {
-    const response = await info.createInfo(req.body, req.params.id);
+    const response = await info.createInfo(req.body, req.body.user_id);
     res.status(201).json({
       status: true,
       data: { ...response },
@@ -21,7 +21,7 @@ const createInfo = async (req: Request, res: Response) => {
 
 const getInfo = async (req: Request, res: Response) => {
   try {
-    const response = await info.getInfo(req.params.id);
+    const response = await info.getInfo(req.body.id);
     res.status(200).json({
       status: true,
       data: { ...response },
@@ -70,9 +70,9 @@ const information_controller_routes = (
   app: Application,
   logger: NextFunction
 ) => {
-  app.post('/user/:id/information', logger, createInfo);
-  app.get('/user/:id/information', logger, getInfo);
-  app.patch('/user/:id/information', logger, updateInfo);
-  app.delete('/user/:id/information', logger, deleteInfo);
+  app.post('/user/information', logger, createInfo);
+  app.get('/user/information', logger, getInfo);
+  app.patch('/user/information', logger, updateInfo);
+  app.delete('/user/information', logger, deleteInfo);
 };
 export default information_controller_routes;

@@ -14,8 +14,9 @@ const app: Application = express();
 export const port = config.port || 8080;
 
 const corsOptions = {
-  origin: 'http://localhost:4000',
-  optionsSucessStatus: 200
+  origin: '*',
+  optionsSucessStatus: 200,
+  methods: 'GET, HEAD, PUT, PATCH, DELETE, POST'
 };
 // Middlewares
 app.use(express.json());

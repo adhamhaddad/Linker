@@ -1,31 +1,35 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useContext } from 'react';
+import Authenticate from '../../Authentication/auth';
 import './Styles.css';
 
 function Signup(props) {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    gender: '',
-    check: false
-  });
-  // const [username, email, password, gender, check] = useRef();
+  const ctx = useContext(Authenticate);
+  const username = useRef('');
+  const email = useRef('');
+  const password = useRef('');
+  const gender = useRef('');
+  const check = useRef('');
+
   const loginChangeHandler = (e) => {
     e.preventDefault();
     props.switchForm(false);
   };
-  // console.log(username, email, password, gender, check);
 
-  // const handleChange = (e) => {
-  //   const { name, value, type, checked } = e.target;
-  //   setFormData((prev) => {
-  //     return {
-  //       ...prev,
-  //       [name]: type === 'checkbox' ? checked : value
-  //     };
-  //   });
-  // };
-  
+  const signupHandler = (e) => {
+    e.preventDefault();
+    ctx.onSignup({
+      username: username.current.value,
+      email: email.current.value,
+      password: password.current.value,
+      gender: gender.current.value
+    });
+    // username.current.value = '';
+    // email.current.value = '';
+    // password.current.value = '';
+    // gender.current.value = '';
+    // check.current.value = '';
+  };
+
   return (
     <div className='container form'>
       <div className='switch-box'>
@@ -57,14 +61,14 @@ function Signup(props) {
           </a>
         </li>
       </ul>
-      <form action='http://localhost:3000/user' method='POST' autoComplete='on'>
+      <form method='POST' autoComplete='on' onSubmit={signupHandler}>
         <input
           type='text'
           placeholder='User Name'
           id='user'
           title='User Name'
           name='username'
-          // ref={username}
+          ref={username}
           // value={formData.username}
           // onChange={handleChange}
           required
@@ -75,7 +79,7 @@ function Signup(props) {
           id='email'
           title='Email Address'
           name='email'
-          // ref={email}
+          ref={email}
           // value={formData.email}
           // onChange={handleChange}
           required
@@ -87,7 +91,7 @@ function Signup(props) {
           id='pass'
           title='New Password'
           name='password'
-          // ref={password}
+          ref={password}
           // value={formData.password}
           // onChange={handleChange}
           required
@@ -100,7 +104,7 @@ function Signup(props) {
               name='gender'
               title='Male'
               value='male'
-              // ref={gender}
+              ref={gender}
               // onChange={handleChange}
               required
             />
@@ -113,7 +117,7 @@ function Signup(props) {
               name='gender'
               title='Female'
               value='female'
-              // ref={gender}
+              ref={gender}
               // onChange={handleChange}
               required
             />
@@ -124,7 +128,7 @@ function Signup(props) {
           <input
             type='checkbox'
             name='check'
-            // ref={check}
+            ref={check}
             // checked={formData.check}
             // onChange={handleChange}
             required

@@ -1,0 +1,23 @@
+.left-side {
+    flex-grow: 0;
+}
+.profile-picture {
+    display: block;
+    width: 150px;
+    height: 160.15px;
+    background-color: var(--base-background-light);
+    border: 2px solid var(--base-color-light)
+}
+.username {
+    display: block;
+    width: 150px;
+    padding: 10px 0;
+}
+/* Right Side */
+.right-side {
+    width: 400px;
+    flex-grow: 0.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

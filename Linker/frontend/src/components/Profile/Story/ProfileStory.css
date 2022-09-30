@@ -3,6 +3,14 @@
     display: flex;
     flex-direction: column;
 }
+.story h3 {
+    text-transform: capitalize;
+    text-align: center;
+    font-weight: 800;
+    font-size: 16px;
+    padding: 10px 0;
+}
+.story h3 > i {width: 25px}
 .story p {
     width: 100%;
     max-height: 250px;
@@ -10,4 +18,13 @@
     line-height: 1.5;
     word-wrap: break-word;
     overflow-y: auto;
+}
+@media only screen and (max-width: 600px) {
+    .story h3 {
+        text-align: left;
+        font-size: 14px;
+    }
+    .container.profile .right-side .story {font-size: 12px}
+    .story h3 > i {width: 22px}
+    .story p {font-size: 12px}
 }

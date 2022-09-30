@@ -1,7 +1,7 @@
-.profile .left-side {
+.left-side {
     flex-grow: 0;
 }
-.profile .left-side .user-id img {
+.profile-picture {
     display: block;
     width: 150px;
     height: 160.15px;
@@ -11,7 +11,7 @@
     text-align: center;
     border: 2px solid var(--base-color-light)
 }
-.profile .left-side .user-id span {
+.username {
     display: block;
     width: 150px;
     padding: 10px 0;
@@ -19,9 +19,8 @@
     font-size: 16px;
     font-weight: 800;
 }
-
 /* Right Side */
-.profile .right-side {
+.right-side {
     width: 400px;
     flex-grow: 0.2;
     display: flex;
@@ -29,25 +28,10 @@
     justify-content: space-between;
 }
 
-.links-section h3,
-.story h3 {
-    text-transform: capitalize;
-    text-align: center;
-    font-weight: 800;
-    font-size: 16px;
-    padding: 10px 0;
-}
-
-.user-info ul li > i,
-.story h3 > i,
-.links-section h3 > i {width: 25px}
-
-
-button.create-post-btn {
+.create-post-btn {
     width: 200px;
     height: 40px;
     line-height: 40px;
-    /* border-radius: 20px; */
     font-weight: bold;
     cursor: pointer;
     margin: 10px;
@@ -77,35 +61,6 @@ a[title='Telegram']:hover {background-color: #0084C6; transition: background .7s
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-    .container.profile .left-side .user-info ul li,
-    .container.profile .right-side .links-section ul li {font-size: 12px}
-    
-    /* Titles */
-    .container.profile .left-side .user-info h3,
-    .container.profile .right-side .story h3,
-    .container.profile .right-side .links-section h3 {
-        text-align: left;
-        font-size: 14px;
-    }
-    .user-info ul li > i,
-    .links-section h3 > i,
-    .story h3 > i
-     {width: 22px}
-
-    .container.profile .right-side .story,
-    .container.profile .right-side .links-section ul li a {font-size: 12px}
-    .container.profile .right-side .story p {font-size: 12px}
-    .container.profile .right-side .links-section {
-        height: auto;
-        padding: 0;
-    }
-    .container.profile .right-side .links-section ul {
-        text-align: left;
-    }
-    .container.profile .right-side .links-section ul li a {
-        padding: 5px 0;
-        margin: 0 5px 0 0;
-    }
     button.create-post-btn {
         margin: 5px;
     }
