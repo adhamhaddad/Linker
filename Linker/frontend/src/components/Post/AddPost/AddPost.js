@@ -1,7 +1,5 @@
 import React, { useRef } from 'react';
-import ReactDOM from 'react-dom';
-import Backdrop from '../../Backdrop/Backdrop';
-import Overlay from '../../Modal/Modal';
+import Modal from '../../Modal/Modal';
 import classes from './AddPost.module.css';
 
 function AddPost(props) {
@@ -31,53 +29,43 @@ function AddPost(props) {
   };
 
   return (
-    <>
-      {ReactDOM.createPortal(
-        <Backdrop />,
-        document.getElementById('overlay')
-      )}
-      {ReactDOM.createPortal(
-        <Overlay>
-          <div className={classes['create-post']}>
-            <div className={classes['create-post__header']}>
-              <div className={classes['create-post__user-info']}>
-                <img
-                  src={props.information.profile}
-                  alt='profile'
-                  className={classes.profile}
-                />
-                <h4 className={classes.username}>
-                  {props.information.fname} {props.information.lname}
-                </h4>
-              </div>
-              <button
-                className={classes.discard}
-                onClick={props.closePostHandler}
-              >
-                discard
-              </button>
-            </div>
-
-            <form method='POST' onSubmit={postFormHandler}>
-              <div className={classes['create-post__content']}>
-                <textarea
-                  type='text'
-                  placeholder='What do you want to talk about?'
-                  ref={caption}
-                ></textarea>
-                <input type='file' name='video' ref={img} />
-                <input type='file' ref={video} />
-              </div>
-
-              <div className={classes['create-post__footer']}>
-                <button type='submit' className={classes['post-button']}>Post</button>
-              </div>
-            </form>
+    <Modal>
+      <div className={classes['create-post']}>
+        <div className={classes['create-post__header']}>
+          <div className={classes['create-post__user-info']}>
+            <img
+              src={props.information.profile}
+              alt='profile'
+              className={classes.profile}
+            />
+            <h4 className={classes.username}>
+              {props.information.fname} {props.information.lname}
+            </h4>
           </div>
-        </Overlay>,
-        document.getElementById('overlay')
-      )}
-    </>
+          <button className={classes.discard} onClick={props.closePostHandler}>
+            discard
+          </button>
+        </div>
+
+        <form method='POST' onSubmit={postFormHandler}>
+          <div className={classes['create-post__content']}>
+            <textarea
+              type='text'
+              placeholder='What do you want to talk about?'
+              ref={caption}
+            ></textarea>
+            <input type='file' name='video' ref={img} />
+            <input type='file' ref={video} />
+          </div>
+
+          <div className={classes['create-post__footer']}>
+            <button type='submit' className={classes['post-button']}>
+              Post
+            </button>
+          </div>
+        </form>
+      </div>
+    </Modal>
   );
 }
 export default AddPost;

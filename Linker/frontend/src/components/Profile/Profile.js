@@ -4,8 +4,6 @@ import AddPost from '../Post/AddPost/AddPost';
 import ProfileInformation from './Information/ProfileInformation';
 import ProfileStory from './Story/ProfileStory';
 import ProfileLinks from './Links/ProfileLinks';
-import Backdrop from '../Backdrop/Backdrop';
-import Overlay from '../Modal/Modal';
 import Container from '../UI/Container/Container';
 import Modal from '../Modal/Modal';
 import classes from './Profile.module.css';
