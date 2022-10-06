@@ -70,6 +70,20 @@ class User {
     }
   }
 
+  async resetPassword(u: Users): Promise<Users> {
+    try {
+      const connection = await database.connect();
+      const sql = 'UPDATE users SET password=$2 WHERE username=$1';
+      const result = await connection.query(sql, [u.username, hash(u.password)]);
+      connection.release();
+      return result.rows[0];
+    } catch (error) {
+      throw new Error(
+        `Could not reset password. Error ${(error as Error).message}`
+      );
+    }
+  }
+
   async deleteUser(id: string): Promise<Users> {
     try {
       const connection = await database.connect();

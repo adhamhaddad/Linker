@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction, Application } from 'express';
-import token from '../middlewares/token';
+import token from '../middlewares/verifyToken';
 
 // Main, Home, Profile
 const main = (_req: Request, res: Response) => {

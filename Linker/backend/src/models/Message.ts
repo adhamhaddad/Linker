@@ -1,15 +1,16 @@
 import database from '../database';
 import Messages from '../types/Messages';
 class Message {
-  async newMessage(m: Messages, user_id: string): Promise<Messages> {
+  async newMessage(m: Messages): Promise<Messages> {
     try {
       const connection = await database.connect();
       const sql =
-        'INSERT INTO messages (timedate, content, user_id) VALUES ($1, $2, $3) RETURNING *';
+        'INSERT INTO messages (timedate, content, user_id, receiver_id) VALUES ($1, $2, $3, $4) RETURNING *';
       const result = await connection.query(sql, [
         new Date(),
         m.content,
-        user_id
+        m.user_id,
+        m.receiver_id
       ]);
       connection.release();
       return result.rows[0];

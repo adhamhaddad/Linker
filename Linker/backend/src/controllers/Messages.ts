@@ -5,7 +5,7 @@ const message = new Message();
 
 const newMessage = async (req: Request, res: Response) => {
   try {
-    const response = await message.newMessage(req.body, req.params.id);
+    const response = await message.newMessage(req.body);
     res.status(201).json({
       status: true,
       data: { ...response },
@@ -67,8 +67,8 @@ const deleteMessage = async (req: Request, res: Response) => {
 };
 
 const messages_controller_routes = (app: Application, logger: NextFunction) => {
-  app.post('/user/:id/message', logger, newMessage);
-  app.get('/user/:id/message', logger, getAllMessages);
+  app.post('/user/message', logger, newMessage);
+  app.get('/user/message', logger, getAllMessages);
   // ! first id for user - second id for message will be deleted or updated
   app.patch('/user/:id/message/:id', logger, updateMessage);
   app.delete('/user/:id/message/:id', logger, deleteMessage);

@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import config from '../config';
 
-const verify = (req: Request, res: Response, next: NextFunction) => {
+const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   try {
     const authorization = req.headers.authorization as string;
     console.log(authorization);
@@ -18,4 +18,4 @@ const verify = (req: Request, res: Response, next: NextFunction) => {
     });
   }
 };
-export default verify;
+export default verifyToken;
