@@ -1,79 +1,51 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import classes from './MenuList.module.css';
 
-function MenuList(props) {
-  const navClickHandler = (e) => {
-    e.preventDefault();
-    props.changeComponent(e.target.title);
-  };
-
+function MenuList() {
   return (
     <ul className={classes['menu-list']}>
       <li>
-        <a
-          className={props.activeComponent === 'HOME' ? classes.active : null}
-          title='Home'
-          onClick={navClickHandler}
-        >
-          <i className='fa-solid fa-home' title='Home'></i>
-          <span title='Home'>home</span>
-        </a>
+        <NavLink title='Home' activeClassName={classes.active} to='/home'>
+          <i className='fa-solid fa-home'></i>
+          <span>home</span>
+        </NavLink>
       </li>
 
       <li>
-        <a
-          className={
-            props.activeComponent === 'PROFILE' ? classes.active : null
-          }
-          title='Profile'
-          onClick={navClickHandler}
-        >
-          <i className='fa-solid fa-user-circle' title='Profile'></i>
-          <span title='Profile'>profile</span>
-        </a>
+        <NavLink to='/profile' activeClassName={classes.active} title='Profile'>
+          <i className='fa-solid fa-user-circle'></i>
+          <span>profile</span>
+        </NavLink>
       </li>
 
       <li>
-        <a
-          className={
-            props.activeComponent === 'MESSAGES' ? classes.active : null
-          }
-          title='Messages'
-          onClick={navClickHandler}
-        >
-          <i className='fa-solid fa-comments' title='Messages'>
+        <NavLink to='/messages' activeClassName={classes.active} title='Messages'>
+          <i className='fa-solid fa-comments'>
             {/* <span title='Messages'>4</span> */}
           </i>
           <span title='Messages'>messages</span>
-        </a>
+        </NavLink>
       </li>
 
       <li>
-        <a
-          className={`${classes.notifications} ${
-            props.activeComponent === 'NOTIFICATIONS' ? classes.active : null
-          }`}
+        <NavLink
           title='Notifications'
-          onClick={navClickHandler}
+          activeClassName={classes.active}
+          to='/notifications'
         >
-          <i className='fa-solid fa-bell' title='Notifications'>
+          <i className='fa-solid fa-bell'>
             {/* <span title='Notifications'>13</span> */}
           </i>
-          <span title='Notifications'>notifications</span>
-        </a>
+          <span>notifications</span>
+        </NavLink>
       </li>
 
       <li>
-        <a
-          className={
-            props.activeComponent === 'SETTINGS' ? classes.active : null
-          }
-          title='Settings'
-          onClick={navClickHandler}
-        >
-          <i className='fa-solid fa-cog' title='Settings'></i>
-          <span title='Settings'>settings</span>
-        </a>
+        <NavLink title='Settings' activeClassName={classes.active} to='/settings'>
+          <i className='fa-solid fa-cog'></i>
+          <span>settings</span>
+        </NavLink>
       </li>
     </ul>
   );

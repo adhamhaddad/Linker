@@ -1,19 +1,16 @@
 import React, { useRef, useContext } from 'react';
 import Authenticate from '../../Authentication/auth';
-import './Styles.css';
+import FormHeader from './FormHeader/FormHeader';
+import classes from './Form.module.css';
+import Container from '../UI/Container/Container';
 
-function Signup(props) {
+function Signup() {
   const ctx = useContext(Authenticate);
   const username = useRef('');
   const email = useRef('');
   const password = useRef('');
   const gender = useRef('');
   const check = useRef('');
-
-  const loginChangeHandler = (e) => {
-    e.preventDefault();
-    props.switchForm(false);
-  };
 
   const signupHandler = (e) => {
     e.preventDefault();
@@ -23,28 +20,13 @@ function Signup(props) {
       password: password.current.value,
       gender: gender.current.value
     });
-    // username.current.value = '';
-    // email.current.value = '';
-    // password.current.value = '';
-    // gender.current.value = '';
-    // check.current.value = '';
   };
 
+  
   return (
-    <div className='container form'>
-      <div className='switch-box'>
-        <a href='/login' onClick={loginChangeHandler}>
-          log in
-        </a>
-        <a
-          href='/register'
-          rel='noreferrer'
-          className={props.register ? 'active' : null}
-        >
-          register
-        </a>
-      </div>
-      <ul className='links'>
+    <Container className={`${classes.container} form`}>
+      <FormHeader />
+      <ul className={classes.links}>
         <li>
           <a href='https://www.facebook.com' rel='noreferrer'>
             <i className='fa-brands fa-facebook fa-1x'></i>
@@ -61,7 +43,7 @@ function Signup(props) {
           </a>
         </li>
       </ul>
-      <form method='POST' autoComplete='on' onSubmit={signupHandler}>
+      <form className={classes.form} method='POST' autoComplete='on' onSubmit={signupHandler}>
         <input
           type='text'
           placeholder='User Name'
@@ -69,8 +51,6 @@ function Signup(props) {
           title='User Name'
           name='username'
           ref={username}
-          // value={formData.username}
-          // onChange={handleChange}
           required
         />
         <input
@@ -80,8 +60,6 @@ function Signup(props) {
           title='Email Address'
           name='email'
           ref={email}
-          // value={formData.email}
-          // onChange={handleChange}
           required
         />
         <input
@@ -92,11 +70,9 @@ function Signup(props) {
           title='New Password'
           name='password'
           ref={password}
-          // value={formData.password}
-          // onChange={handleChange}
           required
         />
-        <div className='radio'>
+        <div className={classes.radio}>
           <label>
             <input
               type='radio'
@@ -105,7 +81,6 @@ function Signup(props) {
               title='Male'
               value='male'
               ref={gender}
-              // onChange={handleChange}
               required
             />
             <span>male</span>
@@ -118,26 +93,18 @@ function Signup(props) {
               title='Female'
               value='female'
               ref={gender}
-              // onChange={handleChange}
               required
             />
             <span>female</span>
           </label>
         </div>
-        <label className='checkbox'>
-          <input
-            type='checkbox'
-            name='check'
-            ref={check}
-            // checked={formData.check}
-            // onChange={handleChange}
-            required
-          />
+        <label className={classes.checkbox}>
+          <input type='checkbox' name='check' ref={check} required />
           <span>I agree to the terms & conditions</span>
         </label>
         <button>sign up</button>
       </form>
-    </div>
+    </Container>
   );
 }
 export default Signup;

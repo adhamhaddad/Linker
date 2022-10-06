@@ -1,13 +1,13 @@
-.container.settings > aside {
+.section {
     height: 100%;
 }
-.container.settings > aside ul {
+.section ul {
     width: 250px;
 }
-.container.settings > aside ul li {
+.section ul li {
     display: block;
 }
-.container.settings > aside ul li a,
+.section ul li a,
 .logout-btn {
     text-transform: capitalize;
     display: block;
@@ -17,32 +17,35 @@
     padding: 0 5px;
     color: var(--base-color-light)
 }
-.container.settings > aside ul li a:hover {background-color: var(--base-background-light); color: var(--base-color-dark)}
-.container.settings > aside ul li a:focus {border-left: 3px solid var(--base-color-light)}
-.container.settings > aside ul li a > i {
+.section ul li a:hover {background-color: var(--base-background-hovered)}
+.section ul li a:focus {border-left: 3px solid var(--base-color-light)}
+.section ul li a > i {
     width: 25px;
 }
-.container.settings > aside button {
+.section button {
     color: var(--base-color-dark)
 }
-.container.settings > .information-section {
+.information-section {
     overflow-y: auto;
 }
 
+.active {
+    background-color: var(--base-background-hovered);
+}
 
 /*** Media Querry ***/
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 890px) {
-    .container.settings > aside ul {
+    .section ul {
         width: 200px;
     }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-    .container.settings > aside {
+    .section {
         width: 100%;
     }
-    .container.settings > aside ul {
+    .section ul {
         width: 100%;
     }
 }

@@ -21,7 +21,7 @@ export function Authentication(props) {
   }, []);
 
   const loginHandler = async (e, p) => {
-    const response = await fetch('http://192.168.1.6:3000/authenticate', {
+    const response = await fetch('http://192.168.1.6:8000/authenticate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: e, password: p })
@@ -34,6 +34,7 @@ export function Authentication(props) {
     localStorage.setItem('user_id', data.data.user_id);
     localStorage.setItem('isLoggedIn', '1');
     localStorage.setItem('currentComponent', 'PROFILE');
+    setUser(data.data)
     setIsLoggedIn(true);
   };
 
@@ -44,7 +45,7 @@ export function Authentication(props) {
   };
 
   const signupHandler = async (user) => {
-    const response = await fetch('http://192.168.1.6:3000/user', {
+    const response = await fetch('http://192.168.1.6:8000/user', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user)

@@ -13,8 +13,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [switchComponent, setSwitchComponent] = useState('');
   const [switchForm, setSwitchForm] = useState(false);
-  
-
+    
   const addNewPost = (e) => {
     console.log('done');
   };

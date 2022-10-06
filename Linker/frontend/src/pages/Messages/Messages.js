@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from '../UI/Container/Container';
+import Container from '../../components/UI/Container/Container';
 import ChatHeader from './ChatHeader/ChatHeader';
 import ChatForm from './ChatForm/ChatForm';
 import Conversation from './Conversation/Conversation';
@@ -40,7 +40,11 @@ function Messages(props) {
       <div className={classes['chat-users']}>
         <ul className={classes['users-list']}>
           <li>
-            <a href='#' className={classes['user-card']} onClick={messageCardHandler}>
+            <a
+              href='#'
+              className={classes['user-card']}
+              onClick={messageCardHandler}
+            >
               <img
                 src='./images/beso.jpg'
                 className={classes.profile}

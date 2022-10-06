@@ -5,7 +5,16 @@
     color: var(--base-color-light);
     background-color: var(--base-background-dark);
 }
-
+.container.form {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    padding: 50px 20px;
+    background-color: var(--base-background-light);
+    filter: drop-shadow(1px 1px 5px var(--base-color-dark));
+}
 .container.header {
     height: 100%;
     display: flex;
@@ -60,7 +69,6 @@
         padding: 5px;
     }
 }
-
 @keyframes loading {
     0% {
         background-color: rgb(200, 200, 200);

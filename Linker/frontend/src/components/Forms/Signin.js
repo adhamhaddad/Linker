@@ -2,9 +2,11 @@ import React, { useState, useContext } from 'react';
 import LoginError from './LoginError/LoginError';
 import Authenticate from '../../Authentication/auth';
 import Button from '../UI/Button/Button';
-import './Styles.css';
+import Container from '../UI/Container/Container';
+import FormHeader from './FormHeader/FormHeader';
+import classes from './Form.module.css';
 
-function Signin(props) {
+function Signin() {
   const ctx = useContext(Authenticate);
   const [enableLogin, setEnableLogin] = useState(false);
   const [validateForm, setValidateForm] = useState({
@@ -39,11 +41,6 @@ function Signin(props) {
     });
   };
 
-  const signupChangeHandler = (e) => {
-    e.preventDefault();
-    props.switchForm(true);
-  };
-
   const submitHandler = (e) => {
     e.preventDefault();
     ctx.onLogin(validateForm.username, validateForm.password);
@@ -55,16 +52,9 @@ function Signin(props) {
   };
 
   return (
-    <div className='container form'>
-      <div className='switch-box'>
-        <a href='/login' className={props.login ? 'active' : null}>
-          <span>log in</span>
-        </a>
-        <a href='/register' onClick={signupChangeHandler}>
-          <span>register</span>
-        </a>
-      </div>
-      <ul className='links'>
+    <Container className={`${classes.container} form`}>
+      <FormHeader />
+      <ul className={classes.links}>
         <li>
           <a href='#' rel='noreferrer'>
             <i className='fa-brands fa-facebook'></i>
@@ -82,6 +72,7 @@ function Signin(props) {
         </li>
       </ul>
       <form
+        className={classes.form}
         method='POST'
         autoComplete='on'
         onSubmit={submitHandler}
@@ -109,7 +100,7 @@ function Signin(props) {
           onChange={passwordHandler}
           required
         />
-        <label className='checkbox'>
+        <label className={classes.checkbox}>
           <input
             type='checkbox'
             id='check'
@@ -119,11 +110,15 @@ function Signin(props) {
           />
           <span>remember me</span>
         </label>
-        <Button className='btn-login' type='submit' disabled={enableLogin}>
+        <Button
+          className={classes['btn-login']}
+          type='submit'
+          disabled={enableLogin}
+        >
           log in
         </Button>
       </form>
-    </div>
+    </Container>
   );
 }
 export default Signin;

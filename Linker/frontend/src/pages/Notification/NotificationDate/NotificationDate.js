@@ -1,5 +1,5 @@
 import React from 'react';
-import { DateDiff, TimeDiff } from '../../Post/Validation/DateControllers';
+import { DateDiff, TimeDiff } from '../../../components/Post/Validation/DateControllers';
 import classes from './NotificationDate.module.css';
 
 function NotificationDate(props) {

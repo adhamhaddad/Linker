@@ -1,10 +1,9 @@
 import React from 'react';
-import ProfileInformation from '../Profile/Information/ProfileInformation';
-import ProfileStory from '../Profile/Story/ProfileStory';
-import ProfileLinks from '../Profile/Links/ProfileLinks';
+import ProfileInformation from '../../pages/Profile/Information/ProfileInformation';
+import ProfileStory from '../../pages/Profile/Story/ProfileStory';
+import ProfileLinks from '../../pages/Profile/Links/ProfileLinks';
 import Container from '../UI/Container/Container';
 import classes from './Loading.module.css';
-
 function Loading() {
   return (
     <Container className='profile loading'>
