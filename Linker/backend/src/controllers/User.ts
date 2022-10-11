@@ -116,7 +116,7 @@ const authenticate = async (req: Request, res: Response) => {
     }
     res.status(200).json({
       status: true,
-      data: { ...response, token },
+      data: { user : {...response}, token },
       message: 'User authenticated successfully!'
     });
   } catch (err) {

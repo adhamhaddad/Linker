@@ -1,14 +1,15 @@
 import express, { Application, NextFunction } from 'express';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import cors from 'cors';
 import logger from './middlewares/logger';
 import user_controller_routes from './controllers/User';
 import information_controller_routes from './controllers/Information';
 import posts_controller_routes from './controllers/Posts';
 import server_controller_routes from './controllers/Server';
-import config from './config';
-import cors from 'cors';
 import messages_controller_routes from './controllers/Messages';
+import friends_controller_routes from './controllers/Friends';
+import config from './config';
 // Express App
 const app: Application = express();
 export const port = config.port || 8080;
@@ -37,6 +38,7 @@ information_controller_routes(app, logger as NextFunction);
 posts_controller_routes(app, logger as NextFunction);
 server_controller_routes(app, logger as NextFunction);
 messages_controller_routes(app, logger as NextFunction);
+friends_controller_routes(app, logger as NextFunction);
 // Express Server
 app.listen(port, () => {
   console.log(`Backend server is listening on ${config.port}`);
