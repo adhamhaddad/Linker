@@ -1,19 +1,19 @@
 import React from 'react';
-import './Information.css';
+import classes from './Information.module.css';
 
 function Information() {
   return (
-    <form action='/information' method='POST' className='settings-form'>
+    <form className={classes['settings-form']}>
       <h3>information</h3>
       <div>
         <span>name</span>
-        <p className='username'>adham ashraf haddad</p>
+        <p className={classes.username}>adham ashraf haddad</p>
         <button type='button'>edit</button>
       </div>
 
       <div>
         <span>gender</span>
-        <p className='gender'>male</p>
+        <p className={classes.gender}>male</p>
         <button>edit</button>
       </div>
       <div>
@@ -64,7 +64,6 @@ function Information() {
         <p>Computers and Information Systems - B.S</p>
         <button>edit</button>
       </div>
-      <button type='submit'>save changes</button>
     </form>
   );
 }

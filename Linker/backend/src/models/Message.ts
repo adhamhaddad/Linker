@@ -21,11 +21,14 @@ class Message {
     }
   }
 
-  async getAllMessages(user_id: string): Promise<Messages[]> {
+  async getAllMessages(
+    user_id: string,
+    receiver_id: string
+  ): Promise<Messages[]> {
     try {
       const connection = await database.connect();
-      const sql = 'SELECT * FROM messages WHERE user_id=$1';
-      const result = await connection.query(sql, [user_id]);
+      const sql = 'SELECT * FROM messages WHERE user_id=$1 AND receiver_id=$2';
+      const result = await connection.query(sql, [user_id, receiver_id]);
       connection.release();
       return result.rows;
     } catch (err) {

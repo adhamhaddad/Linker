@@ -1,0 +1,73 @@
+.left-side {
+    flex-grow: 0;
+}
+
+.profile-picture {
+    display: block;
+    width: 150px;
+    height: 160.15px;
+    background-color: var(--base-background-light);
+    border: 2px solid var(--base-color-light)
+}
+
+.username {
+    display: block;
+    width: 150px;
+    padding: 10px 0;
+}
+
+/* Right Side */
+.right-side {
+    width: 400px;
+    flex-grow: 0.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.spinner {
+    margin: auto;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner div {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    border: 4px solid var(--base-color-light);
+    border-radius: 50%;
+    animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+.spinner div.dark {
+    border-color: var(--base-color-dark) transparent transparent transparent;
+}
+.spinner div.light {
+    border-color: var(--base-color-light) transparent transparent transparent;
+}
+.spinner div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+
+.spinner div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+
+.spinner div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

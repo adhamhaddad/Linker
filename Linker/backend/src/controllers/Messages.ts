@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction, Application } from 'express';
+import verifyToken from '../middlewares/verifyToken';
 import Message from '../models/Message';
 
 const message = new Message();
@@ -21,7 +22,10 @@ const newMessage = async (req: Request, res: Response) => {
 
 const getAllMessages = async (req: Request, res: Response) => {
   try {
-    const response = await message.getAllMessages(req.params.id);
+    const response = await message.getAllMessages(
+      req.query.user_id as string,
+      req.query.receiver_id as string
+    );
     res.status(200).json({
       status: true,
       data: response,
@@ -67,10 +71,10 @@ const deleteMessage = async (req: Request, res: Response) => {
 };
 
 const messages_controller_routes = (app: Application, logger: NextFunction) => {
-  app.post('/user/message', logger, newMessage);
-  app.get('/user/message', logger, getAllMessages);
+  app.post('/user/message', logger, verifyToken, newMessage);
+  app.get('/user/messages', logger, verifyToken, getAllMessages);
   // ! first id for user - second id for message will be deleted or updated
-  app.patch('/user/:id/message/:id', logger, updateMessage);
-  app.delete('/user/:id/message/:id', logger, deleteMessage);
+  app.patch('/user/:id/message/:id', logger, verifyToken, updateMessage);
+  app.delete('/user/:id/message/:id', logger, verifyToken, deleteMessage);
 };
 export default messages_controller_routes;

@@ -1,9 +1,9 @@
 import React from 'react';
-import Modal from '../../../Modal/Modal';
+import Modal from '../../../Modal';
 import './SharesController.css';
 
-function SharesController(props) {
-  const sharesList = props.shares.map((like) => {
+function SharesController({shares, onHideShares}) {
+  const sharesList = shares.map((like) => {
     return (
       <li key={like.username}>
         <a>
@@ -20,7 +20,7 @@ function SharesController(props) {
       <div className='post-shares'>
         <div className='shares-header'>
           <h3>Shares</h3>
-          <button onClick={props.hideShares}>
+          <button onClick={onHideShares}>
             <i className='fa-solid fa-xmark'></i>
           </button>
         </div>

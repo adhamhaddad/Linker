@@ -36,11 +36,14 @@ class Post {
     }
   }
 
-  async getUserPosts(p: Posts): Promise<Posts[]> {
+  async getUserPosts(user_id: string): Promise<Posts[]> {
     try {
       const connection = await database.connect();
-      const sql = 'SELECT * FROM posts WHERE user_id=($1)';
-      const result = await connection.query(sql, [p.user_id]);
+      const sql =
+        `SELECT * FROM posts INNER JOIN information 
+        ON posts.user_id=information.user_id 
+        (SELECT fname, lname, profile FROM information)`;
+      const result = await connection.query(sql);
       connection.release();
       return result.rows;
     } catch (err) {

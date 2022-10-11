@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import classes from './ChatHeader.module.css';
 
-function ChatHeader(props) {
-  const [status, setStatus] = useState(true);
+function ChatHeader({ username, fname, lname }) {
   const [menuState, setMenuState] = useState(false);
   const toggleMenu = () => {
     setMenuState((prev) => (prev ? false : true));
@@ -15,7 +15,9 @@ function ChatHeader(props) {
       </button>
 
       <span className={classes.username}>
-        <a href='mariam'>{props.username}</a>
+        <Link to={`/${username}`}>
+          {fname} {lname}
+        </Link>
       </span>
       <span className={classes.status}></span>
 

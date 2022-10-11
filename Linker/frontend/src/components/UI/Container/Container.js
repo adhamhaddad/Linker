@@ -1,7 +1,11 @@
 import React from 'react';
-import './Container.css';
+import classes from './Container.module.css';
 
 function Container(props) {
-  return <div className={`container ${props.className}`}>{props.children}</div>;
+  return (
+    <div className={`${classes.container} ${classes[props.className]}`}>
+      {props.children}
+    </div>
+  );
 }
 export default Container;

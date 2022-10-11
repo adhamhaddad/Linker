@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import CommentsController from './ReactionsController/Comments/CommentsController';
 import Reactions from './Reactions/Reactions';
 import PostContent from './Content/PostContent';
@@ -8,79 +9,81 @@ import LikesController from './ReactionsController/Likes/LikesController';
 import SharesController from './ReactionsController/Shares/SharesController';
 import './Post.css';
 
-function Post(props) {
+const Post = ({
+  profile,
+  username,
+  fname,
+  lname,
+  timedate,
+  post_id,
+  content,
+  reactions
+}) => {
   const [commentsList, setCommentsList] = useState(false);
   const [likesList, setLikesList] = useState(false);
   const [sharesList, setSharesList] = useState(false);
   const [addComment, setAddComment] = useState('');
-  const [addLike, setAddLike] = useState('');
 
   const showLikesHandler = () => {
-    setLikesList((prev) => {
-      return prev ? false : true;
-    });
+    setLikesList((prev) => !prev);
   };
   const showCommentsHandler = () => {
-    setCommentsList((prev) => {
-      return prev ? false : true;
-    });
+    setCommentsList((prev) => !prev);
   };
   const showSharesHandler = () => {
-    setSharesList((prev) => {
-      return prev ? false : true;
-    });
+    setSharesList((prev) => !prev);
   };
 
   const addCommentsHandler = (e) => {
     setAddComment(e.target.value);
   };
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    props.setReactions(e.target.children);
-    setAddComment('');
-  };
 
   return (
     <div className='posts'>
       <PostHeader
-        profile={props.profile}
-        fname={props.fname}
-        lname={props.lname}
-        timedate={props.timedate}
-        id={props.id}
-        deletePostHandler={props.deletePostHandler}
+        username={username}
+        profile={profile}
+        fname={fname}
+        lname={lname}
+        timedate={timedate}
+        post_id={post_id}
       />
-      <PostContent content={props.content} />
+      <PostContent content={content} />
       <Reactions
-        reactions={props.reactions}
+        reactions={reactions}
         showLikesHandler={showLikesHandler}
         showCommentsHandler={showCommentsHandler}
         showSharesHandler={showSharesHandler}
       />
       <PostBottom
-        onSubmitHandler={onSubmitHandler}
         addComment={addComment}
         addCommentsHandler={addCommentsHandler}
       />
       {likesList && (
-        <LikesController
-          likes={props.reactions.likes}
-          hideLikes={showLikesHandler}
-        />
+        <LikesController likes={reactions.likes} hideLikes={showLikesHandler} />
       )}
       {commentsList && (
         <CommentsController
-          comments={props.reactions.comments}
+          comments={reactions.comments}
           hideComments={showCommentsHandler}
         />
       )}
       {sharesList && (
         <SharesController
-          shares={props.reactions.shares}
+          shares={reactions.shares}
           hideShares={showSharesHandler}
         />
       )}
     </div>
   );
-}
+};
+Post.propTypes = {
+  profile: PropTypes.string.isRequired,
+  fname: PropTypes.string.isRequired,
+  lname: PropTypes.string.isRequired,
+  timedate: PropTypes.string.isRequired,
+  post_id: PropTypes.string.isRequired,
+  content: PropTypes.object.isRequired
+  // reactions: PropTypes.array.isRequired
+};
 export default Post;

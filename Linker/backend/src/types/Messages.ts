@@ -1,8 +1,8 @@
 type Messages = {
   message_id?: string;
-  timedate: Date;
+  timedate: string;
   content: string;
-  receiver_id: string;
+  receiver_id?: string;
   user_id?: string;
 };
 export default Messages;

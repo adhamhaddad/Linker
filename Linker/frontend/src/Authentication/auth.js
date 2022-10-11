@@ -1,77 +1,39 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
 
-const Authenticate = createContext({
+const AuthenticateContext = createContext({
+  accessToken: '',
   isLoggedIn: false,
-  onLogout: () => {},
-  onLogin: (email, password) => {},
-  onSignup: (data) => {},
-  onAuthError: { authError: false, setAuthError: () => {} },
-  user: {}
+  onLogin: (token) => {},
+  onLogout: () => {}
 });
 
-export function Authentication(props) {
-  const [user, setUser] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [authError, setAuthError] = useState(false);
+export const Authentication = (props) => {
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem('accessToken')
+  );
+  const isUserLoggedIn = !!accessToken;
 
-  useEffect(() => {
-    if (localStorage.getItem('isLoggedIn') == '1') {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const loginHandler = async (e, p) => {
-    const response = await fetch('http://192.168.1.6:8000/authenticate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: e, password: p })
-    });
-    const data = await response.json();
-    if (!data.status) {
-      setAuthError(true);
-      return;
-    }
-    localStorage.setItem('user_id', data.data.user_id);
-    localStorage.setItem('isLoggedIn', '1');
-    localStorage.setItem('currentComponent', 'PROFILE');
-    setUser(data.data)
-    setIsLoggedIn(true);
+  const loginHandler = (token) => {
+    setAccessToken(token);
+    
+    localStorage.setItem('accessToken', token);
   };
-
   const logoutHandler = () => {
-    localStorage.removeItem('currentComponent');
-    localStorage.removeItem('isLoggedIn');
-    setIsLoggedIn(false);
+    setAccessToken(null);
+    localStorage.removeItem('accessToken');
   };
-
-  const signupHandler = async (user) => {
-    const response = await fetch('http://192.168.1.6:8000/user', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user)
-    });
-    const data = await response.json();
-
-    if (!data.status) {
-      setAuthError(true);
-      return;
-    }
+  const contextValue = {
+    accessToken: accessToken,
+    isLoggedIn: isUserLoggedIn,
+    onLogin: loginHandler,
+    onLogout: logoutHandler
   };
 
   return (
-    <Authenticate.Provider
-      value={{
-        isLoggedIn: isLoggedIn,
-        onLogin: loginHandler,
-        onLogout: logoutHandler,
-        onSignup: signupHandler,
-        onAuthError: { authError: authError, setAuthError: setAuthError },
-        user: user
-      }}
-    >
+    <AuthenticateContext.Provider value={contextValue}>
       {props.children}
-    </Authenticate.Provider>
+    </AuthenticateContext.Provider>
   );
-}
+};
 
-export default Authenticate;
+export default AuthenticateContext;

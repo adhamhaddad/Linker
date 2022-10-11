@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import Modal from '../../Modal/Modal';
+import Modal from '../../Modal';
 import classes from './AddPost.module.css';
 
 function AddPost(props) {

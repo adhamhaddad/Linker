@@ -35,8 +35,9 @@ class Information {
 
   async getInfo(user_id: string): Promise<Info> {
     try {
+      console.log(user_id);
       const connection = await database.connect();
-      const sql = 'SELECT * FROM information WHERE user_id=($1)';
+      const sql = 'SELECT * FROM information WHERE user_id=$1';
       const result = await connection.query(sql, [user_id]);
       connection.release();
       return result.rows[0];
@@ -47,7 +48,6 @@ class Information {
 
   async updateInfo(user_id: string, i: Info): Promise<Info> {
     try {
-      // profile, fname, lname, phone, birthday, work, relation, education, lives, story, facebook, instagram, whatsapp, linkedin, twitter, telegram
       const connection = await database.connect();
       const sql =
         'UPDATE information SET profile=$2, fname=$3, lname=$4, phone=$5, birthday=$6, work=$7, relation=$8, education=$9, lives=$10, story=$11, facebook=$12, instagram=$13, linkedin=$14, whatsapp=$15, twitter=$16, telegram=$17 WHERE user_id=($1) RETURNING *';
@@ -74,6 +74,23 @@ class Information {
       return result.rows[0];
     } catch (err) {
       throw new Error(`Could not update Info. Error ${(err as Error).message}`);
+    }
+  }
+
+  async updateProfileImage(i: Info): Promise<Info[]> {
+    try {
+      const connection = await database.connect();
+      const sql =
+        'UPDATE information SET profile=$2 WHERE user_id=$1 RETURNING *';
+      const result = await connection.query(sql, [i.user_id, i.profile]);
+      connection.release();
+      return result.rows[0];
+    } catch (error) {
+      throw new Error(
+        `Could not update the profile picture. Error ${
+          (error as Error).message
+        }`
+      );
     }
   }
 

@@ -1,20 +1,27 @@
 import { Request, Response, NextFunction } from 'express';
 
 // Register
-export async function register(
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<unknown> {
-  try {
-    const username = await req.body.username;
-    const email = await req.body.email;
-    const password = await req.body.pass;
-    const check = await req.body.check;
-    const sex = await req.body.sex;
 
-    if (username !== 'adhamhaddad' && password !== 'adham123') {
-      console.log(username, email, password, sex, check);
+export const register = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
+    const gender = req.body.gender;
+    const checked = req.body.checked;
+    // Email Validation
+    if (!(email.trim().length >= 5) && !email.trim().includes('@')) {
+      return res.status(400).json({
+        status: false,
+        message: 'Email is not valid'
+      });
+    }
+    if (
+      username.trim().length >= 5 &&
+      password.trim().length >= 8 &&
+      gender.trim().length > 0
+    ) {
+      console.log(username, email, password, gender, checked);
       next();
     } else {
       return res.send('username already exist!');
@@ -22,25 +29,27 @@ export async function register(
   } catch (err) {
     throw new Error(`Could not register. Error ${(err as Error).message}`);
   }
-}
+};
 // Login
-export async function login(
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<unknown> {
+export const login = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const username = await req.body.username;
-    const password = await req.body.pass;
-    const check = await req.body.check;
+    const username = req.body.username;
+    const password = req.body.pass;
+    const checked = req.body.checked;
 
-    if (username === 'adhamhaddad' && password === 'adham123') {
-      console.log(username, password, check);
+    if (
+      username.trim().length >= 5 &&
+      password.trim().length >= 8 &&
+      checked == true
+    ) {
       next();
     } else {
-      return res.send('username or password wrong.');
+      return res.status(400).json({
+        status: false,
+        message: 'Username or password not valid.'
+      });
     }
   } catch (err) {
-    throw new Error(`Could not register. Error ${(err as Error).message}`);
+    throw new Error(`Could not login. Error ${(err as Error).message}`);
   }
-}
+};

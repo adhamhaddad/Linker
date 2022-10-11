@@ -1,58 +1,69 @@
-import React, { useState, useContext } from 'react';
-import LoginError from './LoginError/LoginError';
-import Authenticate from '../../Authentication/auth';
+import React, { useState, useContext, useRef, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import useHttp from '../../hooks/use-http';
+import AuthenticateContext from '../../Authentication/auth';
 import Button from '../UI/Button/Button';
 import Container from '../UI/Container/Container';
 import FormHeader from './FormHeader/FormHeader';
-import classes from './Form.module.css';
+import classes from '../../css/Form.module.css';
 
-function Signin() {
-  const ctx = useContext(Authenticate);
-  const [enableLogin, setEnableLogin] = useState(false);
-  const [validateForm, setValidateForm] = useState({
-    username: '',
-    password: '',
-    remember: false
-  });
+const Signin = () => {
+  const { isLoading, isError, sendRequest } = useHttp();
+  const authContext = useContext(AuthenticateContext);
+  const usernameRef = useRef();
+  const passwordRef = useRef();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [check, setCheck] = useState('');
+  const [enableLogin, setEnableLogin] = useState(true);
+  const history = useHistory();
 
   const usernameHandler = (e) => {
-    setValidateForm((prev) => {
-      return {
-        ...prev,
-        username: e.target.value
-      };
-    });
+    setUsername(e.target.value);
+    validations();
   };
   const passwordHandler = (e) => {
-    setValidateForm((prev) => {
-      return {
-        ...prev,
-        password: e.target.value
-      };
-    });
+    setPassword(e.target.value);
+    validations();
   };
-
   const checkboxHandler = (e) => {
-    setValidateForm((prev) => {
-      return {
-        ...prev,
-        remember: e.target.value
-      };
-    });
+    setCheck(e.target.value);
   };
 
-  const submitHandler = (e) => {
+  const validations = () => {
+    if (username.trim().length > 5 && password.trim().length >= 8) {
+      setEnableLogin(false);
+    } else {
+      setEnableLogin(true);
+    }
+  };
+  useEffect(() => {
+    validations();
+  }, [usernameHandler, passwordHandler]);
+
+  const authenticationHandler = (data) => {
+    authContext.onLogin(data.token);
+    history.replace('/profile');
+  };
+
+  const submitFormHandler = (e) => {
     e.preventDefault();
-    ctx.onLogin(validateForm.username, validateForm.password);
-    setValidateForm({
-      username: '',
-      password: '',
-      remember: ''
-    });
+    sendRequest(
+      'authenticate',
+      'POST',
+      {
+        username: usernameRef.current.value,
+        password: passwordRef.current.value
+      },
+      authenticationHandler
+    );
+    setUsername('');
+    setPassword('');
+    setCheck('');
   };
 
   return (
-    <Container className={`${classes.container} form`}>
+    <Container className='form'>
       <FormHeader />
       <ul className={classes.links}>
         <li>
@@ -73,19 +84,17 @@ function Signin() {
       </ul>
       <form
         className={classes.form}
-        method='POST'
         autoComplete='on'
-        onSubmit={submitHandler}
+        onSubmit={submitFormHandler}
       >
-        {ctx.onAuthError.authError && <LoginError />}
-
         <input
           type='text'
           placeholder='User Name'
           id='user'
           title='User Name'
           name='username'
-          value={validateForm.username}
+          ref={usernameRef}
+          value={username}
           onChange={usernameHandler}
           required
         />
@@ -96,7 +105,8 @@ function Signin() {
           title='Password'
           name='password'
           minLength='8'
-          value={validateForm.password}
+          ref={passwordRef}
+          value={password}
           onChange={passwordHandler}
           required
         />
@@ -105,20 +115,20 @@ function Signin() {
             type='checkbox'
             id='check'
             name='check'
-            value={validateForm.remember}
+            value={check}
             onChange={checkboxHandler}
           />
           <span>remember me</span>
         </label>
-        <Button
-          className={classes['btn-login']}
-          type='submit'
-          disabled={enableLogin}
-        >
-          log in
-        </Button>
+        {!isLoading && (
+          <Button className='btn-form' disabled={enableLogin}>
+            log in
+          </Button>
+        )}
+        {isLoading && <p className={classes.loading}>Login ...</p>}
+        {isError !== null && <p className={classes.error}>{isError}</p>}
       </form>
     </Container>
   );
-}
+};
 export default Signin;

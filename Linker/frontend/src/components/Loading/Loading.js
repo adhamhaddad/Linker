@@ -4,7 +4,8 @@ import ProfileStory from '../../pages/Profile/Story/ProfileStory';
 import ProfileLinks from '../../pages/Profile/Links/ProfileLinks';
 import Container from '../UI/Container/Container';
 import classes from './Loading.module.css';
-function Loading() {
+
+const LoadingPage = () => {
   return (
     <Container className='profile loading'>
       <div className={classes['left-side']}>
@@ -20,5 +21,5 @@ function Loading() {
       </div>
     </Container>
   );
-}
-export default Loading;
+};
+export default LoadingPage;

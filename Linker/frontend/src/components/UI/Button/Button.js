@@ -1,9 +1,14 @@
 import React from 'react';
-import './Button.css';
+import classes from './Button.module.css';
 
 function Button(props) {
   return (
-    <button className={`button ${props.className}`} disabled={props.disabled} onClick={props.onClick} type={props.type}>
+    <button
+      className={`${classes.button} ${classes[props.className]}`}
+      disabled={props.disabled}
+      onClick={props.onClick}
+      type={props.type}
+    >
       {props.children}
     </button>
   );

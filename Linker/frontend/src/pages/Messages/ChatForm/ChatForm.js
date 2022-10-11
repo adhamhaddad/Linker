@@ -1,20 +1,22 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import classes from './ChatForm.module.css';
-
+const validateMessage = (message) => {
+  if (message.current.value.trim().length === 0) {
+    return <p>please type something</p>;
+  }
+};
 function ChatForm(props) {
-  const newMesasge = useRef();
-
+  const newMesasge = useRef('');
+  const [messageBox, setMessageBox] = useState('');
+ 
+  const messageChangeHandler = (e) => {
+    setMessageBox(e.target.value);
+  };
   const submitFormHandler = (e) => {
     e.preventDefault();
-    if (newMesasge.current.value.trim().length === 0) {
-      return;
-    }
-
-    props.addNewMessageHandler({
-      time: new Date(),
-      message: newMesasge.current.value
-    });
-    newMesasge.current.value = '';
+    validateMessage(newMesasge);
+    props.addNewMessageHandler(newMesasge);
+    setMessageBox('');
   };
 
   return (
@@ -32,6 +34,8 @@ function ChatForm(props) {
         name='message'
         accessKey='off'
         className={classes.input}
+        value={messageBox}
+        onChange={messageChangeHandler}
       />
       <button>
         send

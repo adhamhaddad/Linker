@@ -5,7 +5,6 @@ import config from '../config';
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   try {
     const authorization = req.headers.authorization as string;
-    console.log(authorization);
     const token = authorization.split(' ')[1];
     const decode = jwt.verify(token, config.token as string);
     if (decode) {
@@ -14,7 +13,9 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   } catch (err) {
     res.status(400).json({
       status: false,
-      message: `Access denied, invalid token ${(err as Error).message}`
+      message: (err as Error).message.includes('jwt must be provided')
+        ? 'You must login first.'
+        : (err as Error).message
     });
   }
 };

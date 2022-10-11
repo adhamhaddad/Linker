@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import config from '../config';
 import verifyToken from '../middlewares/verifyToken';
+import searchValidation from '../middlewares/searchHandler';
 
 const user = new User();
 
@@ -105,13 +106,10 @@ const deleteUser = async (req: Request, res: Response) => {
 
 const authenticate = async (req: Request, res: Response) => {
   try {
-    const response = await user.authenticate(
-      req.body.username,
-      req.body.password
-    );
-    const token = jwt.sign({ user: response }, config.token as string);
+    const response = await user.authenticate(req.body);
+    const token = jwt.sign({ response }, config.token as string);
     if (!response) {
-      return res.status(401).json({
+      return res.status(400).json({
         status: false,
         message: 'Username or password incorrect'
       });
@@ -129,6 +127,42 @@ const authenticate = async (req: Request, res: Response) => {
   }
 };
 
+const searchByUsername = async (req: Request, res: Response) => {
+  try {
+    const response = await user.searchByUsername(req.body);
+    res.status(200).json({
+      status: true,
+      data: { ...response },
+      message: 'Users fetched successfully'
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: false,
+      message: (err as Error).message
+    });
+  }
+};
+
+const searchByName = async (req: Request, res: Response) => {
+  console.log(req.body.query.split(' ')[0], req.body.query.split(' ')[1]);
+  try {
+    const response = await user.searchByName(
+      req.body.query.split(' ')[0],
+      req.body.query.split(' ')[1]
+    );
+    res.status(200).json({
+      status: true,
+      data: response,
+      message: 'Users fetched successfully'
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: false,
+      message: (err as Error).message
+    });
+  }
+};
+
 const user_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/user', logger, createUser);
   app.get('/users', logger, verifyToken, getAllUsers);
@@ -137,5 +171,7 @@ const user_controller_routes = (app: Application, logger: NextFunction) => {
   app.patch('/user/reset', logger, verifyToken, resetPassword);
   app.delete('/user', logger, verifyToken, deleteUser);
   app.post('/authenticate', logger, authenticate);
+  // app.post('/search', logger, searchByUsername);
+  app.post('/search', logger, searchByName);
 };
 export default user_controller_routes;

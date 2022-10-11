@@ -1,5 +1,6 @@
 type Info = {
   id?: string;
+  user_id?: string;
   profile: string;
   fname: string;
   lname: string;

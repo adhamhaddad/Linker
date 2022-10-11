@@ -1,30 +1,97 @@
-import React, { useRef, useContext } from 'react';
-import Authenticate from '../../Authentication/auth';
+import React, { useReducer } from 'react';
+import { useHistory } from 'react-router-dom';
+import useHttp from '../../hooks/use-http';
 import FormHeader from './FormHeader/FormHeader';
-import classes from './Form.module.css';
 import Container from '../UI/Container/Container';
+import Button from '../UI/Button/Button';
+import classes from '../../css/Form.module.css';
 
-function Signup() {
-  const ctx = useContext(Authenticate);
-  const username = useRef('');
-  const email = useRef('');
-  const password = useRef('');
-  const gender = useRef('');
-  const check = useRef('');
+const formReducer = (state, action) => {
+  if (action.type === 'TEXT') {
+    return {
+      username: action.val,
+      email: state.email,
+      password: state.password,
+      gender: state.gender,
+      checked: state.checked
+    };
+  }
+  if (action.type === 'EMAIL') {
+    return {
+      username: state.username,
+      email: action.val,
+      password: state.password,
+      gender: state.gender,
+      checked: state.checked
+    };
+  }
+  if (action.type === 'PASSWORD') {
+    return {
+      username: state.username,
+      email: state.email,
+      password: action.val,
+      gender: state.gender,
+      checked: state.checked
+    };
+  }
+  if (action.type === 'RADIO') {
+    return {
+      username: state.username,
+      email: state.email,
+      password: state.password,
+      gender: action.val,
+      checked: state.checked
+    };
+  }
+  if (action.type === 'CHECKBOX') {
+    return {
+      username: state.username,
+      email: state.email,
+      password: state.password,
+      gender: state.gender,
+      checked: action.val
+    };
+  }
+  return {
+    username: '',
+    email: '',
+    password: '',
+    gender: '',
+    checked: false
+  };
+};
 
+const Signup = () => {
+  const { isLoading, isError, sendRequest } = useHttp();
+  const history = useHistory();
+  const [formState, dispatch] = useReducer(formReducer, {
+    username: '',
+    email: '',
+    password: '',
+    gender: '',
+    checked: false
+  });
+
+  const formChangeHandler = (e) => {
+    dispatch({ type: e.target.type.toUpperCase(), val: e.target.value });
+  };
+  const createNewUser = () => {
+    sendRequest('user', 'POST', {
+      username: formState.username,
+      email: formState.email,
+      password: formState.password,
+      gender: formState.gender,
+      checked: formState.checked
+    });
+    isError === null && history.replace('/signin');
+  };
   const signupHandler = (e) => {
     e.preventDefault();
-    ctx.onSignup({
-      username: username.current.value,
-      email: email.current.value,
-      password: password.current.value,
-      gender: gender.current.value
-    });
+    createNewUser();
   };
 
-  
   return (
-    <Container className={`${classes.container} form`}>
+    <Container className='form'>
       <FormHeader />
       <ul className={classes.links}>
         <li>
@@ -43,14 +110,15 @@ function Signup() {
           </a>
         </li>
       </ul>
-      <form className={classes.form} method='POST' autoComplete='on' onSubmit={signupHandler}>
+      <form className={classes.form} autoComplete='on' onSubmit={signupHandler}>
         <input
           type='text'
           placeholder='User Name'
           id='user'
           title='User Name'
           name='username'
-          ref={username}
+          value={formState.username}
+          onChange={formChangeHandler}
           required
         />
         <input
@@ -59,7 +127,8 @@ function Signup() {
           id='email'
           title='Email Address'
           name='email'
-          ref={email}
+          value={formState.email}
+          onChange={formChangeHandler}
           required
         />
         <input
@@ -69,7 +138,8 @@ function Signup() {
           id='pass'
           title='New Password'
           name='password'
-          ref={password}
+          value={formState.password}
+          onChange={formChangeHandler}
           required
         />
         <div className={classes.radio}>
@@ -80,7 +150,7 @@ function Signup() {
               name='gender'
               title='Male'
               value='male'
-              ref={gender}
+              onChange={formChangeHandler}
               required
             />
             <span>male</span>
@@ -92,19 +162,27 @@ function Signup() {
               name='gender'
               title='Female'
               value='female'
-              ref={gender}
+              onChange={formChangeHandler}
               required
             />
             <span>female</span>
           </label>
         </div>
         <label className={classes.checkbox}>
-          <input type='checkbox' name='check' ref={check} required />
+          <input
+            type='checkbox'
+            name='check'
+            value={formState.checked}
+            onChange={formChangeHandler}
+            required
+          />
           <span>I agree to the terms & conditions</span>
         </label>
-        <button>sign up</button>
+        {!isLoading && <Button className='btn-form'>sign up</Button>}
+        {isLoading && <p className={classes.loading}>Creating account ..</p>}
+        {isError !== null && <p className={classes.error}>{isError}</p>}
       </form>
     </Container>
   );
-}
+};
 export default Signup;

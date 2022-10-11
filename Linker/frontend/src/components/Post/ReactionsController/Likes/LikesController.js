@@ -1,9 +1,9 @@
 import React from 'react';
-import Modal from '../../../Modal/Modal';
+import Modal from '../../../Modal';
 import './LikesController.css';
 
-function LikesController(props) {
-  const likesList = props.likes.map((like) => {
+const LikesController = ({ likes, onHideLikes }) => {
+  const likesList = likes.map((like) => {
     return (
       <li key={like.username}>
         <a>
@@ -20,7 +20,7 @@ function LikesController(props) {
       <div className='post-likes'>
         <div className='likes-header'>
           <h3>Likes</h3>
-          <button onClick={props.hideLikes}>
+          <button onClick={onHideLikes}>
             <i className='fa-solid fa-xmark'></i>
           </button>
         </div>
@@ -28,5 +28,5 @@ function LikesController(props) {
       </div>
     </Modal>
   );
-}
+};
 export default LikesController;

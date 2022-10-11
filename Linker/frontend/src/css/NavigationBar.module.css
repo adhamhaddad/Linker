@@ -1,0 +1,144 @@
+.navigation {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-left: auto;
+    font-size: 14px;
+}
+
+.navigation li {
+    height: 100%;
+}
+
+.navigation li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: color .5s ease-in-out;
+    padding: 0 10px;
+    color: #909090;
+}
+
+.navigation li a.active {
+    color: var(--base-color-dark);
+}
+
+.navigation li a svg {
+    width: 30px;
+    height: fit-content;
+    fill: currentColor;
+}
+
+.navigation li a span {
+    height: 100%;
+    line-height: 55px;
+
+}
+
+/*
+.navigation > li > a > span {
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    line-height: 18px;
+    border-radius: 50%;
+    top: -8.5px;
+    left: -9px;
+    position: absolute;
+    font-weight: 800;
+    font-size: 10px;
+    text-shadow: .5px .5px var(--base-background-dark);
+    background-color: #F00;
+    display: block;
+} */
+
+/*** Effects ***/
+.navigation li a:hover {
+    color: var(--base-color-dark);
+    transition: color .5s ease-in-out;
+}
+
+.notifications a:hover i {
+    animation-name: bell;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+
+
+/*** Animations ***/
+@keyframes bell {
+    0% {
+        transform: rotate(5deg)
+    }
+
+    10% {
+        transform: rotate(-5deg)
+    }
+
+    20% {
+        transform: rotate(10deg)
+    }
+
+    30% {
+        transform: rotate(-10deg)
+    }
+
+    40% {
+        transform: rotate(20deg)
+    }
+
+    50% {
+        transform: rotate(-20deg)
+    }
+
+    60% {
+        transform: rotate(30deg)
+    }
+
+    70% {
+        transform: rotate(-30deg)
+    }
+
+    80% {
+        transform: rotate(40deg)
+    }
+
+    90% {
+        transform: rotate(-40deg)
+    }
+
+    100% {
+        transform: rotate(0deg)
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .navigation {
+        width: 100%;
+    }
+
+    .navigation li {
+        flex-grow: 1;
+    }
+
+    .navigation li a {
+        background-position: center;
+        background-size: 35px;
+    }
+
+    .navigation li a.active {
+        border-top: 1px solid var(--base-color-dark)
+    }
+
+    .navigation li a span {
+        display: none;
+    }
+
+    .navigation li a svg {
+        width: 50px;
+    }
+
+}

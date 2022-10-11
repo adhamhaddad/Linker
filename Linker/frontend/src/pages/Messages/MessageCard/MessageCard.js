@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import classes from './MessageCard.module.css';
 
-function MessageCard(props) {
+const MessageCard = ({
+  profile,
+  datetime,
+  lang,
+  username,
+  message,
+  className
+}) => {
   const [messageStatus, setMessageStatus] = useState('seen');
-  const format = (time) => {
-    const timeFormat = new Date(time).toLocaleString('en-US', {
-      timeStyle: 'short'
-    });
-    return timeFormat;
-  };
+  const format = (time) =>
+    new Date(time).toLocaleString('en-US', { timeStyle: 'short' });
 
   // if (messageStatus == 'seen') {
   //   return <img src='./images/mrym.png' alt="" className={messageStatus ? 'active' : 'sent'}/>
@@ -23,15 +26,13 @@ function MessageCard(props) {
   // }
 
   return (
-    <div
-      className={`${classes['message-container']} ${classes[props.className]}`}
-    >
-      <img src={props.profile} alt='Profile' className={classes.profile} />
+    <div className={`${classes['message-container']} ${classes[className]}`}>
+      <div src={profile} title={username} className={classes.profile}></div>
       <div className={classes['message-info']}>
-        <span className={classes['message-content']} lang={props.lang}>
-          {props.message}
+        <span className={classes['message-content']} lang={lang}>
+          {message}
         </span>
-        <span className={classes['message-time']}>{format(props.time)}</span>
+        <span className={classes['message-time']}>{format(datetime)}</span>
       </div>
       <div className={classes['message-status']}>
         <img
@@ -42,5 +43,5 @@ function MessageCard(props) {
       </div>
     </div>
   );
-}
+};
 export default MessageCard;

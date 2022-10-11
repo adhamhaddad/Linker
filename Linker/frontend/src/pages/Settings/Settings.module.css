@@ -1,51 +1,48 @@
-.section {
+.settings {
+    display: flex;
+    flex-direction: row;
     height: 100%;
+    width: 100%;
 }
-.section ul {
+.menu {
     width: 250px;
+    height: 100%;
+    font-size: 14px;
 }
-.section ul li {
-    display: block;
-}
-.section ul li a,
-.logout-btn {
+.menu ul li {display: block}
+.menu ul li a {
     text-transform: capitalize;
     display: block;
     width: 100%;
     height: 50px;
     line-height: 50px;
     padding: 0 5px;
-    color: var(--base-color-light)
+    color: var(--base-color-light);
 }
-.section ul li a:hover {background-color: var(--base-background-hovered)}
-.section ul li a:focus {border-left: 3px solid var(--base-color-light)}
-.section ul li a > i {
+.menu ul li a:hover {background-color: var(--base-background-hovered)}
+.menu ul li a > i {
     width: 25px;
 }
-.section button {
-    color: var(--base-color-dark)
-}
-.information-section {
-    overflow-y: auto;
-}
-
 .active {
     background-color: var(--base-background-hovered);
 }
-
+.right-section {
+    width: 100%;
+    background-color: var(--base-color-light);
+    color: var(--base-color-dark);
+}
 /*** Media Querry ***/
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 890px) {
-    .section ul {
-        width: 200px;
-    }
+
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-    .section {
+    .menu {
         width: 100%;
     }
-    .section ul {
-        width: 100%;
+    .right-section {
+        display: none;
     }
+    
 }

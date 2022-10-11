@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.1.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "5",
@@ -40,5 +40,5 @@
     "eslint-plugin-react": "^7.31.8",
     "prettier": "^2.7.1"
   },
-  "proxy": "http://192.168.1.6:3000"
+  "proxy": "http://192.168.1.6:8000"
 }

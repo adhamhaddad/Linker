@@ -1,0 +1,50 @@
+.image-card {
+    position: relative;
+    border: 2px solid var(--base-color-light);
+    width: fit-content;
+}
+.profile-picture {
+    display: block;
+    width: 150px;
+    height: 160.15px;
+    background-color: var(--base-background-dark);
+    background-image: url('../../../icons/anonymous_user.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+}
+.select {
+    height: 25px;
+    display: block;
+    background-size: 20px;
+    text-align: center;
+}
+.select svg {
+    width: 20px;
+    height: 100%;
+    fill: var(--base-color-light)
+}
+.select-image {
+    width: 150px;
+    background-color: rgb(55, 55, 55);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    transition: .5s background ease-in-out;
+}
+.select-image:hover {
+    background-color: rgb(45, 45, 45);
+    transition: .5s background ease-in-out
+}
+/* .select-image label {
+    display: block;
+    text-align: center;
+    padding: 5px 0;
+    cursor: pointer;
+} */
+.upload-profile {
+    display: none;
+}

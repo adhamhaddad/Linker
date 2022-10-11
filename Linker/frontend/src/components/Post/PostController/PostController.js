@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import useHttp from '../../../hooks/use-http';
 import './PostController.css';
 
-function PostController(props) {
+function PostController({ post_id }) {
+  const { isLoading, isError, sendRequest } = useHttp();
   const [sliders, setSliders] = useState(false);
   const slidersHandler = () => {
-    setSliders((prev) => (prev ? false : true));
+    setSliders((prev) => !prev);
   };
 
   const onDeleteHandler = () => {
-    props.deletePostHandler({ id: props.post_id });
+    sendRequest('user/posts', 'DELETE', { id: post_id });
+  };
+  const onEditPost = () => {
+    sendRequest('user/posts', 'PATCH', { id: post_id });
   };
   return (
     <div className='post-controller'>
@@ -23,7 +28,7 @@ function PostController(props) {
             <i className='fa-solid fa-trash'></i>
             <span>delete post</span>
           </button>
-          <button onClick={props.editPostHandler}>
+          <button onClick={onEditPost}>
             <i className='fa-solid fa-pencil'></i>
             <span>edit post</span>
           </button>
