@@ -16,7 +16,6 @@
     filter: drop-shadow(1px 1px 5px var(--base-color-dark));
 }
 .container.header {
-    height: 100%;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
@@ -45,14 +44,12 @@
 
 .container.settings {
     height: 100%;
-
     /* background-color: green; */
     /* position: relative; */
 }
 .container.chat {
     display: flex;
     flex-direction: row;
-    /* margin: 10px auto; */
     height: 100%;
     background-color: var(--base-background-light);
 }

@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import Authenticate from '../Authentication/auth';
-import Signup from './Forms/Signup';
-import Signin from './Forms/Signin';
+import Authenticate from '../utils/authentication';
+import Signup from '../pages/Signup';
+import Signin from '../pages/Signin';
 import Header from './Header';
 import Main from './Main';
-import Footer from './Footer';
 import '../css/App.css';
 
 const App = () => {
   const authCtx = useContext(Authenticate);
+
   return authCtx.isLoggedIn ? (
     <>
       <Header />
@@ -19,7 +19,6 @@ const App = () => {
       <Route path='/'>
         <Main />
       </Route>
-      <Footer />
     </>
   ) : (
     <>

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import WindowContext from '../store/windowSize';
 import Logo from '../utils/Logo';
 import NavigationBar from './NavigationBar';
-import Container from './UI/Container/Container';
+import Container from './UI/Container';
 import classes from '../css/Header.module.css';
 
 const Header = () => {

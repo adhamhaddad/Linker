@@ -1,61 +1,51 @@
 import React from 'react';
-import './Reactions.css';
+import classes from './Reactions.module.css';
 
-function Reactions(props) {
-  let dott = <></>;
+const Reactions = ({
+  reactions,
+  onShowLikes,
+  onShowComments,
+  onShowShares
+}) => {
   let reactionBar = <></>;
 
   if (
-    props.reactions.comments.length !== 0 &&
-    props.reactions.shares.length !== 0
-  ) {
-    dott = (
-      <span>
-        <i className='fa-solid fa-circle period'></i>
-      </span>
-    );
-  }
-
-  if (
-    props.reactions.likes.length !== 0 &&
-    props.reactions.comments.length !== 0 &&
-    props.reactions.shares.length !== 0
+    reactions.likes.length > 0 ||
+    reactions.comments.length > 0 ||
+    reactions.shares.length > 0
   ) {
     reactionBar = (
-      <div className='post-reactions'>
-        <p onClick={props.showLikesHandler}>
-          {props.reactions.likes.length > 0 && (
-            <>
-              <img src='./images/reactions/like.png' />
-              <span>
-                {
-                  props.reactions.likes[props.reactions.likes.length - 1]
-                    .username
-                }{' '}
-                {props.reactions.likes.length > 1 && (
-                  <span>and {props.reactions.likes.length - 1} others</span>
-                )}
+      <div className={classes['post-reactions']}>
+        {reactions.likes.length > 0 && (
+          <span className={classes['reactions-content']}>
+            <span className={classes['like-icon']}></span>
+            <span onClick={onShowLikes}>
+              {reactions.likes[reactions.likes.length - 1].username}{' '}
+            </span>
+            {reactions.likes.length > 1 && (
+              <span onClick={onShowLikes}>
+                and {reactions.likes.length - 1} others
               </span>
-            </>
-          )}
-        </p>
+            )}
+          </span>
+        )}
 
-        <p>
-          {props.reactions.comments.length > 0 && (
-            <span onClick={props.showCommentsHandler}>
-              {props.reactions.comments.length} comments
+        <span className={classes['reactions-content']}>
+          {reactions.comments.length > 0 && (
+            <span onClick={onShowComments}>
+              {reactions.comments.length} comments
             </span>
           )}
-          {dott}
-          {props.reactions.shares.length > 0 && (
-            <span onClick={props.showSharesHandler}>
-              {props.reactions.shares.length} shares
-            </span>
+          {reactions.comments.length > 0 && reactions.shares.length > 0 && (
+            <span className={classes.dott}></span>
           )}
-        </p>
+          {reactions.shares.length > 0 && (
+            <span onClick={onShowShares}>{reactions.shares.length} shares</span>
+          )}
+        </span>
       </div>
     );
   }
   return reactionBar;
-}
+};
 export default Reactions;

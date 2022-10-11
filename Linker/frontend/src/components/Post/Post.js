@@ -25,6 +25,7 @@ const Post = ({
   const [addComment, setAddComment] = useState('');
 
   const showLikesHandler = () => {
+    console.log('fired')
     setLikesList((prev) => !prev);
   };
   const showCommentsHandler = () => {
@@ -51,27 +52,27 @@ const Post = ({
       <PostContent content={content} />
       <Reactions
         reactions={reactions}
-        showLikesHandler={showLikesHandler}
-        showCommentsHandler={showCommentsHandler}
-        showSharesHandler={showSharesHandler}
+        onShowLikes={showLikesHandler}
+        onShowComments={showCommentsHandler}
+        onShowShares={showSharesHandler}
       />
       <PostBottom
         addComment={addComment}
         addCommentsHandler={addCommentsHandler}
       />
       {likesList && (
-        <LikesController likes={reactions.likes} hideLikes={showLikesHandler} />
+        <LikesController likes={reactions.likes} onHide={showLikesHandler} />
       )}
       {commentsList && (
         <CommentsController
           comments={reactions.comments}
-          hideComments={showCommentsHandler}
+          onHide={showCommentsHandler}
         />
       )}
       {sharesList && (
         <SharesController
           shares={reactions.shares}
-          hideShares={showSharesHandler}
+          onHide={showSharesHandler}
         />
       )}
     </div>

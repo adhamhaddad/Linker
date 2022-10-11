@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useHttp from '../hooks/use-http';
-import classes from '../css/Searchbar.module.css';
 import SpinnerLoading from './Loading/Spinner';
 import Error from './Error';
+import classes from '../css/Searchbar.module.css';
 
 const SearchBar = () => {
   const { isError, isLoading, sendRequest } = useHttp();
@@ -40,25 +40,23 @@ const SearchBar = () => {
   }, [query]);
 
   return (
-    <>
-      <div className={classes.searchbox}>
-        <div className={classes['search-bar']}>
-          <input
-            type='search'
-            placeholder='Type to Search ..'
-            value={query}
-            onChange={queryChangeHandler}
-          />
-        </div>
-        {usersList.length > 0 && (
-          <ul className={classes.usersList}>
-            {isError !== null && <Error />}
-            {isLoading && <SpinnerLoading />}
-            {usersList.length > 0 && usersList}
-          </ul>
-        )}
+    <div className={classes.searchbox}>
+      <div className={classes['search-bar']}>
+        <input
+          type='search'
+          placeholder='Type to Search ..'
+          value={query}
+          onChange={queryChangeHandler}
+        />
       </div>
-    </>
+      {usersList.length > 0 && (
+        <ul className={classes.usersList}>
+          {isError !== null && <Error />}
+          {isLoading && <SpinnerLoading />}
+          {usersList.length > 0 && usersList}
+        </ul>
+      )}
+    </div>
   );
 };
 export default SearchBar;

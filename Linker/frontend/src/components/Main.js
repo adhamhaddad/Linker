@@ -2,12 +2,12 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
-import Messages from '../pages/Messages/Messages';
+import Messages from '../pages/Messages';
 import Notification from '../pages/Notification/Notification';
-import Settings from '../pages/Settings/Settings';
+import Settings from '../pages/Settings';
 import classes from '../css/Main.module.css';
 
-function Main() {
+const Main = () => {
   return (
     <main className={classes.main}>
       <Route path='/home'>

@@ -1,31 +1,19 @@
 .footer {
-    height: 25px;
     line-height: 25px;
     bottom: 0;
     left: 0;
     right: 0;
     position: fixed;
     z-index: 1200;
-    font-size: 13px;
+    font-size: 12px;
     text-align: center;
     text-transform: capitalize;
     color: var(--base-color-light);
     background-color: var(--base-background-dark);
 }
+
 .footer small a {
     color: var(--base-color-light);
     display: inline-block;
     margin: 0 5px;
-}
-
-/*** Media Querry ***/
-/* 550px Screens */
-@media screen and (max-width: 550px) {.footer {font-size: 10px}}
-/* 345px Screens */
-@media screen and (max-width: 345px) {.footer {display: none}}
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (max-width: 600px) {
-    .footer {
-        display: none;
-    }
 }

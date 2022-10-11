@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import NotificationCard from './NotificationCard/NotificationCard';
-import Container from '../../components/UI/Container/Container';
+import Container from '../../components/UI/Container';
 import classes from './Notification.module.css';
 
 function Notifications() {

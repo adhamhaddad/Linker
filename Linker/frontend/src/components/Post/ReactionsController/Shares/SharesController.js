@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from '../../../Modal';
 import './SharesController.css';
 
-function SharesController({shares, onHideShares}) {
+function SharesController({shares, onHide}) {
   const sharesList = shares.map((like) => {
     return (
       <li key={like.username}>
@@ -20,7 +20,7 @@ function SharesController({shares, onHideShares}) {
       <div className='post-shares'>
         <div className='shares-header'>
           <h3>Shares</h3>
-          <button onClick={onHideShares}>
+          <button onClick={onHide}>
             <i className='fa-solid fa-xmark'></i>
           </button>
         </div>

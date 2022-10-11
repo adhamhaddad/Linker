@@ -1,7 +1,7 @@
 import React from 'react';
-import classes from './Container.module.css';
+import classes from '../../css/Container.module.css';
 
-function Container(props) {
+const Container = (props) => {
   return (
     <div className={`${classes.container} ${classes[props.className]}`}>
       {props.children}

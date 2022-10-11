@@ -1,5 +1,5 @@
 import { useContext, useState, useCallback } from 'react';
-import AuthenticateContext from '../Authentication/auth';
+import AuthenticateContext from '../utils/authentication';
 
 const useHttp = () => {
   const [isError, setIsError] = useState(null);

@@ -1,19 +1,9 @@
 .navbar {
-    /* height: 60px; */
-    display: flex;
-    top: 0;
-    right: 0;
-    left: 0;
-    position: fixed;
-    z-index: 1200;
+    height: 50px;
 }
-/*** Media Querry ***/
-/* Small devices (portrait tablets and large phones, 600px and up) */
+
 @media only screen and (max-width: 600px) {
     .navbar {
-        top: auto;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        border-top: 1px solid #888;
     }
 }

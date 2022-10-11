@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, NavLink } from 'react-router-dom';
-import Container from '../../components/UI/Container/Container';
-import Information from './Information/Information';
-import Account from './Account/Account';
-import classes from './Settings.module.css';
+import Container from '../components/UI/Container';
+import Information from './Settings/Information/Information';
+import Account from './Settings/Account/Account';
+import classes from '../css/Settings.module.css';
 
 function Settings() {
   return (

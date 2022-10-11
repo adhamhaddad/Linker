@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import classes from './MessageCard.module.css';
 
 const MessageCard = ({
-  profile,
-  datetime,
-  lang,
   username,
+  profile,
   message,
+  timedate,
+  lang,
   className
 }) => {
   const [messageStatus, setMessageStatus] = useState('seen');
@@ -32,15 +32,9 @@ const MessageCard = ({
         <span className={classes['message-content']} lang={lang}>
           {message}
         </span>
-        <span className={classes['message-time']}>{format(datetime)}</span>
+        <span className={classes['message-time']}>{format(timedate)}</span>
       </div>
-      <div className={classes['message-status']}>
-        <img
-          src='./images/mrym.png'
-          alt=''
-          className={messageStatus ? 'active' : 'sent'}
-        />
-      </div>
+      <div className={classes['message-status']}></div>
     </div>
   );
 };

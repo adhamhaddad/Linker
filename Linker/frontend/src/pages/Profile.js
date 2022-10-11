@@ -5,7 +5,7 @@ import AddPost from '../components/Post/AddPost/AddPost';
 import ProfileInformation from '../utils/Profile/Information/ProfileInformation';
 import ProfileStory from '../utils/Profile/Story/ProfileStory';
 import ProfileLinks from '../utils/Profile/Links/ProfileLinks';
-import Container from '../components/UI/Container/Container';
+import Container from '../components/UI/Container';
 import ProfilePicture from '../utils/Profile/ProfilePicture/ProfilePicture';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';

@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import useHttp from '../hooks/use-http';
 import WindowContext from '../store/windowSize';
-import TopNavbar from '../components/TopNavbar';
-import Container from '../components/UI/Container/Container';
+import Container from '../components/UI/Container';
 import Error from '../components/Error';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Post from '../components/Post/Post';
 import classes from '../css/Home.module.css';
 
 const Home = () => {
-  const windowCtx = useContext(WindowContext);
   const { isLoading, isError, sendRequest } = useHttp();
   const [allPosts, setAllPosts] = useState([]);
   const [reactions, setReactions] = useState({
@@ -85,7 +83,6 @@ const Home = () => {
       .sort((a, b) => b.key - a.key);
   return (
     <>
-      {windowCtx.windowSize <= '600' && <TopNavbar />}
       <Container>{posts.length > 0 && posts}</Container>
       {isLoading && <SpinnerLoading color='dark' />}
       {isError !== null && <Error message={isError} />}

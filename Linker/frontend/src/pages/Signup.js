@@ -1,10 +1,10 @@
 import React, { useReducer } from 'react';
 import { useHistory } from 'react-router-dom';
-import useHttp from '../../hooks/use-http';
-import FormHeader from './FormHeader/FormHeader';
-import Container from '../UI/Container/Container';
-import Button from '../UI/Button/Button';
-import classes from '../../css/Form.module.css';
+import useHttp from '../hooks/use-http';
+import FormHeader from '../components/FormHeader/FormHeader';
+import Container from '../components/UI/Container';
+import Button from '../components/UI/Button/Button';
+import classes from '../css/Form.module.css';
 
 const formReducer = (state, action) => {
   if (action.type === 'TEXT') {

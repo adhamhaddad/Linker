@@ -1,11 +1,11 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import useHttp from '../../hooks/use-http';
-import AuthenticateContext from '../../Authentication/auth';
-import Button from '../UI/Button/Button';
-import Container from '../UI/Container/Container';
-import FormHeader from './FormHeader/FormHeader';
-import classes from '../../css/Form.module.css';
+import useHttp from '../hooks/use-http';
+import AuthenticateContext from '../utils/authentication';
+import Button from '../components/UI/Button/Button';
+import Container from '../components/UI/Container';
+import FormHeader from '../components/FormHeader/FormHeader';
+import classes from '../css/Form.module.css';
 
 const Signin = () => {
   const { isLoading, isError, sendRequest } = useHttp();
@@ -42,7 +42,7 @@ const Signin = () => {
   }, [usernameHandler, passwordHandler]);
 
   const authenticationHandler = (data) => {
-    authContext.onLogin(data.token);
+    authContext.onLogin(data.token, data.user);
     history.replace('/profile');
   };
 

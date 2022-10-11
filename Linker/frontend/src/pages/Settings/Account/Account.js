@@ -1,5 +1,5 @@
 import React, { useReducer, useContext } from 'react';
-import Authenticate from '../../../Authentication/auth';
+import Authenticate from '../../../utils/authentication';
 import Button from '../../../components/UI/Button/Button';
 import classes from './Account.module.css';
 
