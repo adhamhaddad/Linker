@@ -42,8 +42,6 @@ const getAllUsers = async (_req: Request, res: Response) => {
 
 const getUser = async (req: Request, res: Response) => {
   try {
-    console.log(await req.body.id);
-    console.log(await req.body);
     const response = await user.getUser(req.body.id);
     res.status(200).json({
       status: true,
@@ -116,7 +114,7 @@ const authenticate = async (req: Request, res: Response) => {
     }
     res.status(200).json({
       status: true,
-      data: { user : {...response}, token },
+      data: { user: { ...response }, token },
       message: 'User authenticated successfully!'
     });
   } catch (err) {
@@ -144,7 +142,6 @@ const searchByUsername = async (req: Request, res: Response) => {
 };
 
 const searchByName = async (req: Request, res: Response) => {
-  console.log(req.body.query.split(' ')[0], req.body.query.split(' ')[1]);
   try {
     const response = await user.searchByName(
       req.body.query.split(' ')[0],

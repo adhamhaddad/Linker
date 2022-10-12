@@ -22,7 +22,7 @@ const createPost = async (req: Request, res: Response) => {
 
 const getAllPosts = async (req: Request, res: Response) => {
   try {
-    const response = await post.getAllPosts();
+    const response = await post.getAllPosts(req.query.user_id as string);
     res.status(200).json({
       status: true,
       data: response,
@@ -41,7 +41,7 @@ const getUserPosts = async (req: Request, res: Response) => {
     const response = await post.getUserPosts(req.query.user_id as string);
     res.status(200).json({
       status: true,
-      data: { response },
+      data: response,
       message: 'Posts retrieved successfully!'
     });
   } catch (err) {

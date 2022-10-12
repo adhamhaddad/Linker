@@ -22,11 +22,12 @@ class Post {
     }
   }
 
-  async getAllPosts(): Promise<Posts[]> {
+  async getAllPosts(user_id: string): Promise<Posts[]> {
     try {
       const connection = await database.connect();
-      const sql = 'SELECT * FROM posts';
-      const result = await connection.query(sql);
+      const sql =
+        'SELECT DISTINCT u.user_id, u.username, i.fname, i.lname, i.profile, p.* FROM posts p, information i, friends f, users u WHERE p.user_id=f.friend_id AND f.friend_id=i.user_id AND i.user_id=u.user_id AND f.user_id=$1 OR p.user_id=f.user_id AND f.user_id=i.user_id AND i.user_id=u.user_id AND f.friend_id=$1';
+      const result = await connection.query(sql, [user_id]);
       connection.release();
       return result.rows;
     } catch (err) {
@@ -40,10 +41,8 @@ class Post {
     try {
       const connection = await database.connect();
       const sql =
-        `SELECT * FROM posts INNER JOIN information 
-        ON posts.user_id=information.user_id 
-        (SELECT fname, lname, profile FROM information)`;
-      const result = await connection.query(sql);
+        'SELECT DISTINCT u.user_id, u.username, i.fname, i.lname, i.profile, p.* FROM posts p, information i, users u WHERE p.user_id=i.user_id AND i.user_id=u.user_id AND p.user_id=$1';
+      const result = await connection.query(sql, [user_id]);
       connection.release();
       return result.rows;
     } catch (err) {

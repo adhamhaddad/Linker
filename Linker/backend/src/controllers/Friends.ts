@@ -25,7 +25,7 @@ const getAllFriends = async (req: Request, res: Response) => {
     const response = await friend.getAllFriends(req.query.user_id as string);
     res.status(200).json({
       status: true,
-      data: { ...response },
+      data: response,
       message: 'Retrieved the all Friends successfully!'
     });
   } catch (err) {

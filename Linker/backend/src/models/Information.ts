@@ -35,7 +35,6 @@ class Information {
 
   async getInfo(user_id: string): Promise<Info> {
     try {
-      console.log(user_id);
       const connection = await database.connect();
       const sql = 'SELECT * FROM information WHERE user_id=$1';
       const result = await connection.query(sql, [user_id]);
