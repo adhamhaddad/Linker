@@ -22,8 +22,24 @@
     color: #909090;
 }
 
+.profile {
+    background-image: url('../icons/test.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    margin-right: 4px;
+    opacity: 0.65;
+}
+
 .navigation li a.active {
     color: var(--base-color-dark);
+}
+
+.navigation li a.active .profile {
+    opacity: 1
 }
 
 .navigation li a svg {
@@ -35,9 +51,8 @@
 .navigation li a span {
     height: 100%;
     line-height: 55px;
-
+    font-size: 15px;
 }
-
 /*
 .navigation > li > a > span {
     width: 18px;
@@ -129,16 +144,18 @@
         background-size: 35px;
     }
 
-    .navigation li a.active {
-        border-top: 1px solid var(--base-color-dark)
-    }
-
     .navigation li a span {
         display: none;
     }
 
     .navigation li a svg {
         width: 50px;
+    }
+
+    .profile {
+        width: 33px;
+        height: 33px;
+        margin-right: 0;
     }
 
 }

@@ -3,19 +3,20 @@ import PropTypes from 'prop-types';
 import CommentsController from './ReactionsController/Comments/CommentsController';
 import Reactions from './Reactions/Reactions';
 import PostContent from './Content/PostContent';
-import PostHeader from './Header/PostHeader';
+import PostHeader from './PostHeader';
 import PostBottom from './Bottom/PostBottom';
 import LikesController from './ReactionsController/Likes/LikesController';
 import SharesController from './ReactionsController/Shares/SharesController';
-import './Post.css';
+import classes from '../../css/Post.module.css';
 
 const Post = ({
-  profile,
+  user_id,
   username,
   fname,
   lname,
-  timedate,
+  profile,
   post_id,
+  timedate,
   content,
   reactions
 }) => {
@@ -25,7 +26,6 @@ const Post = ({
   const [addComment, setAddComment] = useState('');
 
   const showLikesHandler = () => {
-    console.log('fired')
     setLikesList((prev) => !prev);
   };
   const showCommentsHandler = () => {
@@ -40,14 +40,15 @@ const Post = ({
   };
 
   return (
-    <div className='posts'>
+    <div className={classes.posts}>
       <PostHeader
+        user_id={user_id}
         username={username}
-        profile={profile}
         fname={fname}
         lname={lname}
-        timedate={timedate}
+        profile={profile}
         post_id={post_id}
+        timedate={timedate}
       />
       <PostContent content={content} />
       <Reactions
@@ -79,11 +80,13 @@ const Post = ({
   );
 };
 Post.propTypes = {
-  profile: PropTypes.string.isRequired,
+  user_id: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
   fname: PropTypes.string.isRequired,
   lname: PropTypes.string.isRequired,
-  timedate: PropTypes.string.isRequired,
+  profile: PropTypes.string.isRequired,
   post_id: PropTypes.string.isRequired,
+  timedate: PropTypes.string.isRequired,
   content: PropTypes.object.isRequired
   // reactions: PropTypes.array.isRequired
 };

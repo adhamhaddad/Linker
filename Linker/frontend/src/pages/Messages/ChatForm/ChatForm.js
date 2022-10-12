@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import useHttp from '../../../hooks/use-http';
 import classes from './ChatForm.module.css';
 
 const validateMessage = (message) => {
@@ -8,28 +7,20 @@ const validateMessage = (message) => {
   }
 };
 
-function ChatForm({ onAddNewMessage, user_id, receiver_id }) {
-  const { isLoading, isError, sendRequest } = useHttp();
-  const newMesasge = useRef();
+function ChatForm({ onAddNewMessage }) {
+  const newMesasgeRef = useRef();
   const [messageBox, setMessageBox] = useState('');
 
-  const messageChangeHandler = (e) => {
+  const onMessageChange = (e) => {
     setMessageBox(e.target.value);
   };
   const submitFormHandler = (e) => {
     e.preventDefault();
-    validateMessage(newMesasge);
-    onAddNewMessage(newMesasge);
+    validateMessage(newMesasgeRef);
+    onAddNewMessage(newMesasgeRef);
     setMessageBox('');
   };
 
-  const addNewMessageHandler = (newMesasge) => {
-    sendRequest('http://192.168.1.6:8000/user/message', 'POST', {
-      user_id: user_id,
-      receiver_id: receiver_id,
-      content: newMesasge.current.value
-    });
-  };
   return (
     <form
       autoComplete='off'
@@ -39,18 +30,17 @@ function ChatForm({ onAddNewMessage, user_id, receiver_id }) {
       className={classes.form}
     >
       <textarea
-        ref={newMesasge}
+        ref={newMesasgeRef}
         type='text'
         placeholder='Type a Message ..'
         name='message'
         accessKey='off'
         className={classes.input}
         value={messageBox}
-        onChange={messageChangeHandler}
+        onChange={onMessageChange}
       />
       <button>
         send
-        <i className='fa fa-paper-plane'></i>
       </button>
     </form>
   );

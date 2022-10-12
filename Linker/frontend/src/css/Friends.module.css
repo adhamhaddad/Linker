@@ -1,0 +1,75 @@
+.friends {
+    width: 250px;
+    /* min-height: 200px; */
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--base-color-light);
+    padding: 5px;
+}
+
+.friends h3 {
+    font-size: 16px;
+    padding: 0 0 10px;
+    font-weight: normal;
+}
+
+.friends p {
+    font-size: 13px;
+    padding: 10px;
+}
+
+.friends-list {
+    padding: 5px;
+    overflow-y: auto;
+    height: 100%;
+    background-color: var(--base-color-light);
+    display: flex;
+    flex-direction: column;
+}
+
+.friends-list li a {
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+
+
+.profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-image: url('../icons/anonymous_user.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
+.username {
+    margin-right: auto;
+    font-size: 13px;
+    color: var(--base-color-dark);
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.delete {
+    width: 15px;
+    height: 15px;
+    background-image: url('../icons/delete-user.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: transparent;
+}
+
+.min {
+    flex-direction: row;
+}
+
+.min>div,
+.min>button {
+    display: none;
+}

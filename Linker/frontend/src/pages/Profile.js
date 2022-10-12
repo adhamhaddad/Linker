@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import useHttp from '../hooks/use-http';
+import WindowContext from '../store/windowSize';
+import AuthenticateContext from '../utils/authentication';
 import Post from '../components/Post/Post';
 import AddPost from '../components/Post/AddPost/AddPost';
 import ProfileInformation from '../utils/Profile/Information/ProfileInformation';
@@ -9,9 +11,12 @@ import Container from '../components/UI/Container';
 import ProfilePicture from '../utils/Profile/ProfilePicture/ProfilePicture';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';
+import Friends from './Friends';
 import classes from '../css/Profile.module.css';
 
-const Profile = ({ profile, fname, lname, user_id }) => {
+const Profile = () => {
+  const windowCtx = useContext(WindowContext);
+  const authCtx = useContext(AuthenticateContext);
   const { isLoading, isError, sendRequest } = useHttp();
   const [information, setInformation] = useState({});
   const [userPosts, setUserPosts] = useState([]);
@@ -52,7 +57,7 @@ const Profile = ({ profile, fname, lname, user_id }) => {
 
   const getInformation = () => {
     sendRequest(
-      `user/information?user_id=46ae6640-2ca1-48b5-a5c6-a34cb36cc33f`,
+      `user/information?user_id=${authCtx.user.user_id}`,
       'GET',
       {},
       setInformation
@@ -62,30 +67,25 @@ const Profile = ({ profile, fname, lname, user_id }) => {
   const transformPost = (data) => {
     const transformedData = data.map((post) => {
       return {
-        post_id: post.post_id,
-        profile: post.profile,
-        fname: post.fname,
-        lname: post.lname,
-        timedate: post.timedate,
+        ...post,
         content: {
           caption: post.caption,
           img: post.img,
           video: post.video
-        },
-        user_id: post.user_id
+        }
       };
     });
     setUserPosts(transformedData);
   };
 
   const getUserPosts = () => {
-    sendRequest('user/posts', 'GET', {}, transformPost);
+    sendRequest(
+      `user/posts?user_id=${authCtx.user.user_id}`,
+      'GET',
+      {},
+      transformPost
+    );
   };
-  /*
-  const getUserPosts = () => {
-    sendRequest(`user/posts?id=${authCtx.user_id}`, 'GET', {}, transformPost);
-  };
-  */
 
   const posts =
     userPosts.length &&
@@ -93,14 +93,15 @@ const Profile = ({ profile, fname, lname, user_id }) => {
       .map((post) => {
         return (
           <Post
-            fname={fname}
-            lname={lname}
-            profile={profile}
-            reactions={reactions}
+            user_id={post.user_id}
+            username={post.username}
+            fname={post.fname}
+            lname={post.lname}
+            profile={post.profile}
+            post_id={post.post_id}
             timedate={post.timedate}
             content={post.content}
-            user_id={user_id}
-            post_id={post.id}
+            reactions={reactions}
             key={new Date(post.timedate).getTime()}
           />
         );
@@ -125,18 +126,18 @@ const Profile = ({ profile, fname, lname, user_id }) => {
         </div>
         <div className={classes['right-side']}>
           <ProfileStory story={information.story} />
-          <ProfileLinks links={information} />
+          {/* <ProfileLinks links={information} /> */}
         </div>
+        <Friends />
       </Container>
 
-      <Container className='profile-feed'>
+      <Container className='posts'>
         <button
           className={classes['create-post-btn']}
           onClick={createPostHandler}
         >
           Create a new post
         </button>
-
         {newPost && (
           <AddPost
             information={information}

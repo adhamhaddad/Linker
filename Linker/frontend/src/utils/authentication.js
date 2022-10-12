@@ -20,7 +20,6 @@ export const Authentication = (props) => {
 
   const loginHandler = (token, user) => {
     setAccessToken(token);
-    console.log(token)
     setUser(user);
     localStorage.setItem('user_id', user.user_id);
     localStorage.setItem('username', user.username);

@@ -1,9 +1,14 @@
-import React from 'react';
-import classes from './Information.module.css';
+import React, { useContext } from 'react';
+import WindowContext from '../store/windowSize';
+import BackButton from '../components/UI/BackButton';
+import classes from '../css/Information.module.css';
 
-function Information() {
+const Information = () => {
+  const windowCtx = useContext(WindowContext);
+
   return (
     <form className={classes['settings-form']}>
+      {windowCtx.windowSize <= 600 && <BackButton path='/settings' />}
       <h3>information</h3>
       <div>
         <span>name</span>
@@ -66,5 +71,5 @@ function Information() {
       </div>
     </form>
   );
-}
+};
 export default Information;

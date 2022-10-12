@@ -1,0 +1,21 @@
+.back-button {
+    display: block;
+    width: 80px;
+    height: 30px;
+    background-color: var(--base-color-light);
+    background-image: url('../icons/back.svg');
+    background-position: 10px;
+    background-repeat: no-repeat;
+    background-size: 12px;
+    padding: 0 0 0 30px;
+    margin-right: 5px;
+    line-height: 30px;
+    font-size: 14px;
+    color: var(--base-color-dark);
+    border: 1px solid var(--base-color-dark);
+    border-radius: 2px;
+}
+.back-button:hover {
+    background-color: var(--base-color-light);
+    border: none;
+}

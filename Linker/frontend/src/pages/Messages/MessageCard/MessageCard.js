@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import classes from './MessageCard.module.css';
 
-const MessageCard = ({
-  username,
-  profile,
-  message,
-  timedate,
-  lang,
-  className
-}) => {
+const MessageCard = ({ profile, message, timedate, lang, className }) => {
   const [messageStatus, setMessageStatus] = useState('seen');
   const format = (time) =>
     new Date(time).toLocaleString('en-US', { timeStyle: 'short' });
@@ -27,7 +20,7 @@ const MessageCard = ({
 
   return (
     <div className={`${classes['message-container']} ${classes[className]}`}>
-      <div src={profile} title={username} className={classes.profile}></div>
+      <div className={classes['message-profile']}></div>
       <div className={classes['message-info']}>
         <span className={classes['message-content']} lang={lang}>
           {message}

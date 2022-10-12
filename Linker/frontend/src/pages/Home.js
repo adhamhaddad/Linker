@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import useHttp from '../hooks/use-http';
-import WindowContext from '../store/windowSize';
+import AuthenticateContext from '../utils/authentication';
 import Container from '../components/UI/Container';
 import Error from '../components/Error';
 import SpinnerLoading from '../components/Loading/Spinner';
@@ -8,6 +8,7 @@ import Post from '../components/Post/Post';
 import classes from '../css/Home.module.css';
 
 const Home = () => {
+  const authCtx = useContext(AuthenticateContext);
   const { isLoading, isError, sendRequest } = useHttp();
   const [allPosts, setAllPosts] = useState([]);
   const [reactions, setReactions] = useState({
@@ -42,25 +43,24 @@ const Home = () => {
   const transformPost = (data) => {
     const transformedData = data.map((post) => {
       return {
-        post_id: post.post_id,
-        profile: '',
-        username: 'adhamhaddad',
-        fname: '',
-        lname: '',
-        timedate: post.timedate,
+        ...post,
         content: {
           caption: post.caption,
           img: post.img,
           video: post.video
-        },
-        user_id: post.user_id
+        }
       };
     });
     setAllPosts(transformedData);
   };
 
   useEffect(() => {
-    sendRequest('users/posts', 'GET', {}, transformPost);
+    sendRequest(
+      `users/posts?user_id=${authCtx.user.user_id}`,
+      'GET',
+      {},
+      transformPost
+    );
   }, []);
 
   const posts =
@@ -68,12 +68,12 @@ const Home = () => {
     allPosts
       .map((post) => (
         <Post
-          username={post.username}
-          post_id={post.post_id}
           user_id={post.user_id}
-          profile={post.profile}
+          username={post.username}
           fname={post.fname}
           lname={post.lname}
+          profile={post.profile}
+          post_id={post.post_id}
           timedate={post.timedate}
           content={post.content}
           reactions={reactions}
@@ -83,7 +83,7 @@ const Home = () => {
       .sort((a, b) => b.key - a.key);
   return (
     <>
-      <Container>{posts.length > 0 && posts}</Container>
+      <Container className='posts'>{posts.length > 0 && posts}</Container>
       {isLoading && <SpinnerLoading color='dark' />}
       {isError !== null && <Error message={isError} />}
     </>

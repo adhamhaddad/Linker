@@ -1,7 +1,9 @@
 import React, { useReducer, useContext } from 'react';
-import Authenticate from '../../../utils/authentication';
-import Button from '../../../components/UI/Button/Button';
-import classes from './Account.module.css';
+import WindowContext from '../store/windowSize';
+import Authenticate from '../utils/authentication';
+import Button from '../components/UI/Button/Button';
+import BackButton from '../components/UI/BackButton';
+import classes from '../css/Account.module.css';
 
 const accountFormReducer = (state, action) => {
   if (action.type === 'TEXT') {
@@ -45,6 +47,7 @@ const accountFormReducer = (state, action) => {
   };
 };
 const Account = (props) => {
+  const windowCtx = useContext(WindowContext);
   const authCtx = useContext(Authenticate);
   const [accountForm, dispatch] = useReducer(accountFormReducer, {
     username: '',
@@ -69,6 +72,7 @@ const Account = (props) => {
   return (
     <>
       <section className={classes.sections}>
+        {windowCtx.windowSize <= 600 && <BackButton path='/settings' />}
         <form onSubmit={onFormSubmitHandler} className={classes.form}>
           <div>
             <label htmlFor='username'>Username</label>

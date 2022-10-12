@@ -3,33 +3,38 @@
     align-items: center;
     justify-content: space-between;
 }
-.post-header > .info {
-    display: flex
+.post-info {
+    display: flex;
 }
-.post-header > .info > .profile-image {
+.profile-image {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
     font-size: 12px;
     text-align: center;
-    background-image: url('../../../icons/anonymous_user.png');
+    background-image: url('../icons/anonymous_user.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.post-header > .info > div {
+.post-info > div {
     display: flex;
     flex-direction: column;
 }
-.post-header > .info > div .username {
+.post-username {
     font-size: 14px;
     font-weight: 800;
     margin-bottom: 4px;
     text-transform: capitalize;
 }
-.post-header > .info > div .date {
+.post-date {
     font-size: 12px;
+    width: max-content;
+    background-image: url('../icons/earth-africa-solid.svg');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 12px;
+    padding: 0 15px 0 0;
 }
-.post-header > .info > div .date > i {margin-left: 4px}

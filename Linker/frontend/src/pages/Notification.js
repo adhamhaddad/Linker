@@ -1,35 +1,35 @@
 import React, { useState } from 'react';
-import NotificationCard from './NotificationCard/NotificationCard';
-import Container from '../../components/UI/Container';
-import classes from './Notification.module.css';
+import NotificationCard from './Notification/NotificationCard/NotificationCard';
+import Container from '../components/UI/Container';
+import classes from '../css/Notification.module.css';
 
 function Notifications() {
   const [notifications, setNotifications] = useState([
     {
       id: 1,
       username: 'Ahmed Emad',
-      profile: './images/beso.jpg',
+      profile: '',
       time: 'Tue Sep 20 2022 12:30:32 GMT+0200 (Eastern European Standard Time)',
       content: 'has liked on your post'
     },
     {
       id: 2,
       username: 'Mohamed Khaled',
-      profile: './images/simba.jpeg',
+      profile: '',
       time: 'Tue Sep 20 2022 12:31:32 GMT+0200 (Eastern European Standard Time)',
       content: 'has liked on your post'
     },
     {
       id: 3,
       username: 'Bassem Hamada',
-      profile: './images/bassem.jpg',
+      profile: '',
       time: 'Tue Sep 20 2022 12:32:32 GMT+0200 (Eastern European Standard Time)',
       content: 'has commented on your post'
     },
     {
       id: 4,
       username: 'Cup Coffee',
-      profile: './images/coffee.jpg',
+      profile: '',
       time: 'Tue Sep 20 2022 12:34:32 GMT+0200 (Eastern European Standard Time)',
       content: 'shared your post'
     }

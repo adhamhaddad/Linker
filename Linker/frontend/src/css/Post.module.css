@@ -3,9 +3,10 @@
     max-width: 500px;
     /* max-height: 600px; */
     padding: 5px;
-    margin: 10px;
+    margin: 10px auto;
     background-color: var(--base-color-light);
     color: var(--base-color-dark);
+    border: 1px solid rgb(219, 219, 219)
 }
 .posts > .post-header,
 .posts .post-bottom {

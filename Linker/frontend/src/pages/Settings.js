@@ -1,11 +1,13 @@
-import React from 'react';
-import { Route, NavLink } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Route, NavLink, Redirect } from 'react-router-dom';
+import WindowContext from '../store/windowSize';
 import Container from '../components/UI/Container';
-import Information from './Settings/Information/Information';
-import Account from './Settings/Account/Account';
+import Information from './Information';
+import Account from './Account';
 import classes from '../css/Settings.module.css';
 
 function Settings() {
+  const windowCtx = useContext(WindowContext);
   return (
     <Container className='settings'>
       <div className={classes.settings}>
@@ -14,7 +16,11 @@ function Settings() {
             <li>
               <NavLink
                 activeClassName={classes.active}
-                to='/settings/information'
+                to={
+                  windowCtx.windowSize <= 600
+                    ? '/information'
+                    : '/settings/information'
+                }
                 title='Information'
               >
                 <i className='fa-solid fa-circle-info'></i>
@@ -24,7 +30,9 @@ function Settings() {
             <li>
               <NavLink
                 activeClassName={classes.active}
-                to='/settings/privacy'
+                to={
+                  windowCtx.windowSize <= 600 ? '/privacy' : '/settings/privacy'
+                }
                 title='Privacy & Security'
               >
                 <i className='fa-solid fa-shield-halved'></i>
@@ -64,7 +72,9 @@ function Settings() {
             <li>
               <NavLink
                 activeClassName={classes.active}
-                to='/settings/account'
+                to={
+                  windowCtx.windowSize <= 600 ? '/account' : '/settings/account'
+                }
                 title='Account'
               >
                 <i className='fa-solid fa-circle-user'></i>
