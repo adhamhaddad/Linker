@@ -1,14 +1,11 @@
-import React, { useContext } from 'react';
-import WindowContext from '../store/windowSize';
+import React from 'react';
 import BackButton from '../components/UI/BackButton';
 import classes from '../css/Information.module.css';
 
-const Information = () => {
-  const windowCtx = useContext(WindowContext);
-
+const Information = ({ windowSize }) => {
   return (
     <form className={classes['settings-form']}>
-      {windowCtx.windowSize <= 600 && <BackButton path='/settings' />}
+      {windowSize <= 600 && <BackButton path='/settings' />}
       <h3>information</h3>
       <div>
         <span>name</span>

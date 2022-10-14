@@ -1,18 +1,19 @@
 .chat-conversation {
-    flex-grow: 1;
+    width: 60%;
     height: 100%;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     border-right: 1px solid rgb(219, 219, 219);
 }
+
 .conversation {
-    /* flex-grow: 1; */
     height: 100%;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
 }
+
 #seen {
     width: 15px;
     height: 15px;
@@ -22,18 +23,28 @@
     position: absolute;
     color: var(--base-color-dark);
 }
+
 #error {
     text-align: center;
     margin: 25px 0;
     color: var(--base-color-dark);
     font-size: 14px;
 }
+
 #error a {
     text-decoration: underline;
     color: var(--base-color-dark)
 }
+
 .hint {
     font-size: 14px;
     text-align: center;
     color: var(--base-color-dark);
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+    .chat-conversation {
+        width: 100%;
+    }
 }

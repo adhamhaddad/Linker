@@ -17,7 +17,6 @@ const MessageCard = ({ profile, message, timedate, lang, className }) => {
   // } else {
   //   return <i className='fa-regular fa-error'></i>
   // }
-
   return (
     <div className={`${classes['message-container']} ${classes[className]}`}>
       <div className={classes['message-profile']}></div>

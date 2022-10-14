@@ -30,7 +30,13 @@
     width: 20px;
     height: 100%;
 }
+.like-name {
+    text-transform: capitalize;
+}
+.other-likes {
+    text-transform: none;
 
+}
 .dott {
     width: 3px;
     height: 3px;

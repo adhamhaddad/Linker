@@ -4,16 +4,26 @@ import PostDate from './Validation/PostDate';
 import PostController from './PostController';
 import classes from '../../css/PostHeader.module.css';
 
-function PostHeader({ username, profile, fname, lname, timedate, post_id }) {
+function PostHeader({
+  user_id,
+  post_id,
+  post_user_id,
+  username,
+  timedate,
+  profile,
+  fname,
+  lname,
+  onDeletePost
+}) {
   return (
     <div className={classes['post-header']}>
       <div className={classes['post-info']}>
         <Link
-          to={`/user/${username}`}
+          to={`/profile/${username}`}
           className={classes['profile-image']}
-          style={{
-            backgroundImage: profile.trim().length > 0 && `url(${profile})`
-          }}
+          // style={{
+          //   backgroundImage: profile.trim().length > 0 && `url(${profile})`
+          // }}
         ></Link>
 
         <div>
@@ -25,7 +35,12 @@ function PostHeader({ username, profile, fname, lname, timedate, post_id }) {
           </span>
         </div>
       </div>
-      <PostController post_id={post_id} />
+      <PostController
+        user_id={user_id}
+        post_id={post_id}
+        post_user_id={post_user_id}
+        onDeletePost={onDeletePost}
+      />
     </div>
   );
 }

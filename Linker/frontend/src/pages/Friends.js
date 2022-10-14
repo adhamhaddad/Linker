@@ -9,7 +9,7 @@ import classes from '../css/Friends.module.css';
 
 const Friends = () => {
   const authCtx = useContext(AuthenticateContext);
-  const [listSize, setListSize] = useState('min');
+  const [listSize, setListSize] = useState(false);
   const { isLoading, isError, sendRequest } = useHttp();
   const [friendsList, setFriendsList] = useState([]);
   const onDeleteFriend = (e) => {
@@ -22,7 +22,7 @@ const Friends = () => {
         <Link
           to={`/profile/${friend.username}`}
           className={
-            listSize === 'min' ? `${classes.min} ${classes.profile}` : null
+            listSize ? classes.max : `${classes.profile} ${classes.min}`
           }
         >
           <div className={classes.profile}></div>
@@ -33,7 +33,9 @@ const Friends = () => {
         </Link>
       </li>
     ));
-
+  const showFriendsHandler = () => {
+    setListSize((prev) => !prev);
+  };
   useEffect(() => {
     sendRequest(
       `user/friends?user_id=${authCtx.user.user_id}`,
@@ -44,20 +46,32 @@ const Friends = () => {
   }, []);
 
   return (
-    <section className={classes.friends}>
-      <h3>Friends {friendsList.length}</h3>
-      {isLoading && <SpinnerLoading color='light' />}
-      {isError !== null && <Error message={isError} />}
-      {friendsList.length > 0 && (
-        <ul
-          className={`${classes['friends-list']} ${
-            listSize === 'min' ? classes.min : null
-          }`}
-        >
-          {List}
-        </ul>
-      )}
-    </section>
+    <>
+      <section className={classes.friends}>
+        <h3>
+          friends {friendsList.length}
+          {friendsList.length > 0 && (
+            <button
+              className={classes['show-all']}
+              onClick={showFriendsHandler}
+            >
+              {listSize ? 'hide' : 'show'}
+            </button>
+          )}
+        </h3>
+        {isLoading && <SpinnerLoading color='light' />}
+        {isError !== null && <Error message={isError} />}
+        {friendsList.length > 0 && (
+          <ul
+            className={`${classes['friends-list']} ${
+              listSize ? classes.max : classes.min
+            }`}
+          >
+            {List}
+          </ul>
+        )}
+      </section>
+    </>
   );
 };
 export default Friends;

@@ -1,57 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NotificationCard from './Notification/NotificationCard/NotificationCard';
 import Container from '../components/UI/Container';
+import useHttp from '../hooks/use-http';
+import Error from '../components/Error';
+import SpinnerLoading from '../components/Loading/Spinner';
 import classes from '../css/Notification.module.css';
 
-function Notifications() {
+const Notifications = () => {
+  const { isLoading, isError, sendRequest } = useHttp();
   const [notifications, setNotifications] = useState([
     {
       id: 1,
-      username: 'Ahmed Emad',
+      username: 'ahmedemad',
+      fname: 'Ahmed',
+      lname: 'Emad',
       profile: '',
       time: 'Tue Sep 20 2022 12:30:32 GMT+0200 (Eastern European Standard Time)',
       content: 'has liked on your post'
     },
     {
       id: 2,
-      username: 'Mohamed Khaled',
+      username: 'mohamedsimba',
+      fname: 'Mohamed',
+      lname: 'Khaled',
       profile: '',
       time: 'Tue Sep 20 2022 12:31:32 GMT+0200 (Eastern European Standard Time)',
       content: 'has liked on your post'
     },
     {
       id: 3,
-      username: 'Bassem Hamada',
+      username: 'bassemhamada',
+      fname: 'Bassem',
+      lname: 'Hamada',
       profile: '',
       time: 'Tue Sep 20 2022 12:32:32 GMT+0200 (Eastern European Standard Time)',
       content: 'has commented on your post'
-    },
-    {
-      id: 4,
-      username: 'Cup Coffee',
-      profile: '',
-      time: 'Tue Sep 20 2022 12:34:32 GMT+0200 (Eastern European Standard Time)',
-      content: 'shared your post'
     }
   ]);
   const notificationItems = notifications
     .map((notification) => {
       return (
         <NotificationCard
-          profile={notification.profile}
           username={notification.username}
+          fname={notification.lname}
+          lname={notification.lname}
+          profile={notification.profile}
           content={notification.content}
           time={notification.time}
           key={new Date(notification.time).getTime()}
         />
       );
     })
-    .sort((a, b) => a.key - b.key);
-
+    .sort((a, b) => b.key - a.key);
+  useEffect(() => {
+    // sendRequest('/notifiications?user_id=test', 'GET', {}, setNotifications)
+  }, []);
   return (
     <Container className='notifications'>
-      <ul className={classes['notifications-list']}>{notificationItems}</ul>
+      {isLoading && <SpinnerLoading />}
+      {!isLoading && isError !== null && <Error message={isError} />}
+      {!isLoading && isError === null && (
+        <ul className={classes['notifications-list']}>{notificationItems}</ul>
+      )}
     </Container>
   );
-}
+};
 export default Notifications;

@@ -1,12 +1,11 @@
 .chat-users {
-    width: 350px;
-    /* flex-grow: 0.3; */
+    width: 40%;
     height: 100%;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     background-color: var(--base-color-dark);
-    padding: 5px;
+    padding: 0 5px;
 }
 
 .users-list {
@@ -28,9 +27,11 @@
     border-bottom: 1px solid rgb(219, 219, 219);
     opacity: 0.6;
 }
+
 .user-card.active {
     opacity: 1;
 }
+
 .profile {
     width: 50px;
     height: 50px;

@@ -9,47 +9,44 @@ import Account from '../pages/Account';
 import Information from '../pages/Information';
 import Conversation from '../pages/Messages/Conversation/Conversation';
 import classes from '../css/Main.module.css';
-import { useState } from 'react';
 
-const Main = () => {
-  const [msgData, setMsgData] = useState({});
-  const getMessageData = (e) => {
-    setMsgData(e);
-  };
+const Main = ({ user_id, windowSize }) => {
   return (
     <main className={classes.main}>
       <Switch>
         <Route path='/home' exact>
-          <Home title='Home-Page' />
+          <Home title='Home-Page' user_id={user_id} />
         </Route>
-        <Route path='/profile'>
-          <Profile title='Profile-Page' />
+        <Route path='/profile/:username' exact>
+          <Profile title='Profile-Page' user_id={user_id} />
         </Route>
-        <Route path='/messages'>
-          <Messages title='Messages-Page' />
+        <Route path='/messages' exact={windowSize <= 600 && true}>
+          <Messages
+            title='Messages-Page'
+            user_id={user_id}
+            windowSize={windowSize}
+          />
         </Route>
-        <Route path='/notifications' exact>
+        <Route path='/settings' exact={windowSize <= 600 && true}>
+          <Settings title='Settings-Page' windowSize={windowSize} />
+        </Route>
+        <Route path='/notifications'>
           <Notification title='Notifications-Page' />
         </Route>
-        <Route path='/settings'>
-          <Settings title='Settings-Page' />
+
+        <Route path='/messages/:username/:phone-screen' exact>
+          <Conversation user_id={user_id} />
         </Route>
-        <Route path='/account' exact>
-          <Account title='Settings-Page' />
+        <Route path='/settings/notification/:phone-screen' exact>
+          <Notification title='Notifications-Page' windowSize={windowSize} />
         </Route>
-        <Route path='/information' exact>
-          <Information title='Settings-Page' />
+        <Route path='/settings/information/:phone-screen' exact>
+          <Information title='Information-Page' windowSize={windowSize} />
+        </Route>
+        <Route path='/settings/account/:phone-screen' exact>
+          <Account title='Account-Page' windowSize={windowSize} />
         </Route>
       </Switch>
-      {/* <Route path={`/messages/${msgData.username}`}>
-        <Conversation
-          user_id={msgData.user_id}
-          receiver_id={msgData.user_id}
-          receiver_fname={msgData.fname}
-          receiver_lname={msgData.lname}
-          receiver_username={msgData.username}
-        />
-      </Route> */}
     </main>
   );
 };

@@ -93,24 +93,8 @@ const Signup = () => {
   return (
     <Container className='form'>
       <FormHeader />
-      <ul className={classes.links}>
-        <li>
-          <a href='https://www.facebook.com' rel='noreferrer'>
-            <i className='fa-brands fa-facebook fa-1x'></i>
-          </a>
-        </li>
-        <li>
-          <a href='https://www.twitter.com' rel='noreferrer'>
-            <i className='fa-brands fa-twitter fa-1x'></i>
-          </a>
-        </li>
-        <li>
-          <a href='https://www.google.com' rel='noreferrer'>
-            <i className='fa-brands fa-google fa-1x'></i>
-          </a>
-        </li>
-      </ul>
-      <form className={classes.form} autoComplete='on' onSubmit={signupHandler}>
+
+      <form className={classes.form} autoComplete='off' onSubmit={signupHandler}>
         <input
           type='text'
           placeholder='User Name'

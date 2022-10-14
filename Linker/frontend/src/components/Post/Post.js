@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import useHttp from '../../hooks/use-http';
 import CommentsController from './ReactionsController/Comments/CommentsController';
 import Reactions from './Reactions/Reactions';
 import PostContent from './Content/PostContent';
@@ -11,70 +12,87 @@ import classes from '../../css/Post.module.css';
 
 const Post = ({
   user_id,
+  post_id,
+  post_user_id,
   username,
   fname,
   lname,
   profile,
-  post_id,
   timedate,
   content,
-  reactions
+  onDeletePost
 }) => {
-  const [commentsList, setCommentsList] = useState(false);
-  const [likesList, setLikesList] = useState(false);
-  const [sharesList, setSharesList] = useState(false);
-  const [addComment, setAddComment] = useState('');
+  const { sendRequest } = useHttp();
+  const [likesList, setLikesList] = useState([]);
+  const [commentsList, setCommentsList] = useState([]);
+  const [sharesList, setSharesList] = useState([]);
+  const [likesPort, setLikesPort] = useState(false);
+  const [commentsPort, setCommentsPort] = useState(false);
+  const [sharesPort, setSharesPort] = useState(false);
 
   const showLikesHandler = () => {
-    setLikesList((prev) => !prev);
+    setLikesPort((prev) => !prev);
   };
   const showCommentsHandler = () => {
-    setCommentsList((prev) => !prev);
+    setCommentsPort((prev) => !prev);
   };
   const showSharesHandler = () => {
-    setSharesList((prev) => !prev);
+    setSharesPort((prev) => !prev);
   };
 
-  const addCommentsHandler = (e) => {
-    setAddComment(e.target.value);
-  };
-
+  useEffect(() => {
+    sendRequest(`post/likes?post_id=${post_id}`, 'GET', {}, setLikesList);
+    sendRequest(`post/comments?post_id=${post_id}`, 'GET', {}, setCommentsList);
+    sendRequest(`post/shares?post_id=${post_id}`, 'GET', {}, setSharesList);
+  }, []);
   return (
     <div className={classes.posts}>
       <PostHeader
         user_id={user_id}
+        post_id={post_id}
+        post_user_id={post_user_id}
         username={username}
         fname={fname}
         lname={lname}
         profile={profile}
-        post_id={post_id}
         timedate={timedate}
+        onDeletePost={onDeletePost}
       />
       <PostContent content={content} />
       <Reactions
-        reactions={reactions}
+        user_id={user_id}
+        post_id={post_id}
+        post_user_id={post_user_id}
+        likes={likesList}
+        comments={commentsList}
+        shares={sharesList}
         onShowLikes={showLikesHandler}
         onShowComments={showCommentsHandler}
         onShowShares={showSharesHandler}
       />
       <PostBottom
-        addComment={addComment}
-        addCommentsHandler={addCommentsHandler}
+        user_id={user_id}
+        post_id={post_id}
+        post_user_id={post_user_id}
+        fname={fname}
+        lname={lname}
+        username={username}
+        likesList={likesList}
+        setLikesList={setLikesList}
+        setCommentsList={setCommentsList}
+        setSharesList={setSharesList}
       />
-      {likesList && (
-        <LikesController likes={reactions.likes} onHide={showLikesHandler} />
+      {likesPort && (
+        <LikesController likes={likesList} onHide={showLikesHandler} />
       )}
-      {commentsList && (
+      {commentsPort && (
         <CommentsController
-          comments={reactions.comments}
+          comments={commentsList}
           onHide={showCommentsHandler}
         />
       )}
-      {sharesList && (
-        <SharesController
-          shares={reactions.shares}
-          onHide={showSharesHandler}
-        />
+      {sharesPort && (
+        <SharesController shares={sharesList} onHide={showSharesHandler} />
       )}
     </div>
   );
@@ -84,10 +102,9 @@ Post.propTypes = {
   username: PropTypes.string.isRequired,
   fname: PropTypes.string.isRequired,
   lname: PropTypes.string.isRequired,
-  profile: PropTypes.string.isRequired,
+  // profile: PropTypes.string.isRequired,
   post_id: PropTypes.string.isRequired,
   timedate: PropTypes.string.isRequired,
   content: PropTypes.object.isRequired
-  // reactions: PropTypes.array.isRequired
 };
 export default Post;

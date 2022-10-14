@@ -7,38 +7,10 @@ import SpinnerLoading from '../components/Loading/Spinner';
 import Post from '../components/Post/Post';
 import classes from '../css/Home.module.css';
 
-const Home = () => {
+const Home = ({user_id}) => {
   const authCtx = useContext(AuthenticateContext);
   const { isLoading, isError, sendRequest } = useHttp();
   const [allPosts, setAllPosts] = useState([]);
-  const [reactions, setReactions] = useState({
-    likes: [
-      { profile: './images/profile.jpg', username: 'Adham Ashraf' },
-      { profile: './images/beso.jpg', username: 'Ahmed Emad' },
-      { profile: './images/bassem.jpg', username: 'Bassem Hamada' },
-      { profile: './images/simba.jpeg', username: 'Mohamed Khaled' }
-    ],
-    comments: [
-      {
-        id: '2',
-        username: 'Ahmed Emad',
-        profile: './images/beso.jpg',
-        content: '❤️❤️',
-        time: 'Tue Sep 13 2022 17:40:31 GMT+0200 (Eastern European Standard Time)'
-      },
-      {
-        id: '1',
-        username: 'Mohamed Khaled',
-        profile: './images/simba.jpeg',
-        content: '❤️❤️',
-        time: 'Tue Sep 13 2022 17:35:31 GMT+0200 (Eastern European Standard Time)'
-      }
-    ],
-    shares: [
-      { profile: './images/beso.jpg', username: 'Ahmed Emad' },
-      { profile: './images/simba.jpeg', username: 'Mohamed Khaled' }
-    ]
-  });
 
   const transformPost = (data) => {
     const transformedData = data.map((post) => {
@@ -68,15 +40,15 @@ const Home = () => {
     allPosts
       .map((post) => (
         <Post
-          user_id={post.user_id}
+          user_id={user_id}
+          post_user_id={post.user_id}
+          post_id={post.post_id}
           username={post.username}
           fname={post.fname}
           lname={post.lname}
           profile={post.profile}
-          post_id={post.post_id}
           timedate={post.timedate}
           content={post.content}
-          reactions={reactions}
           key={new Date(post.timedate).getTime()}
         />
       ))

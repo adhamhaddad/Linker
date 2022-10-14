@@ -1,16 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import classes from './FormHeader.module.css';
 
 const FormHeader = () => {
   return (
     <div className={classes['switch-box']}>
-      <Link to='/signin' className={classes.active}>
-        <span>log in</span>
-      </Link>
-      <Link to='/signup'>
-        <span>register</span>
-      </Link>
+      <NavLink to='/signin' activeClassName={classes.active}>
+        log in
+      </NavLink>
+      <NavLink to='/signup' activeClassName={classes.active}>
+        register
+      </NavLink>
     </div>
   );
 };

@@ -1,19 +1,23 @@
 .sections {
+    width: 75%;
     padding: 10px;
-    width: 100%;
-    width: fit-content;
+    background-color: var(--base-color-light);
 }
+
 .form div {
     color: var(--base-color-dark);
     margin: 0 0 15px 0;
 }
+
 .form div label {
     font-size: 14px;
     font-weight: bold;
     margin: 5px 0;
     display: block;
 }
-.form div input, .form div select {
+
+.form div input,
+.form div select {
     display: block;
     width: 250px;
     height: 40px;
@@ -22,9 +26,11 @@
     border-radius: 2px;
     background-color: var(--base-color-light);
 }
+
 .form div select {
     text-transform: capitalize;
 }
+
 .confirm {
     width: 100%;
     display: block;
@@ -34,4 +40,12 @@
     background-color: var(--base-color-dark);
     margin: 10px 0;
     cursor: pointer;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+    .sections {
+        width: 100%;
+    }
+
 }

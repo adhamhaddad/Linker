@@ -10,11 +10,11 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 3px solid var(--base-color-dark);
+    border: 2px solid var(--base-color-dark);
     background-image: url('../icons/link-solid.svg');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 30px;
+    background-size: 25px;
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

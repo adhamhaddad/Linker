@@ -1,25 +1,9 @@
-/* Links */
-.links {
-    margin: 10px 0;
-    padding: 10px 0;
-    text-align: center;
-}
-.links li {display: inline-block}
-.links li a {
-    display: inline-block;
-    width: 45px;
-    height: 45px;
-    line-height: 45px;
-    margin: 0 10px;
-    border-radius: 50%;
-    font-size: 16px;
-    transition: background .7s;
-    background-color: var(--base-background-dark);
-    color: var(--base-color-light);
+.form {
+    width: 80%;
+    margin: 10px auto
 }
 
-.form {width: 80%; margin: 10px auto}
-.form > input {
+.form>input {
     display: block;
     width: 100%;
     padding: 10px 5px;
@@ -30,48 +14,58 @@
     color: var(--base-color-dark);
     position: relative
 }
+
 /* alert */
-.form .radio {margin: 15px 0 20px}
+.form .radio {
+    margin: 15px 0 20px
+}
+
 .form .radio label,
-.form > label {
+.form>label {
     display: block;
     margin-right: 10px;
     font-size: 14px;
     color: #888;
 }
-.form .radio label {display: inline-block; text-transform: capitalize}
+
+.form .radio label {
+    display: inline-block;
+    text-transform: capitalize
+}
 
 .form .radio label input,
-.form > label.checkbox input {margin-right: 5px}
-.form > label.checkbox {
+.form>label.checkbox input {
+    margin-right: 5px
+}
+
+.form>label.checkbox {
     margin: 25px 0;
 }
-.form > label.checkbox span {
+
+.form>label.checkbox span {
     font-size: 12px;
     text-transform: capitalize;
 }
 
+.form label {
+    height: 20px
+}
 
-.loading {
-    text-align: center;
-    font-weight: bold;
-    color: var(--base-color-dark);
+.form label span,
+.form label input {
+    display: inline-block;
     font-size: 12px;
-    padding: 10px 0;
+    vertical-align: middle;
 }
-.error {
-    text-align: center;
-    color: red;
-    font-size: 12px;
-    padding: 10px 0;
-}
+
 /*! When anchor link have class active !*/
 .switch-box a.active {
-    border-radius: 20px ;
+    border-radius: 20px;
     color: var(--base-color-light);
     background-color: var(--base-background-dark);
 }
-.form > input.passValidation::after {
+
+.form>input.passValidation::after {
     content: 'please enter at least 8 characters';
     background-color: red;
     color: red;
@@ -82,18 +76,26 @@
     bottom: 0;
     position: absolute;
 }
+
 /*** Effects ***/
-.form label input:checked ~ span {color: var(--base-color-dark)}
-.form button:hover {background-color: var(--base-background-hovered); transition: background .7s}
+.form label input:checked~span {
+    color: var(--base-color-dark)
+}
+
+.form button:hover {
+    background-color: var(--base-background-hovered);
+    transition: background .7s
+}
 
 
 /*** Media Query ***/
-@media screen and (max-width: 460px){
+@media screen and (max-width: 460px) {
     .container {
         width: 100%;
         padding: 30px 10px;
         border: none;
     }
+
     .switch-box {
         width: 250px;
     }
@@ -103,6 +105,7 @@
         width: 40px;
         height: 40px;
     }
+
     .links ul li a i {
         color: var(--base-color-light);
         font-size: 14px;

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import useHttp from '../../../hooks/use-http';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import SearchBar from '../../../components/Searchbar';
 import SpinnerLoading from '../../../components/Loading/Spinner';
 import Error from '../../../components/Error';
 import classes from './ChatUsers.module.css';
 
-const ChatUsers = ({ user_id, onChangeChat }) => {
+const ChatUsers = ({ user_id, windowSize }) => {
   const [friendsList, setFriendsList] = useState([]);
   const { isLoading, isError, sendRequest } = useHttp();
 
@@ -15,13 +15,13 @@ const ChatUsers = ({ user_id, onChangeChat }) => {
     friendsList.map((friend) => (
       <li key={friend.user_id}>
         <NavLink
-          activeClassName={classes.active}
-          to={`/messages/${friend.username}?user_id=${friend.user_id}`}
+          to={
+            windowSize <= 600
+              ? `/messages/${friend.username}/phone-screen?user_id=${friend.user_id}`
+              : `/messages/${friend.username}?user_id=${friend.user_id}`
+          }
           className={classes['user-card']}
-          onClick={() => {
-            onChangeChat();
-            onChangeChat(friend);
-          }}
+          activeClassName={classes.active}
         >
           <div className={classes.profile} alt={friend.username}></div>
           <div className={classes['content']}>

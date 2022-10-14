@@ -6,11 +6,9 @@
 .story h3 {
     text-transform: capitalize;
     text-align: center;
-    font-weight: 800;
     font-size: 16px;
     padding: 10px 0;
 }
-.story h3 > i {width: 25px}
 .story p {
     width: 100%;
     max-height: 250px;

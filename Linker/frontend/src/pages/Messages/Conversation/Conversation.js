@@ -5,19 +5,25 @@ import ChatForm from '../ChatForm/ChatForm';
 import SpinnerLoading from '../../../components/Loading/Spinner';
 import Error from '../../../components/Error';
 import MessageCard from '../MessageCard/MessageCard';
+import { useParams } from 'react-router-dom';
 import classes from './Conversation.module.css';
 
-const Conversation = ({
-  user_id,
-  receiver_username,
-  receiver_fname,
-  receiver_lname,
-  receiver_id
-}) => {
+const Conversation = ({ user_id }) => {
   const query = new URLSearchParams(location.search);
+  const params = useParams();
   const { isLoading, isError, sendRequest } = useHttp();
   const [messages, setMessages] = useState([]);
+  const [currentUser, setCurrentUser] = useState({
+    user_username: params.username,
+    user_fname: '',
+    user_lname: ''
+  });
 
+  const currentUserHandler = (user) => {
+    setCurrentUser((prev) => {
+      return { prev, user_fname: user.fname, user_lname: user.lname };
+    });
+  };
   const newMessageHander = (res) => {
     setMessages((prev) => [...prev, res]);
   };
@@ -40,15 +46,15 @@ const Conversation = ({
       .map((msg) => {
         return (
           <MessageCard
-            className={msg.user_id == user_id ? 'sender' : 'receiver'}
+            className={msg.user_id === user_id ? 'sender' : 'receiver'}
             profile={msg.profile}
             message={msg.content}
-            timedate={new Date(msg.timedate).getTime()}
-            key={msg.message_id}
+            timedate={msg.timedate}
+            key={new Date(msg.timedate).getTime()}
           />
         );
       })
-      .sort((a, b) => a.timedate - b.timedate);
+      .sort((a, b) => a.key - b.key);
 
   // Get All Messages
   useEffect(() => {
@@ -58,13 +64,19 @@ const Conversation = ({
       {},
       setMessages
     );
+    sendRequest(
+      `user/information?user_id=${query.get('user_id')}`,
+      'GET',
+      {},
+      currentUserHandler
+    );
   }, []);
   return (
     <div className={classes['chat-conversation']}>
       <ChatHeader
-        username={receiver_username}
-        fname={receiver_fname}
-        lname={receiver_lname}
+        username={currentUser.user_username}
+        fname={currentUser.user_fname}
+        lname={currentUser.user_lname}
       />
       <div className={classes.conversation}>
         {messages.length > 0 && conversationMessages}
@@ -73,11 +85,12 @@ const Conversation = ({
         {messages.length === 0 && !isLoading && isError === null && (
           <p className={classes.hint}>Chat is empty</p>
         )}
-        {/* <p>Conversation started at ... End-To-End Encryption</p> */}
+        {/* <p className={classes['conversation-first-time']}>Conversation started at ... End-To-End Encryption</p> */}
+        {/* <p className={classes['conversation-date']}>{new Date().getTime()}</p> */}
       </div>
       <ChatForm
         user_id={user_id}
-        receiver_id={receiver_id}
+        receiver_id={query.get('user_id')}
         onAddNewMessage={addNewMessageHandler}
       />
     </div>

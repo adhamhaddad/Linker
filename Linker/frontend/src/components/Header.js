@@ -1,18 +1,16 @@
-import React, { useContext } from 'react';
-import WindowContext from '../store/windowSize';
+import React from 'react';
 import Logo from '../utils/Logo';
 import NavigationBar from './NavigationBar';
 import Container from './UI/Container';
 import classes from '../css/Header.module.css';
 
-const Header = () => {
-  const windowCtx = useContext(WindowContext);
+const Header = ({username, windowSize}) => {
 
   return (
     <nav className={classes.navbar}>
       <Container className='header'>
-        {windowCtx.windowSize > 600 && <Logo />}
-        <NavigationBar />
+        {windowSize > 600 && <Logo />}
+        <NavigationBar username={username} />
       </Container>
     </nav>
   );

@@ -1,17 +1,24 @@
 .switch-box {
-    width: 80%;
-    margin: 0 auto;
     display: flex;
-    border-radius: 20px;
-    background-color: var(--base-color-light);
-    box-shadow: 1px 2px 15px var(--base-background-dark);
+    width: 80%;
+    margin: 0 auto 30px;
     overflow: hidden;
+    background-color: var(--base-color-light);
+    border: 1px solid var(--base-color-dark);
+    border-radius: 25px;
 }
 
 .switch-box a {
     width: 50%;
-    padding: 10px 15px;
+    height: 45px;
+    line-height: 45px;
     text-align: center;
     text-transform: capitalize;
     color: var(--base-color-dark);
+}
+
+.switch-box a.active {
+    border-radius: 25px;
+    background-color: var(--base-color-dark);
+    color: var(--base-color-light)
 }

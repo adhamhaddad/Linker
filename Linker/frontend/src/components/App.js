@@ -1,24 +1,34 @@
 import React, { useContext } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import Authenticate from '../utils/authentication';
+import WindowContext from '../store/windowSize';
 import Signup from '../pages/Signup';
 import Signin from '../pages/Signin';
 import Header from './Header';
 import Main from './Main';
+// import io from 'socket.io-client';
 import '../css/App.css';
-
+// const socket = io.connect('http://192.168.1.6:8000');
 const App = () => {
   const authCtx = useContext(Authenticate);
-
+  const windowSize = useContext(WindowContext);
   return authCtx.isLoggedIn ? (
     <>
-      <Header />
-      <Route path='/' exact>
-        <Redirect to='/home' />
-      </Route>
-      <Route path='/'>
-        <Main />
-      </Route>
+      <Header
+        username={authCtx.user.username}
+        windowSize={windowSize.windowSize}
+      />
+      <Switch>
+        <Route path='/' exact>
+          <Redirect to='/home' />
+        </Route>
+        <Route path='/'>
+          <Main
+            user_id={authCtx.user.user_id}
+            windowSize={windowSize.windowSize}
+          />
+        </Route>
+      </Switch>
     </>
   ) : (
     <>

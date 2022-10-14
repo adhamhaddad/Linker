@@ -1,30 +1,30 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Modal from '../../../Modal';
-import './LikesController.css';
+import classes from './LikesController.module.css';
 
 const LikesController = ({ likes, onHide }) => {
-  const likesList = likes.map((like) => {
-    return (
-      <li key={like.username}>
-        <a>
-          <img src={like.profile} alt='profile' />
-        </a>
-        <a href='/'>
-          <h4>{like.username}</h4>
-        </a>
+  const likesList = likes
+    .map((like) => (
+      <li key={new Date(like.timedate).getTime()}>
+        <Link
+          to={`/profile/${like.username}`}
+          className={classes['post-profile']}
+        ></Link>
+        <Link href='/' className={classes['post-username']}>
+          {like.fname} {like.lname}
+        </Link>
       </li>
-    );
-  });
+    ))
+    .sort((a, b) => b.key - a.key);
   return (
     <Modal>
-      <div className='post-likes'>
-        <div className='likes-header'>
+      <div className={classes['post-likes']}>
+        <div className={classes['likes-header']}>
           <h3>Likes</h3>
-          <button onClick={onHide}>
-            <i className='fa-solid fa-xmark'></i>
-          </button>
+          <button onClick={onHide}></button>
         </div>
-        <ul className='likes-list'>{likesList}</ul>
+        <ul className={classes['likes-list']}>{likesList}</ul>
       </div>
     </Modal>
   );

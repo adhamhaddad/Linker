@@ -5,16 +5,16 @@
     color: var(--base-color-light);
     background-color: var(--base-background-dark);
 }
+
 .container.form {
     top: 50%;
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
-    width: 450px;
-    padding: 50px 20px;
+    width: 400px;
     background-color: var(--base-background-light);
-    filter: drop-shadow(1px 1px 5px var(--base-color-dark));
 }
+
 .container.header {
     display: flex;
     flex-flow: row wrap;
@@ -30,12 +30,14 @@
     color: var(--base-color-light);
     background-color: var(--base-color-dark);
 }
+
 .container.posts {
     /* background-color: transparent; */
     /* width: fit-content; */
     /* padding: 5px; */
-    
+
 }
+
 .container.profile.loading {
     animation-name: loading;
     animation-duration: 1s;
@@ -49,15 +51,16 @@
 
 .container.settings {
     height: 100%;
-    /* background-color: green; */
-    /* position: relative; */
+    display: flex;
+    flex-direction: row;
+    position: relative;
 }
+
 .container.chat {
     display: flex;
     flex-direction: row;
     height: 100%;
     background-color: var(--base-background-light);
-    /* background-color: red; */
 }
 
 
@@ -73,13 +76,16 @@
         padding: 5px;
     }
 }
+
 @keyframes loading {
     0% {
         background-color: rgb(200, 200, 200);
     }
+
     50% {
         background-color: rgb(230, 230, 230);
     }
+
     100% {
         background-color: rgb(200, 200, 200);
     }

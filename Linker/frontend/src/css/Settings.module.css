@@ -1,15 +1,12 @@
-.settings {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    width: 100%;
-}
 .menu {
-    width: 250px;
+    width: 25%;
     height: 100%;
     font-size: 14px;
 }
-.menu ul li {display: block}
+.menu ul li {
+    display: block
+}
+
 .menu ul li a {
     text-transform: capitalize;
     display: block;
@@ -19,30 +16,23 @@
     padding: 0 5px;
     color: var(--base-color-light);
 }
-.menu ul li a:hover {background-color: var(--base-background-hovered)}
-.menu ul li a > i {
-    width: 25px;
+
+.menu ul li a:hover {
+    background-color: var(--base-background-hovered)
 }
+
 .active {
     background-color: var(--base-background-hovered);
 }
-.right-section {
-    width: 100%;
-    background-color: var(--base-color-light);
-    color: var(--base-color-dark);
-}
+
 /*** Media Querry ***/
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 890px) {
+@media only screen and (max-width: 890px) {}
 
-}
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
     .menu {
         width: 100%;
     }
-    .right-section {
-        display: none;
-    }
-    
+
 }
