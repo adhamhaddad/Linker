@@ -70,7 +70,7 @@ const updatePost = async (req: Request, res: Response) => {
 
 const deletePost = async (req: Request, res: Response) => {
   try {
-    await post.deletePost(req.body);
+    await post.deletePost(req.body.user_id, req.body.post_id);
     res.status(200).json({
       status: true,
       message: 'Post deleted successfully!'

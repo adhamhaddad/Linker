@@ -14,7 +14,7 @@ class User {
       const sql =
         'INSERT INTO users (username, email, password, gender, joined) VALUES ($1, $2, $3, $4, $5) RETURNING user_id, username, email, gender, joined';
       const result = await connection.query(sql, [
-        u.username.toLocaleLowerCase(),
+        u.username.toLocaleLowerCase().trim(),
         u.email.toLocaleLowerCase(),
         hash(u.password),
         u.gender.toLocaleLowerCase(),

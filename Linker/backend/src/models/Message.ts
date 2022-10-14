@@ -27,7 +27,14 @@ class Message {
   ): Promise<Messages[]> {
     try {
       const connection = await database.connect();
-      const sql = 'SELECT * FROM messages WHERE user_id=$1 AND receiver_id=$2 OR user_id=$2 AND receiver_id=$1';
+      const sql = `
+        SELECT DISTINCT u.username, i.fname, i.lname, i.profile, m.*
+        FROM messages m, information i, users u
+        WHERE
+        m.user_id=$1 AND m.receiver_id=$2 AND i.user_id=$1 AND u.user_id=$1
+        OR
+        m.user_id=$2 AND m.receiver_id=$1 AND i.user_id=$2 AND u.user_id=$2
+        `;
       const result = await connection.query(sql, [user_id, receiver_id]);
       connection.release();
       return result.rows;

@@ -1,21 +1,18 @@
-CREATE TABLE Information (
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE TABLE IF NOT EXISTS Information (
     info_id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
-    profile text,
+    user_id uuid,
     fname VARCHAR(255),
     lname VARCHAR(255),
     phone VARCHAR(50) UNIQUE,
+    profile text,
     birthday text,
-    work VARCHAR(255),
+    work text,
     relation VARCHAR(100),
     education VARCHAR(255),
     lives VARCHAR(255),
     story text,
-    facebook VARCHAR(255),
-    instagram VARCHAR(255),
-    whatsapp VARCHAR(255),
     twitter VARCHAR(255),
     linkedin VARCHAR(255),
-    telegram VARCHAR(255),
-    user_id uuid,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
