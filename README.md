@@ -18,8 +18,41 @@ This is a Social-Network platform called `Linker` that simulates `Facebook` and 
 
 ## Installation
 
-1. From the root of the repo, navigate backend folder `cd backend` to install the node_modules `npm install`. After installation is done start the api in dev mode with `npm run dev`.
-1. Without closing the terminal in step 1, navigate to the frontend `cd frontend` to intall the node_modules `npm install`. After installation is done start the api in dev mode with `npm run start`.
+### Database setup
+
+Open postgres terminal with: `psql postgres`
+
+1- `CREATE DATABASE network_dev;`
+
+2- `CREATE USER admin WITH PASSWORD 'admin123';`
+
+3- `GRANT ALL PRIVILEGES ON DATABASE network_dev TO admin;`
+
+### Create Environment
+
+1. From the root of the repo, navigate backend folder `cd backend` First create file called `.env` and enter the following code:
+
+```
+ENV=dev
+PORT=8000
+# Database config
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_USER=admin
+POSTGRES_DB=network_dev
+POSTGRES_DB_TEST=network_test
+POSTGRES_PASSWORD=admin123
+# Secrets keys
+SECRET_TOKEN=love-you
+SALT_ROUNDS=10
+SECRET_PEPER=thor-thunder
+# AWS config
+URL=http://localhost:4000
+```
+
+2. Second to install the node_modules run `npm install` or `yarn`. After installation is done start the api in dev mode with `npm run dev` or `yarn dev`.
+
+3. Without closing the terminal in step 1, navigate to the frontend `cd frontend` to intall the node_modules `npm install` or `yarn`. After installation is done start the api in dev mode with `npm run start` or `yarn start`.
 
 ## Unit Tests:
 
