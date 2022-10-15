@@ -42,7 +42,7 @@ const getAllUsers = async (_req: Request, res: Response) => {
 
 const getUser = async (req: Request, res: Response) => {
   try {
-    const response = await user.getUser(req.body.id);
+    const response = await user.getUser(req.query.user_id as string);
     res.status(200).json({
       status: true,
       data: { ...response },

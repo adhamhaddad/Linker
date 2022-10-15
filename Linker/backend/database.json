@@ -1,19 +1,19 @@
 {
-    "dev": {
-        "driver": "pg",
-        "host": "127.0.0.1",
-        "port": "5432",
-        "database": "network_dev",
-        "user": "postgres",
-        "password": "postgres123"
-    },
+  "dev": {
+    "driver": "pg",
+    "host": "127.0.0.1",
+    "port": "5432",
+    "database": "network_dev",
+    "user": "admin",
+    "password": "admin123"
+  },
 
-    "test": {
-        "driver": "pg",
-        "host": "127.0.0.1",
-        "port": "5432",
-        "database": "network_test",
-        "user": "postgres",
-        "password": "postgres123"
-    }
+  "test": {
+    "driver": "pg",
+    "host": "127.0.0.1",
+    "port": "5432",
+    "database": "network_test",
+    "user": "admin",
+    "password": "admin123"
+  }
 }

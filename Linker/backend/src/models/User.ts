@@ -44,12 +44,12 @@ class User {
     }
   }
 
-  async getUser(id: string): Promise<Users> {
+  async getUser(user_id: string): Promise<Users> {
     try {
       const connection = await database.connect();
       const sql =
-        'SELECT user_id, username, email, gender, joined FROM users WHERE user_id=($1)';
-      const result = await connection.query(sql, [id]);
+        'SELECT user_id, username, email, gender, joined FROM users WHERE user_id=$1';
+      const result = await connection.query(sql, [user_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -157,9 +157,18 @@ class User {
   ): Promise<Info[]> {
     try {
       const connection = await database.connect();
-      const sql = `SELECT profile, fname, lname, user_id FROM information WHERE fname LIKE '${fname.toLowerCase()}%' OR lname LIKE '${
-        lname !== undefined && lname.toLowerCase()
-      }%'`;
+      const sql = `
+      SELECT DISTINCT i.profile, i.fname, i.lname, i.user_id, u.username
+      FROM information i, users u
+      WHERE
+      i.fname LIKE '${fname.toLowerCase()}%'
+      AND
+      i.user_id=u.user_id
+      OR
+      i.lname LIKE '${lname !== undefined && lname.toLowerCase()}%'
+      AND
+      i.user_id=u.user_id
+      `;
       const result = await connection.query(sql);
       connection.release();
       return result.rows;
