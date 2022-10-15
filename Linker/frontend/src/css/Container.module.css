@@ -31,11 +31,8 @@
     background-color: var(--base-color-dark);
 }
 
-.container.posts {
-    /* background-color: transparent; */
-    /* width: fit-content; */
-    /* padding: 5px; */
-
+.container.home {
+    overflow-y: auto;
 }
 
 .container.profile.loading {

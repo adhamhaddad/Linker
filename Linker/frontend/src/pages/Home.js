@@ -5,9 +5,10 @@ import Container from '../components/UI/Container';
 import Error from '../components/Error';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Post from '../components/Post/Post';
+import SearchBar from '../components/Searchbar';
 import classes from '../css/Home.module.css';
 
-const Home = ({user_id}) => {
+const Home = ({ user_id, windowSize }) => {
   const authCtx = useContext(AuthenticateContext);
   const { isLoading, isError, sendRequest } = useHttp();
   const [allPosts, setAllPosts] = useState([]);
@@ -55,9 +56,13 @@ const Home = ({user_id}) => {
       .sort((a, b) => b.key - a.key);
   return (
     <>
-      <Container className='posts'>{posts.length > 0 && posts}</Container>
-      {isLoading && <SpinnerLoading color='dark' />}
-      {isError !== null && <Error message={isError} />}
+      <div className={classes['home-page']}>
+        {windowSize <= 600 && <SearchBar />}
+      <Container className='home'>{posts.length > 0 && posts}</Container>
+        {/* <Container className='home'></Container> */}
+        {isLoading && <SpinnerLoading color='dark' />}
+        {isError !== null && <Error message={isError} />}
+      </div>
     </>
   );
 };

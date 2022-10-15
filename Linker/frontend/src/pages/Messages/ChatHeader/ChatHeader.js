@@ -3,18 +3,17 @@ import { Link } from 'react-router-dom';
 import BackButton from '../../../components/UI/BackButton';
 import classes from './ChatHeader.module.css';
 
-function ChatHeader({ username, fname, lname }) {
+function ChatHeader({receiver_id, username, fname, lname }) {
   const [menuState, setMenuState] = useState(false);
   const toggleMenu = () => {
     setMenuState((prev) => !prev);
   };
-
   return (
     <div className={classes['chat-header']}>
       <BackButton path='/messages' />
 
       <span className={classes.username}>
-        <Link to={`/profile/${username}`}>
+        <Link to={`/profile/${username}?user_id=${receiver_id}`}>
           {fname} {lname}
         </Link>
       </span>

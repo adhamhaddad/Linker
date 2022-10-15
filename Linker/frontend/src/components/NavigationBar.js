@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classes from '../css/NavigationBar.module.css';
 
-const NavigationBar = ({ username }) => {
+const NavigationBar = ({ username, user_id }) => {
   return (
     <ul className={classes.navigation}>
       <li>
@@ -15,7 +15,7 @@ const NavigationBar = ({ username }) => {
       </li>
       <li>
         <NavLink
-          to={`/profile/${username}`}
+          to={`/profile/${username}?user_id=${user_id}`}
           activeClassName={classes.active}
           title='Profile'
         >

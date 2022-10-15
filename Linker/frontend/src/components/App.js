@@ -15,6 +15,7 @@ const App = () => {
   return authCtx.isLoggedIn ? (
     <>
       <Header
+        user_id={authCtx.user.user_id}
         username={authCtx.user.username}
         windowSize={windowSize.windowSize}
       />

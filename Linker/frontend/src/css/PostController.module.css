@@ -28,7 +28,6 @@
     box-shadow: 0 0 12px 4px rgb(219, 219, 219);
     background-color: var(--base-color-light);
     width: 200px;
-    padding: 5px;
 }
 
 .post-options button {
@@ -50,7 +49,7 @@
 }
 
 .post-options button:hover {
-    background-color: var(--base-color-dark);
+    background-color: rgb(230, 230, 230);
     transition: background .5s ease-in-out;
 }
 

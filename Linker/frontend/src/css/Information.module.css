@@ -1,96 +1,103 @@
-.settings-form {
+.information-form {
     width: 75%;
     height: 100%;
     padding: 5px;
     overflow-y: auto;
     background-color: var(--base-color-light);
-    color: var(--base-color-dark)
+    color: var(--base-color-dark);
 }
 
-.settings-form>h3 {
+.information-form h3 {
     margin: 25px 0 10px;
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
     text-transform: capitalize;
 }
 
-.settings-form>h3:first-of-type {
+.information-form h3:first-of-type {
     margin: 0
 }
 
-.settings-form>div {
+.information-form div {
     display: flex;
     margin: 15px 0;
     line-height: 1.5;
 }
 
-.settings-form>div>span {
-    width: 100px;
+.information-form div span {
     text-transform: capitalize;
+    width: 100px;
+    height: fit-content;
     font-weight: bold;
-    font-size: 14px
-}
-
-.settings-form>div>p {
-    width: 85%;
     font-size: 14px;
 }
 
-/* Submit Button */
-.settings-form>button,
-.settings-form>div>button {
-    display: block;
-    width: 100%;
-    height: 40px;
-    margin: 50px auto 0;
-    border-radius: 2px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background .5s ease-in-out;
+.information-form div p {
+    width: 65%;
+    height: fit-content;
+    font-size: 14px;
     text-transform: capitalize;
-    color: var(--base-color-light);
-    background-color: var(--base-background-hovered);
+    margin-right: auto;
 }
 
-.settings-form>div>button {
-    margin: 0;
-    display: inline-block;
+.information-form div p.information-links {
+    text-transform: lowercase;
+}
+
+.information-form div button {
     width: 100px;
     height: 30px;
-    position: static;
+    text-transform: capitalize;
+    color: var(--base-color-light);
+    background-color: var(--base-color-dark);
+    cursor: pointer;
 }
 
-.settings-form>button:hover,
-.settings-form>div>button:hover {
+.information-form div button:hover {
     background-color: rgb(45, 45, 45);
     transition: background .5s ease-in-out;
 }
 
+.information-form div input {
+    width: 170px;
+    text-transform: capitalize;
+    border: 1px solid rgb(219, 219, 219);
+    margin-right: 5px;
+    padding: 0 10px;
+}
+.information-form div input:last-of-type {
+    margin-right: auto;
+}
+.story {
+    width: 65%;
+    height: 150px;
+    padding: 5px;
+    margin-right: auto;
+    /* background-color: red; */
+    border: 1px solid rgb(219, 219, 219);
+    resize: none;
+}
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-    .settings-form {
+    .information-form {
         width: 100%;
     }
 
-    .settings-form>div {
+    .information-form>div {
         display: flex;
         flex-direction: column;
         margin: 10px 0;
     }
 
-    .settings-form>div>span {
+    .information-form>div>span {
         width: 100%;
     }
 
-    .settings-form>div>p {
+    .information-form>div>p {
         width: 100%;
     }
 
-    .settings-form>div button {
+    .information-form>div button {
         width: 100%;
-    }
-
-    .settings-form>button {
-        margin-top: 10px;
     }
 }

@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
-import Modal from '../../Modal';
-import classes from './AddPost.module.css';
+import Modal from '../Modal';
+import classes from '../../css/AddPost.module.css';
 
-function AddPost({ user_id, onCreatePost, onClosePost }) {
+function AddPost({ user_id, fname, lname, onCreatePost, onClosePost }) {
   const caption = useRef('');
   const img = useRef('');
   const video = useRef('');
@@ -32,16 +32,10 @@ function AddPost({ user_id, onCreatePost, onClosePost }) {
     <Modal>
       <div className={classes['create-post']}>
         <div className={classes['create-post__header']}>
-          <div className={classes['create-post__user-info']}>
-            <img
-              // src={props.information.profile}
-              alt='profile'
-              className={classes.profile}
-            />
-            <h4 className={classes.username}>
-              {/* {props.information.fname} {props.information.lname} */}
-            </h4>
-          </div>
+          <div className={classes['create-post__user-photo']}></div>
+          <h4 className={classes.username}>
+            {fname} {lname}
+          </h4>
           <button className={classes.discard} onClick={onClosePost}>
             discard
           </button>
@@ -54,8 +48,10 @@ function AddPost({ user_id, onCreatePost, onClosePost }) {
               placeholder='What do you want to talk about?'
               ref={caption}
             ></textarea>
-            <input type='file' name='video' ref={img} />
-            <input type='file' ref={video} />
+            <label htmlFor='video' className={classes['video-input']}></label>
+            <label htmlFor='image' className={classes['image-input']}></label>
+            <input type='file' id='image' name='video' ref={img} />
+            <input type='file' id='video' ref={video} />
           </div>
 
           <div className={classes['create-post__footer']}>

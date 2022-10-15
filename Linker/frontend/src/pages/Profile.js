@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import useHttp from '../hooks/use-http';
 import Post from '../components/Post/Post';
-import AddPost from '../components/Post/AddPost/AddPost';
+import AddPost from '../components/Post/AddPost';
 import ProfileInformation from '../utils/Profile/Information/ProfileInformation';
 import ProfileStory from '../utils/Profile/Story/ProfileStory';
 import Container from '../components/UI/Container';
@@ -12,11 +13,12 @@ import Friends from './Friends';
 import classes from '../css/Profile.module.css';
 
 const Profile = ({ user_id }) => {
+  const params = useParams();
+  const query = new URLSearchParams(location.search);
   const { isLoading, isError, sendRequest } = useHttp();
   const [information, setInformation] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [postPort, setPostPort] = useState(false);
-
   const closePostPort = () => {
     setPostPort((prev) => !prev);
   };
@@ -70,21 +72,25 @@ const Profile = ({ user_id }) => {
 
   const getInformation = () => {
     sendRequest(
-      `user/information?user_id=${user_id}`,
+      `user/information?user_id=${query.get('user_id')}`,
       'GET',
       {},
       setInformation
     );
   };
   const getUserPosts = () => {
-    sendRequest(`user/posts?user_id=${user_id}`, 'GET', {}, transformPost);
+    sendRequest(
+      `user/posts?user_id=${query.get('user_id')}`,
+      'GET',
+      {},
+      transformPost
+    );
   };
   const createNewPost = (data) => {
     sendRequest('user/posts', 'POST', data, addNewPost);
   };
 
   useEffect(() => {
-    console.log('Fired')
     getInformation();
     getUserPosts();
   }, [setUserPosts]);
@@ -98,7 +104,13 @@ const Profile = ({ user_id }) => {
               {information.fname} {information.lname}
             </span>
           </div>
-          <ProfileInformation information={information} />
+          <ProfileInformation
+            work={information.work}
+            relation={information.relation}
+            education={information.education}
+            lives={information.lives}
+            information={information}
+          />
         </div>
         <div className={classes['right-side']}>
           <ProfileStory story={information.story} />
@@ -107,13 +119,19 @@ const Profile = ({ user_id }) => {
       </Container>
 
       <Container className='posts'>
-        <button className={classes['create-post-btn']} onClick={closePostPort}>
-          Create a new post
-        </button>
+        {user_id == query.get('user_id') && (
+          <button
+            className={classes['create-post-btn']}
+            onClick={closePostPort}
+          >
+            Create a new post
+          </button>
+        )}
         {postPort && (
           <AddPost
             user_id={user_id}
-            information={information}
+            fname={information.fname}
+            lname={information.lname}
             onCreatePost={createNewPost}
             onClosePost={closePostPort}
           />

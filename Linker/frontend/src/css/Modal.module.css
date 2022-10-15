@@ -8,7 +8,7 @@
     background-color: rgba(0, 0, 0, 0.75);
 }
 
-.overlay > div {
+.overlay>div {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -22,7 +22,8 @@
     padding: 15px;
     border-radius: 10px;
 }
-.overlay > div > img {
+
+.overlay>div>img {
     display: block;
     width: 550px;
     height: 560.15px;
@@ -30,9 +31,9 @@
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-    .overlay > div > * {
+    .overlay>div {
         width: 100vw;
+        padding: 0px;
+
     }
-}
-@media only screen and (max-width: 420px) {
 }

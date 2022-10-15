@@ -4,7 +4,7 @@ import useHttp from '../hooks/use-http';
 import AuthenticateContext from '../utils/authentication';
 import Button from '../components/UI/Button/Button';
 import Container from '../components/UI/Container';
-import FormHeader from '../components/FormHeader/FormHeader';
+import FormHeader from '../components/FormHeader';
 import Error from '../components/Error';
 import SpinnerLoading from '../components/Loading/Spinner';
 import classes from '../css/Form.module.css';
@@ -54,7 +54,7 @@ const Signin = () => {
 
   const authenticationHandler = (data) => {
     authContext.onLogin(data.token, data.user);
-    history.replace(`/profile/${data.user.username}`);
+    history.replace(`/profile/${data.user.username}?user_id=${data.user.user_id}`);
   };
 
   const submitFormHandler = (e) => {

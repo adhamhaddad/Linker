@@ -15,10 +15,14 @@ const Main = ({ user_id, windowSize }) => {
     <main className={classes.main}>
       <Switch>
         <Route path='/home' exact>
-          <Home title='Home-Page' user_id={user_id} />
+          <Home title='Home-Page' user_id={user_id} windowSize={windowSize} />
         </Route>
         <Route path='/profile/:username' exact>
-          <Profile title='Profile-Page' user_id={user_id} />
+          <Profile
+            title='Profile-Page'
+            user_id={user_id}
+            windowSize={windowSize}
+          />
         </Route>
         <Route path='/messages' exact={windowSize <= 600 && true}>
           <Messages

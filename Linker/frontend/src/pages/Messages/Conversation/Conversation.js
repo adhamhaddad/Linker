@@ -18,7 +18,7 @@ const Conversation = ({ user_id }) => {
     user_fname: '',
     user_lname: ''
   });
-
+  console.log(query.get('user_id'))
   const currentUserHandler = (user) => {
     setCurrentUser((prev) => {
       return { prev, user_fname: user.fname, user_lname: user.lname };
@@ -74,6 +74,7 @@ const Conversation = ({ user_id }) => {
   return (
     <div className={classes['chat-conversation']}>
       <ChatHeader
+        receiver_id={query.get('user_id')}
         username={currentUser.user_username}
         fname={currentUser.user_fname}
         lname={currentUser.user_lname}

@@ -1,6 +1,7 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, useEffect, useState } from 'react';
 import WindowContext from '../store/windowSize';
-import Authenticate from '../utils/authentication';
+import AuthenticateContext from '../utils/authentication';
+import useHttp from '../hooks/use-http';
 import Button from '../components/UI/Button/Button';
 import BackButton from '../components/UI/BackButton';
 import classes from '../css/Account.module.css';
@@ -46,9 +47,11 @@ const accountFormReducer = (state, action) => {
     gender: ''
   };
 };
-const Account = (props) => {
+const Account = ({user_id, }) => {
+  const [accountData, setAccountData] = useState({});
+  const { isLoading, isError, sendRequest } = useHttp();
   const windowCtx = useContext(WindowContext);
-  const authCtx = useContext(Authenticate);
+  const authCtx = useContext(AuthenticateContext);
   const [accountForm, dispatch] = useReducer(accountFormReducer, {
     username: '',
     email: '',
@@ -69,6 +72,9 @@ const Account = (props) => {
     e.preventDefault();
   };
 
+  useEffect(() => {
+    sendRequest(`user?user_id=${authCtx.user.user_id}`, 'GET', {}, setAccountData)
+  }, []);
   return (
     <section className={classes.sections}>
       {windowCtx.windowSize <= 600 && <BackButton path='/settings' />}
@@ -78,6 +84,7 @@ const Account = (props) => {
           <input
             type='text'
             value={accountForm.username}
+            placeholder={accountData.username}
             onChange={onChangeHandler}
           />
         </div>
@@ -86,12 +93,13 @@ const Account = (props) => {
           <input
             type='email'
             value={accountForm.email}
+            placeholder={accountData.email}
             onChange={onChangeHandler}
           />
         </div>
         <div>
           <label htmlFor='gender'>Gender</label>
-          <select name='gender' id='gender' onChange={onChangeHandler}>
+          <select name='gender' id='gender' onChange={onChangeHandler} value={accountData.gender}>
             <option value='male'>male</option>
             <option value='female'>female</option>
           </select>
@@ -106,7 +114,7 @@ const Account = (props) => {
         </div>
         <div>
           <label htmlFor='joined'>Joined</label>
-          <input type='text' value={props.joined} disabled />
+          <input type='text' value={new Date(accountData.joined).toLocaleString('en-US', {dateStyle: 'full'})} disabled />
         </div>
       </form>
 

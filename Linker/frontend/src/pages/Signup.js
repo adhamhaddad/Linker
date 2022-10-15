@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import { useHistory } from 'react-router-dom';
 import useHttp from '../hooks/use-http';
-import FormHeader from '../components/FormHeader/FormHeader';
+import FormHeader from '../components/FormHeader';
 import Container from '../components/UI/Container';
 import Button from '../components/UI/Button/Button';
 import classes from '../css/Form.module.css';

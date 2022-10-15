@@ -1,25 +1,34 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import CommentDate from '../Validation/CommentDate';
 import './CommentCard.css';
 
-function CommentCard(props) {
+function CommentCard({
+  comment_user_id,
+  username,
+  fname,
+  lname,
+  profile,
+  time,
+  content
+}) {
   return (
     <li className='comment-card'>
       <div className='comment-header'>
-        <a
-          href={`http://www.network.com/${props.comment.username}`}
+        <Link
+          to={`/profile/${username}?user_id=${comment_user_id}`}
           className='profile'
         >
-          <img src={props.comment.profile} alt='profile' />
-        </a>
+          <img src={profile} alt='profile' />
+        </Link>
         <h4 className='username'>
-          <a href={`http://www.network.com/${props.comment.username}`}>
-            {props.comment.username}
+          <a href={`/profile/${username}?user_id=${comment_user_id}`}>
+            {fname} {lname}
           </a>
         </h4>
-        <CommentDate time={props.comment.time} />
+        <CommentDate time={time} />
       </div>
-      <div className='comment-content'>{props.comment.content}</div>
+      <div className='comment-content'>{content}</div>
       <div className='comment-footer'>
         <button>like</button>
         <i className='fa-solid fa-circle period'></i>

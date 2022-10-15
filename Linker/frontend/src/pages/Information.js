@@ -1,69 +1,220 @@
-import React from 'react';
+import React, { useEffect, useState, useContext, useReducer } from 'react';
+import useHttp from '../hooks/use-http';
+import AuthenticateContext from '../utils/authentication';
 import BackButton from '../components/UI/BackButton';
 import classes from '../css/Information.module.css';
 
+const NameReducer = (state, action) => {
+  if (action.type === 'INPUT') {
+    return {
+      fname: action.val,
+      lname: state.lname,
+      isValid: state.fname.trim().length > 0 && state.lname.trim().length > 0
+    };
+  }
+  if (action.type === 'BLUR') {
+    return {
+      fname: state.fname,
+      lname: state.lname,
+      isValid: state.fname.trim().length > 0 && state.lname.trim().length > 0
+    };
+  }
+  return {
+    fname: '',
+    lname: ''
+  };
+};
+
 const Information = ({ windowSize }) => {
+  // const [informationData, setInformationData] = useState({});
+  const [editName, setEditName] = useState(false);
+  const [editLocation, setEditLocation] = useState(false);
+  const [editStory, setEditStory] = useState(false);
+
+  const [storyValue, setStoryValue] = useState('');
+  const [nameValue, setNameValue] = useState({});
+  const [locationValue, setLocationValue] = useState('');
+
+  const authCtx = useContext(AuthenticateContext);
+  const { isLoading, isError, sendRequest } = useHttp();
+
+  const editNameToggle = () => {
+    setEditName((prev) => !prev);
+  };
+  const editLocationToggle = () => {
+    setEditLocation((prev) => !prev);
+  };
+  const editStoryToggle = () => {
+    setEditStory((prev) => !prev);
+  };
+  const saveStory = (e) => {
+    sendRequest(
+      `user/information/story`,
+      'PATCH',
+      {
+        story: e.target.value
+      },
+      null
+    );
+  };
+
+  const onNameChange = (e) => {
+    console.log(e);
+  };
+
+  const saveName = (e) => {
+    sendRequest(
+      `user/information/fname`,
+      'PATCH',
+      {
+        fname: e.target.value
+      },
+      null
+    );
+    // condition
+    sendRequest(
+      `user/information/lname`,
+      'PATCH',
+      {
+        lname: e.target.value
+      },
+      null
+    );
+  };
+  const saveLocation = (e) => {
+    sendRequest(
+      `user/information`,
+      'PATCH',
+      {
+        city: e.target.value,
+        country: e.target.value
+      },
+      null
+    );
+  };
+
+  const setInformationData = (e) => {
+    setNameValue({
+      fname: e.fname,
+      lname: e.lname
+    });
+    setStoryValue(e.story);
+    setLocationValue(e.lives);
+  };
+
+  const onNameChangeHandler = (e) => {
+    setNameValue({
+      fname: e.target.value,
+      lname: e.target.value
+    });
+  };
+
+  const onChangeStoryHandler = (e) => {
+    setStoryValue(e.target.value);
+  };
+
+  useEffect(() => {
+    sendRequest(
+      `user/information?user_id=${authCtx.user.user_id}`,
+      'GET',
+      {},
+      setInformationData
+    );
+  }, []);
+
   return (
-    <form className={classes['settings-form']}>
+    <form className={classes['information-form']}>
       {windowSize <= 600 && <BackButton path='/settings' />}
       <h3>information</h3>
       <div>
         <span>name</span>
-        <p className={classes.username}>adham ashraf haddad</p>
-        <button type='button'>edit</button>
+        {editName && (
+          <>
+            <input value={nameValue.fname} onChange={onNameChangeHandler} />
+            <input value={nameValue.lname} />
+            <button type='button' onClick={saveName}>
+              save
+            </button>
+          </>
+        )}
+        {!editName && (
+          <>
+            <p className={classes.username}>
+              {nameValue.fname} {nameValue.lname}
+            </p>
+            <button type='button' onClick={editNameToggle}>
+              edit
+            </button>
+          </>
+        )}
       </div>
 
       <div>
-        <span>gender</span>
-        <p className={classes.gender}>male</p>
-        <button>edit</button>
-      </div>
-      <div>
         <span>location</span>
-        <p className='location'>egypt, giza</p>
-        <button>edit</button>
+        {!editLocation && (
+          <>
+            <p className='location'>{locationValue}</p>
+            <button onClick={editLocationToggle}>edit</button>
+          </>
+        )}
+        {editLocation && (
+          <>
+            <input type='text' value={locationValue} placeholder='Location' />
+            <button onClick={saveLocation}>save</button>
+          </>
+        )}
       </div>
       <div>
         <span>birthday</span>
-        <p className='birthday'>february, 8, 2002</p>
+        <p className='birthday'>{}</p>
         <button>edit</button>
       </div>
+
       <div>
         <span>story</span>
-
-        <p className='story'>
-          Hi, I am Adham. I am a student at High Institute for Computers &
-          Management Information Systems started in 2019 and I will graduate in
-          2023. I started my Full-Stack journey in 2019 and built many projects
-          using many languages. I also joined Udacity Nanodegree programs and
-          got certified as a Professional Front End Web Developer. I worked too
-          hard to achieve this progress, its my passion and I need an
-          opportunity to show myself.
-        </p>
-        <button>edit</button>
+        {!editStory && (
+          <>
+            <p>{storyValue}</p>
+            <button type='button' onClick={editStoryToggle}>
+              edit
+            </button>
+          </>
+        )}
+        {editStory && (
+          <>
+            <textarea
+              className={classes.story}
+              value={storyValue}
+              onChange={onChangeStoryHandler}
+            ></textarea>
+            <button type='button' onClick={saveStory}>
+              save
+            </button>
+          </>
+        )}
       </div>
 
       <h3>links</h3>
       <div>
         <span>linkedIn</span>
-        <p>https://linkedin.com/in/adhamashraf</p>
-        <button>edit</button>
+        <p className={classes['information-links']}>{}</p>
+        <button type='button'>edit</button>
       </div>
       <div>
         <span>twitter</span>
-        <p>https://twitter.com/AdhamHaddad_</p>
-        <button>edit</button>
+        <p className={classes['information-links']}>{}</p>
+        <button type='button'>edit</button>
       </div>
 
       <h3>education</h3>
       <div>
         <span>work</span>
-        <p>The Sparks Foundation - Web Development and Designing</p>
-        <button>edit</button>
+        <p>{}</p>
+        <button type='button'>edit</button>
       </div>
       <div>
         <span>education</span>
-        <p>Computers and Information Systems - B.S</p>
+        <p>{}</p>
         <button>edit</button>
       </div>
     </form>
