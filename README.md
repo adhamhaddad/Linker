@@ -10,7 +10,6 @@ This is a Social-Network platform called `Linker` that simulates `Facebook` and 
 
 - npm 6.14.8 (LTS) or more recent, Yarn can work but was not tested for this project
 
-
 ## Installation
 
 ### Database setup
@@ -41,13 +40,13 @@ POSTGRES_PASSWORD=admin123
 SECRET_TOKEN=love-you
 SALT_ROUNDS=10
 SECRET_PEPER=thor-thunder
-# AWS config
-URL=http://localhost:3000
 ```
 
 2. Second to install the node_modules run `npm install` or `yarn`. After installation is done start the api in dev mode with `npm run dev` or `yarn dev`.
 
 3. Without closing the terminal in step 1, navigate to the frontend `cd frontend` to intall the node_modules `npm install` or `yarn`. After installation is done start the api in dev mode with `npm run start` or `yarn start`.
+
+Note: open `Social-Network/Linker/frontend/src/hooks/use-http.js` if you want to access from a mobile device on the same network
 
 ## Unit Tests:
 
