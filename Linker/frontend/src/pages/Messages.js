@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import Container from '../components/UI/Container';
-import ChatUsers from './Messages/ChatUsers/ChatUsers';
-import Conversation from './Messages/Conversation/Conversation';
+import ChatUsers from '../components/Messages/ChatUsers';
+import Conversation from '../components/Messages/Conversation';
 
 const Messages = ({ user_id, windowSize }) => {
   return (

@@ -18,7 +18,7 @@
   "scripts": {
     "lint": "eslint src/**/*.js --fix",
     "format": "prettier --write src/components/**/*.js && prettier --write src/*.js",
-    "start": "PORT=4000 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

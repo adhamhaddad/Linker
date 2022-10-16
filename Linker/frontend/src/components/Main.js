@@ -3,12 +3,13 @@ import { Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import Messages from '../pages/Messages';
-import Notification from '../pages/Notification';
+import Notification from '../pages/Notifications';
 import Settings from '../pages/Settings';
 import Account from '../pages/Account';
 import Information from '../pages/Information';
-import Conversation from '../pages/Messages/Conversation/Conversation';
+import Conversation from './Messages/Conversation';
 import classes from '../css/Main.module.css';
+import UnderDevelopment from '../pages/NotAvailable';
 
 const Main = ({ user_id, windowSize }) => {
   return (
@@ -24,6 +25,9 @@ const Main = ({ user_id, windowSize }) => {
             windowSize={windowSize}
           />
         </Route>
+        <Route path='/friend-request' exact>
+          <UnderDevelopment />
+        </Route>
         <Route path='/messages' exact={windowSize <= 600 && true}>
           <Messages
             title='Messages-Page'
@@ -31,24 +35,36 @@ const Main = ({ user_id, windowSize }) => {
             windowSize={windowSize}
           />
         </Route>
-        <Route path='/settings' exact={windowSize <= 600 && true}>
-          <Settings title='Settings-Page' windowSize={windowSize} />
-        </Route>
-        <Route path='/notifications'>
-          <Notification title='Notifications-Page' />
-        </Route>
-
         <Route path='/messages/:username/:phone-screen' exact>
           <Conversation user_id={user_id} />
         </Route>
-        <Route path='/settings/notification/:phone-screen' exact>
-          <Notification title='Notifications-Page' windowSize={windowSize} />
+        <Route path='/notifications'>
+          <UnderDevelopment />
+        </Route>
+
+        <Route path='/settings' exact={windowSize <= 600 && true}>
+          <Settings title='Settings-Page' windowSize={windowSize} />
         </Route>
         <Route path='/settings/information/:phone-screen' exact>
           <Information title='Information-Page' windowSize={windowSize} />
         </Route>
+        <Route path='/settings/privacy/:phone-screen' exact>
+          <UnderDevelopment />
+        </Route>
+        <Route path='/settings/emails/:phone-screen' exact>
+          <UnderDevelopment />
+        </Route>
+        <Route path='/settings/notifications/:phone-screen' exact>
+          <UnderDevelopment />
+        </Route>
+        <Route path='/settings/language/:phone-screen' exact>
+          <UnderDevelopment />
+        </Route>
         <Route path='/settings/account/:phone-screen' exact>
           <Account title='Account-Page' windowSize={windowSize} />
+        </Route>
+        <Route path='/settings/help/:phone-screen' exact>
+          <UnderDevelopment />
         </Route>
       </Switch>
     </main>

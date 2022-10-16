@@ -1,6 +1,6 @@
 .sections {
-    width: 75%;
     padding: 10px;
+    height: 100%;
     background-color: var(--base-color-light);
 }
 

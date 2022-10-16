@@ -34,7 +34,7 @@ Open postgres terminal with: `psql postgres`
 
 ```
 ENV=dev
-PORT=8000
+PORT=4000
 # Database config
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
@@ -47,7 +47,7 @@ SECRET_TOKEN=love-you
 SALT_ROUNDS=10
 SECRET_PEPER=thor-thunder
 # AWS config
-URL=http://localhost:4000
+URL=http://localhost:3000
 ```
 
 2. Second to install the node_modules run `npm install` or `yarn`. After installation is done start the api in dev mode with `npm run dev` or `yarn dev`.
@@ -56,7 +56,7 @@ URL=http://localhost:4000
 
 ## Unit Tests:
 
-Unit tests are using the Jasmine Framework.
+No Unit test available now.
 
 ## Built With
 

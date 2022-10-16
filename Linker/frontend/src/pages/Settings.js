@@ -3,12 +3,13 @@ import { Route, NavLink } from 'react-router-dom';
 import Container from '../components/UI/Container';
 import Information from './Information';
 import Account from './Account';
+import UnderDevelopment from './NotAvailable';
 import classes from '../css/Settings.module.css';
 
 function Settings({ windowSize }) {
   return (
     <Container className='settings'>
-      <section className={classes.menu}>
+      <section className={classes['settings-navigation']}>
         <ul>
           <li>
             <NavLink
@@ -103,24 +104,29 @@ function Settings({ windowSize }) {
           </li>
         </ul>
       </section>
+      <section className={classes['settings-section']}>
       <Route path='/settings/information' exact>
         <Information windowSize={windowSize} />
       </Route>
       <Route path='/settings/privacy' exact>
-        <Information windowSize={windowSize} />
+        <UnderDevelopment />
       </Route>
       <Route path='/settings/emails' exact>
-        <Information windowSize={windowSize} />
+        <UnderDevelopment />
+      </Route>
+      <Route path='/settings/notifications' exact>
+        <UnderDevelopment />
       </Route>
       <Route path='/settings/language' exact>
-        <Information windowSize={windowSize} />
+        <UnderDevelopment />
       </Route>
       <Route path='/settings/account' exact>
         <Account windowSize={windowSize} />
       </Route>
       <Route path='/settings/help' exact>
-        <Information windowSize={windowSize} />
+        <UnderDevelopment />
       </Route>
+      </section>
     </Container>
   );
 }

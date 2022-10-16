@@ -1,13 +1,13 @@
-.menu {
+.settings-navigation {
     width: 25%;
     height: 100%;
     font-size: 14px;
 }
-.menu ul li {
+.settings-navigation ul li {
     display: block
 }
 
-.menu ul li a {
+.settings-navigation ul li a {
     text-transform: capitalize;
     display: block;
     width: 100%;
@@ -17,21 +17,23 @@
     color: var(--base-color-light);
 }
 
-.menu ul li a:hover {
+.settings-navigation ul li a:hover {
     background-color: var(--base-background-hovered)
 }
 
 .active {
     background-color: var(--base-background-hovered);
 }
-
+.settings-section {
+    width: 75%;
+}
 /*** Media Querry ***/
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 890px) {}
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-    .menu {
+    .settings-navigation {
         width: 100%;
     }
 

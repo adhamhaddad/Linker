@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PostDate from './Validation/PostDate';
+import PostDate from '../../Validation/PostDate';
 import PostController from './PostController';
 import classes from '../../css/PostHeader.module.css';
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext, useReducer } from 'react';
 import useHttp from '../hooks/use-http';
+import Footer from '../components/Footer';
 import AuthenticateContext from '../utils/authentication';
 import BackButton from '../components/UI/BackButton';
 import classes from '../css/Information.module.css';
@@ -26,7 +27,7 @@ const NameReducer = (state, action) => {
 };
 
 const Information = ({ windowSize }) => {
-  // const [informationData, setInformationData] = useState({});
+  const [informationData, setInformationData] = useState({});
   const [editName, setEditName] = useState(false);
   const [editLocation, setEditLocation] = useState(false);
   const [editStory, setEditStory] = useState(false);
@@ -93,7 +94,7 @@ const Information = ({ windowSize }) => {
     );
   };
 
-  const setInformationData = (e) => {
+  const setInformation = (e) => {
     setNameValue({
       fname: e.fname,
       lname: e.lname
@@ -118,12 +119,13 @@ const Information = ({ windowSize }) => {
       `user/information?user_id=${authCtx.user.user_id}`,
       'GET',
       {},
+      // null
       setInformationData
     );
   }, []);
 
   return (
-    <form className={classes['information-form']}>
+    <div className={classes['information']}>
       {windowSize <= 600 && <BackButton path='/settings' />}
       <h3>information</h3>
       <div>
@@ -167,7 +169,7 @@ const Information = ({ windowSize }) => {
       <div>
         <span>birthday</span>
         <p className='birthday'>{}</p>
-        <button>edit</button>
+        <button type='button'>edit</button>
       </div>
 
       <div>
@@ -217,7 +219,8 @@ const Information = ({ windowSize }) => {
         <p>{}</p>
         <button>edit</button>
       </div>
-    </form>
+      <Footer />
+    </div>
   );
 };
 export default Information;

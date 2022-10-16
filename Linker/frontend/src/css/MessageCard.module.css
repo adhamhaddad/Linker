@@ -1,0 +1,99 @@
+.message-container {
+    position: relative;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.message-profile {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 12px;
+    margin: 0 5px;
+    align-self: flex-end;
+    color: var(--base-color-light);
+    background-image: url('../icons/anonymous_user.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.message-info {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+    border-radius: 12px 12px 12px 0px;
+    overflow: hidden;
+    background-color: var(--base-background-dark);
+    color: var(--base-color-light)
+}
+
+.message-content {
+    font-size: 14px;
+    word-wrap: break-word;
+    padding: 10px;
+    text-align: left;
+}
+
+.message-time {
+    font-size: 10px;
+    padding: 5px 10px;
+}
+
+.message-content:lang(ar) {
+    text-align: right;
+}
+
+
+/* Sender */
+.sender {
+    direction: rtl;
+}
+
+.sender .message-info {
+    border: 1px solid var(--base-color-dark);
+    border-radius: 12px 12px 0px 12px;
+    direction: ltr;
+    margin-left: auto;
+}
+
+.sender .message-time {
+    text-align: right;
+}
+
+.sender .message-status {
+    margin-right: 5px;
+}
+
+/* Receiver */
+.receiver {
+    direction: ltr
+}
+
+.receiver .message-info {
+    border: 1px solid rgb(219, 219, 219);
+    color: var(--base-color-dark);
+    background-color: var(--base-color-light);
+    margin-right: auto;
+}
+
+.receiver .message-time {
+    color: var(--base-color-dark);
+}
+
+.receiver .message-status {
+    margin-left: 5px;
+}
+
+
+
+.message-status {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    align-self: flex-end;
+}

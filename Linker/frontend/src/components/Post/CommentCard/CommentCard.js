@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CommentDate from '../Validation/CommentDate';
+import CommentDate from '../../../Validation/CommentDate';
 import './CommentCard.css';
 
 function CommentCard({

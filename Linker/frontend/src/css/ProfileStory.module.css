@@ -9,6 +9,9 @@
     font-size: 16px;
     padding: 10px 0;
 }
+.story h3 i {
+    width: 30px;
+}
 .story p {
     width: 100%;
     max-height: 250px;

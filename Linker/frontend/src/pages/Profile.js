@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useHttp from '../hooks/use-http';
 import Post from '../components/Post/Post';
 import AddPost from '../components/Post/AddPost';
-import ProfileInformation from '../utils/Profile/Information/ProfileInformation';
-import ProfileStory from '../utils/Profile/Story/ProfileStory';
+import ProfileInformation from '../components/ProfileInformation';
+import ProfileStory from '../components/ProfileStory';
 import Container from '../components/UI/Container';
 import ProfilePicture from '../utils/Profile/ProfilePicture/ProfilePicture';
 import SpinnerLoading from '../components/Loading/Spinner';
@@ -109,7 +109,6 @@ const Profile = ({ user_id }) => {
             relation={information.relation}
             education={information.education}
             lives={information.lives}
-            information={information}
           />
         </div>
         <div className={classes['right-side']}>
