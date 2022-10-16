@@ -9,7 +9,7 @@ const useHttp = () => {
   const sendRequest = useCallback(async (url, method, body, responseData) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`http://192.168.1.6:8000/${url}`, {
+      const response = await fetch(`http://localhost:4000/${url}`, {
         method: method,
         headers: {
           'Content-Type': 'application/json',
