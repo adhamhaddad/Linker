@@ -5,11 +5,11 @@ const useHttp = () => {
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const authCtx = useContext(AuthenticateContext);
-
   const sendRequest = useCallback(async (url, method, body, responseData) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`http://localhost:4000/${url}`, {
+      //! IMPORTANT. replace 192.168.1.6 with your IP. you can find it in the terminal message
+      const response = await fetch(`http://192.168.1.6:4000/${url}`, {
         method: method,
         headers: {
           'Content-Type': 'application/json',
