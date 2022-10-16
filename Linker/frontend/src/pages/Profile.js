@@ -7,9 +7,9 @@ import ProfileInformation from '../components/ProfileInformation';
 import ProfileStory from '../components/ProfileStory';
 import Container from '../components/UI/Container';
 import ProfilePicture from '../utils/Profile/ProfilePicture/ProfilePicture';
+import Friends from './Friends';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';
-import Friends from './Friends';
 import classes from '../css/Profile.module.css';
 
 const Profile = ({ user_id, username }) => {
@@ -18,20 +18,28 @@ const Profile = ({ user_id, username }) => {
   const [information, setInformation] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [postPort, setPostPort] = useState(false);
+
   const closePostPort = () => {
     setPostPort((prev) => !prev);
   };
+
   const transformNewPost = (post) => {
-    return {
+    const transformedData = {
       ...post,
+      user_id: user_id,
+      username: username,
+      fname: information.fname,
+      lname: information.lname,
       content: {
         caption: post.caption,
         img: post.img,
         video: post.video
       }
     };
+    setUserPosts((prev) => [...prev, transformedData]);
   };
-  const transformPost = (data) => {
+
+  const transformPosts = (data) => {
     const transformedData = data.map((post) => {
       return {
         ...post,
@@ -44,11 +52,9 @@ const Profile = ({ user_id, username }) => {
     });
     setUserPosts(transformedData);
   };
-  const addNewPost = (data) => {
-    setUserPosts((prev) => [...prev, transformNewPost(data)]);
-  };
+
   const posts =
-    userPosts.length &&
+    userPosts.length > 0 &&
     userPosts
       .map((post) => {
         return (
@@ -78,16 +84,17 @@ const Profile = ({ user_id, username }) => {
     );
   };
   const getUserPosts = () => {
-    sendRequest(`user/posts/${params.username}`, 'GET', {}, transformPost);
+    sendRequest(`user/posts/${params.username}`, 'GET', {}, transformPosts);
   };
+
   const createNewPost = (data) => {
-    sendRequest('user/posts', 'POST', data, addNewPost);
+    sendRequest('user/posts', 'POST', data, transformNewPost);
   };
 
   useEffect(() => {
     getInformation();
     getUserPosts();
-  }, [setUserPosts, params]);
+  }, [params]);
   return (
     <>
       <Container className='profile'>
