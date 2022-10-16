@@ -76,7 +76,7 @@ const Signup = () => {
     dispatch({ type: e.target.type.toUpperCase(), val: e.target.value });
   };
   const createNewUser = () => {
-    sendRequest('user', 'POST', {
+    sendRequest('users', 'POST', {
       username: formState.username,
       email: formState.email,
       password: formState.password,

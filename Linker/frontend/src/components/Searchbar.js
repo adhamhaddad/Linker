@@ -15,7 +15,7 @@ const SearchBar = () => {
     fetchedUsers.map((user) => {
       return (
         <li key={user.user_id}>
-          <Link to={`/profile/${user.username}?user_id=${user.user_id}`}>
+          <Link to={`/profile/${user.username}`}>
             <div
               style={{ backgroundImage: `url${user.profile}` }}
               title={user.username}

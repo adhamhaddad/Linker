@@ -54,7 +54,7 @@ const Signin = () => {
 
   const authenticationHandler = (data) => {
     authContext.onLogin(data.token, data.user);
-    history.replace(`/profile/${data.user.username}?user_id=${data.user.user_id}`);
+    history.replace(`/profile/${data.user.username}`);
   };
 
   const submitFormHandler = (e) => {

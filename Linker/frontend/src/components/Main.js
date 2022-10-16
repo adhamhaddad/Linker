@@ -11,17 +11,23 @@ import Conversation from './Messages/Conversation';
 import classes from '../css/Main.module.css';
 import UnderDevelopment from '../pages/NotAvailable';
 
-const Main = ({ user_id, windowSize }) => {
+const Main = ({ user_id, username, windowSize }) => {
   return (
     <main className={classes.main}>
       <Switch>
         <Route path='/home' exact>
-          <Home title='Home-Page' user_id={user_id} windowSize={windowSize} />
+          <Home
+            title='Home-Page'
+            user_id={user_id}
+            username={username}
+            windowSize={windowSize}
+          />
         </Route>
         <Route path='/profile/:username' exact>
           <Profile
             title='Profile-Page'
             user_id={user_id}
+            username={username}
             windowSize={windowSize}
           />
         </Route>
@@ -32,6 +38,7 @@ const Main = ({ user_id, windowSize }) => {
           <Messages
             title='Messages-Page'
             user_id={user_id}
+            username={username}
             windowSize={windowSize}
           />
         </Route>
@@ -43,10 +50,18 @@ const Main = ({ user_id, windowSize }) => {
         </Route>
 
         <Route path='/settings' exact={windowSize <= 600 && true}>
-          <Settings title='Settings-Page' windowSize={windowSize} />
+          <Settings
+            title='Settings-Page'
+            username={username}
+            windowSize={windowSize}
+          />
         </Route>
         <Route path='/settings/information/:phone-screen' exact>
-          <Information title='Information-Page' windowSize={windowSize} />
+          <Information
+            title='Information-Page'
+            username={username}
+            windowSize={windowSize}
+          />
         </Route>
         <Route path='/settings/privacy/:phone-screen' exact>
           <UnderDevelopment />
@@ -61,7 +76,11 @@ const Main = ({ user_id, windowSize }) => {
           <UnderDevelopment />
         </Route>
         <Route path='/settings/account/:phone-screen' exact>
-          <Account title='Account-Page' windowSize={windowSize} />
+          <Account
+            title='Account-Page'
+            windowSize={windowSize}
+            username={username}
+          />
         </Route>
         <Route path='/settings/help/:phone-screen' exact>
           <UnderDevelopment />

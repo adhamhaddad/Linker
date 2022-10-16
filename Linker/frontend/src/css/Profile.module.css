@@ -1,15 +1,16 @@
 .left-side {
-    flex-grow: 0;
+    flex-grow: 0.2;
 }
 
 .username {
     display: block;
-    width: 150px;
+    width: fit-content;
     padding: 10px 0;
     text-transform: capitalize;
     font-size: 15px;
     font-weight: 800;
 }
+
 /* Right Side */
 .right-side {
     width: 400px;
@@ -17,6 +18,19 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.add-friend {
+    height: 30px;
+    padding: 0 5px;
+    border-radius: 2px;
+    margin-left: 10px;
+    background-color: var(--base-color-light);
+    cursor: pointer;
+}
+
+.add-friend:hover {
+    border: 1px solid var(--base-color-light)
 }
 
 .create-post-btn {
@@ -29,26 +43,44 @@
 }
 
 /* Effects */
-a:hover {background-color: var(--base-background-light); transition: background .7s}
-a[title='LinkedIn']:hover {background-color: #0E76A8; transition: background .7s}
-a[title='Facebook']:hover {background-color: #1777f2; transition: background .7s}
-a[title='Twitter']:hover {background-color: #00ACEE; transition: background .7s}
-a[title='Whatsapp']:hover {background-color: #24CC63; transition: background .7s}
-a[title='Telegram']:hover {background-color: #0084C6; transition: background .7s}
+a:hover {
+    background-color: var(--base-background-light);
+    transition: background .7s
+}
+
+a[title='LinkedIn']:hover {
+    background-color: #0E76A8;
+    transition: background .7s
+}
+
+a[title='Facebook']:hover {
+    background-color: #1777f2;
+    transition: background .7s
+}
+
+a[title='Twitter']:hover {
+    background-color: #00ACEE;
+    transition: background .7s
+}
+
+a[title='Whatsapp']:hover {
+    background-color: #24CC63;
+    transition: background .7s
+}
+
+a[title='Telegram']:hover {
+    background-color: #0084C6;
+    transition: background .7s
+}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-}
+@media only screen and (min-width: 1200px) {}
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (max-width: 1080px) {
-   
-}
+@media only screen and (max-width: 1080px) {}
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 768px) {
-
-}
+@media only screen and (max-width: 768px) {}
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {

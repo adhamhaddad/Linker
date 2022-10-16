@@ -2,7 +2,7 @@ import database from '../database';
 import Info from '../types/Information';
 
 class Information {
-  async createInfo(i: Info, user_id: string): Promise<Info> {
+  async createInfo(i: Info): Promise<Info> {
     try {
       const connection = await database.connect();
       const sql = `
@@ -17,7 +17,7 @@ class Information {
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
         RETURNING *`;
       const result = await connection.query(sql, [
-        user_id,
+        i.user_id,
         i.fname.toLowerCase(),
         i.lname.toLowerCase(),
         i.phone,
@@ -38,11 +38,15 @@ class Information {
     }
   }
 
-  async getInfo(user_id: string): Promise<Info> {
+  async getInfo(username: string): Promise<Info> {
     try {
       const connection = await database.connect();
-      const sql = 'SELECT * FROM information WHERE user_id=$1';
-      const result = await connection.query(sql, [user_id]);
+      const sql = `
+      SELECT DISTINCT i.*
+      FROM users u, information i
+      WHERE
+      i.user_id=u.user_id AND u.username=$1`;
+      const result = await connection.query(sql, [username]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -50,12 +54,12 @@ class Information {
     }
   }
 
-  async updateFname(i: Info) {
+  async updateFname(username: string, i: Info) {
     try {
       const connection = await database.connect();
-      const sql = 'UPDATE information SET fname=$2, WHERE user_id=$1';
+      const sql = 'UPDATE information SET fname=$2 WHERE username=$1';
       const result = await connection.query(sql, [
-        i.user_id,
+        username,
         i.fname.toLowerCase()
       ]);
       connection.release();
@@ -66,12 +70,12 @@ class Information {
       );
     }
   }
-  async updateLname(i: Info): Promise<Info> {
+  async updateLname(username: string, i: Info): Promise<Info> {
     try {
       const connection = await database.connect();
-      const sql = 'UPDATE information SET lname=$2, WHERE user_id=$1';
+      const sql = 'UPDATE information SET lname=$2 WHERE user_id=$1';
       const result = await connection.query(sql, [
-        i.user_id,
+        username,
         i.lname.toLowerCase()
       ]);
       connection.release();
@@ -83,11 +87,11 @@ class Information {
     }
   }
 
-  async updatePhone(i: Info): Promise<Info> {
+  async updatePhone(username: string, i: Info): Promise<Info> {
     try {
       const connection = await database.connect();
-      const sql = 'UPDATE information SET phone=$2, WHERE user_id=$1';
-      const result = await connection.query(sql, [i.user_id, i.phone]);
+      const sql = 'UPDATE information SET phone=$2 WHERE user_id=$1';
+      const result = await connection.query(sql, [username, i.phone]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -97,12 +101,12 @@ class Information {
     }
   }
 
-  async updateProfile(i: Info): Promise<Info[]> {
+  async updateProfile(username: string, i: Info): Promise<Info[]> {
     try {
       const connection = await database.connect();
       const sql =
-        'UPDATE information SET profile=$2 WHERE user_id=$1 RETURNING *';
-      const result = await connection.query(sql, [i.user_id, i.profile]);
+        'UPDATE information SET profile=$2 WHERE username=$1 RETURNING *';
+      const result = await connection.query(sql, [username, i.profile]);
       connection.release();
       return result.rows[0];
     } catch (error) {

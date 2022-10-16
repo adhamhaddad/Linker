@@ -15,7 +15,7 @@ const NavigationBar = ({ username, user_id }) => {
       </li>
       <li>
         <NavLink
-          to={`/profile/${username}?user_id=${user_id}`}
+          to={`/profile/${username}`}
           activeClassName={classes.active}
           title='Profile'
         >

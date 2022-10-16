@@ -29,7 +29,7 @@ const Home = ({ user_id, windowSize }) => {
 
   useEffect(() => {
     sendRequest(
-      `users/posts?user_id=${authCtx.user.user_id}`,
+      `users/posts/${authCtx.user.username}`,
       'GET',
       {},
       transformPost
@@ -58,8 +58,15 @@ const Home = ({ user_id, windowSize }) => {
     <>
       <div className={classes['home-page']}>
         {windowSize <= 600 && <SearchBar />}
-      <Container className='home'>{posts.length > 0 && posts}</Container>
-        {/* <Container className='home'></Container> */}
+        <Container className='home'>
+          {posts && posts}
+          {!posts && (
+            <div className={classes['no-posts']}>
+              <p>No posts found.</p>
+              <p>please add friends to see there posts</p>
+            </div>
+          )}
+        </Container>
         {isLoading && <SpinnerLoading color='dark' />}
         {isError !== null && <Error message={isError} />}
       </div>

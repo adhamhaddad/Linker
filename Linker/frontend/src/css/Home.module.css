@@ -3,3 +3,10 @@
     display: flex;
     flex-direction: column;
 }
+
+.no-posts {
+    margin: 20px auto 0;
+    color: var(--base-color-dark);
+    text-align: center;
+    font-size: 14px;
+}

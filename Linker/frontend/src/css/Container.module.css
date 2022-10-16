@@ -33,6 +33,7 @@
 
 .container.home {
     overflow-y: auto;
+    background-color: var(--base-color-light);
 }
 
 .container.profile.loading {

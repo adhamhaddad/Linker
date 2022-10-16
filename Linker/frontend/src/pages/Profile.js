@@ -12,9 +12,8 @@ import Error from '../components/Error';
 import Friends from './Friends';
 import classes from '../css/Profile.module.css';
 
-const Profile = ({ user_id }) => {
+const Profile = ({ user_id, username }) => {
   const params = useParams();
-  const query = new URLSearchParams(location.search);
   const { isLoading, isError, sendRequest } = useHttp();
   const [information, setInformation] = useState({});
   const [userPosts, setUserPosts] = useState([]);
@@ -72,19 +71,14 @@ const Profile = ({ user_id }) => {
 
   const getInformation = () => {
     sendRequest(
-      `user/information?user_id=${query.get('user_id')}`,
+      `user/information/${params.username}`,
       'GET',
       {},
       setInformation
     );
   };
   const getUserPosts = () => {
-    sendRequest(
-      `user/posts?user_id=${query.get('user_id')}`,
-      'GET',
-      {},
-      transformPost
-    );
+    sendRequest(`user/posts/${params.username}`, 'GET', {}, transformPost);
   };
   const createNewPost = (data) => {
     sendRequest('user/posts', 'POST', data, addNewPost);
@@ -93,7 +87,7 @@ const Profile = ({ user_id }) => {
   useEffect(() => {
     getInformation();
     getUserPosts();
-  }, [setUserPosts]);
+  }, [setUserPosts, params]);
   return (
     <>
       <Container className='profile'>
@@ -101,7 +95,12 @@ const Profile = ({ user_id }) => {
           <div className={classes['user-id']}>
             <ProfilePicture information={information.profile} />
             <span className={classes.username}>
-              {information.fname} {information.lname}
+              {information.fname} {information.lname}{' '}
+              {username !== params.username && (
+                <button className={classes['add-friend']}>
+                  Add Friend <i className='fa-solid fa-user-plus'></i>
+                </button>
+              )}
             </span>
           </div>
           <ProfileInformation
@@ -118,7 +117,7 @@ const Profile = ({ user_id }) => {
       </Container>
 
       <Container className='posts'>
-        {user_id == query.get('user_id') && (
+        {username == params.username && (
           <button
             className={classes['create-post-btn']}
             onClick={closePostPort}

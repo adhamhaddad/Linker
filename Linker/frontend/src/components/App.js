@@ -26,6 +26,7 @@ const App = () => {
         <Route path='/'>
           <Main
             user_id={authCtx.user.user_id}
+            username={authCtx.user.username}
             windowSize={windowSize.windowSize}
           />
         </Route>
