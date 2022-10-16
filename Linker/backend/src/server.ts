@@ -13,12 +13,16 @@ import likes_controller_routes from './controllers/Likes';
 import comments_controller_routes from './controllers/Comments';
 import shares_controller_routes from './controllers/Shares';
 import config from './config';
+import os from 'os';
+
 // import { Server } from 'socket.io';
 // import http from 'http';
 
 // Express App
 const app: Application = express();
 export const port = config.port || 8080;
+const ip = os.networkInterfaces()['wlan0']?.[0].address;
+
 const corsOptions = {
   origin: '*',
   optionsSucessStatus: 200,
@@ -87,10 +91,10 @@ io.on('connection', (socket) => {
   });
 });
 */
+
 app.listen(port, () => {
-  console.log(`Backend server is listening on ${config.port}`);
-  console.log(`Frontend server is running on ${config.url}`);
-  console.log(`press CTRL+C to stop server`);
+  console.log(`Backend server is listening on http://${ip}:${config.port}`);
+  console.log(`press CTRL+C to stop the server`);
 });
 
 export default app;
