@@ -8,8 +8,9 @@ import Settings from '../pages/Settings';
 import Account from '../pages/Account';
 import Information from '../pages/Information';
 import Conversation from './Messages/Conversation';
-import classes from '../css/Main.module.css';
 import UnderDevelopment from '../pages/NotAvailable';
+import Requests from '../pages/Requests';
+import classes from '../css/Main.module.css';
 
 const Main = ({ user_id, username, windowSize }) => {
   return (
@@ -32,7 +33,7 @@ const Main = ({ user_id, username, windowSize }) => {
           />
         </Route>
         <Route path='/friend-request' exact>
-          <UnderDevelopment />
+          <Requests user_id={user_id} />
         </Route>
         <Route path='/messages' exact={windowSize <= 600 && true}>
           <Messages

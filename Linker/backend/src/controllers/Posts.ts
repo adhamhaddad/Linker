@@ -22,12 +22,13 @@ const createPost = async (req: Request, res: Response) => {
 
 const getAllPosts = async (req: Request, res: Response) => {
   try {
-    const response = await post.getAllPosts(req.params.username);
+    const response = await post.getAllPosts(req.query.user_id as string);
     res.status(200).json({
       status: true,
       data: response,
       message: 'Posts retrieved successfully!'
     });
+    console.log('Test')
   } catch (err) {
     res.status(401).json({
       status: false,
@@ -85,7 +86,7 @@ const deletePost = async (req: Request, res: Response) => {
 
 const posts_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/user/posts', logger, verifyToken, createPost);
-  app.get('/users/posts/:username', logger, verifyToken, getAllPosts);
+  app.get('/users/posts', logger, verifyToken, getAllPosts);
   app.get('/user/posts/:username', logger, verifyToken, getUserPosts);
   app.patch('/user/posts', logger, verifyToken, updatePost);
   app.delete('/user/post', logger, verifyToken, deletePost);

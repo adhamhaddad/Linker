@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import useHttp from '../hooks/use-http';
-import AuthenticateContext from '../utils/authentication';
 import Container from '../components/UI/Container';
 import Error from '../components/Error';
 import SpinnerLoading from '../components/Loading/Spinner';
@@ -8,12 +7,12 @@ import Post from '../components/Post/Post';
 import SearchBar from '../components/Searchbar';
 import classes from '../css/Home.module.css';
 
-const Home = ({ user_id, windowSize }) => {
-  const authCtx = useContext(AuthenticateContext);
+const Home = ({ user_id, username, windowSize }) => {
   const { isLoading, isError, sendRequest } = useHttp();
   const [allPosts, setAllPosts] = useState([]);
 
   const transformPost = (data) => {
+    console.log(data);
     const transformedData = data.map((post) => {
       return {
         ...post,
@@ -28,12 +27,7 @@ const Home = ({ user_id, windowSize }) => {
   };
 
   useEffect(() => {
-    sendRequest(
-      `users/posts/${authCtx.user.username}`,
-      'GET',
-      {},
-      transformPost
-    );
+    sendRequest(`users/posts?user_id=${user_id}`, 'GET', {}, transformPost);
   }, []);
 
   const posts =

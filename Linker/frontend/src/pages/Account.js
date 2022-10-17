@@ -47,7 +47,7 @@ const accountFormReducer = (state, action) => {
     gender: ''
   };
 };
-const Account = ({user_id, }) => {
+const Account = ({ user_id }) => {
   const [accountData, setAccountData] = useState({});
   const { isLoading, isError, sendRequest } = useHttp();
   const windowCtx = useContext(WindowContext);
@@ -73,7 +73,12 @@ const Account = ({user_id, }) => {
   };
 
   useEffect(() => {
-    sendRequest(`users/${authCtx.user.username}`, 'GET', {}, setAccountData)
+    sendRequest(
+      `user?user_id=${authCtx.user.user_id}`,
+      'GET',
+      {},
+      setAccountData
+    );
   }, []);
   return (
     <section className={classes.sections}>
@@ -99,7 +104,12 @@ const Account = ({user_id, }) => {
         </div>
         <div>
           <label htmlFor='gender'>Gender</label>
-          <select name='gender' id='gender' onChange={onChangeHandler} value={accountData.gender}>
+          <select
+            name='gender'
+            id='gender'
+            onChange={onChangeHandler}
+            value={accountData.gender}
+          >
             <option value='male'>male</option>
             <option value='female'>female</option>
           </select>
@@ -114,7 +124,13 @@ const Account = ({user_id, }) => {
         </div>
         <div>
           <label htmlFor='joined'>Joined</label>
-          <input type='text' value={new Date(accountData.joined).toLocaleString('en-US', {dateStyle: 'full'})} disabled />
+          <input
+            type='text'
+            value={new Date(accountData.joined).toLocaleString('en-US', {
+              dateStyle: 'full'
+            })}
+            disabled
+          />
         </div>
       </form>
 

@@ -4,8 +4,13 @@ class Post {
   async createPost(p: Posts): Promise<Posts> {
     try {
       const connection = await database.connect();
-      const sql =
-        'INSERT INTO posts (user_id, timedate, caption, img, video) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+      const sql = `
+        INSERT INTO posts
+        (user_id, timedate, caption, img, video)
+        VALUES
+        ($1, $2, $3, $4, $5)
+        RETURNING *
+        `;
       const result = await connection.query(sql, [
         p.user_id,
         new Date(),
@@ -32,21 +37,53 @@ class Post {
   // p.user_id=f.user_id AND f.user_id=i.user_id AND i.user_id=u.user_id AND f.friend_id=$1
 
   // `
-  async getAllPosts(username: string): Promise<Posts[]> {
+  // p.user_id=i.user_id AND i.user_id=u.user_id AND u.username=$1
+
+  /*
+  OR
+
+      p.user_id=f.user_id
+      AND
+      f.user_id=i.user_id
+      AND
+      i.user_id=u.user_id
+      AND
+      u.user_id=$1
+      AND
+      f.isFriend='1'
+  */
+  async getAllPosts(user_id: string): Promise<Posts[]> {
+    console.log('Logged', user_id);
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT u.username, i.fname, i.lname, p.*
+      SELECT DISTINCT p.user_id, u.username, i.fname, i.lname, p.*
       FROM posts p, information i, users u, friends f
       WHERE
-      p.user_id=i.user_id AND i.user_id=u.user_id AND u.username=$1
-      OR
-      p.user_id=f.friend_id AND f.friend_id=i.user_id AND i.user_id=u.user_id AND u.username=$1
-      OR
-      p.user_id=f.user_id AND f.user_id=i.user_id AND i.user_id=u.user_id AND u.username=$1
       
+      p.user_id=f.friend_id
+      AND
+      f.friend_id=i.user_id
+      AND
+      i.user_id=u.user_id
+      AND
+      u.user_id=$1
+      AND
+      f.isFriend='1'
+
+      OR
+
+      p.user_id=f.user_id
+      AND
+      f.user_id=i.user_id
+      AND
+      i.user_id=u.user_id
+      AND
+      u.user_id=$1
+      AND
+      f.isFriend='1'
       `;
-      const result = await connection.query(sql, [username]);
+      const result = await connection.query(sql, [user_id]);
       connection.release();
       return result.rows;
     } catch (err) {

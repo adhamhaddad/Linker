@@ -7,14 +7,17 @@ import { Link } from 'react-router-dom';
 import Modal from '../components/Modal';
 import classes from '../css/Friends.module.css';
 
-const Friends = () => {
+const Friends = (user_id) => {
   const authCtx = useContext(AuthenticateContext);
   const [listSize, setListSize] = useState(false);
   const { isLoading, isError, sendRequest } = useHttp();
   const [friendsList, setFriendsList] = useState([]);
+  
   const onDeleteFriend = (e) => {
     console.log(e);
+    sendRequest('/user/friend', 'DELETE', { user_id, friend_id: 1 }, null);
   };
+  
   const List =
     friendsList.length > 0 &&
     friendsList.map((friend) => (

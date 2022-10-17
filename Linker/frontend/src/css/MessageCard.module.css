@@ -13,7 +13,7 @@
     margin: 0 5px;
     align-self: flex-end;
     color: var(--base-color-light);
-    background-image: url('../icons/anonymous_user.png');
+    background-image: url('../images/anonymous_user.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

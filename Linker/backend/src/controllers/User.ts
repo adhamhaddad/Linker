@@ -42,7 +42,7 @@ const getAllUsers = async (_req: Request, res: Response) => {
 
 const getUser = async (req: Request, res: Response) => {
   try {
-    const response = await user.getUser(req.params.username as string);
+    const response = await user.getUser(req.query.user_id as string);
     res.status(200).json({
       status: true,
       data: { ...response },
@@ -164,7 +164,7 @@ const authenticate = async (req: Request, res: Response) => {
 const user_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/users', logger, createUser);
   app.get('/users', logger, verifyToken, getAllUsers);
-  app.get('/users/:username', logger, verifyToken, getUser);
+  app.get('/user', logger, verifyToken, getUser);
   app.patch('/users', logger, verifyToken, updateUser);
   app.patch('/users/reset', logger, verifyToken, resetPassword);
   app.delete('/users', logger, verifyToken, deleteUser);

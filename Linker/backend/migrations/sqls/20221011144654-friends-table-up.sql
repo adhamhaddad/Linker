@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS friends (
     user_id uuid,
     friend_id uuid,
     timedate TEXT NOT NULL,
+    isFriend BIT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );

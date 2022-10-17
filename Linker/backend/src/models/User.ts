@@ -44,12 +44,12 @@ class User {
     }
   }
 
-  async getUser(username: string): Promise<Users> {
+  async getUser(user_id: string): Promise<Users> {
     try {
       const connection = await database.connect();
       const sql =
-        'SELECT user_id, username, email, gender, joined FROM users WHERE username=$1';
-      const result = await connection.query(sql, [username]);
+        'SELECT user_id, username, email, gender, joined FROM users WHERE user_id=$1';
+      const result = await connection.query(sql, [user_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {
