@@ -3,12 +3,36 @@ import { useHistory } from 'react-router-dom';
 import useHttp from '../hooks/use-http';
 import FormHeader from '../components/FormHeader';
 import Container from '../components/UI/Container';
-import Button from '../components/UI/Button/Button';
+import Button from '../components/UI/Button';
 import classes from '../css/Form.module.css';
 
 const formReducer = (state, action) => {
-  if (action.type === 'TEXT') {
+  if (action.type === 'FNAME') {
     return {
+      first_name: action.val,
+      last_name: state.last_name,
+      username: state.username,
+      email: state.email,
+      password: state.password,
+      gender: state.gender,
+      checked: state.checked
+    };
+  }
+  if (action.type === 'LNAME') {
+    return {
+      first_name: state.first_name,
+      last_name: action.val,
+      username: state.username,
+      email: state.email,
+      password: state.password,
+      gender: state.gender,
+      checked: state.checked
+    };
+  }
+  if (action.type === 'USERNAME') {
+    return {
+      first_name: state.first_name,
+      last_name: state.last_name,
       username: action.val,
       email: state.email,
       password: state.password,
@@ -18,6 +42,8 @@ const formReducer = (state, action) => {
   }
   if (action.type === 'EMAIL') {
     return {
+      first_name: state.first_name,
+      last_name: state.last_name,
       username: state.username,
       email: action.val,
       password: state.password,
@@ -27,6 +53,8 @@ const formReducer = (state, action) => {
   }
   if (action.type === 'PASSWORD') {
     return {
+      first_name: state.first_name,
+      last_name: state.last_name,
       username: state.username,
       email: state.email,
       password: action.val,
@@ -36,6 +64,8 @@ const formReducer = (state, action) => {
   }
   if (action.type === 'RADIO') {
     return {
+      first_name: state.first_name,
+      last_name: state.last_name,
       username: state.username,
       email: state.email,
       password: state.password,
@@ -45,6 +75,8 @@ const formReducer = (state, action) => {
   }
   if (action.type === 'CHECKBOX') {
     return {
+      first_name: state.first_name,
+      last_name: state.last_name,
       username: state.username,
       email: state.email,
       password: state.password,
@@ -53,6 +85,8 @@ const formReducer = (state, action) => {
     };
   }
   return {
+    first_name: '',
+    last_name: '',
     username: '',
     email: '',
     password: '',
@@ -65,6 +99,8 @@ const Signup = () => {
   const { isLoading, isError, sendRequest } = useHttp();
   const history = useHistory();
   const [formState, dispatch] = useReducer(formReducer, {
+    first_name: '',
+    last_name: '',
     username: '',
     email: '',
     password: '',
@@ -75,8 +111,20 @@ const Signup = () => {
   const formChangeHandler = (e) => {
     dispatch({ type: e.target.type.toUpperCase(), val: e.target.value });
   };
+  const fnameHandler = (e) => {
+    dispatch({ type: 'FNAME', val: e.target.value });
+  };
+  const lnameHandler = (e) => {
+    dispatch({ type: 'LNAME', val: e.target.value });
+  };
+
+  const usernameHandler = (e) => {
+    dispatch({ type: 'USERNAME', val: e.target.value });
+  };
   const createNewUser = () => {
     sendRequest('users', 'POST', {
+      first_name: formState.first_name,
+      last_name: formState.last_name,
       username: formState.username,
       email: formState.email,
       password: formState.password,
@@ -94,15 +142,34 @@ const Signup = () => {
     <Container className='form'>
       <FormHeader />
 
-      <form className={classes.form} autoComplete='off' onSubmit={signupHandler}>
+      <form
+        className={classes.form}
+        autoComplete='off'
+        onSubmit={signupHandler}
+      >
+        <input
+          type='text'
+          placeholder='First Name'
+          title='First Name'
+          value={formState.first_name}
+          onChange={fnameHandler}
+          required
+        />
+        <input
+          type='text'
+          placeholder='Last Name'
+          title='Last Name'
+          value={formState.last_name}
+          onChange={lnameHandler}
+          required
+        />
         <input
           type='text'
           placeholder='User Name'
           id='user'
           title='User Name'
-          name='username'
           value={formState.username}
-          onChange={formChangeHandler}
+          onChange={usernameHandler}
           required
         />
         <input

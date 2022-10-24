@@ -1,17 +1,11 @@
 type Info = {
-  id?: string;
-  user_id?: string;
-  fname: string;
-  lname: string;
-  phone: string;
-  profile: string;
-  birthday: string;
-  work: string;
-  relation: string;
+  info_id?: string;
+  user_id: string;
+  job_title: string;
   education: string;
-  lives: string;
+  relationship: string;
+  location: string;
   story: string;
-  linkedin: string;
-  twitter: string;
+  birthday: string;
 };
 export default Info;

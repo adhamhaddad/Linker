@@ -6,7 +6,7 @@ class Post {
       const connection = await database.connect();
       const sql = `
         INSERT INTO posts
-        (user_id, timedate, caption, img, video)
+        (user_id, timedate, post_caption, post_img, post_video)
         VALUES
         ($1, $2, $3, $4, $5)
         RETURNING *
@@ -14,9 +14,9 @@ class Post {
       const result = await connection.query(sql, [
         p.user_id,
         new Date(),
-        p.caption,
-        p.img,
-        p.video
+        p.post_caption,
+        p.post_img,
+        p.post_video
       ]);
       connection.release();
       return result.rows[0];
@@ -52,36 +52,30 @@ class Post {
       AND
       f.isFriend='1'
   */
+  //! Need Fix
   async getAllPosts(user_id: string): Promise<Posts[]> {
-    console.log('Logged', user_id);
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT p.user_id, u.username, i.fname, i.lname, p.*
-      FROM posts p, information i, users u, friends f
+      SELECT DISTINCT p.user_id, u.username, u.first_name, u.last_name, p.*
+      FROM posts p, users u, friends f
       WHERE
       
-      p.user_id=f.friend_id
+      p.user_id=f.sender_id
       AND
-      f.friend_id=i.user_id
-      AND
-      i.user_id=u.user_id
-      AND
-      u.user_id=$1
+      f.sender_id=u.user_id
       AND
       f.isFriend='1'
-
+      
       OR
-
-      p.user_id=f.user_id
+      
+      p.user_id=f.receiver_id
       AND
-      f.user_id=i.user_id
-      AND
-      i.user_id=u.user_id
-      AND
-      u.user_id=$1
+      f.receiver_id=u.user_id
       AND
       f.isFriend='1'
+      AND
+      p.user_id=$1
       `;
       const result = await connection.query(sql, [user_id]);
       connection.release();
@@ -97,10 +91,10 @@ class Post {
     try {
       const connection = await database.connect();
       const sql = `
-        SELECT DISTINCT u.user_id, u.username, i.fname, i.lname, p.*
-        FROM posts p, information i, users u
+        SELECT DISTINCT p.user_id, u.username, u.first_name, u.last_name, p.*
+        FROM posts p, users u
         WHERE
-        p.user_id=i.user_id AND i.user_id=u.user_id AND u.username=$1
+        p.user_id=u.user_id AND u.username=$1
         `;
       const result = await connection.query(sql, [username]);
       connection.release();
@@ -115,8 +109,9 @@ class Post {
   async updatePost(p: Posts): Promise<Posts> {
     try {
       const connection = await database.connect();
-      const sql = 'UPDATE posts SET caption=$2 WHERE post_id=($1) RETURNING *';
-      const result = await connection.query(sql, [p.post_id, p.caption]);
+      const sql =
+        'UPDATE posts SET post_caption=$2 WHERE post_id=($1) RETURNING *';
+      const result = await connection.query(sql, [p.post_id, p.post_caption]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -130,7 +125,8 @@ class Post {
     try {
       const connection = await database.connect();
       const sql = `
-      DELETE FROM posts WHERE
+      DELETE FROM posts
+      WHERE
       post_id=$2 AND user_id=$1
       `;
       const result = await connection.query(sql, [user_id, post_id]);

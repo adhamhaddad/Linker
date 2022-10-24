@@ -20,6 +20,10 @@
 .settings-navigation ul li a:hover {
     background-color: var(--base-background-hovered)
 }
+.settings-navigation ul li a i {
+    width: 30px;
+    text-align: center;
+}
 
 .active {
     background-color: var(--base-background-hovered);

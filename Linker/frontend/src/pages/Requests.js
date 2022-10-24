@@ -15,8 +15,8 @@ const Requests = ({ user_id }) => {
       'user/friend',
       'PATCH',
       {
-        user_id: user.user_id,
-        friend_id: user_id
+        sender_id: user.sender_id,
+        receiver_id: user_id
       },
       setRequests
     );
@@ -26,17 +26,15 @@ const Requests = ({ user_id }) => {
       'user/friend',
       'DELETE',
       {
-        user_id: user.user_id,
-        friend_id: user_id
+        sender_id: user.sender_id
       },
       setRequests
     );
   };
-
   const requestsList =
     requests.length > 0 &&
     requests.map((request) => (
-      <li key={request.user_id}>
+      <li key={request.sender_id}>
         <Link
           to={`/profile/${request.username}`}
           className={classes['request-profile']}
@@ -45,7 +43,7 @@ const Requests = ({ user_id }) => {
           to={`/profile/${request.username}`}
           className={classes['request-name']}
         >
-          {request.fname} {request.lname}
+          {request.first_name} {request.last_name}
         </Link>
         <button
           className={classes['request-accept']}
@@ -64,14 +62,17 @@ const Requests = ({ user_id }) => {
   useEffect(() => {
     sendRequest(`user/friend?user_id=${user_id}`, 'GET', {}, setRequests);
   }, []);
-
   return (
-    <Container>
+    <Container className='requests'>
       <div className={classes['requests-page']}>
         {isLoading && <SpinnerLoading color='dark' />}
         {!isLoading && isError !== null && <Error message={isError} />}
-        {/* {!isLoading && isError === null && } */}
-        <ul className={classes['requests-list']}>{requestsList}</ul>
+        {!isLoading && isError === null && (
+          <>
+            <h2>{requests.length} requests</h2>
+            <ul className={classes['requests-list']}>{requestsList}</ul>
+          </>
+        )}
       </div>
     </Container>
   );

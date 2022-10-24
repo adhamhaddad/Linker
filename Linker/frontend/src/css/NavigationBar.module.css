@@ -4,6 +4,7 @@
     align-items: center;
     margin-left: auto;
     font-size: 14px;
+    /* background-color: red; */
 }
 
 .navigation li {
@@ -12,8 +13,10 @@
 
 .navigation li a {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
+    justify-content: space-evenly;
     height: 50px;
     text-transform: capitalize;
     cursor: pointer;
@@ -49,9 +52,7 @@
 }
 
 .navigation li a span {
-    height: 100%;
-    line-height: 55px;
-    font-size: 15px;
+    font-size: 12px;
 }
 /*
 .navigation > li > a > span {
@@ -145,7 +146,8 @@
     }
 
     .navigation li a span {
-        display: none;
+        /* display: none; */
+        font-size: 10px;
     }
 
     .navigation li a svg {

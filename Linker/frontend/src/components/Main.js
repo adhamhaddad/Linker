@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import Messages from '../pages/Messages';
+import MiniNavigationBar from './MiniNavigationBar';
 import Notification from '../pages/Notifications';
 import Settings from '../pages/Settings';
 import Account from '../pages/Account';
@@ -17,6 +18,7 @@ const Main = ({ user_id, username, windowSize }) => {
     <main className={classes.main}>
       <Switch>
         <Route path='/home' exact>
+          {windowSize <= 600 && <MiniNavigationBar />}
           <Home
             title='Home-Page'
             user_id={user_id}
@@ -25,6 +27,7 @@ const Main = ({ user_id, username, windowSize }) => {
           />
         </Route>
         <Route path='/profile/:username' exact>
+          {windowSize <= 600 && <MiniNavigationBar />}
           <Profile
             title='Profile-Page'
             user_id={user_id}
@@ -32,9 +35,28 @@ const Main = ({ user_id, username, windowSize }) => {
             windowSize={windowSize}
           />
         </Route>
-        <Route path='/friend-request' exact>
+        <Route
+          path='/profile/:username/:phone-screen'
+          exact={windowSize <= 600 && true}
+        >
+          {windowSize <= 600 && <MiniNavigationBar />}
+          <Profile
+            title='Profile-Page'
+            user_id={user_id}
+            username={username}
+            windowSize={windowSize}
+          />
+        </Route>
+
+        <Route path='/requests' exact>
+          {windowSize <= 600 && <MiniNavigationBar />}
           <Requests user_id={user_id} />
         </Route>
+        <Route path='/requests/:phone-screen' exact={windowSize <= 600 && true}>
+          <MiniNavigationBar />
+          <Requests user_id={user_id} />
+        </Route>
+
         <Route path='/messages' exact={windowSize <= 600 && true}>
           <Messages
             title='Messages-Page'
@@ -46,6 +68,7 @@ const Main = ({ user_id, username, windowSize }) => {
         <Route path='/messages/:username/:phone-screen' exact>
           <Conversation user_id={user_id} />
         </Route>
+
         <Route path='/notifications'>
           <UnderDevelopment />
         </Route>

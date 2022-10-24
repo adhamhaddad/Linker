@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import Modal from '../Modal';
 import classes from '../../css/AddPost.module.css';
 
-function AddPost({ user_id, fname, lname, onCreatePost, onClosePost }) {
+function AddPost({ user_id, first_name, last_name, onCreatePost, onClosePost }) {
   const caption = useRef('');
   const img = useRef('');
   const video = useRef('');
@@ -21,9 +21,9 @@ function AddPost({ user_id, fname, lname, onCreatePost, onClosePost }) {
     }
     onCreatePost({
       user_id: user_id,
-      caption: captionValue,
-      img: imgValue,
-      video: videoValue
+      post_caption: captionValue,
+      post_img: imgValue,
+      post_video: videoValue
     });
     onClosePost();
   };
@@ -34,7 +34,7 @@ function AddPost({ user_id, fname, lname, onCreatePost, onClosePost }) {
         <div className={classes['create-post__header']}>
           <div className={classes['create-post__user-photo']}></div>
           <h4 className={classes.username}>
-            {fname} {lname}
+            {first_name} {last_name}
           </h4>
           <button className={classes.discard} onClick={onClosePost}>
             discard

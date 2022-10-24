@@ -1,17 +1,16 @@
 import database from '../database';
-import Reactions from '../types/Reactions';
+import Share from '../types/Shares';
 
 class Shares {
-  async createShare(share: Reactions): Promise<Reactions> {
+  async createShare(share: Share): Promise<Share> {
     try {
       const connection = await database.connect();
       const sql =
-        'INSERT INTO shares (post_id, user_id, timedate, caption) VALUES ($1, $2, $3, $4) RETURNING *';
+        'INSERT INTO shares (post_id, user_id, timedate) VALUES ($1, $2, $3) RETURNING *';
       const result = await connection.query(sql, [
         share.post_id,
         share.user_id,
-        new Date(),
-        share.caption
+        new Date()
       ]);
       connection.release();
       return result.rows[0];
@@ -22,14 +21,14 @@ class Shares {
     }
   }
 
-  async getAllShares(post_id: string): Promise<Reactions[]> {
+  async getAllShares(post_id: string): Promise<Share[]> {
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT u.username, i.fname, i.lname
-      FROM information i, users u, shares s
+      SELECT DISTINCT u.username, u.fname, u.lname
+      FROM users u, shares s
       WHERE
-      s.post_id=$1 AND s.user_id=i.user_id AND i.user_id=u.user_id
+      s.post_id=$1 AND s.user_id=u.user_id
       `;
       const result = await connection.query(sql, [post_id]);
       connection.release();
@@ -42,7 +41,7 @@ class Shares {
   }
 
   //! Need fix later .. when user shares post will be added to posts table with new id and new row
-  async updateShare(share: Reactions): Promise<Reactions[]> {
+  async updateShare(share: Share): Promise<Share[]> {
     try {
       const connection = await database.connect();
       const sql = `
@@ -50,9 +49,7 @@ class Shares {
       share_id=$2 AND user_id=$1
       `;
       const result = await connection.query(sql, [
-        share.id,
         share.user_id,
-        share.caption
       ]);
       connection.release();
       return result.rows;
@@ -63,7 +60,7 @@ class Shares {
     }
   }
 
-  async deleteShare(share: Reactions): Promise<Reactions> {
+  async deleteShare(share: Share): Promise<Share> {
     try {
       const connection = await database.connect();
       const sql = 'DELETE FROM shares WHERE post_id=$2 AND user_id=$1';

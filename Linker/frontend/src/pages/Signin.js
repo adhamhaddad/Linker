@@ -2,7 +2,7 @@ import React, { useContext, useReducer } from 'react';
 import { useHistory } from 'react-router-dom';
 import useHttp from '../hooks/use-http';
 import AuthenticateContext from '../utils/authentication';
-import Button from '../components/UI/Button/Button';
+import Button from '../components/UI/Button';
 import Container from '../components/UI/Container';
 import FormHeader from '../components/FormHeader';
 import Error from '../components/Error';
@@ -66,7 +66,7 @@ const Signin = () => {
         'POST',
         {
           email: formValues.username,
-          password: formValues.password
+          current_password: formValues.password
         },
         authenticationHandler
       );
@@ -76,7 +76,7 @@ const Signin = () => {
         'POST',
         {
           username: formValues.username,
-          password: formValues.password
+          current_password: formValues.password
         },
         authenticationHandler
       );

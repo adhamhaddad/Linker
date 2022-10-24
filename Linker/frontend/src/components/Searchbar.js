@@ -22,7 +22,7 @@ const SearchBar = () => {
               className={classes.profilePic}
             ></div>
             <span>
-              {user.fname} {user.lname}
+              {user.first_name} {user.last_name}
             </span>
           </Link>
         </li>
@@ -36,19 +36,18 @@ const SearchBar = () => {
   useEffect(() => {
     query.trim().length === 0 && setFetchedUsers([]);
     query.trim().length > 0 &&
-      sendRequest('search', 'POST', { query: query }, setFetchedUsers);
+      sendRequest('search', 'POST', {
+         query: query }, setFetchedUsers);
   }, [query]);
 
   return (
     <div className={classes.searchbox}>
-      <div className={classes['search-bar']}>
-        <input
-          type='search'
-          placeholder='Type to Search ..'
-          value={query}
-          onChange={queryChangeHandler}
-        />
-      </div>
+      <input
+        type='search'
+        placeholder='Type to Search ..'
+        value={query}
+        onChange={queryChangeHandler}
+      />
       {usersList.length > 0 && (
         <ul className={classes.usersList}>
           {isError !== null && <Error />}

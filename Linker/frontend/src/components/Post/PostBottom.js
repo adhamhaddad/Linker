@@ -3,17 +3,17 @@ import useHttp from '../../hooks/use-http';
 import classes from '../../css/PostBottom.module.css';
 
 const PostBottom = ({
-  user_id,
   post_id,
-  fname,
-  lname,
+  user_id,
+  first_name,
+  last_name,
   username,
   likesList,
   setLikesList,
   setCommentsList,
   setSharesList
 }) => {
-  const { isLoading, isError, sendRequest } = useHttp();
+  const { sendRequest } = useHttp();
   const [isLiked, setIsLiked] = useState(false);
   const [commentContent, setCommentContent] = useState('');
   const commentContentRef = useRef();
@@ -27,18 +27,18 @@ const PostBottom = ({
         'post/like',
         'POST',
         {
-          user_id,
-          post_id
+          post_id,
+          user_id
         },
         null
       );
       setLikesList((prev) => [
         ...prev,
         {
-          user_id,
-          username,
-          fname,
-          lname,
+          user_id: user_id,
+          username: username,
+          first_name: first_name,
+          last_name: last_name,
           timedate: new Date()
         }
       ]);
@@ -50,8 +50,8 @@ const PostBottom = ({
             'post/like',
             'DELETE',
             {
-              user_id,
-              post_id
+              post_id,
+              user_id
             },
             null
           );
@@ -64,18 +64,18 @@ const PostBottom = ({
             'post/like',
             'POST',
             {
-              user_id,
-              post_id
+              post_id,
+              user_id
             },
             null
           );
           setLikesList((prev) => [
             ...prev,
             {
-              user_id,
-              username,
-              fname,
-              lname,
+              user_id: user_id,
+              username: username,
+              first_name: first_name,
+              last_name: last_name,
               timedate: new Date()
             }
           ]);
@@ -112,7 +112,7 @@ const PostBottom = ({
     );
     setCommentContent('');
   };
-  // console.log(user_id); // who am i
+  // console.log(user_id); // me
   // console.log(post_id); // post id
   // console.log(post_user_id); // who posted this
   return (

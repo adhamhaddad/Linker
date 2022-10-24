@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classes from '../css/NavigationBar.module.css';
 
-const NavigationBar = ({ username, user_id }) => {
+const NavigationBar = ({ username, user_id, windowSize }) => {
   return (
     <ul className={classes.navigation}>
       <li>
@@ -25,7 +25,7 @@ const NavigationBar = ({ username, user_id }) => {
       </li>
       <li>
         <NavLink
-          to='/friend-request'
+          to={windowSize <= 600 ? '/requests/phone-screen' : '/requests'}
           activeClassName={classes.active}
           title='Friend-Request'
         >

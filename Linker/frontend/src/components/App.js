@@ -12,6 +12,7 @@ import '../css/App.css';
 const App = () => {
   const authCtx = useContext(Authenticate);
   const windowSize = useContext(WindowContext);
+
   return authCtx.isLoggedIn ? (
     <>
       <Header

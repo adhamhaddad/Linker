@@ -6,7 +6,7 @@ import AddPost from '../components/Post/AddPost';
 import ProfileInformation from '../components/ProfileInformation';
 import ProfileStory from '../components/ProfileStory';
 import Container from '../components/UI/Container';
-import ProfilePicture from '../utils/Profile/ProfilePicture/ProfilePicture';
+import ProfilePicture from '../components/ProfilePicture';
 import Friends from './Friends';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';
@@ -15,12 +15,23 @@ import classes from '../css/Profile.module.css';
 const Profile = ({ user_id, username }) => {
   const params = useParams();
   const { isLoading, isError, sendRequest } = useHttp();
+  const [user, setUser] = useState({});
   const [information, setInformation] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [postPort, setPostPort] = useState(false);
-
   const closePostPort = () => {
     setPostPort((prev) => !prev);
+  };
+  const addFriend = () => {
+    sendRequest(
+      'user/friend',
+      'POST',
+      {
+        sender_id: user_id,
+        receiver_id: user.user_id
+      },
+      null
+    );
   };
 
   const transformNewPost = (post) => {
@@ -28,12 +39,12 @@ const Profile = ({ user_id, username }) => {
       ...post,
       user_id: user_id,
       username: username,
-      fname: information.fname,
-      lname: information.lname,
+      first_name: user.first_name,
+      last_name: user.last_name,
       content: {
-        caption: post.caption,
-        img: post.img,
-        video: post.video
+        caption: post.post_caption,
+        img: post.post_img,
+        video: post.post_video
       }
     };
     setUserPosts((prev) => [...prev, transformedData]);
@@ -44,9 +55,9 @@ const Profile = ({ user_id, username }) => {
       return {
         ...post,
         content: {
-          caption: post.caption,
-          img: post.img,
-          video: post.video
+          caption: post.post_caption,
+          img: post.post_img,
+          video: post.post_video
         }
       };
     });
@@ -60,21 +71,26 @@ const Profile = ({ user_id, username }) => {
         return (
           <Post
             user_id={user_id}
+            username={user.username}
+            first_name={user.first_name}
+            last_name={user.last_name}
             post_id={post.post_id}
             post_user_id={post.user_id}
-            username={post.username}
-            fname={post.fname}
-            lname={post.lname}
-            profile={post.profile}
-            timedate={post.timedate}
-            content={post.content}
-            key={new Date(post.timedate).getTime()}
+            post_username={post.username}
+            post_first_name={post.first_name}
+            post_last_name={post.last_name}
+            post_profile={post.profile}
+            post_timedate={post.timedate}
+            post_content={post.content}
+            key={new Date(post.post_timedate).getTime()}
             onDeletePost={setUserPosts}
           />
         );
       })
       .sort((a, b) => b.key - a.key);
-
+  const getUser = () => {
+    sendRequest(`users/${params.username}`, 'GET', {}, setUser);
+  };
   const getInformation = () => {
     sendRequest(
       `user/information/${params.username}`,
@@ -94,6 +110,7 @@ const Profile = ({ user_id, username }) => {
   useEffect(() => {
     getInformation();
     getUserPosts();
+    getUser();
   }, [params]);
   return (
     <>
@@ -102,9 +119,9 @@ const Profile = ({ user_id, username }) => {
           <div className={classes['user-id']}>
             <ProfilePicture information={information.profile} />
             <span className={classes.username}>
-              {information.fname} {information.lname}{' '}
+              {user.first_name} {user.last_name}{' '}
               {username !== params.username && (
-                <button className={classes['add-friend']}>
+                <button className={classes['add-friend']} onClick={addFriend}>
                   Add Friend <i className='fa-solid fa-user-plus'></i>
                 </button>
               )}
@@ -135,8 +152,8 @@ const Profile = ({ user_id, username }) => {
         {postPort && (
           <AddPost
             user_id={user_id}
-            fname={information.fname}
-            lname={information.lname}
+            first_name={user.first_name}
+            last_name={user.last_name}
             onCreatePost={createNewPost}
             onClosePost={closePostPort}
           />

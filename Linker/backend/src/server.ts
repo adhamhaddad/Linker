@@ -12,6 +12,7 @@ import friends_controller_routes from './controllers/Friends';
 import likes_controller_routes from './controllers/Likes';
 import comments_controller_routes from './controllers/Comments';
 import shares_controller_routes from './controllers/Shares';
+import password_controller_routes from './controllers/Passwords';
 import config from './config';
 import os from 'os';
 
@@ -51,6 +52,7 @@ friends_controller_routes(app, logger as NextFunction);
 likes_controller_routes(app, logger as NextFunction);
 comments_controller_routes(app, logger as NextFunction);
 shares_controller_routes(app, logger as NextFunction);
+password_controller_routes(app, logger as NextFunction);
 // Express Server
 
 /*

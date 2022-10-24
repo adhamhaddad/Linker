@@ -8,28 +8,20 @@ class Information {
       const sql = `
         INSERT INTO information
         (
-          user_id, fname, lname,
-          phone, profile, birthday,
-          work, relation, education,
-          lives, story, linkedin,
-          twitter
+          user_id, job_title,
+          relationship, education, location,
+          story, birthday
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
         RETURNING *`;
       const result = await connection.query(sql, [
         i.user_id,
-        i.fname.toLowerCase(),
-        i.lname.toLowerCase(),
-        i.phone,
-        i.profile,
-        i.birthday,
-        i.work.toLowerCase(),
-        i.relation.toLowerCase(),
+        i.job_title.toLowerCase(),
+        i.relationship.toLowerCase(),
         i.education.toLowerCase(),
-        i.lives.toLowerCase(),
+        i.location.toLowerCase(),
         i.story,
-        i.twitter,
-        i.linkedin
+        i.birthday
       ]);
       connection.release();
       return result.rows[0];
@@ -54,53 +46,8 @@ class Information {
     }
   }
 
-  async updateFname(username: string, i: Info) {
-    try {
-      const connection = await database.connect();
-      const sql = 'UPDATE information SET fname=$2 WHERE username=$1';
-      const result = await connection.query(sql, [
-        username,
-        i.fname.toLowerCase()
-      ]);
-      connection.release();
-      return result.rows[0];
-    } catch (err) {
-      throw new Error(
-        `Could not update the first name. Error ${(err as Error).message}`
-      );
-    }
-  }
-  async updateLname(username: string, i: Info): Promise<Info> {
-    try {
-      const connection = await database.connect();
-      const sql = 'UPDATE information SET lname=$2 WHERE user_id=$1';
-      const result = await connection.query(sql, [
-        username,
-        i.lname.toLowerCase()
-      ]);
-      connection.release();
-      return result.rows[0];
-    } catch (err) {
-      throw new Error(
-        `Could not update the last name. Error ${(err as Error).message}`
-      );
-    }
-  }
 
-  async updatePhone(username: string, i: Info): Promise<Info> {
-    try {
-      const connection = await database.connect();
-      const sql = 'UPDATE information SET phone=$2 WHERE user_id=$1';
-      const result = await connection.query(sql, [username, i.phone]);
-      connection.release();
-      return result.rows[0];
-    } catch (err) {
-      throw new Error(
-        `Could not update the last name. Error ${(err as Error).message}`
-      );
-    }
-  }
-
+  /*
   async updateProfile(username: string, i: Info): Promise<Info[]> {
     try {
       const connection = await database.connect();
@@ -117,6 +64,7 @@ class Information {
       );
     }
   }
+  */
   async updateStory(i: Info): Promise<Info> {
     try {
       const connection = await database.connect();

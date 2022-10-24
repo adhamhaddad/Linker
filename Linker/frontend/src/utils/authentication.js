@@ -1,5 +1,5 @@
-import React, { createContext, useState } from 'react';
-
+import React, { createContext, useState, useEffect } from 'react';
+import useHttp from '../hooks/use-http';
 const AuthenticateContext = createContext({
   user: {},
   accessToken: '',
@@ -9,6 +9,7 @@ const AuthenticateContext = createContext({
 });
 
 export const Authentication = (props) => {
+  const { sendRequest } = useHttp();
   const [user, setUser] = useState({
     user_id: localStorage.getItem('user_id'),
     username: localStorage.getItem('username')
@@ -21,6 +22,7 @@ export const Authentication = (props) => {
   const loginHandler = (token, user) => {
     setAccessToken(token);
     setUser(user);
+
     localStorage.setItem('user_id', user.user_id);
     localStorage.setItem('username', user.username);
     localStorage.setItem('accessToken', token);

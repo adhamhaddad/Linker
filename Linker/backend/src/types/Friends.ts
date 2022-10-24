@@ -1,7 +1,8 @@
 type Friends = {
-  id?: string;
-  friend_id: string;
-  user_id: string;
+  friend_id?: string;
+  sender_id: string;
+  receiver_id: string;
   timedate: string;
+  isFriend: string;
 };
 export default Friends;

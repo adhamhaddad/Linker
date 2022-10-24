@@ -20,6 +20,7 @@ const addcomment = async (req: Request, res: Response) => {
   }
 };
 
+/*
 const getAllComments = async (req: Request, res: Response) => {
   try {
     const response = await comment.getAllComments(req.query.post_id as string);
@@ -35,6 +36,7 @@ const getAllComments = async (req: Request, res: Response) => {
     });
   }
 };
+*/
 const updateCOmment = async (req: Request, res: Response) => {
   try {
     const response = await comment.updateComment(req.body);
@@ -67,7 +69,7 @@ const removeComment = async (req: Request, res: Response) => {
 
 const comments_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/post/comment', logger, verifyToken, addcomment);
-  app.get('/post/comments', logger, verifyToken, getAllComments);
+  // app.get('/post/comments', logger, verifyToken, getAllComments);
   app.delete('/post/comment', logger, verifyToken, removeComment);
 };
 export default comments_controller_routes;

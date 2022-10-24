@@ -18,7 +18,7 @@ const Reactions = ({
           <span className={classes['reactions-content']}>
             <span className={classes['like-icon']}></span>
             <span onClick={onShowLikes} className={classes['like-name']}>
-              {likes[0].fname} {likes[0].lname}{' '}
+              {likes[0].first_name} {likes[0].last_name}{' '}
               {likes.length > 1 && (
                 <span onClick={onShowLikes} className={classes['other-likes']}>
                   {' '}

@@ -5,6 +5,8 @@ import Friend from '../models/Friends';
 const friend = new Friend();
 
 const addFriend = async (req: Request, res: Response) => {
+  console.log('Add Friend Logged')
+
   try {
     const response = await friend.addFriend(req.body);
     res.status(201).json({
@@ -21,6 +23,8 @@ const addFriend = async (req: Request, res: Response) => {
 };
 
 const getFriends = async (req: Request, res: Response) => {
+  console.log('Get Friends Logged')
+
   try {
     const response = await friend.getFriends(req.query.user_id as string);
     res.status(200).json({
@@ -37,6 +41,7 @@ const getFriends = async (req: Request, res: Response) => {
 };
 
 const friendRequest = async (req: Request, res: Response) => {
+  console.log('Friend Request Logged')
   try {
     const response = await friend.friendRequest(req.query.user_id as string);
     res.status(200).json({
@@ -53,6 +58,8 @@ const friendRequest = async (req: Request, res: Response) => {
 };
 
 const acceptFriend = async (req: Request, res: Response) => {
+  console.log('Accept Friend Logged')
+
   try {
     const response = await friend.acceptFriend(req.body);
     res.status(200).json({
@@ -69,6 +76,8 @@ const acceptFriend = async (req: Request, res: Response) => {
 };
 
 const ignoreFriend = async (req: Request, res: Response) => {
+  console.log('Ignore Friend Logged')
+
   try {
     const response = await friend.ignoreFriend(req.body);
     res.status(200).json({
@@ -85,6 +94,7 @@ const ignoreFriend = async (req: Request, res: Response) => {
 };
 
 const deleteFriend = async (req: Request, res: Response) => {
+  console.log('Delete Friend Logged')
   try {
     await friend.deleteFriend(req.body);
     res.status(200).json({
@@ -100,11 +110,11 @@ const deleteFriend = async (req: Request, res: Response) => {
 };
 
 const friends_controller_routes = (app: Application, logger: NextFunction) => {
+  app.get('/user/friends', logger, verifyToken, getFriends);
   app.post('/user/friend', logger, verifyToken, addFriend);
   app.get('/user/friend', logger, verifyToken, friendRequest);
   app.patch('/user/friend', logger, verifyToken, acceptFriend);
-  // app.patch('/user/friend', logger, verifyToken, ignoreFriend);
-  app.get('/user/friends', logger, verifyToken, getFriends);
+  app.delete('/user/friend', logger, verifyToken, ignoreFriend);
   app.delete('/user/friend', logger, verifyToken, deleteFriend);
 };
 export default friends_controller_routes;

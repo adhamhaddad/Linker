@@ -4,13 +4,19 @@ class Message {
   async newMessage(m: Messages): Promise<Messages> {
     try {
       const connection = await database.connect();
-      const sql =
-        'INSERT INTO messages (timedate, content, user_id, receiver_id) VALUES ($1, $2, $3, $4) RETURNING *';
+      const sql = `
+      INSERT INTO messages
+      (sender_id, receiver_id, timedate, content, isSeen)
+      VALUES
+      ($1, $2, $3, $4, $5)
+      RETURNING *
+      `;
       const result = await connection.query(sql, [
+        m.sender_id,
+        m.receiver_id,
         new Date(),
         m.content,
-        m.user_id,
-        m.receiver_id
+        0
       ]);
       connection.release();
       return result.rows[0];
@@ -28,12 +34,12 @@ class Message {
     try {
       const connection = await database.connect();
       const sql = `
-        SELECT DISTINCT u.username, i.fname, i.lname, i.profile, m.*
-        FROM messages m, information i, users u
+        SELECT DISTINCT u.username, u.first_name, u.last_name, m.*
+        FROM messages m, users u
         WHERE
-        m.user_id=$1 AND m.receiver_id=$2 AND i.user_id=$1 AND u.user_id=$1
+        m.sender_id=$1 AND m.receiver_id=$2 AND u.user_id=$1
         OR
-        m.user_id=$2 AND m.receiver_id=$1 AND i.user_id=$2 AND u.user_id=$2
+        m.sender_id=$2 AND m.receiver_id=$1 AND u.user_id=$2
         `;
       const result = await connection.query(sql, [user_id, receiver_id]);
       connection.release();
@@ -45,6 +51,7 @@ class Message {
     }
   }
 
+  //! Need Fix
   async updateMessage(m: Messages, user_id: string): Promise<Messages> {
     try {
       const connection = await database.connect();
@@ -62,7 +69,7 @@ class Message {
   async deleteMessage(id: string): Promise<Messages> {
     try {
       const connection = await database.connect();
-      const sql = 'DELETE FROM messages WHERE id=$1';
+      const sql = 'DELETE FROM messages WHERE message_id=$1';
       const result = await connection.query(sql, [id]);
       connection.release();
       return result.rows[0];

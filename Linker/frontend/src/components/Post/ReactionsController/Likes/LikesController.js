@@ -8,14 +8,14 @@ const LikesController = ({ likes, onHide }) => {
     .map((like) => (
       <li key={new Date(like.timedate).getTime()}>
         <Link
-          to={`/profile/${like.username}?user_id=${like.user_id}`}
+          to={`/profile/${like.username}`}
           className={classes['post-profile']}
         ></Link>
         <Link
-          to={`/profile/${like.username}?user_id=${like.user_id}`}
+          to={`/profile/${like.username}`}
           className={classes['post-username']}
         >
-          {like.fname} {like.lname}
+          {like.first_name} {like.last_name}
         </Link>
       </li>
     ))

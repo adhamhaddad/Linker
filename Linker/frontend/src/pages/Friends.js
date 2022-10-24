@@ -12,7 +12,6 @@ const Friends = (user_id) => {
   const [listSize, setListSize] = useState(false);
   const { isLoading, isError, sendRequest } = useHttp();
   const [friendsList, setFriendsList] = useState([]);
-  
   const onDeleteFriend = (e) => {
     console.log(e);
     sendRequest('/user/friend', 'DELETE', { user_id, friend_id: 1 }, null);
@@ -30,7 +29,7 @@ const Friends = (user_id) => {
         >
           <div className={classes.profile}></div>
           <div className={classes.username}>
-            {friend.fname} {friend.lname}
+            {friend.first_name} {friend.last_name}
           </div>
           <button onClick={onDeleteFriend} className={classes.delete}></button>
         </Link>

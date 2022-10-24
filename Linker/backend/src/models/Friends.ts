@@ -1,15 +1,20 @@
 import database from '../database';
-import Friends from '../types/Friends';
+import Friend from '../types/Friends';
 
-class Friend {
-  async addFriend(f: Friends): Promise<Friends> {
+class Friends {
+  async addFriend(f: Friend): Promise<Friend> {
     try {
       const connection = await database.connect();
-      const sql =
-        'INSERT INTO friends (friend_id, user_id, timedate, isFriend ) VALUES ($1, $2, $3, $4) RETURNING *';
+      const sql = `
+      INSERT INTO friends
+      (sender_id, receiver_id, timedate, isFriend)
+      VALUES
+      ($1, $2, $3, $4)
+      RETURNING *
+      `;
       const result = await connection.query(sql, [
-        f.friend_id,
-        f.user_id,
+        f.sender_id,
+        f.receiver_id,
         new Date(),
         0
       ]);
@@ -22,17 +27,16 @@ class Friend {
     }
   }
 
-  async getFriends(user_id: string): Promise<Friends[]> {
+  async getFriends(user_id: string): Promise<Friend[]> {
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT u.user_id, u.username, i.profile, i.fname, i.lname
-      FROM friends f, information i, users u
+      SELECT DISTINCT u.user_id, u.username, u.first_name, u.last_name
+      FROM friends f, users u
       WHERE
-      f.friend_id=i.user_id AND i.user_id=u.user_id AND f.user_id=$1 AND isFriend='1'
+      f.sender_id=u.user_id AND f.sender_id=$1 AND f.isFriend='1'
       OR
-      f.user_id=i.user_id AND
-      i.user_id=u.user_id AND f.friend_id=$1 AND isFriend='1'
+      f.receiver_id=u.user_id AND f.receiver_id=$1 AND f.isFriend='1'
       `;
       const result = await connection.query(sql, [user_id]);
       connection.release();
@@ -44,16 +48,19 @@ class Friend {
     }
   }
 
-  async friendRequest(user_id: string): Promise<Friends[]> {
+  //! In this case I'am receiver_id
+  async friendRequest(user_id: string): Promise<Friend[]> {
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT u.user_id, u.username, i.fname, i.lname, f.timedate
-      FROM friends f, information i, users u
+      SELECT DISTINCT f.sender_id, u.username, u.first_name, u.last_name, f.timedate
+      FROM friends f, users u
       WHERE
-      f.user_id=i.user_id AND i.user_id=u.user_id
+      f.sender_id=u.user_id
       AND
-      f.friend_id=$1 AND isFriend='0'
+      f.isFriend='0'
+      AND
+      f.receiver_id=$1
       `;
       const result = await connection.query(sql, [user_id]);
       connection.release();
@@ -65,15 +72,18 @@ class Friend {
     }
   }
 
-  async acceptFriend(f: Friends): Promise<Friends> {
+  //! In this case I'am receiver_id
+  async acceptFriend(f: Friend): Promise<Friend> {
+    console.log('Sender', f.sender_id)
+    console.log('Receiver', f.receiver_id)
     try {
       const connection = await database.connect();
       const sql = `
         UPDATE friends
         SET isFriend='1'
-        WHERE friend_id=$1 AND user_id=$2
+        WHERE sender_id=$1 AND receiver_id=$2
         `;
-      const result = await connection.query(sql, [f.friend_id, f.user_id]);
+      const result = await connection.query(sql, [f.sender_id, f.receiver_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -82,11 +92,12 @@ class Friend {
       );
     }
   }
-  async ignoreFriend(f: Friends): Promise<Friends> {
+  //! In this case I'am receiver_id
+  async ignoreFriend(f: Friend): Promise<Friend> {
     try {
       const connection = await database.connect();
-      const sql = 'DELETE FROM friends WHERE friend_id=1 user_id=$2';
-      const result = await connection.query(sql, [f.friend_id, f.user_id]);
+      const sql = 'DELETE FROM friends WHERE sender_id=$1 AND receiver_id=$2';
+      const result = await connection.query(sql, [f.sender_id, f.receiver_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -96,7 +107,7 @@ class Friend {
     }
   }
   //! For Block List - Not Needed Now
-  async updateFriend(f: Friends, user_id: string): Promise<Friends> {
+  async updateFriend(f: Friend, user_id: string): Promise<Friend> {
     try {
       const connection = await database.connect();
       const sql = 'UPDATE friends SET friend_id= WHERE user_id=$1 RETURNING *';
@@ -110,7 +121,7 @@ class Friend {
     }
   }
 
-  async deleteFriend(f: Friends): Promise<Friends> {
+  async deleteFriend(f: Friend): Promise<Friend> {
     try {
       const connection = await database.connect();
       const sql = 'DELETE FROM friends WHERE friend_id=$1';
@@ -124,4 +135,4 @@ class Friend {
     }
   }
 }
-export default Friend;
+export default Friends;

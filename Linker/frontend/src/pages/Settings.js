@@ -21,6 +21,7 @@ function Settings({ windowSize }) {
               }
               title='Information'
             >
+              <i className='fa-solid fa-info-circle'></i>
               information
             </NavLink>
           </li>
@@ -34,6 +35,7 @@ function Settings({ windowSize }) {
               }
               title='Privacy & Security'
             >
+              <i className='fa-solid fa-lock'></i>
               privacy & security
             </NavLink>
           </li>
@@ -47,6 +49,7 @@ function Settings({ windowSize }) {
               }
               title='Emails'
             >
+              <i className='fa-solid fa-envelope'></i>
               emails
             </NavLink>
           </li>
@@ -60,6 +63,7 @@ function Settings({ windowSize }) {
               }
               title='Notifications'
             >
+              <i className='fa-solid fa-bell'></i>
               notifications
             </NavLink>
           </li>
@@ -73,6 +77,7 @@ function Settings({ windowSize }) {
               }
               title='Language'
             >
+              <i className='fa-solid fa-language'></i>
               language
             </NavLink>
           </li>
@@ -86,6 +91,7 @@ function Settings({ windowSize }) {
               }
               title='Account'
             >
+              <i className='fa-solid fa-user'></i>
               account
             </NavLink>
           </li>
@@ -99,34 +105,37 @@ function Settings({ windowSize }) {
               }
               title='Help'
             >
+              <i className='fa-solid fa-question-circle'></i>
               help
             </NavLink>
           </li>
         </ul>
       </section>
-      <section className={classes['settings-section']}>
-      <Route path='/settings/information' exact>
-        <Information windowSize={windowSize} />
-      </Route>
-      <Route path='/settings/privacy' exact>
-        <UnderDevelopment />
-      </Route>
-      <Route path='/settings/emails' exact>
-        <UnderDevelopment />
-      </Route>
-      <Route path='/settings/notifications' exact>
-        <UnderDevelopment />
-      </Route>
-      <Route path='/settings/language' exact>
-        <UnderDevelopment />
-      </Route>
-      <Route path='/settings/account' exact>
-        <Account windowSize={windowSize} />
-      </Route>
-      <Route path='/settings/help' exact>
-        <UnderDevelopment />
-      </Route>
-      </section>
+      {windowSize > 600 && (
+        <section className={classes['settings-section']}>
+          <Route path='/settings/information' exact>
+            <Information windowSize={windowSize} />
+          </Route>
+          <Route path='/settings/privacy' exact>
+            <UnderDevelopment />
+          </Route>
+          <Route path='/settings/emails' exact>
+            <UnderDevelopment />
+          </Route>
+          <Route path='/settings/notifications' exact>
+            <UnderDevelopment />
+          </Route>
+          <Route path='/settings/language' exact>
+            <UnderDevelopment />
+          </Route>
+          <Route path='/settings/account' exact>
+            <Account windowSize={windowSize} />
+          </Route>
+          <Route path='/settings/help' exact>
+            <UnderDevelopment />
+          </Route>
+        </section>
+      )}
     </Container>
   );
 }

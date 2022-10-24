@@ -1,8 +1,7 @@
 import database from '../database';
-import Reactions from '../types/Reactions';
-
+import Like from '../types/Likes';
 class Likes {
-  async createLike(like: Reactions): Promise<Reactions> {
+  async createLike(like: Like): Promise<Like> {
     try {
       const connection = await database.connect();
       const sql =
@@ -21,14 +20,14 @@ class Likes {
     }
   }
 
-  async getPostLikes(post_id: string): Promise<Reactions[]> {
+  async getPostLikes(post_id: string): Promise<Like[]> {
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT u.user_id, u.username, i.fname, i.lname
-      FROM information i, users u, likes l
+      SELECT DISTINCT l.timedate, u.user_id, u.username, u.first_name, u.last_name
+      FROM users u, likes l
       WHERE
-      l.post_id=$1 AND l.user_id=i.user_id AND i.user_id=u.user_id
+      l.post_id=$1 AND l.user_id=u.user_id
       `;
       const result = await connection.query(sql, [post_id]);
       connection.release();
@@ -40,7 +39,7 @@ class Likes {
     }
   }
 
-  async deleteLike(like: Reactions): Promise<Reactions> {
+  async deleteLike(like: Like): Promise<Like> {
     try {
       const connection = await database.connect();
       const sql = 'DELETE FROM likes WHERE post_id=$2 AND user_id=$1';

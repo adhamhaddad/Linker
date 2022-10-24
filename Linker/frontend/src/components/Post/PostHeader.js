@@ -8,18 +8,18 @@ function PostHeader({
   user_id,
   post_id,
   post_user_id,
-  username,
-  timedate,
-  profile,
-  fname,
-  lname,
+  post_username,
+  post_timedate,
+  post_profile,
+  post_first_name,
+  post_last_name,
   onDeletePost
 }) {
   return (
     <div className={classes['post-header']}>
       <div className={classes['post-info']}>
         <Link
-          to={`/profile/${username}?user_id=${post_user_id}`}
+          to={`/profile/${post_username}?user_id=${post_user_id}`}
           className={classes['profile-image']}
           // style={{
           //   backgroundImage: profile.trim().length > 0 && `url(${profile})`
@@ -28,13 +28,13 @@ function PostHeader({
 
         <div>
           <Link
-            to={`/profile/${username}?user_id=${post_user_id}`}
+            to={`/profile/${post_username}?user_id=${post_user_id}`}
             className={classes['post-username']}
           >
-            {fname} {lname}
+            {post_first_name} {post_last_name}
           </Link>
           <span className={classes['post-date']}>
-            <PostDate timedate={timedate} />
+            <PostDate timedate={post_timedate} />
           </span>
         </div>
       </div>

@@ -12,14 +12,17 @@ import classes from '../../css/Post.module.css';
 
 const Post = ({
   user_id,
+  username,
+  first_name,
+  last_name,
   post_id,
   post_user_id,
-  username,
-  fname,
-  lname,
-  profile,
-  timedate,
-  content,
+  post_username,
+  post_first_name,
+  post_last_name,
+  post_profile,
+  post_timedate,
+  post_content,
   onDeletePost
 }) => {
   const { sendRequest } = useHttp();
@@ -51,17 +54,17 @@ const Post = ({
         user_id={user_id}
         post_id={post_id}
         post_user_id={post_user_id}
-        username={username}
-        fname={fname}
-        lname={lname}
-        profile={profile}
-        timedate={timedate}
+        post_username={post_username}
+        post_first_name={post_first_name}
+        post_last_name={post_last_name}
+        post_profile={post_profile}
+        post_timedate={post_timedate}
         onDeletePost={onDeletePost}
       />
-      <PostContent content={content} />
+      <PostContent content={post_content} />
       <Reactions
-        user_id={user_id}
         post_id={post_id}
+        user_id={user_id}
         post_user_id={post_user_id}
         likes={likesList}
         comments={commentsList}
@@ -71,12 +74,11 @@ const Post = ({
         onShowShares={showSharesHandler}
       />
       <PostBottom
-        user_id={user_id}
         post_id={post_id}
-        post_user_id={post_user_id}
-        fname={fname}
-        lname={lname}
+        user_id={user_id}
         username={username}
+        first_name={first_name}
+        last_name={last_name}
         likesList={likesList}
         setLikesList={setLikesList}
         setCommentsList={setCommentsList}
@@ -99,12 +101,12 @@ const Post = ({
 };
 Post.propTypes = {
   user_id: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  fname: PropTypes.string.isRequired,
-  lname: PropTypes.string.isRequired,
+  post_username: PropTypes.string.isRequired,
+  post_first_name: PropTypes.string.isRequired,
+  post_last_name: PropTypes.string.isRequired,
   // profile: PropTypes.string.isRequired,
   post_id: PropTypes.string.isRequired,
-  timedate: PropTypes.string.isRequired,
-  content: PropTypes.object.isRequired
+  post_timedate: PropTypes.string.isRequired,
+  post_content: PropTypes.object.isRequired
 };
 export default Post;

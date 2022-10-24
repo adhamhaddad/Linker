@@ -1,15 +1,21 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
+import Passwords from '../models/Passwords';
 import config from '../config';
 import verifyToken from '../middlewares/verifyToken';
 import searchValidation from '../middlewares/searchHandler';
 
 const user = new User();
+const passwords = new Passwords();
 
 const createUser = async (req: Request, res: Response) => {
   try {
     const response = await user.createUser(req.body);
+    const password = await passwords.createPassword(
+      response.user_id as string,
+      req.body.password
+    );
     const token = jwt.sign({ response }, config.token as string);
     res.status(201).json({
       status: true,
@@ -25,6 +31,7 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const getAllUsers = async (_req: Request, res: Response) => {
+  console.log('Get All Friends Logged')
   try {
     const response = await user.getAllUsers();
     res.status(200).json({
@@ -41,8 +48,9 @@ const getAllUsers = async (_req: Request, res: Response) => {
 };
 
 const getUser = async (req: Request, res: Response) => {
+  console.log('Get User Logged')
   try {
-    const response = await user.getUser(req.query.user_id as string);
+    const response = await user.getUser(req.params.username as string);
     res.status(200).json({
       status: true,
       data: { ...response },
@@ -63,21 +71,6 @@ const updateUser = async (req: Request, res: Response) => {
       status: true,
       data: { ...response },
       message: 'User updated successfully!'
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: false,
-      message: (err as Error).message
-    });
-  }
-};
-
-const resetPassword = async (req: Request, res: Response) => {
-  try {
-    await user.resetPassword(req.body);
-    res.status(201).json({
-      status: true,
-      message: 'Password changed successfully!'
     });
   } catch (err) {
     res.status(400).json({
@@ -137,38 +130,12 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-const authenticate = async (req: Request, res: Response) => {
-  const bodyData = Object.keys(req.body)[0];
-  try {
-    const response = await user.authenticate(req.body);
-    const token = jwt.sign({ response }, config.token as string);
-    if (!response) {
-      return res.status(400).json({
-        status: false,
-        message: `${bodyData} doesn't exist`
-      });
-    }
-    res.status(200).json({
-      status: true,
-      data: { user: { ...response }, token },
-      message: 'User authenticated successfully!'
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: false,
-      message: (err as Error).message
-    });
-  }
-};
-
 const user_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/users', logger, createUser);
   app.get('/users', logger, verifyToken, getAllUsers);
-  app.get('/user', logger, verifyToken, getUser);
+  app.get('/users/:username', logger, verifyToken, getUser);
   app.patch('/users', logger, verifyToken, updateUser);
-  app.patch('/users/reset', logger, verifyToken, resetPassword);
   app.delete('/users', logger, verifyToken, deleteUser);
-  app.post('/authenticate', logger, authenticate);
   app.post('/search', logger, verifyToken, searchByName);
   app.post('/search/:username', logger, verifyToken, searchByUsername);
 };

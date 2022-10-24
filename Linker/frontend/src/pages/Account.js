@@ -2,7 +2,7 @@ import React, { useReducer, useContext, useEffect, useState } from 'react';
 import WindowContext from '../store/windowSize';
 import AuthenticateContext from '../utils/authentication';
 import useHttp from '../hooks/use-http';
-import Button from '../components/UI/Button/Button';
+import Button from '../components/UI/Button';
 import BackButton from '../components/UI/BackButton';
 import classes from '../css/Account.module.css';
 

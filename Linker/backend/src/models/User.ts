@@ -1,23 +1,26 @@
 import database from '../database';
 import Users from '../types/Users';
-import bcrypt from 'bcrypt';
 import config from '../config';
 import Info from '../types/Information';
-
-const hash = (pass: string) =>
-  bcrypt.hashSync(pass + config.peper, config.salt);
 
 class User {
   async createUser(u: Users): Promise<Users> {
     try {
       const connection = await database.connect();
-      const sql =
-        'INSERT INTO users (username, email, password, gender, joined) VALUES ($1, $2, $3, $4, $5) RETURNING user_id, username, email, gender, joined';
+      const sql = `
+      INSERT INTO users
+      (first_name, last_name, username, email, gender, joined)
+      VALUES
+      ($1, $2, $3, $4, $5, $6)
+      RETURNING
+      user_id, first_name, last_name, username, email, gender, joined
+      `;
       const result = await connection.query(sql, [
-        u.username.toLocaleLowerCase().trim(),
-        u.email.toLocaleLowerCase(),
-        hash(u.password),
-        u.gender.toLocaleLowerCase(),
+        u.first_name.toLowerCase().trim(),
+        u.last_name.toLowerCase().trim(),
+        u.username.toLowerCase().trim(),
+        u.email.toLowerCase(),
+        u.gender.toLowerCase(),
         new Date()
       ]);
       connection.release();
@@ -44,12 +47,12 @@ class User {
     }
   }
 
-  async getUser(user_id: string): Promise<Users> {
+  async getUser(username: string): Promise<Users> {
     try {
       const connection = await database.connect();
       const sql =
-        'SELECT user_id, username, email, gender, joined FROM users WHERE user_id=$1';
-      const result = await connection.query(sql, [user_id]);
+        'SELECT user_id, username, first_name, last_name, email, gender, joined FROM users WHERE username=$1';
+      const result = await connection.query(sql, [username]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -57,16 +60,16 @@ class User {
     }
   }
 
+  //! Not Done
   async updateUser(u: Users): Promise<Users> {
     try {
       const connection = await database.connect();
       const sql =
         'UPDATE users SET username=$2, email=$3, password=$4, gender=$5 WHERE user_id=$($1) RETURNING user_id, username, email, gender';
       const result = await connection.query(sql, [
-        u.id,
+        u.user_id,
         u.username,
         u.email,
-        hash(u.password),
         u.gender
       ]);
       connection.release();
@@ -76,19 +79,49 @@ class User {
     }
   }
 
-  async resetPassword(u: Users): Promise<Users> {
+  async updateFname(u: Users) {
     try {
       const connection = await database.connect();
-      const sql = 'UPDATE users SET password=$2 WHERE username=$1';
+      const sql = 'UPDATE information SET fname=$2 WHERE username=$1';
       const result = await connection.query(sql, [
         u.username,
-        hash(u.password)
+        u.first_name.toLowerCase()
       ]);
       connection.release();
       return result.rows[0];
-    } catch (error) {
+    } catch (err) {
       throw new Error(
-        `Could not reset password. Error ${(error as Error).message}`
+        `Could not update the first name. Error ${(err as Error).message}`
+      );
+    }
+  }
+  async updateLname(u: Users): Promise<Users> {
+    try {
+      const connection = await database.connect();
+      const sql = 'UPDATE users SET last_name=$2 WHERE user_id=$1';
+      const result = await connection.query(sql, [
+        u.user_id,
+        u.last_name.toLowerCase()
+      ]);
+      connection.release();
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(
+        `Could not update the last name. Error ${(err as Error).message}`
+      );
+    }
+  }
+
+  async updatePhone(u: Users): Promise<Users> {
+    try {
+      const connection = await database.connect();
+      const sql = 'UPDATE users SET phone_number=$2 WHERE user_id=$1';
+      const result = await connection.query(sql, [u.user_id, u.phone_number]);
+      connection.release();
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(
+        `Could not update the last name. Error ${(err as Error).message}`
       );
     }
   }
@@ -97,9 +130,10 @@ class User {
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT u.user_id, u.username i.fname, i.lname
-      FROM users u, information i
-      WHERE i.user_id=u.user_id AND u.username=$1`;
+      SELECT user_id, username, first_name, last_name
+      FROM users
+      WHERE
+      username=$1`;
       const result = await connection.query(sql, [u.username]);
       connection.release();
       return result.rows;
@@ -116,16 +150,12 @@ class User {
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT i.profile, i.fname, i.lname, i.user_id, u.username
-      FROM information i, users u
+      SELECT user_id, username, first_name, last_name
+      FROM users
       WHERE
-      i.fname LIKE '${fname.toLowerCase()}%'
-      AND
-      i.user_id=u.user_id
+      first_name LIKE '${fname.toLowerCase()}%'
       OR
-      i.lname LIKE '${lname !== undefined && lname.toLowerCase()}%'
-      AND
-      i.user_id=u.user_id
+      last_name LIKE '${lname !== undefined && lname.toLowerCase()}%'
       `;
       const result = await connection.query(sql);
       connection.release();
@@ -145,43 +175,6 @@ class User {
       return result.rows[0];
     } catch (err) {
       throw new Error(`Could not delete user. Error ${(err as Error).message}`);
-    }
-  }
-  async authenticate(u: Users): Promise<Users | null> {
-    let sqlCompare;
-    let sqlValue;
-
-    if (u.username !== undefined) {
-      sqlCompare = 'username';
-      sqlValue = u.username;
-    } else {
-      sqlCompare = 'email';
-      sqlValue = u.email;
-    }
-    try {
-      const connection = await database.connect();
-      const sql = `SELECT password FROM users WHERE ${sqlCompare}=$1`;
-      const result = await connection.query(sql, [sqlValue]);
-      if (result.rows.length) {
-        const db_pass = result.rows[0].password;
-        const checkPass = bcrypt.compareSync(
-          `${u.password}${config.peper}`,
-          db_pass
-        );
-
-        if (checkPass) {
-          const sql = `SELECT user_id, username FROM users WHERE ${sqlCompare}=$1`;
-          const result = await connection.query(sql, [sqlValue]);
-          connection.release();
-          return result.rows[0];
-        } else {
-          throw new Error('Password incorrect');
-        }
-      }
-      connection.release();
-      return null;
-    } catch (err) {
-      throw new Error((err as Error).message);
     }
   }
 }
