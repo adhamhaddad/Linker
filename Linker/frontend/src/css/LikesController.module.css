@@ -27,7 +27,7 @@
     height: 25px;
     border-radius: 50%;
     background-color: var(--base-color-light);
-    background-image: url('../../../../icons/xmark-solid.svg');
+    background-image: url('../icons/xmark-solid.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 12px;
@@ -61,7 +61,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-image: url('../../../../images/anonymous_user.png');
+    background-image: url('../images/anonymous_user.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

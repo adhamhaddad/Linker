@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Modal from '../../../Modal';
-import classes from './LikesController.module.css';
+import Modal from '../Modal';
+import classes from '../../css/LikesController.module.css';
 
 const LikesController = ({ likes, onHide }) => {
   const likesList = likes

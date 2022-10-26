@@ -23,7 +23,7 @@
 }
 
 .like-icon {
-    background-image: url('../../../icons/heart.svg');
+    background-image: url('../icons/heart.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 12px;
@@ -43,4 +43,9 @@
     border-radius: 50%;
     margin: 0 6px;
     background-color: var(--base-color-dark);
+}
+@media only screen and (max-width: 600px) {
+    .post-reactions {
+        font-size: 11px;
+    }
 }

@@ -34,6 +34,7 @@
 }
 
 .create-post-btn {
+    font-size: 12px;
     width: 200px;
     height: 40px;
     line-height: 40px;
@@ -42,37 +43,7 @@
     margin: 10px;
     border: 1px solid var(--base-color-dark);
     border-radius: 4px;
-}
-
-/* Effects */
-a:hover {
-    background-color: var(--base-background-light);
-    transition: background .7s
-}
-
-a[title='LinkedIn']:hover {
-    background-color: #0E76A8;
-    transition: background .7s
-}
-
-a[title='Facebook']:hover {
-    background-color: #1777f2;
-    transition: background .7s
-}
-
-a[title='Twitter']:hover {
-    background-color: #00ACEE;
-    transition: background .7s
-}
-
-a[title='Whatsapp']:hover {
-    background-color: #24CC63;
-    transition: background .7s
-}
-
-a[title='Telegram']:hover {
-    background-color: #0084C6;
-    transition: background .7s
+    background-color: var(--base-color-light);
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */

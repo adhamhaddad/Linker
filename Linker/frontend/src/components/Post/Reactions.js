@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Reactions.module.css';
+import classes from '../../css/Reactions.module.css';
 
 const Reactions = ({
   likes,

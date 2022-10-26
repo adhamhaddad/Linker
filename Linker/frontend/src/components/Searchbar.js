@@ -6,7 +6,7 @@ import SpinnerLoading from './Loading/Spinner';
 import Error from './Error';
 import classes from '../css/Searchbar.module.css';
 
-const SearchBar = () => {
+const SearchBar = ({ theme }) => {
   const authCtx = useContext(AuthenticateContext);
   const { isError, isLoading, sendRequest } = useHttp();
   const [query, setQuery] = useState('');
@@ -53,7 +53,7 @@ const SearchBar = () => {
   }, [query]);
 
   return (
-    <div className={classes.searchbox}>
+    <div className={`${classes.searchbox} ${classes[theme]}`}>
       <input
         type='search'
         placeholder='Type to Search ..'

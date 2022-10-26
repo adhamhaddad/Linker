@@ -47,7 +47,7 @@ const ChatUsers = ({ windowSize }) => {
   }, []);
   return (
     <div className={classes['chat-users']}>
-      <SearchBar />
+      <SearchBar theme='chat-search'/>
       {isLoading && <SpinnerLoading color='light' />}
       {isError !== null && <Error message={isError} />}
       {list.length === 0 && <p>Friends is {list.length}</p>}

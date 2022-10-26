@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useHttp from '../../hooks/use-http';
-import CommentsController from './ReactionsController/Comments/CommentsController';
-import Reactions from './Reactions/Reactions';
+import CommentsController from './CommentsController';
+import Reactions from './Reactions';
 import PostContent from './PostContent';
 import PostHeader from './PostHeader';
 import PostBottom from './PostBottom';
-import LikesController from './ReactionsController/Likes/LikesController';
-import SharesController from './ReactionsController/Shares/SharesController';
+import LikesController from './LikesController';
+import SharesController from './SharesController';
 import classes from '../../css/Post.module.css';
 
 const Post = ({
@@ -89,7 +89,9 @@ const Post = ({
       )}
       {commentsPort && (
         <CommentsController
+        post_user_id={post_user_id}
           comments={commentsList}
+          onChangeComment={setCommentsList}
           onHide={showCommentsHandler}
         />
       )}

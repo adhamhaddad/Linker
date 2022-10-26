@@ -18,7 +18,7 @@ const PostBottom = ({
   const [commentContent, setCommentContent] = useState('');
   const commentContentRef = useRef();
   const commentContentHandler = (e) => {
-    setCommentContent(e);
+    setCommentContent(e.target.value);
   };
 
   const toggleLikehandler = () => {
@@ -96,7 +96,8 @@ const PostBottom = ({
       null
     );
   };
-  const onAddComment = () => {
+  const onAddComment = (e) => {
+    e.preventDefault();
     if (commentContentRef.current.value.trim().length === 0) {
       return;
     }
@@ -104,11 +105,13 @@ const PostBottom = ({
       'post/comment',
       'POST',
       {
-        user_id,
         post_id,
-        content: commentContentRef.current.value
+        user_id,
+        comment_caption: commentContentRef.current.value,
+        comment_img: null,
+        comment_video: null
       },
-      null
+      (data) => {console.log(data); setCommentsList((prev) => [...prev, data])}
     );
     setCommentContent('');
   };

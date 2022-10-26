@@ -6,44 +6,53 @@
     border-bottom: 1px solid rgb(219, 219, 219);
     padding: 5px;
 }
+
 .comment-card:last-of-type {
     border-bottom: none;
 }
-.comment-card .comment-header {
+
+.comment-header {
     display: flex;
     align-items: center;
 }
-.comment-card .comment-header .profile {
+
+.comment-profile {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    background-image: url('../images/anonymous_user.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     overflow: hidden;
     /* border: 1px solid var(--base-color-dark) */
 }
-.comment-card .comment-header .profile img {
-    width: 40px;
-    height: 40px;
-}
-.comment-card .comment-header .username a {
-    font-size: 12px;
+
+.comment-username {
+    font-size: 11.5px;
+    text-transform: capitalize;
+    font-weight: bold;
     margin-left: 5px;
     color: var(--base-color-dark)
 }
-.comment-card .comment-content {
-    font-size: 14px;
+.comment-content {
+    font-size: 12px;
     padding: 5px 0;
 }
-.comment-card .comment-footer {
+.comment-footer {
     display: flex;
     align-items: center;
     margin: 5px 0;
+    padding: 5px 0;
 }
+
 .comment-card .comment-footer button {
     text-transform: capitalize;
-    font-size: 12px;
+    font-size: 11px;
     cursor: pointer;
     background-color: var(--base-color-light);
 }
+
 .comment-card .comment-footer i {
     font-size: 2.5px;
     margin: 0 6px;

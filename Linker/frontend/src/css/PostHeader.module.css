@@ -23,6 +23,7 @@
 
 .post-info>div {
     display: flex;
+    justify-content: center;
     flex-direction: column;
 }
 
@@ -35,13 +36,13 @@
 }
 
 .post-date {
-    font-size: 12px;
+    font-size: 11px;
     width: max-content;
     background-image: url('../icons/earth-africa-solid.svg');
     background-repeat: no-repeat;
     background-position: right;
-    background-size: 12px;
-    padding: 0 15px 0 0;
+    background-size: 11px;
+    padding: 0 14px 0 0;
 }
 
 @media only screen and (max-width: 600px) {

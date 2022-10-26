@@ -19,7 +19,7 @@ function PostHeader({
     <div className={classes['post-header']}>
       <div className={classes['post-info']}>
         <Link
-          to={`/profile/${post_username}?user_id=${post_user_id}`}
+          to={`/profile/${post_username}`}
           className={classes['profile-image']}
           // style={{
           //   backgroundImage: profile.trim().length > 0 && `url(${profile})`
@@ -28,7 +28,7 @@ function PostHeader({
 
         <div>
           <Link
-            to={`/profile/${post_username}?user_id=${post_user_id}`}
+            to={`/profile/${post_username}`}
             className={classes['post-username']}
           >
             {post_first_name} {post_last_name}

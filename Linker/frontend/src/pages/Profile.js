@@ -221,7 +221,7 @@ const Profile = ({ user_id, username }) => {
             className={classes['create-post-btn']}
             onClick={closePostPort}
           >
-            Create a new post
+            Create a post
           </button>
         )}
         {postPort && (

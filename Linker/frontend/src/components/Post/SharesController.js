@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Modal from '../../../Modal';
-import classes from './SharesController.module.css';
+import Modal from '../Modal';
+import classes from '../../css/SharesController.module.css';
 
 function SharesController({ shares, onHide }) {
   const sharesList = shares.map((share) => {

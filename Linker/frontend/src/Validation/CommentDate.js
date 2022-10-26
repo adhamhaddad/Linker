@@ -4,10 +4,10 @@ import '../css/CommentDate.css';
 
 function CommentDate(props) {
   const commentDate = (time) => {
-    if (TimeDiff.inSeconds(time) <= 60) {
+    if (TimeDiff.inSeconds(time) < 60) {
       return `${TimeDiff.inSeconds(time)} sec`;
     }
-    if (TimeDiff.inMinutes(time) <= 60) {
+    if (TimeDiff.inMinutes(time) < 60) {
       return `${TimeDiff.inMinutes(time)} min`;
     }
     if (TimeDiff.inHours(time) <= 24) {
