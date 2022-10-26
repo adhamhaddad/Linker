@@ -40,6 +40,8 @@
     font-weight: bold;
     cursor: pointer;
     margin: 10px;
+    border: 1px solid var(--base-color-dark);
+    border-radius: 4px;
 }
 
 /* Effects */
@@ -84,6 +86,9 @@ a[title='Telegram']:hover {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
+    .username {
+        font-size: 14px;
+    }
     button.create-post-btn {
         margin: 5px;
     }

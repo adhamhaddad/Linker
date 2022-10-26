@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import useHttp from '../../hooks/use-http';
+import AuthenticateContext from '../../utils/authentication';
 import ChatHeader from './ChatHeader';
 import ChatForm from './ChatForm';
 import SpinnerLoading from '../Loading/Spinner';
@@ -9,32 +10,27 @@ import { useParams } from 'react-router-dom';
 import classes from '../../css/Conversation.module.css';
 
 const Conversation = ({ user_id }) => {
+  const authCtx = useContext(AuthenticateContext);
   const query = new URLSearchParams(location.search);
   const params = useParams();
   const { isLoading, isError, sendRequest } = useHttp();
   const [messages, setMessages] = useState([]);
-  const [currentUser, setCurrentUser] = useState({
-    user_username: params.username,
-    user_fname: '',
-    user_lname: ''
-  });
-  console.log(query.get('user_id'))
+  const [currentUser, setCurrentUser] = useState({});
+
   const currentUserHandler = (user) => {
-    setCurrentUser((prev) => {
-      return { prev, user_fname: user.fname, user_lname: user.lname };
-    });
+    setCurrentUser({ user_fname: user.first_name, user_lname: user.last_name });
   };
+
   const newMessageHander = (res) => {
     setMessages((prev) => [...prev, res]);
   };
-
   const addNewMessageHandler = (newMesasge) => {
     sendRequest(
       'user/message',
       'POST',
       {
-        user_id: user_id,
-        receiver_id: query.get('user_id'),
+        sender_id: authCtx.user.user_id,
+        receiver_id: params.username,
         content: newMesasge.current.value
       },
       newMessageHander
@@ -46,7 +42,7 @@ const Conversation = ({ user_id }) => {
       .map((msg) => {
         return (
           <MessageCard
-            className={msg.user_id === user_id ? 'sender' : 'receiver'}
+            className={msg.sender_id === user_id ? 'sender' : 'receiver'}
             profile={msg.profile}
             message={msg.content}
             timedate={msg.timedate}
@@ -58,17 +54,12 @@ const Conversation = ({ user_id }) => {
 
   // Get All Messages
   useEffect(() => {
+    sendRequest(`users/${params.username}`, 'GET', {}, currentUserHandler);
     sendRequest(
-      `user/messages?user_id=${user_id}&receiver_id=${query.get('user_id')}`,
+      `user/messages?sender_id=${user_id}&receiver_id=${params.username}`,
       'GET',
       {},
       setMessages
-    );
-    sendRequest(
-      `user/information?user_id=${query.get('user_id')}`,
-      'GET',
-      {},
-      currentUserHandler
     );
   }, []);
   return (

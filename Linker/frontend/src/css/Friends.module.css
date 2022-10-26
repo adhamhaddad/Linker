@@ -5,30 +5,28 @@
     max-height: 200px;
     display: flex;
     flex-direction: column;
-    /* border: 1px solid var(--base-color-light); */
-    /* background-color: var(--base-color-light); */
     /* color: var(--base-color-dark) */
 }
 
 .friends h3 {
     text-transform: capitalize;
-    font-size: 16px;
-    padding: 10px 5px;
+    font-size: 14px;
+}
+
+.friends h3 i {
+    width: 25px;
+    text-align: center;
 }
 
 .show-all {
     width: fit-content;
     margin-left: 15px;
+    padding: 10px 0;
     text-decoration: underline;
     background-color: transparent;
     color: var(--base-color-light);
     text-transform: capitalize;
     cursor: pointer;
-}
-
-.friends p {
-    font-size: 13px;
-    padding: 10px;
 }
 
 .friends-list {
@@ -68,14 +66,16 @@
     text-transform: capitalize;
 }
 
-.delete {
-    width: 15px;
-    height: 15px;
+.delete-friend {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
     background-image: url('../icons/delete-user.svg');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
-    background-color: transparent;
+    background-size: 14px;
+    /* background-color: green; */
+    cursor: pointer;
 }
 
 .friends-list.min {
@@ -110,10 +110,14 @@
 .friends-list li a.max>button {
     display: block
 }
+
 @media only screen and (max-width: 600px) {
     .friends h3 {
-        font-size: 14px;
-        padding: 10px 0;
+        font-size: 13px;
     }
 
+    .friends h3>i {
+        width: 22px;
+        text-align: center;
+    }
 }

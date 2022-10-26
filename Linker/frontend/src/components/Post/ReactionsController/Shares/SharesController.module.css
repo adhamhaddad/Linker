@@ -17,12 +17,12 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid rgb(219, 219, 219);
+    font-size: 14px;
 }
 .post-shares .shares-header button {
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
-    font-size: 16px;
     font-weight: bold;
     background-color: var(--base-color-light);
     transition: background .4s ease-in-out;

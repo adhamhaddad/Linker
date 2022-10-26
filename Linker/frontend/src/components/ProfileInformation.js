@@ -1,32 +1,32 @@
 import React from 'react';
 import classes from '../css/ProfileInformation.module.css';
 
-function ProfileInformation({ work, relation, education, lives }) {
+function ProfileInformation({ job_title, relationship, education, location }) {
   return (
     <div className={classes['user-info']}>
       <ul>
-        {work !== undefined && (
+        {job_title !== null && (
           <li className={classes['info-work']}>
             <i className='fa-solid fa-briefcase'></i>
-            {work}
+            {job_title}
           </li>
         )}
-        {relation !== undefined && (
+        {relationship !== null && (
           <li className={classes['info-education']}>
             <i className='fa-solid fa-graduation-cap'></i>
             {education}
           </li>
         )}
-        {education !== undefined && (
+        {education !== null && (
           <li className={classes['info-relation']}>
             <i className='fa-solid fa-heart'></i>
-            {relation}
+            {relationship}
           </li>
         )}
-        {lives !== undefined && (
+        {location !== null && (
           <li className={classes['info-lives']}>
             <i className='fa-solid fa-location-dot'></i>
-            {lives}
+            {location}
           </li>
         )}
       </ul>

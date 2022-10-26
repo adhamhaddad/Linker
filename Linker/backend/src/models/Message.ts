@@ -4,6 +4,11 @@ class Message {
   async newMessage(m: Messages): Promise<Messages> {
     try {
       const connection = await database.connect();
+      const receiver_id_SQL = 'SELECT user_id FROM users WHERE username=$1';
+      const user_id_result = await connection.query(receiver_id_SQL, [
+        m.receiver_id
+      ]);
+      const receiver_id = user_id_result.rows[0].user_id;
       const sql = `
       INSERT INTO messages
       (sender_id, receiver_id, timedate, content, isSeen)
@@ -13,7 +18,7 @@ class Message {
       `;
       const result = await connection.query(sql, [
         m.sender_id,
-        m.receiver_id,
+        receiver_id,
         new Date(),
         m.content,
         0
@@ -28,11 +33,14 @@ class Message {
   }
 
   async getAllMessages(
-    user_id: string,
-    receiver_id: string
+    sender_id: string,
+    username: string
   ): Promise<Messages[]> {
     try {
       const connection = await database.connect();
+      const user_id_SQL = 'SELECT user_id FROM users WHERE username=$1';
+      const result_SQL = await connection.query(user_id_SQL, [username]);
+      const receiver_id = result_SQL.rows[0].user_id;
       const sql = `
         SELECT DISTINCT u.username, u.first_name, u.last_name, m.*
         FROM messages m, users u
@@ -41,7 +49,7 @@ class Message {
         OR
         m.sender_id=$2 AND m.receiver_id=$1 AND u.user_id=$2
         `;
-      const result = await connection.query(sql, [user_id, receiver_id]);
+      const result = await connection.query(sql, [sender_id, receiver_id]);
       connection.release();
       return result.rows;
     } catch (err) {

@@ -23,7 +23,7 @@ const newMessage = async (req: Request, res: Response) => {
 const getAllMessages = async (req: Request, res: Response) => {
   try {
     const response = await message.getAllMessages(
-      req.query.user_id as string,
+      req.query.sender_id as string,
       req.query.receiver_id as string
     );
     res.status(200).json({

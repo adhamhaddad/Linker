@@ -97,3 +97,19 @@
     overflow: hidden;
     align-self: flex-end;
 }
+@media screen and (max-width: 600px) {
+    .message-profile {
+        width: 30px;
+        height: 30px;
+    }
+    .message-info {
+        border-radius: 10px 10px 10px 0px;
+    }
+    .message-content {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+    .sender .message-info {
+        border-radius: 10px 10px 0px 10px;
+    }
+}

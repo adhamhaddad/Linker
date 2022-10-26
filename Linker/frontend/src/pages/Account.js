@@ -48,11 +48,20 @@ const accountFormReducer = (state, action) => {
   };
 };
 const Account = ({ user_id }) => {
-  const [accountData, setAccountData] = useState({});
+  const [accountData, setAccountData] = useState({
+    first_name: '',
+    last_name: '',
+    username: '',
+    email: '',
+    password: '',
+    gender: ''
+  });
   const { isLoading, isError, sendRequest } = useHttp();
   const windowCtx = useContext(WindowContext);
   const authCtx = useContext(AuthenticateContext);
   const [accountForm, dispatch] = useReducer(accountFormReducer, {
+    first_name: '',
+    last_name: '',
     username: '',
     email: '',
     password: '',
@@ -68,29 +77,61 @@ const Account = ({ user_id }) => {
     console.log(accountForm);
   };
 
-  const deleteAccountHandler = (e) => {
-    e.preventDefault();
-  };
-
-  useEffect(() => {
+  const onDeleteAccount = () => {
     sendRequest(
-      `user?user_id=${authCtx.user.user_id}`,
-      'GET',
-      {},
-      setAccountData
+      'users',
+      'DELETE',
+      {
+        user_id: authCtx.user.user_id
+      },
+      (response) => {
+        response.status && authCtx.onLogout();
+      }
     );
+  };
+  const changeUsernameHandler = (e) => {
+    setAccountData((prev) => ({ ...prev, username: e.target.value }));
+  };
+  const changeFirstNameHandler = (e) => {
+    setAccountData((prev) => ({ ...prev, first_name: e.target.value }));
+  };
+  const changeLastNameHandler = (e) => {
+    setAccountData((prev) => ({ ...prev, last_name: e.target.value }));
+  };
+  useEffect(() => {
+    sendRequest(`users/${authCtx.user.username}`, 'GET', {}, setAccountData);
   }, []);
   return (
     <section className={classes.sections}>
       {windowCtx.windowSize <= 600 && <BackButton path='/settings' />}
       <form onSubmit={onFormSubmitHandler} className={classes.form}>
+        <div className={classes['nameInputs']}>
+          <div className={classes['name']}>
+            <label htmlFor='fname'>First Name</label>
+            <input
+              type='text'
+              id='fname'
+              value={accountData.first_name}
+              onChange={changeFirstNameHandler}
+            />
+          </div>
+          <div className={classes['name']}>
+            <label htmlFor='fname'>Last Name</label>
+            <input
+              type='text'
+              id='lname'
+              value={accountData.last_name}
+              onChange={changeLastNameHandler}
+            />
+          </div>
+        </div>
         <div>
           <label htmlFor='username'>Username</label>
           <input
             type='text'
             value={accountForm.username}
             placeholder={accountData.username}
-            onChange={onChangeHandler}
+            onChange={changeUsernameHandler}
           />
         </div>
         <div>
@@ -137,13 +178,15 @@ const Account = ({ user_id }) => {
       <Button type='button' onClick={authCtx.onLogout} className='btn-logout'>
         logout
       </Button>
-      <Button
-        type='button'
-        onClick={deleteAccountHandler}
-        className='delete-account'
-      >
-        delete account
-      </Button>
+      {!isLoading && (
+        <Button
+          type='button'
+          onClick={onDeleteAccount}
+          className='delete-account'
+        >
+          delete account
+        </Button>
+      )}
     </section>
   );
 };

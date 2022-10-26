@@ -1,21 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import useHttp from '../hooks/use-http';
+import AuthenticateContext from '../utils/authentication';
 import SpinnerLoading from './Loading/Spinner';
 import Error from './Error';
 import classes from '../css/Searchbar.module.css';
 
 const SearchBar = () => {
+  const authCtx = useContext(AuthenticateContext);
   const { isError, isLoading, sendRequest } = useHttp();
   const [query, setQuery] = useState('');
   const [fetchedUsers, setFetchedUsers] = useState([]);
+
+  const queryChangeHandler = (e) => {
+    setQuery(e.target.value);
+  };
+  const closeListHandler = () => {
+    setQuery('');
+  };
 
   const usersList =
     fetchedUsers.length > 0 &&
     fetchedUsers.map((user) => {
       return (
         <li key={user.user_id}>
-          <Link to={`/profile/${user.username}`}>
+          <Link to={`/profile/${user.username}`} onClick={closeListHandler}>
             <div
               style={{ backgroundImage: `url${user.profile}` }}
               title={user.username}
@@ -29,15 +38,18 @@ const SearchBar = () => {
       );
     });
 
-  const queryChangeHandler = (e) => {
-    setQuery(e.target.value);
-  };
-
   useEffect(() => {
     query.trim().length === 0 && setFetchedUsers([]);
     query.trim().length > 0 &&
-      sendRequest('search', 'POST', {
-         query: query }, setFetchedUsers);
+      sendRequest(
+        'search',
+        'POST',
+        {
+          user_id: authCtx.user.user_id,
+          query: query
+        },
+        setFetchedUsers
+      );
   }, [query]);
 
   return (

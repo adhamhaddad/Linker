@@ -101,16 +101,98 @@ const updateStory = async (req: Request, res: Response) => {
   }
 };
 
+const updateRelationship = async (req: Request, res: Response) => {
+  try {
+    const response = await info.updateRelationship(req.body);
+    res.status(201).json({
+      status: true,
+      data: { ...response },
+      message: 'Story uploaded successfully!'
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: false,
+      message: (err as Error).message
+    });
+  }
+};
+
+const updateLocation = async (req: Request, res: Response) => {
+  try {
+    const response = await info.updateLocation(req.body);
+    res.status(201).json({
+      status: true,
+      data: { ...response },
+      message: 'Story uploaded successfully!'
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: false,
+      message: (err as Error).message
+    });
+  }
+};
+
+const updateBirthday = async (req: Request, res: Response) => {
+  console.log(req.body)
+  try {
+    const response = await info.updateBirthday(req.body);
+    res.status(201).json({
+      status: true,
+      data: { ...response },
+      message: 'Story uploaded successfully!'
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: false,
+      message: (err as Error).message
+    });
+  }
+};
+
+const updateJobTitle = async (req: Request, res: Response) => {
+  try {
+    const response = await info.updateJobTitle(req.body);
+    res.status(201).json({
+      status: true,
+      data: { ...response },
+      message: 'Story uploaded successfully!'
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: false,
+      message: (err as Error).message
+    });
+  }
+};
+
+const updateEducation = async (req: Request, res: Response) => {
+  try {
+    const response = await info.updateEducation(req.body);
+    res.status(201).json({
+      status: true,
+      data: { ...response },
+      message: 'Story uploaded successfully!'
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: false,
+      message: (err as Error).message
+    });
+  }
+};
+
 const information_controller_routes = (
   app: Application,
   logger: NextFunction
 ) => {
   app.post('/user/information', logger, verifyToken, createInfo);
   app.get('/user/information/:username', logger, verifyToken, getInfo);
-
-  // app.patch('/user/information/fname', logger, verifyToken, updateFname);
-  // app.patch('/user/information/lname', logger, verifyToken, updateLname);
-  // app.patch('/user/information/profile', logger, verifyToken, updateProfile);
   app.patch('/user/information/story', logger, verifyToken, updateStory);
+  app.patch('/user/information/relationship', logger, verifyToken, updateRelationship);
+  app.patch('/user/information/location', logger, verifyToken, updateLocation);
+  app.patch('/user/information/birthday', logger, verifyToken, updateBirthday);
+  app.patch('/user/information/job-title', logger, verifyToken, updateJobTitle);
+  app.patch('/user/information/education', logger, verifyToken, updateEducation);
 };
 export default information_controller_routes;

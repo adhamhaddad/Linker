@@ -4,7 +4,7 @@ import config from '../config';
 import Info from '../types/Information';
 
 class User {
-  async createUser(u: Users): Promise<Users> {
+  async createUser(u: Users, i: Info): Promise<Users> {
     try {
       const connection = await database.connect();
       const sql = `
@@ -22,6 +22,25 @@ class User {
         u.email.toLowerCase(),
         u.gender.toLowerCase(),
         new Date()
+      ]);
+      const createInfo = `
+      INSERT INTO information
+      (
+        user_id, job_title,
+        relationship, education, location,
+        story, birthday
+      )
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING *
+      `;
+      const infoResult = await connection.query(createInfo, [
+        result.rows[0].user_id,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ]);
       connection.release();
       return result.rows[0];
@@ -145,8 +164,10 @@ class User {
   }
   async searchByName(
     fname: string,
-    lname: string | undefined
+    lname: string | undefined,
+    user_id: string
   ): Promise<Info[]> {
+    console.log(user_id);
     try {
       const connection = await database.connect();
       const sql = `
@@ -154,8 +175,10 @@ class User {
       FROM users
       WHERE
       first_name LIKE '${fname.toLowerCase()}%'
+      AND user_id != '${user_id}'
       OR
       last_name LIKE '${lname !== undefined && lname.toLowerCase()}%'
+      AND user_id != '${user_id}'
       `;
       const result = await connection.query(sql);
       connection.release();
@@ -166,11 +189,13 @@ class User {
       );
     }
   }
-  async deleteUser(id: string): Promise<Users> {
+  async deleteUser(user_id: string): Promise<Users> {
+    console.log('Logged')
+    console.log(user_id)
     try {
       const connection = await database.connect();
       const sql = 'DELETE FROM users WHERE user_id=$1';
-      const result = await connection.query(sql, [id]);
+      const result = await connection.query(sql, [user_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {

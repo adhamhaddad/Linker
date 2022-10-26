@@ -19,6 +19,7 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid rgb(219, 219, 219);
+    font-size: 14px;
 }
 
 .likes-header button {
@@ -29,7 +30,7 @@
     background-image: url('../../../../icons/xmark-solid.svg');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: 12px;
     transition: background .4s ease-in-out;
     cursor: pointer;
 }
@@ -67,7 +68,7 @@
     margin-right: 10px;
 }
 .post-username {
-    font-size: 14px;
+    font-size: 13px;
     text-transform: capitalize;
     color: var(--base-color-dark);
     font-weight: bold;

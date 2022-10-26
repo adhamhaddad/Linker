@@ -1,8 +1,11 @@
+.user-info {
+    padding-bottom: 10px;
+}
 .user-info ul li {
     display: block;
     text-transform: capitalize;
     padding: 10px 0;
-    font-size: 14px;
+    font-size: 13.5px;
     color: var(--base-color-light);
     transition: background .7s ease-in-out;
     cursor: default;
@@ -10,17 +13,20 @@
     background-repeat: no-repeat;
     background-size: 15px;
 }
+
 .user-info ul li i {
-    width: 22px;
-    margin-right: 2px;
+    width: 25px;
     text-align: center;
 }
+
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-    .user-info h3 {
-        text-align: left;
-        font-size: 14px;
+    .user-info ul li {
+        font-size: 12px;
+        font-size: 13px;
     }
-    .user-info ul li {font-size: 12px}
-    .user-info ul li > i {width: 22px}
+
+    .user-info ul li>i {
+        width: 22px
+    }
 }

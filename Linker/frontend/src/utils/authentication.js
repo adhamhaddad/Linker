@@ -1,5 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
-import useHttp from '../hooks/use-http';
+import React, { createContext, useState } from 'react';
 const AuthenticateContext = createContext({
   user: {},
   accessToken: '',
@@ -9,10 +8,11 @@ const AuthenticateContext = createContext({
 });
 
 export const Authentication = (props) => {
-  const { sendRequest } = useHttp();
   const [user, setUser] = useState({
     user_id: localStorage.getItem('user_id'),
-    username: localStorage.getItem('username')
+    username: localStorage.getItem('username'),
+    first_name: localStorage.getItem('first_name'),
+    last_name: localStorage.getItem('first_name')
   });
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem('accessToken')
@@ -25,6 +25,8 @@ export const Authentication = (props) => {
 
     localStorage.setItem('user_id', user.user_id);
     localStorage.setItem('username', user.username);
+    localStorage.setItem('first_name', user.first_name);
+    localStorage.setItem('last_name', user.last_name);
     localStorage.setItem('accessToken', token);
   };
   const logoutHandler = () => {
@@ -32,6 +34,8 @@ export const Authentication = (props) => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('user_id');
     localStorage.removeItem('username');
+    localStorage.removeItem('first_name');
+    localStorage.removeItem('last_name');
   };
   const contextValue = {
     user: user,

@@ -5,8 +5,6 @@ import Friend from '../models/Friends';
 const friend = new Friend();
 
 const addFriend = async (req: Request, res: Response) => {
-  console.log('Add Friend Logged')
-
   try {
     const response = await friend.addFriend(req.body);
     res.status(201).json({
@@ -23,10 +21,8 @@ const addFriend = async (req: Request, res: Response) => {
 };
 
 const getFriends = async (req: Request, res: Response) => {
-  console.log('Get Friends Logged')
-
   try {
-    const response = await friend.getFriends(req.query.user_id as string);
+    const response = await friend.getFriends(req.query.username as string);
     res.status(200).json({
       status: true,
       data: response,
@@ -39,9 +35,22 @@ const getFriends = async (req: Request, res: Response) => {
     });
   }
 };
-
+const getFriend = async (req: Request, res: Response) => {
+  try {
+    const response = await friend.getFriend(req.body);
+    res.status(200).json({
+      status: true,
+      data: { ...response },
+      message: 'Friend retrieved successfully'
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: false,
+      message: (err as Error).message
+    });
+  }
+};
 const friendRequest = async (req: Request, res: Response) => {
-  console.log('Friend Request Logged')
   try {
     const response = await friend.friendRequest(req.query.user_id as string);
     res.status(200).json({
@@ -58,8 +67,6 @@ const friendRequest = async (req: Request, res: Response) => {
 };
 
 const acceptFriend = async (req: Request, res: Response) => {
-  console.log('Accept Friend Logged')
-
   try {
     const response = await friend.acceptFriend(req.body);
     res.status(200).json({
@@ -75,15 +82,12 @@ const acceptFriend = async (req: Request, res: Response) => {
   }
 };
 
-const ignoreFriend = async (req: Request, res: Response) => {
-  console.log('Ignore Friend Logged')
-
+const cancelRequest = async (req: Request, res: Response) => {
   try {
-    const response = await friend.ignoreFriend(req.body);
-    res.status(200).json({
+    await friend.deleteFriend(req.body);
+    res.status(201).json({
       status: true,
-      data: { ...response },
-      message: 'Retrieved Friend successfully!'
+      message: 'Request canceled successfully!'
     });
   } catch (err) {
     res.status(400).json({
@@ -92,13 +96,12 @@ const ignoreFriend = async (req: Request, res: Response) => {
     });
   }
 };
-
 const deleteFriend = async (req: Request, res: Response) => {
-  console.log('Delete Friend Logged')
   try {
-    await friend.deleteFriend(req.body);
+    const response = await friend.deleteFriend(req.body);
     res.status(200).json({
       status: true,
+      data: { ...response },
       message: 'Friend deleted successfully!'
     });
   } catch (err) {
@@ -111,10 +114,12 @@ const deleteFriend = async (req: Request, res: Response) => {
 
 const friends_controller_routes = (app: Application, logger: NextFunction) => {
   app.get('/user/friends', logger, verifyToken, getFriends);
-  app.post('/user/friend', logger, verifyToken, addFriend);
   app.get('/user/friend', logger, verifyToken, friendRequest);
-  app.patch('/user/friend', logger, verifyToken, acceptFriend);
-  app.delete('/user/friend', logger, verifyToken, ignoreFriend);
-  app.delete('/user/friend', logger, verifyToken, deleteFriend);
+  app.post('/user/friend-check', logger, verifyToken, getFriend);
+  app.post('/user/add-friend', logger, verifyToken, addFriend);
+  app.patch('/user/accept-request', logger, verifyToken, acceptFriend);
+  app.delete('/user/ignore-request', logger, verifyToken, deleteFriend);
+  app.delete('/user/cancel-request', logger, verifyToken, cancelRequest);
+  app.delete('/user/delete-friend', logger, verifyToken, deleteFriend);
 };
 export default friends_controller_routes;

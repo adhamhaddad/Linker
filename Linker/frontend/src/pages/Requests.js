@@ -10,25 +10,25 @@ const Requests = ({ user_id }) => {
   const [requests, setRequests] = useState([]);
   const { isLoading, isError, sendRequest } = useHttp();
 
+  const requestActions = (response) => {
+    setRequests((prev) =>
+      prev.filter((request) => request.friend_id !== response.friend_id)
+    );
+  };
   const acceptRequest = (user) => {
     sendRequest(
-      'user/friend',
+      'user/accept-request',
       'PATCH',
-      {
-        sender_id: user.sender_id,
-        receiver_id: user_id
-      },
-      setRequests
+      { friend_id: user.friend_id },
+      requestActions
     );
   };
   const ignoreRequest = (user) => {
     sendRequest(
-      'user/friend',
+      'user/ignore-request',
       'DELETE',
-      {
-        sender_id: user.sender_id
-      },
-      setRequests
+      { friend_id: user.friend_id },
+      requestActions
     );
   };
   const requestsList =

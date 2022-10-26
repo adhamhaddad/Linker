@@ -1,13 +1,14 @@
 .requests-page {
-    background-color: green;
     height: 100%;
 }
+
 .requests-page h2 {
     font-size: 14px;
     text-transform: capitalize;
     padding: 10px;
     color: var(--base-color-dark)
 }
+
 .requests-list {
     width: 350px;
     height: 100%;
@@ -37,6 +38,7 @@
     text-transform: capitalize;
     margin-right: auto;
 }
+
 .requests-page button {
     width: 30px;
     height: 30px;
@@ -51,6 +53,7 @@
     font-size: 16px;
     cursor: pointer;
 }
+
 .requests-page button i {
     display: block;
     height: 100%;

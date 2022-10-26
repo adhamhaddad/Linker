@@ -46,7 +46,6 @@ class Information {
     }
   }
 
-
   /*
   async updateProfile(username: string, i: Info): Promise<Info[]> {
     try {
@@ -68,7 +67,8 @@ class Information {
   async updateStory(i: Info): Promise<Info> {
     try {
       const connection = await database.connect();
-      const sql = 'UPDATE information SET story=$2, WHERE user_id=$1';
+      const sql =
+        'UPDATE information SET story=$2 WHERE user_id=$1 RETURNING story';
       const result = await connection.query(sql, [i.user_id, i.story]);
       connection.release();
       return result.rows[0];
@@ -78,15 +78,77 @@ class Information {
       );
     }
   }
-  async deleteInfo(user_id: string): Promise<Info> {
+  async updateRelationship(i: Info): Promise<Info> {
     try {
       const connection = await database.connect();
-      const sql = 'DELETE FROM information * WHERE user_id=($1)';
-      const result = await connection.query(sql, [user_id]);
+      const sql =
+        'UPDATE information SET relationship=$2 WHERE user_id=$1 RETURNING relationship';
+      const result = await connection.query(sql, [i.user_id, i.relationship]);
       connection.release();
       return result.rows[0];
     } catch (err) {
-      throw new Error(`Could not delete Info. Error ${(err as Error).message}`);
+      throw new Error(
+        `Could not update the story. Error ${(err as Error).message}`
+      );
+    }
+  }
+  async updateLocation(i: Info): Promise<Info> {
+    try {
+      const connection = await database.connect();
+      const sql =
+        'UPDATE information SET location=$2 WHERE user_id=$1 RETURNING location';
+      const result = await connection.query(sql, [i.user_id, i.location]);
+      connection.release();
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(
+        `Could not update the story. Error ${(err as Error).message}`
+      );
+    }
+  }
+
+  async updateBirthday(i: Info): Promise<Info> {
+    try {
+      const connection = await database.connect();
+      const sql =
+        'UPDATE information SET birthday=$2 WHERE user_id=$1 RETURNING birthday';
+      const result = await connection.query(sql, [i.user_id, i.birthday]);
+      connection.release();
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(
+        `Could not update the story. Error ${(err as Error).message}`
+      );
+    }
+  }
+
+  async updateJobTitle(i: Info): Promise<Info> {
+    try {
+      const connection = await database.connect();
+      const sql =
+        'UPDATE information SET job_title=$2 WHERE user_id=$1 RETURNING job_title';
+      const result = await connection.query(sql, [i.user_id, i.job_title]);
+      connection.release();
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(
+        `Could not update the story. Error ${(err as Error).message}`
+      );
+    }
+  }
+
+  async updateEducation(i: Info): Promise<Info> {
+    try {
+      const connection = await database.connect();
+      const sql =
+        'UPDATE information SET education=$2 WHERE user_id=$1 RETURNING education';
+      const result = await connection.query(sql, [i.user_id, i.education]);
+      connection.release();
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(
+        `Could not update the story. Error ${(err as Error).message}`
+      );
     }
   }
 }

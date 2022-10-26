@@ -1,31 +1,45 @@
-.story {
+.profile-story {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
-.story h3 {
+
+.profile-story h3 {
     text-transform: capitalize;
-    text-align: center;
-    font-size: 16px;
-    padding: 10px 0;
-}
-.story h3 i {
-    width: 30px;
-}
-.story p {
-    width: 100%;
-    max-height: 250px;
+    /* text-align: center; */
     font-size: 14px;
+}
+
+.profile-story h3 i {
+    width: 25px;
+}
+
+.profile-story p {
+    padding: 5px 0;
+    max-height: 250px;
+    font-size: 13.5px;
     line-height: 1.5;
     word-wrap: break-word;
     overflow-y: auto;
 }
+
 @media only screen and (max-width: 600px) {
-    .story h3 {
-        text-align: left;
-        font-size: 14px;
+    .profile-story {
+        font-size: 12px
     }
-    .container.profile .right-side .story {font-size: 12px}
-    .story h3 > i {width: 22px}
-    .story p {font-size: 12px}
+
+    .profile-story h3 {
+        text-align: left;
+        font-size: 13px;
+    }
+
+    .profile-story h3>i {
+        width: 22px;
+        text-align: center;
+        /* background-color: green; */
+    }
+    .profile-story p {
+        padding: 5px 3.5px;
+        font-size: 12px;
+    }
 }

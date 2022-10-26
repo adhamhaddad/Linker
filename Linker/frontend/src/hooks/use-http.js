@@ -22,7 +22,7 @@ const useHttp = () => {
         throw new Error(data.message);
       }
       setIsError(null);
-      responseData(data.data);
+      responseData !== null && responseData(data.data);
     } catch (error) {
       setIsError(error.message);
     } finally {

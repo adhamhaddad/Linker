@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import AuthenticateContext from '../../utils/authentication';
 import useHttp from '../../hooks/use-http';
 import { NavLink } from 'react-router-dom';
 import SearchBar from '../Searchbar';
@@ -6,7 +7,8 @@ import SpinnerLoading from '../Loading/Spinner';
 import Error from '../Error';
 import classes from '../../css/ChatUsers.module.css';
 
-const ChatUsers = ({ user_id, windowSize }) => {
+const ChatUsers = ({ windowSize }) => {
+  const authCtx = useContext(AuthenticateContext);
   const [friendsList, setFriendsList] = useState([]);
   const { isLoading, isError, sendRequest } = useHttp();
 
@@ -17,8 +19,8 @@ const ChatUsers = ({ user_id, windowSize }) => {
         <NavLink
           to={
             windowSize <= 600
-              ? `/messages/${friend.username}/phone-screen?user_id=${friend.user_id}`
-              : `/messages/${friend.username}?user_id=${friend.user_id}`
+              ? `/messages/${friend.username}/phone-screen`
+              : `/messages/${friend.username}`
           }
           className={classes['user-card']}
           activeClassName={classes.active}
@@ -26,7 +28,7 @@ const ChatUsers = ({ user_id, windowSize }) => {
           <div className={classes.profile} alt={friend.username}></div>
           <div className={classes['content']}>
             <span className={classes.username}>
-              {friend.fname} {friend.lname}
+              {friend.first_name} {friend.last_name}
             </span>
             <p className={classes.message}>Call me later</p>
           </div>
@@ -36,7 +38,12 @@ const ChatUsers = ({ user_id, windowSize }) => {
     ));
 
   useEffect(() => {
-    sendRequest(`user/friends?user_id=${user_id}`, 'GET', {}, setFriendsList);
+    sendRequest(
+      `user/friends?username=${authCtx.user.username}`,
+      'GET',
+      {},
+      setFriendsList
+    );
   }, []);
   return (
     <div className={classes['chat-users']}>

@@ -51,6 +51,7 @@
     text-transform: capitalize;
     color: var(--base-color-light);
     background-color: var(--base-color-dark);
+    border-radius: 4px;
     cursor: pointer;
 }
 
@@ -60,11 +61,10 @@
 }
 
 .information div input {
-    width: 170px;
-    text-transform: capitalize;
+    width: 90%;
     border: 1px solid rgb(219, 219, 219);
     margin-right: 5px;
-    padding: 0 10px;
+    padding: 10px;
 }
 .information div input:last-of-type {
     margin-right: auto;
@@ -74,7 +74,6 @@
     height: 150px;
     padding: 5px;
     margin-right: auto;
-    /* background-color: red; */
     border: 1px solid rgb(219, 219, 219);
     resize: none;
 }
@@ -99,6 +98,11 @@
     }
 
     .information>div button {
+        /* width: 100%; */
+        margin: auto;
+    }
+    .story {
         width: 100%;
+        font-size: 14px;
     }
 }

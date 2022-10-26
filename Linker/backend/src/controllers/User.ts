@@ -11,7 +11,7 @@ const passwords = new Passwords();
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const response = await user.createUser(req.body);
+    const response = await user.createUser(req.body, req.body);
     const password = await passwords.createPassword(
       response.user_id as string,
       req.body.password
@@ -31,7 +31,6 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const getAllUsers = async (_req: Request, res: Response) => {
-  console.log('Get All Friends Logged')
   try {
     const response = await user.getAllUsers();
     res.status(200).json({
@@ -48,7 +47,6 @@ const getAllUsers = async (_req: Request, res: Response) => {
 };
 
 const getUser = async (req: Request, res: Response) => {
-  console.log('Get User Logged')
   try {
     const response = await user.getUser(req.params.username as string);
     res.status(200).json({
@@ -98,10 +96,10 @@ const searchByUsername = async (req: Request, res: Response) => {
 
 const searchByName = async (req: Request, res: Response) => {
   try {
-    console.log(req.body.query.split(' ')[0], req.body.query.split(' ')[1]);
     const response = await user.searchByName(
       req.body.query.split(' ')[0],
-      req.body.query.split(' ')[1]
+      req.body.query.split(' ')[1],
+      req.body.user_id
     );
     res.status(200).json({
       status: true,
@@ -117,7 +115,7 @@ const searchByName = async (req: Request, res: Response) => {
 };
 const deleteUser = async (req: Request, res: Response) => {
   try {
-    await user.deleteUser(req.body.id);
+    await user.deleteUser(req.body.user_id);
     res.status(200).json({
       status: true,
       message: 'User deleted successfully!'

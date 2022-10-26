@@ -98,7 +98,7 @@ class Passwords {
         );
 
         if (checkPass) {
-          const sql = `SELECT user_id, username FROM users WHERE ${sqlCompare}=$1`;
+          const sql = `SELECT user_id, username, first_name, last_name FROM users WHERE ${sqlCompare}=$1`;
           const result = await connection.query(sql, [sqlValue]);
           connection.release();
           return result.rows[0];

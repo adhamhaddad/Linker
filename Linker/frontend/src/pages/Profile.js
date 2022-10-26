@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import AuthenticateContext from '../utils/authentication';
 import useHttp from '../hooks/use-http';
 import Post from '../components/Post/Post';
 import AddPost from '../components/Post/AddPost';
@@ -13,18 +14,35 @@ import Error from '../components/Error';
 import classes from '../css/Profile.module.css';
 
 const Profile = ({ user_id, username }) => {
+  const authCtx = useContext(AuthenticateContext);
   const params = useParams();
   const { isLoading, isError, sendRequest } = useHttp();
   const [user, setUser] = useState({});
   const [information, setInformation] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [postPort, setPostPort] = useState(false);
+  const [isFriend, setIsFriend] = useState('');
+  const [friendsList, setFriendsList] = useState([]);
+  const friendsActions = (response) => {
+    setFriendsList((prev) =>
+      prev.filter((friend) => friend.friend_id !== response.friend_id)
+    );
+  };
+  const onDeleteFriend = (friend) => {
+    sendRequest(
+      'user/delete-friend',
+      'DELETE',
+      { friend_id: friend.friend_id },
+      friendsActions
+    );
+  };
   const closePostPort = () => {
     setPostPort((prev) => !prev);
   };
+
   const addFriend = () => {
     sendRequest(
-      'user/friend',
+      'user/add-friend',
       'POST',
       {
         sender_id: user_id,
@@ -71,9 +89,9 @@ const Profile = ({ user_id, username }) => {
         return (
           <Post
             user_id={user_id}
-            username={user.username}
-            first_name={user.first_name}
-            last_name={user.last_name}
+            username={authCtx.user.username}
+            first_name={authCtx.user.first_name}
+            last_name={authCtx.user.last_name}
             post_id={post.post_id}
             post_user_id={post.user_id}
             post_username={post.username}
@@ -82,7 +100,7 @@ const Profile = ({ user_id, username }) => {
             post_profile={post.profile}
             post_timedate={post.timedate}
             post_content={post.content}
-            key={new Date(post.post_timedate).getTime()}
+            key={new Date(post.timedate).getTime()}
             onDeletePost={setUserPosts}
           />
         );
@@ -99,6 +117,14 @@ const Profile = ({ user_id, username }) => {
       setInformation
     );
   };
+  const getFriends = () => {
+    sendRequest(
+      `user/friends?username=${params.username}`,
+      'GET',
+      {},
+      setFriendsList
+    );
+  };
   const getUserPosts = () => {
     sendRequest(`user/posts/${params.username}`, 'GET', {}, transformPosts);
   };
@@ -106,11 +132,44 @@ const Profile = ({ user_id, username }) => {
   const createNewPost = (data) => {
     sendRequest('user/posts', 'POST', data, transformNewPost);
   };
+  const checkIsFriend = (friends) => {
+    return friends.map((friend) => {
+      if (friend.username === username) {
+        console.log('isFriend: 1');
+        return;
+      }
+      console.log('isFriend: 0');
+      return false;
+    });
+  };
+
+  const cancelRequest = () => {
+    console.log('Friend Request Canceled');
+    sendRequest('/user/');
+  };
+
+  const removeFriend = () => {
+    console.log('Friend Removed');
+  };
+
+  const requestFriendHandler = () => {
+    if (isFriend === '') {
+      console.log('Add Sent');
+      return addFriend();
+    } else if (isFriend === '0') {
+      console.log('Cancel Done');
+      return cancelRequest();
+    } else {
+      console.log('Removed');
+      return removeFriend();
+    }
+  };
 
   useEffect(() => {
-    getInformation();
-    getUserPosts();
     getUser();
+    getInformation();
+    getFriends();
+    getUserPosts();
   }, [params]);
   return (
     <>
@@ -120,24 +179,40 @@ const Profile = ({ user_id, username }) => {
             <ProfilePicture information={information.profile} />
             <span className={classes.username}>
               {user.first_name} {user.last_name}{' '}
-              {username !== params.username && (
-                <button className={classes['add-friend']} onClick={addFriend}>
+              {username !== params.username && !isLoading && checkIsFriend ? (
+                <button
+                  className={classes['add-friend']}
+                  onClick={requestFriendHandler}
+                >
+                  Remove Friend <i className='fa-solid fa-user-xmark'></i>
+                </button>
+              ) : (
+                <button
+                  className={classes['add-friend']}
+                  onClick={requestFriendHandler}
+                >
                   Add Friend <i className='fa-solid fa-user-plus'></i>
                 </button>
               )}
             </span>
           </div>
           <ProfileInformation
-            work={information.work}
-            relation={information.relation}
+            job_title={information.job_title}
+            relationship={information.relationship}
             education={information.education}
-            lives={information.lives}
+            location={information.location}
           />
         </div>
         <div className={classes['right-side']}>
           <ProfileStory story={information.story} />
         </div>
-        <Friends />
+        <Friends
+          friendsList={friendsList}
+          onDeleteFriend={onDeleteFriend}
+          isLoading={isLoading}
+          isError={isError}
+          checkIsFriend={checkIsFriend}
+        />
       </Container>
 
       <Container className='posts'>
