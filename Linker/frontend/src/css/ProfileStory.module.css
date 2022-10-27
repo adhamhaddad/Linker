@@ -1,12 +1,11 @@
 .profile-story {
-    width: 100%;
     display: flex;
     flex-direction: column;
 }
 
 .profile-story h3 {
     text-transform: capitalize;
-    /* text-align: center; */
+    text-align: center;
     font-size: 14px;
 }
 
@@ -16,13 +15,17 @@
 
 .profile-story p {
     padding: 5px 0;
-    max-height: 250px;
+    max-height: 200px;
     font-size: 13.5px;
     line-height: 1.5;
     word-wrap: break-word;
     overflow-y: auto;
 }
-
+@media only screen and (max-width: 660px) {
+    .profile-story h3 {
+        text-align: left;
+    }
+}
 @media only screen and (max-width: 600px) {
     .profile-story {
         font-size: 12px
@@ -36,7 +39,6 @@
     .profile-story h3>i {
         width: 22px;
         text-align: center;
-        /* background-color: green; */
     }
     .profile-story p {
         padding: 5px 3.5px;

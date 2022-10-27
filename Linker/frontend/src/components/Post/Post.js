@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useHttp from '../../hooks/use-http';
-import CommentsController from './CommentsController';
+import CommentsController from './CommentsBox';
 import Reactions from './Reactions';
 import PostContent from './PostContent';
 import PostHeader from './PostHeader';
@@ -26,6 +26,7 @@ const Post = ({
   onDeletePost
 }) => {
   const { sendRequest } = useHttp();
+  const [isEdit, setIsEdit] = useState(false);
   const [likesList, setLikesList] = useState([]);
   const [commentsList, setCommentsList] = useState([]);
   const [sharesList, setSharesList] = useState([]);
@@ -60,8 +61,10 @@ const Post = ({
         post_profile={post_profile}
         post_timedate={post_timedate}
         onDeletePost={onDeletePost}
+        isEdit={isEdit}
+        onEditPost={setIsEdit}
       />
-      <PostContent content={post_content} />
+      <PostContent content={post_content} post_id={post_id} isEdit={isEdit} />
       <Reactions
         post_id={post_id}
         user_id={user_id}
@@ -89,7 +92,7 @@ const Post = ({
       )}
       {commentsPort && (
         <CommentsController
-        post_user_id={post_user_id}
+          post_user_id={post_user_id}
           comments={commentsList}
           onChangeComment={setCommentsList}
           onHide={showCommentsHandler}

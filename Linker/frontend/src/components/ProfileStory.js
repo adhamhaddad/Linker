@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from '../css/ProfileStory.module.css';
 
-function ProfileStory({ story }) {
+const ProfileStory = ({ story }) => {
   return (
     <div className={classes['profile-story']}>
       <h3>

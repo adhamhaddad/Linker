@@ -10,15 +10,14 @@ const Friends = ({
   friendsList,
   onDeleteFriend,
   isLoading,
-  isError,
-  checkIsFriend
+  isError
 }) => {
   const [listSize, setListSize] = useState(false);
 
   const showFriendsHandler = () => {
     setListSize((prev) => !prev);
   };
-  checkIsFriend(friendsList);
+  
   const List =
     friendsList.length > 0 &&
     friendsList.map((friend) => (

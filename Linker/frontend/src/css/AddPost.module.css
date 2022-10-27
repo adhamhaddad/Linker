@@ -33,7 +33,7 @@
     margin-right: auto;
 }
 
-.discard {
+.discard-button {
     height: 40px;
     padding: 5px 10px;
     border-radius: 4px;
@@ -41,6 +41,8 @@
     cursor: pointer;
     background-color: var(--base-color-dark);
     color: var(--base-color-light);
+    transition: .4s background ease-in-out;
+
 }
 
 .create-post__content {
@@ -86,22 +88,14 @@
     cursor: pointer;
     background-color: var(--base-color-dark);
     color: var(--base-color-light);
+    transition: .4s background ease-in-out;
 }
-
-
+.discard-button:hover,
+.post-button:hover {
+    background-color: var(--base-hover-color);
+    transition: .4s background ease-in-out;
+}
 /*** Media Querry ***/
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (max-width: 1080px) {}
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 890px) {}
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 768px) {}
-
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
     .create-post__content>textarea {
@@ -109,5 +103,3 @@
         height: 300px;
     }
 }
-
-@media only screen and (max-width: 420px) {}

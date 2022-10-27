@@ -13,50 +13,32 @@ import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';
 import classes from '../css/Profile.module.css';
 
-const Profile = ({ user_id, username }) => {
+const Profile = ({ user_id }) => {
   const authCtx = useContext(AuthenticateContext);
   const params = useParams();
-  const { isLoading, isError, sendRequest } = useHttp();
   const [user, setUser] = useState({});
   const [information, setInformation] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [postPort, setPostPort] = useState(false);
-  const [isFriend, setIsFriend] = useState('');
   const [friendsList, setFriendsList] = useState([]);
+  const [isFriend, setIsFriend] = useState('');
+  const { isLoading, isError, sendRequest } = useHttp();
+
   const friendsActions = (response) => {
     setFriendsList((prev) =>
       prev.filter((friend) => friend.friend_id !== response.friend_id)
     );
   };
-  const onDeleteFriend = (friend) => {
-    sendRequest(
-      'user/delete-friend',
-      'DELETE',
-      { friend_id: friend.friend_id },
-      friendsActions
-    );
-  };
+
   const closePostPort = () => {
     setPostPort((prev) => !prev);
-  };
-
-  const addFriend = () => {
-    sendRequest(
-      'user/add-friend',
-      'POST',
-      {
-        sender_id: user_id,
-        receiver_id: user.user_id
-      },
-      null
-    );
   };
 
   const transformNewPost = (post) => {
     const transformedData = {
       ...post,
       user_id: user_id,
-      username: username,
+      // username: authCtx.user.username,
       first_name: user.first_name,
       last_name: user.last_name,
       content: {
@@ -132,39 +114,75 @@ const Profile = ({ user_id, username }) => {
   const createNewPost = (data) => {
     sendRequest('user/posts', 'POST', data, transformNewPost);
   };
-  const checkIsFriend = (friends) => {
-    return friends.map((friend) => {
-      if (friend.username === username) {
-        console.log('isFriend: 1');
-        return;
-      }
-      console.log('isFriend: 0');
+
+  const checkIsFriend = () => {
+    if (friendsList.length === 0) {
       return false;
-    });
-  };
-
-  const cancelRequest = () => {
-    console.log('Friend Request Canceled');
-    sendRequest('/user/');
-  };
-
-  const removeFriend = () => {
-    console.log('Friend Removed');
-  };
-
-  const requestFriendHandler = () => {
-    if (isFriend === '') {
-      console.log('Add Sent');
-      return addFriend();
-    } else if (isFriend === '0') {
-      console.log('Cancel Done');
-      return cancelRequest();
-    } else {
-      console.log('Removed');
-      return removeFriend();
+    }
+    if (friendsList.length > 0) {
+      friendsList.map((friend) => {
+        if (friend.username === authCtx.user.username) {
+          console.log('True');
+          return true;
+        } else {
+          console.log('False');
+          return false;
+        }
+      });
     }
   };
 
+  const cancelRequest = () => {
+    sendRequest(
+      'user/cancel-request',
+      'DELETE',
+      {
+        sender_id: user.user_id,
+        receiver_id: authCtx.user.user_id
+      },
+      null
+    );
+  };
+  const addFriend = () => {
+    console.log('AddFriend Logged');
+
+    sendRequest(
+      'user/add-friend',
+      'POST',
+      {
+        sender_id: authCtx.user.user_id,
+        receiver_id: user.user_id
+      },
+      null
+    );
+  };
+
+  const removeFriend = () => {
+    console.log('RemoveFriend Logged');
+    sendRequest(
+      'user/delete-friend',
+      'DELETE',
+      {
+        sender_id: user.user_id,
+        receiver_id: authCtx.user.user_id
+      },
+      (data) => {
+        console.log(data);
+        setFriendsList((prev) =>
+          prev.filter((friend) => friend.friend_id !== data.friend_id)
+        );
+      }
+    );
+  };
+
+  const deleteFriend = (friend) => {
+    sendRequest(
+      'user/delete-friend',
+      'DELETE',
+      { friend_id: friend.friend_id },
+      friendsActions
+    );
+  };
   useEffect(() => {
     getUser();
     getInformation();
@@ -174,25 +192,33 @@ const Profile = ({ user_id, username }) => {
   return (
     <>
       <Container className='profile'>
-        <div className={classes['left-side']}>
+        <section className={classes['information-section']}>
           <div className={classes['user-id']}>
             <ProfilePicture information={information.profile} />
             <span className={classes.username}>
               {user.first_name} {user.last_name}{' '}
-              {username !== params.username && !isLoading && checkIsFriend ? (
-                <button
-                  className={classes['add-friend']}
-                  onClick={requestFriendHandler}
-                >
-                  Remove Friend <i className='fa-solid fa-user-xmark'></i>
-                </button>
-              ) : (
-                <button
-                  className={classes['add-friend']}
-                  onClick={requestFriendHandler}
-                >
-                  Add Friend <i className='fa-solid fa-user-plus'></i>
-                </button>
+              {!isLoading && authCtx.user.username !== params.username && (
+                <>
+                  {checkIsFriend() && (
+                    <button
+                      className={classes['friend-actions']}
+                      onClick={removeFriend}
+                    >
+                      <span>Remove Friend</span>
+                      <i className='fa-solid fa-user-xmark'></i>
+                    </button>
+                  )}
+
+                  {!checkIsFriend() && (
+                    <button
+                      className={classes['friend-actions']}
+                      onClick={addFriend}
+                    >
+                      <span>Add Friend</span>
+                      <i className='fa-solid fa-user-plus'></i>
+                    </button>
+                  )}
+                </>
               )}
             </span>
           </div>
@@ -202,21 +228,22 @@ const Profile = ({ user_id, username }) => {
             education={information.education}
             location={information.location}
           />
-        </div>
-        <div className={classes['right-side']}>
+        </section>
+        <section className={classes['story-section']}>
           <ProfileStory story={information.story} />
-        </div>
-        <Friends
-          friendsList={friendsList}
-          onDeleteFriend={onDeleteFriend}
-          isLoading={isLoading}
-          isError={isError}
-          checkIsFriend={checkIsFriend}
-        />
+        </section>
+        <section className={classes['friends-section']}>
+          <Friends
+            friendsList={friendsList}
+            onDeleteFriend={deleteFriend}
+            isLoading={isLoading}
+            isError={isError}
+          />
+        </section>
       </Container>
 
       <Container className='posts'>
-        {username == params.username && (
+        {authCtx.user.username == params.username && (
           <button
             className={classes['create-post-btn']}
             onClick={closePostPort}

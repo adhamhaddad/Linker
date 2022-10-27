@@ -111,10 +111,9 @@ class Friends {
   }
   //! In this case I'am receiver_id
   async ignoreFriend(f: Friend): Promise<Friend> {
-    console.log(f.sender_id, f.receiver_id);
     try {
       const connection = await database.connect();
-      const sql = 'DELETE FROM friends WHERE friend_id=$1';
+      const sql = 'DELETE FROM friends WHERE friend_id=$1 RETURNING friend_id';
       const result = await connection.query(sql, [f.friend_id]);
       connection.release();
       return result.rows[0];
@@ -140,10 +139,12 @@ class Friends {
   }
 
   async deleteFriend(f: Friend): Promise<Friend> {
+    console.log(f.sender_id, f.receiver_id);
     try {
       const connection = await database.connect();
-      const sql = 'DELETE FROM friends WHERE friend_id=$1 RETURNING friend_id';
-      const result = await connection.query(sql, [f.friend_id]);
+      const sql =
+        'DELETE FROM friends WHERE sender_id=$1 AND receiver_id=$2 OR sender_id=$2 AND receiver_id=$1 RETURNING friend_id';
+      const result = await connection.query(sql, [f.sender_id, f.receiver_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {

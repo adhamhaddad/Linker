@@ -36,7 +36,7 @@ function AddPost({ user_id, first_name, last_name, onCreatePost, onClosePost }) 
           <h4 className={classes.username}>
             {first_name} {last_name}
           </h4>
-          <button className={classes.discard} onClick={onClosePost}>
+          <button className={classes['discard-button']} onClick={onClosePost}>
             discard
           </button>
         </div>

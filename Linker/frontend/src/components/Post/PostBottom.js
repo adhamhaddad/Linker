@@ -93,7 +93,18 @@ const PostBottom = ({
         user_id,
         post_id
       },
-      null
+      () => {
+        setSharesList((prev) => [
+          {
+            user_id: user_id,
+            username: username,
+            first_name: first_name,
+            last_name: last_name,
+            timedate: new Date()
+          },
+          ...prev
+        ]);
+      }
     );
   };
   const onAddComment = (e) => {
@@ -111,7 +122,10 @@ const PostBottom = ({
         comment_img: null,
         comment_video: null
       },
-      (data) => {console.log(data); setCommentsList((prev) => [...prev, data])}
+      (data) => {
+        console.log(data);
+        setCommentsList((prev) => [...prev, data]);
+      }
     );
     setCommentContent('');
   };
@@ -119,7 +133,7 @@ const PostBottom = ({
   // console.log(post_id); // post id
   // console.log(post_user_id); // who posted this
   return (
-    <div className={classes['post-bottom']}>
+    <div className={classes['post-bottom']} id='post-bottom'>
       <button
         className={classes['like-button']}
         title='Like'

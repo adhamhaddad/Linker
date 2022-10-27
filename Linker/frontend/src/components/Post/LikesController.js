@@ -9,11 +9,11 @@ const LikesController = ({ likes, onHide }) => {
       <li key={new Date(like.timedate).getTime()}>
         <Link
           to={`/profile/${like.username}`}
-          className={classes['post-profile']}
+          className={classes['like-profile']}
         ></Link>
         <Link
           to={`/profile/${like.username}`}
-          className={classes['post-username']}
+          className={classes['like-username']}
         >
           {like.first_name} {like.last_name}
         </Link>

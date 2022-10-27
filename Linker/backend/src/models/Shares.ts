@@ -25,7 +25,7 @@ class Shares {
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT u.username, u.fname, u.lname
+      SELECT DISTINCT u.username, u.first_name, u.last_name
       FROM users u, shares s
       WHERE
       s.post_id=$1 AND s.user_id=u.user_id

@@ -4,13 +4,13 @@
     justify-content: space-between;
     border: 1px solid rgb(219, 219, 219);
     min-height: 125px;
-    /* max-height: 100%; */
+    height: auto;
     margin: 5px 0;
     background-color: var(--base-color-light);
 }
 .post-content p {
-    padding: 5px 2px;
-    font-size: 14px;
+    padding: 5px;
+    font-size: var(--post-content-size)
 }
 
 .image-content {
@@ -21,4 +21,11 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+.post-textarea {
+    display: block;
+    height: 125px;
+    resize: none;
+    font-size: var(--post-content-size);
+    padding: 5px;
 }

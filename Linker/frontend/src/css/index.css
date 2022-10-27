@@ -1,12 +1,16 @@
 :root {
-    /* Background */
-    --base-background-dark: rgb(32, 32, 32);
-    --base-background-light: #FFF;
-    --base-background-hovered: rgb(55, 55, 55);
-    /* Font Color */
+    /* Main Colors */
     --base-color-light: #FFF;
     --base-color-dark: rgb(32, 32, 32);
+    --base-hover-color: rgb(22, 22, 22);
     --base-light-gray: rgb(180, 180, 180);
+    /* Main Font Sizes for Post */
+    --post-header-size: 14px;
+    --post-content-size: 14px;
+    --post-bottom-size: 12px;
+    --post-comments-header-size: 14px;
+    --post-comments-content-size: 12px;
+    --post-comments-bottom-size: 12px;
 }
 * {
     padding: 0;
@@ -25,4 +29,16 @@
     -webkit-tap-highlight-color: transparent;
     -o-tap-highlight-color: transparent;
     -ms-tap-highlight-color: transparent;
+}
+
+@media only screen and (max-width: 600px) {
+    :root {
+        /* Main Font Sizes for Post */
+        --post-header-size: 12px;
+        --post-content-size: 12px;
+        --post-bottom-size: 11.2px;
+        --post-comments-header-size: 12px;
+        --post-comments-content-size: 11.2px;
+        --post-comments-bottom-size: 11.2px;
+    }
 }

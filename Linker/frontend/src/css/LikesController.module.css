@@ -57,7 +57,7 @@
     margin-bottom: 0;
 }
 
-.post-profile {
+.like-profile {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -67,7 +67,7 @@
     background-size: cover;
     margin-right: 10px;
 }
-.post-username {
+.like-username {
     font-size: 13px;
     text-transform: capitalize;
     color: var(--base-color-dark);

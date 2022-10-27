@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import CommentCard from './CommentCard';
-import classes from '../../css/CommentsController.module.css';
+import classes from '../../css/CommentsBox.module.css';
 
-function CommentsController({
+function CommentsBox({
   comments,
   post_user_id,
   onHide,
@@ -25,22 +25,22 @@ function CommentsController({
       })
       .sort((a, b) => b.key.split(' ')[1] - a.key.split(' ')[1]);
 
-  // useEffect(() => {
-  //   onHide
-  //     ? document.querySelector('main').scrollTo({
-  //         top:
-  //           document.querySelector(`${classes['post-comments']}`).offsetTop +
-  //           document.querySelector(`${classes['post-comments']}`).offsetHeight,
-  //         behavior: 'smooth'
-  //       })
-  //     : document.querySelector('main').scrollTo({
-  //         top: document.querySelector(`${classes['post-bottom']}`).offsetTop,
-  //         behavior: 'smooth'
-  //       });
-  // }, []);
+  useEffect(() => {
+    onHide
+      ? document.querySelector('main').scrollTo({
+          top:
+            document.querySelector('#post-comments').offsetTop +
+            document.querySelector('#post-comments').offsetHeight,
+          behavior: 'smooth'
+        })
+      : document.querySelector('main').scrollTo({
+          top: document.querySelector('#post-bottom').offsetTop,
+          behavior: 'smooth'
+        });
+  }, []);
 
   return (
-    <div className={classes['post-comments']}>
+    <div className={classes['post-comments']} id='post-comments'>
       <div className={classes['comments-controller']}>
         <p>All comments on this post</p>
         <button onClick={onHide}>hide comments</button>
@@ -49,4 +49,4 @@ function CommentsController({
     </div>
   );
 }
-export default CommentsController;
+export default CommentsBox;

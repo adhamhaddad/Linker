@@ -82,11 +82,28 @@ const acceptFriend = async (req: Request, res: Response) => {
   }
 };
 
-const cancelRequest = async (req: Request, res: Response) => {
+const ignoreRequest = async (req: Request, res: Response) => {
   try {
-    await friend.deleteFriend(req.body);
+    const response = await friend.ignoreFriend(req.body);
     res.status(201).json({
       status: true,
+      data: { ...response },
+      message: 'Request canceled successfully!'
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: false,
+      message: (err as Error).message
+    });
+  }
+};
+
+const cancelRequest = async (req: Request, res: Response) => {
+  try {
+    const response = await friend.deleteFriend(req.body);
+    res.status(201).json({
+      status: true,
+      data: { ...response },
       message: 'Request canceled successfully!'
     });
   } catch (err) {
@@ -118,7 +135,7 @@ const friends_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/user/friend-check', logger, verifyToken, getFriend);
   app.post('/user/add-friend', logger, verifyToken, addFriend);
   app.patch('/user/accept-request', logger, verifyToken, acceptFriend);
-  app.delete('/user/ignore-request', logger, verifyToken, deleteFriend);
+  app.delete('/user/ignore-request', logger, verifyToken, ignoreRequest);
   app.delete('/user/cancel-request', logger, verifyToken, cancelRequest);
   app.delete('/user/delete-friend', logger, verifyToken, deleteFriend);
 };

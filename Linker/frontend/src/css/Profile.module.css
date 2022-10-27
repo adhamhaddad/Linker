@@ -1,5 +1,13 @@
-.left-side {
-    flex-grow: 0.2;
+.information-section {
+    flex-grow: 0.3;
+    width: 240px;
+}
+.story-section {
+    width: 400px;
+}
+.friends-section {
+    margin-top: 5px;
+    width: 100%;
 }
 
 .username {
@@ -11,24 +19,20 @@
     font-weight: 800;
 }
 
-/* Right Side */
-.right-side {
-    width: 400px;
-    flex-grow: 0.2;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.add-friend {
+.friend-actions {
     height: 30px;
     padding: 0 5px;
     border-radius: 2px;
     margin-left: 10px;
     background-color: var(--base-color-light);
     cursor: pointer;
+    font-size: 12px;
 }
-
+.friend-actions > i {
+    width: 20px;
+    line-height: 27px;
+    /* background-color: green; */
+}
 .add-friend:hover {
     border: 1px solid var(--base-color-light)
 }
@@ -40,12 +44,17 @@
     line-height: 40px;
     font-weight: bold;
     cursor: pointer;
-    margin: 10px;
+    margin: 10px 0;
     border: 1px solid var(--base-color-dark);
     border-radius: 4px;
     background-color: var(--base-color-light);
+    transition: .4s background, color ease-in-out;
 }
-
+.create-post-btn:hover {
+    background-color: var(--base-hover-color);
+    color: var(--base-color-light);
+    transition: .4s background, color ease-in-out;
+}
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {}
 

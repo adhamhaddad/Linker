@@ -10,10 +10,12 @@ function PostHeader({
   post_user_id,
   post_username,
   post_timedate,
-  post_profile,
   post_first_name,
   post_last_name,
-  onDeletePost
+  isEdit,
+  onDeletePost,
+  onEditPost,
+  onSaveChanges
 }) {
   return (
     <div className={classes['post-header']}>
@@ -21,9 +23,6 @@ function PostHeader({
         <Link
           to={`/profile/${post_username}`}
           className={classes['profile-image']}
-          // style={{
-          //   backgroundImage: profile.trim().length > 0 && `url(${profile})`
-          // }}
         ></Link>
 
         <div>
@@ -38,11 +37,20 @@ function PostHeader({
           </span>
         </div>
       </div>
+      {isEdit && (
+        <div>
+          <button className={classes['update-post']} onClick={onSaveChanges}>
+            save
+          </button>
+          <button className={classes['discard-update']}>discard</button>
+        </div>
+      )}
       <PostController
         user_id={user_id}
         post_id={post_id}
         post_user_id={post_user_id}
         onDeletePost={onDeletePost}
+        onEditPost={onEditPost}
       />
     </div>
   );

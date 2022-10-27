@@ -28,7 +28,7 @@
 }
 
 .post-username {
-    font-size: 14px;
+    font-size: var(--post-header-size);
     font-weight: 800;
     margin-bottom: 4px;
     text-transform: capitalize;
@@ -45,8 +45,17 @@
     padding: 0 14px 0 0;
 }
 
-@media only screen and (max-width: 600px) {
-    .post-username {
-        font-size: 12px;
-    }
+.update-post, .discard-update {
+    width: fit-content;
+    font-size: 12px;
+    padding: 2px 5px;
+    margin: 0 2px;
+    border: 1px solid var(--base-color-dark);
+    border-radius: 2px;
+    text-transform: capitalize;
+    color: var(--base-color-dark);
+    background-color: transparent;
+}
+.discard-update {
+
 }
