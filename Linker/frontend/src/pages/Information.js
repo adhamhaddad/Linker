@@ -166,7 +166,7 @@ const Information = ({ windowSize }) => {
       `user/information/${authCtx.user.username}`,
       'GET',
       {},
-      (data) => setInformationData({ ...data == null ? '' : data })
+      (data) => setInformationData({ ...(data == null ? '' : data) })
     );
   }, []);
 
@@ -204,11 +204,21 @@ const Information = ({ windowSize }) => {
         )}
         {editRelation && (
           <>
-            <input
-              type='text'
-              value={informationData.relationship}
+            <select
+              defaultValue={
+                informationData.relationship
+                  ? informationData.relationship
+                  : 'null'
+              }
               onChange={onRelationChange}
-            />
+            >
+              <option value='null' disabled>
+                Select relation status
+              </option>
+              <option value='single'>Single</option>
+              <option value='engaged'>Engaged</option>
+              <option value='married'>Married</option>
+            </select>
             <button onClick={saveRelation}>save</button>
           </>
         )}

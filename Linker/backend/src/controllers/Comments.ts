@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import verifyToken from '../middlewares/verifyToken';
-import Comments from '../models/Comments';
+import Comments from '../models/Comment';
 
 const comment = new Comments();
 

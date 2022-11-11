@@ -1,17 +1,15 @@
 .user-info {
     padding-bottom: 10px;
 }
+
 .user-info ul li {
-    display: block;
+    display: flex;
     text-transform: capitalize;
     padding: 10px 0;
     font-size: 13.5px;
     color: var(--base-color-light);
     transition: background .7s ease-in-out;
     cursor: default;
-    background-position: 5px;
-    background-repeat: no-repeat;
-    background-size: 15px;
 }
 
 .user-info ul li i {

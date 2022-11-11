@@ -9,7 +9,7 @@ const PostContent = ({ content, post_id, isEdit }) => {
   const { isLoading, isError, sendRequest } = useHttp();
   const [contentStatus, setContentStatus] = useState(false);
   const [editCaption, setEditCaption] = useState(content.caption);
-  
+
   const viewContent = () => {
     setContentStatus((prev) => (prev ? false : true));
   };

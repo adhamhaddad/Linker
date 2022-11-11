@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import verifyToken from '../middlewares/verifyToken';
 import config from '../config';
-import Passwords from '../models/Passwords';
+import Passwords from '../models/Password';
 import jwt from 'jsonwebtoken';
 
 const password = new Passwords();

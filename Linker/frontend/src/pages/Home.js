@@ -4,6 +4,7 @@ import Container from '../components/UI/Container';
 import Error from '../components/Error';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Post from '../components/Post/Post';
+import openSocket from 'socket.io-client';
 import classes from '../css/Home.module.css';
 
 const Home = ({ user_id }) => {
@@ -23,9 +24,41 @@ const Home = ({ user_id }) => {
     });
     setAllPosts(transformedData);
   };
-
+  const newPostAdded = (post) => {
+    setAllPosts((prev) => {
+      return [
+        ...prev,
+        {
+          ...post,
+          content: {
+            caption: post.post_caption,
+            img: post.post_img,
+            video: post.post_video
+          }
+        }
+      ];
+    });
+  };
+  const newPostUpdate = (data) => {
+    setAllPosts((prev) => [...prev, data]);
+  };
+  const newPostDelete = (data) => {
+    setAllPosts((prev) => prev.filter((post) => post.post_id !== data.post_id));
+  };
   useEffect(() => {
     sendRequest(`posts?user_id=${user_id}`, 'GET', {}, transformPost);
+    const socket = openSocket('http://192.168.1.6:4000');
+    socket.on('posts', (data) => {
+      if (data.action === 'CREATE') {
+        newPostAdded(data.data);
+      }
+      if (data.action === 'UPDATE') {
+        newPostUpdate(data.data);
+      }
+      if (data.action === 'DELETE') {
+        newPostDelete(data.data);
+      }
+    });
   }, []);
 
   const posts =

@@ -4,7 +4,7 @@ import CommentDate from '../../Validation/CommentDate';
 import CommentController from './CommentController';
 import classes from '../../css/CommentCard.module.css';
 
-function CommentCard({ comment, onChangeComment, post_user_id }) {
+const CommentCard = ({ comment, onChangeComment, post_user_id }) => {
   return (
     <li className={classes['comment-card']}>
       <div className={classes['comment-header']}>
@@ -36,5 +36,5 @@ function CommentCard({ comment, onChangeComment, post_user_id }) {
       </div>
     </li>
   );
-}
+};
 export default CommentCard;

@@ -18,6 +18,8 @@
 .users-list li {
     display: block;
     background-color: var(--base-color-light);
+    border-radius: 2px;
+    overflow: hidden;
 }
 
 .user-card {

@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from '../css/Footer.module.css';
 
-function Footer() {
+const Footer = () => {
   return (
     <footer className={classes.footer}>
       <small>
@@ -17,5 +17,5 @@ function Footer() {
       </small>
     </footer>
   );
-}
+};
 export default Footer;

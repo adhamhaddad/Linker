@@ -2,19 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import classes from '../css/Modal.module.css';
 
-function Backdrop(props) {
+const Backdrop = (props) => {
   return <div className={classes.backdrop} onClick={props.onClick}></div>;
-}
+};
 
-function Overlay(props) {
+const Overlay = (props) => {
   return (
     <div className={classes.overlay}>
       <div>{props.children}</div>
     </div>
   );
-}
+};
 
-function Modal(props) {
+const Modal = (props) => {
   return (
     <>
       {ReactDOM.createPortal(
@@ -27,5 +27,5 @@ function Modal(props) {
       )}
     </>
   );
-}
+};
 export default Modal;

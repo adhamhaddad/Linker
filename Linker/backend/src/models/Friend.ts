@@ -1,25 +1,33 @@
 import database from '../database';
-import Friend from '../types/Friends';
+import Friends from '../types/Friends';
 
-class Friends {
-  async addFriend(f: Friend): Promise<Friend> {
+class Friend {
+  async addFriend(f: Friends): Promise<Friends> {
     try {
       const connection = await database.connect();
-      const sql = `
+      const add_friend_SQL = `
       INSERT INTO friends
       (sender_id, receiver_id, timedate, isFriend)
       VALUES
       ($1, $2, $3, $4)
       RETURNING *
       `;
-      const result = await connection.query(sql, [
+      const add_friend_result = await connection.query(add_friend_SQL, [
         f.sender_id,
         f.receiver_id,
         new Date(),
         0
       ]);
+      const user_id = add_friend_result.rows[0].sender_id;
+      const friend_SQL = `
+      SELECT username, first_name, last_name
+      FROM users
+      WHERE
+      user_id=$1
+      `;
+      const friend_result = await connection.query(friend_SQL, [user_id]);
       connection.release();
-      return result.rows[0];
+      return { ...add_friend_result.rows[0], ...friend_result.rows[0] };
     } catch (err) {
       throw new Error(
         `Could not save a new friend. Error ${(err as Error).message}`
@@ -27,7 +35,7 @@ class Friends {
     }
   }
 
-  async getFriends(username: string): Promise<Friend[]> {
+  async getFriends(username: string): Promise<Friends[]> {
     try {
       const connection = await database.connect();
       const user_id_SQL = 'SELECT user_id FROM users WHERE username=$1';
@@ -50,17 +58,42 @@ class Friends {
       );
     }
   }
-  async getFriend(f: Friend) {
+
+  async checkFriend(
+    sender_username: string,
+    receiver_username: string
+  ): Promise<Friends[] | null> {
     try {
       const connection = await database.connect();
-      const sql = `
-      SELECT isFriend FROM friends
+      const sender_id_SQL = 'SELECT user_id FROM users WHERE username=$1';
+      const receiver_id_SQL = 'SELECT user_id FROM users WHERE username=$1';
+
+      const sender_id_result = await connection.query(sender_id_SQL, [
+        sender_username
+      ]);
+      const receiver_id_result = await connection.query(receiver_id_SQL, [
+        receiver_username
+      ]);
+      const sender_id = sender_id_result.rows[0].user_id;
+      const receiver_id = receiver_id_result.rows[0].user_id;
+      const check_SQL = `
+      SELECT sender_id, receiver_id, isFriend FROM friends
       WHERE
       sender_id=$1 AND receiver_id=$2
+      OR
+      sender_id=$2 AND receiver_id=$1
       `;
-      const result = await connection.query(sql, [f.sender_id, f.receiver_id]);
+      const result = await connection.query(check_SQL, [
+        sender_id,
+        receiver_id
+      ]);
       connection.release();
-      return result.rows[0];
+
+      if (result.rows.length) {
+        return result.rows[0];
+      }
+
+      return null;
     } catch (err) {
       throw new Error(`Could not get Friend. Error ${(err as Error).message}`);
     }
@@ -90,33 +123,28 @@ class Friends {
   }
 
   //! In this case I'am receiver_id
-  async acceptFriend(f: Friend): Promise<Friend> {
+  async acceptFriend(f: Friends): Promise<Friends> {
     try {
       const connection = await database.connect();
-      const sql = `
+      const add_friend_SQL = `
         UPDATE friends
         SET isFriend='1'
         WHERE friend_id=$1
         RETURNING
-        friend_id
+        *
         `;
-      const result = await connection.query(sql, [f.friend_id]);
+      const add_friend_result = await connection.query(add_friend_SQL, [
+        f.friend_id
+      ]);
+      const user_id = add_friend_result.rows[0].friend_id;
+      const friend_SQL = `
+        SELECT username, first_name, last_name
+        FROM users
+        WHERE user_id=$1
+        `;
+      const friend_result = await connection.query(friend_SQL, [user_id]);
       connection.release();
-      return result.rows[0];
-    } catch (err) {
-      throw new Error(
-        `Could not update the friend. Error ${(err as Error).message}`
-      );
-    }
-  }
-  //! In this case I'am receiver_id
-  async ignoreFriend(f: Friend): Promise<Friend> {
-    try {
-      const connection = await database.connect();
-      const sql = 'DELETE FROM friends WHERE friend_id=$1 RETURNING friend_id';
-      const result = await connection.query(sql, [f.friend_id]);
-      connection.release();
-      return result.rows[0];
+      return { ...add_friend_result.rows[0], ...friend_result.rows[0] };
     } catch (err) {
       throw new Error(
         `Could not update the friend. Error ${(err as Error).message}`
@@ -124,7 +152,7 @@ class Friends {
     }
   }
   //! For Block List - Not Needed Now
-  async updateFriend(f: Friend, user_id: string): Promise<Friend> {
+  async updateFriend(f: Friend, user_id: string): Promise<Friends> {
     try {
       const connection = await database.connect();
       const sql = 'UPDATE friends SET friend_id= WHERE user_id=$1 RETURNING *';
@@ -138,12 +166,17 @@ class Friends {
     }
   }
 
-  async deleteFriend(f: Friend): Promise<Friend> {
-    console.log(f.sender_id, f.receiver_id);
+  async deleteFriend(f: Friends): Promise<Friends> {
     try {
       const connection = await database.connect();
-      const sql =
-        'DELETE FROM friends WHERE sender_id=$1 AND receiver_id=$2 OR sender_id=$2 AND receiver_id=$1 RETURNING friend_id';
+      const sql = `
+      DELETE FROM friends
+      WHERE
+      sender_id=$1 AND receiver_id=$2
+      OR
+      sender_id=$2 AND receiver_id=$1
+      RETURNING friend_id
+      `;
       const result = await connection.query(sql, [f.sender_id, f.receiver_id]);
       connection.release();
       return result.rows[0];
@@ -154,4 +187,4 @@ class Friends {
     }
   }
 }
-export default Friends;
+export default Friend;

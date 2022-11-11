@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import verifyToken from '../middlewares/verifyToken';
-import Shares from '../models/Shares';
+import Shares from '../models/Share';
 
 const share = new Shares();
 

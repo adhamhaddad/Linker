@@ -6,10 +6,9 @@
 }
 
 .message-profile {
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
-    font-size: 12px;
     margin: 0 5px;
     align-self: flex-end;
     color: var(--base-color-light);
@@ -17,28 +16,32 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    cursor: pointer;
 }
 
 .message-info {
+    height: fit-content;
+    align-self: flex-end;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     max-width: 70%;
-    border-radius: 12px 12px 12px 0px;
+    border-radius: 4px 4px 4px 0px;
     overflow: hidden;
-    background-color: var(--base-background-dark);
-    color: var(--base-color-light)
+    background-color: var(--base-color-dark);
+    color: var(--base-color-light);
 }
 
 .message-content {
     font-size: 14px;
     word-wrap: break-word;
-    padding: 10px;
+    padding: 5px;
     text-align: left;
 }
 
 .message-time {
     font-size: 10px;
-    padding: 5px 10px;
+    padding: 0 5px;
 }
 
 .message-content:lang(ar) {
@@ -53,7 +56,7 @@
 
 .sender .message-info {
     border: 1px solid var(--base-color-dark);
-    border-radius: 12px 12px 0px 12px;
+    border-radius: 4px 4px 0px 4px;
     direction: ltr;
     margin-left: auto;
 }
@@ -103,13 +106,11 @@
         height: 30px;
     }
     .message-info {
-        border-radius: 10px 10px 10px 0px;
     }
     .message-content {
         font-size: 12px;
         padding: 5px 10px;
     }
     .sender .message-info {
-        border-radius: 10px 10px 0px 10px;
     }
 }

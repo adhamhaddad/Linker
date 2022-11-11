@@ -7,6 +7,7 @@ import SpinnerLoading from '../Loading/Spinner';
 import Error from '../Error';
 import MessageCard from './MessageCard';
 import { useParams } from 'react-router-dom';
+import openSocket from 'socket.io-client';
 import classes from '../../css/Conversation.module.css';
 
 const Conversation = ({ user_id }) => {
@@ -24,7 +25,8 @@ const Conversation = ({ user_id }) => {
   const newMessageHander = (res) => {
     setMessages((prev) => [...prev, res]);
   };
-  const addNewMessageHandler = (newMesasge) => {
+
+  const addNewMessage = (newMesasge) => {
     sendRequest(
       'user/message',
       'POST',
@@ -33,7 +35,7 @@ const Conversation = ({ user_id }) => {
         receiver_id: params.username,
         content: newMesasge.current.value
       },
-      newMessageHander
+      null
     );
   };
   const conversationMessages =
@@ -46,11 +48,12 @@ const Conversation = ({ user_id }) => {
             profile={msg.profile}
             message={msg.content}
             timedate={msg.timedate}
-            key={new Date(msg.timedate).getTime()}
+            key={`$${msg.message_id} ${new Date(msg.timedate).getTime()}`}
+            message_id={msg.message_id}
           />
         );
       })
-      .sort((a, b) => a.key - b.key);
+      .sort((a, b) => a.key.split(' ')[1] - b.key.split(' ')[1]);
 
   // Get All Messages
   useEffect(() => {
@@ -61,6 +64,18 @@ const Conversation = ({ user_id }) => {
       {},
       setMessages
     );
+    const socket = openSocket('http://192.168.1.6:4000');
+    socket.on('messages', (data) => {
+      if (data.action === 'NEW_MESSAGE') {
+        newMessageHander(data.data);
+      }
+      if (data.action === 'UPDATE_MESSAGE') {
+        newMessageHander(data.data);
+      }
+      if (data.action === 'DELETE_MESSAGE') {
+        newMessageHander(data.data);
+      }
+    });
   }, []);
   return (
     <div className={classes['chat-conversation']}>
@@ -70,7 +85,7 @@ const Conversation = ({ user_id }) => {
         fname={currentUser.user_fname}
         lname={currentUser.user_lname}
       />
-      <div className={classes.conversation}>
+      <div className={classes.conversation} id='conversation'>
         {messages.length > 0 && conversationMessages}
         {isLoading && <SpinnerLoading color='dark' />}
         {isError !== null && <Error message={isError} />}
@@ -83,7 +98,7 @@ const Conversation = ({ user_id }) => {
       <ChatForm
         user_id={user_id}
         receiver_id={query.get('user_id')}
-        onAddNewMessage={addNewMessageHandler}
+        onAddNewMessage={addNewMessage}
       />
     </div>
   );

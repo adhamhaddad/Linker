@@ -190,8 +190,6 @@ class User {
     }
   }
   async deleteUser(user_id: string): Promise<Users> {
-    console.log('Logged')
-    console.log(user_id)
     try {
       const connection = await database.connect();
       const sql = 'DELETE FROM users WHERE user_id=$1';

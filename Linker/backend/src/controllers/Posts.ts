@@ -1,12 +1,15 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import verifyToken from '../middlewares/verifyToken';
-import Post from '../models/Posts';
+import Post from '../models/Post';
+// import io from 'socket.io'
+import { io } from '../server';
 
 const post = new Post();
 
 const createPost = async (req: Request, res: Response) => {
   try {
     const response = await post.createPost(req.body);
+    io.emit('posts', { action: 'CREATE', data: { ...response } });
     res.status(201).json({
       status: true,
       data: { ...response },
@@ -55,6 +58,7 @@ const getUserPosts = async (req: Request, res: Response) => {
 const updatePost = async (req: Request, res: Response) => {
   try {
     const response = await post.updatePost(req.body);
+    io.emit('posts', { action: 'UPDATE', data: { ...response } });
     res.status(201).json({
       status: true,
       data: { ...response },
@@ -70,9 +74,11 @@ const updatePost = async (req: Request, res: Response) => {
 
 const deletePost = async (req: Request, res: Response) => {
   try {
-    await post.deletePost(req.body.user_id, req.body.post_id);
+    const response = await post.deletePost(req.body.post_id);
+    io.emit('posts', { action: 'DELETE', data: { ...response } });
     res.status(200).json({
       status: true,
+      data: { ...response },
       message: 'Post deleted successfully!'
     });
   } catch (err) {

@@ -4,7 +4,7 @@ import PostDate from '../../Validation/PostDate';
 import PostController from './PostController';
 import classes from '../../css/PostHeader.module.css';
 
-function PostHeader({
+const PostHeader = ({
   user_id,
   post_id,
   post_user_id,
@@ -13,10 +13,9 @@ function PostHeader({
   post_first_name,
   post_last_name,
   isEdit,
-  onDeletePost,
   onEditPost,
   onSaveChanges
-}) {
+}) => {
   return (
     <div className={classes['post-header']}>
       <div className={classes['post-info']}>
@@ -49,10 +48,9 @@ function PostHeader({
         user_id={user_id}
         post_id={post_id}
         post_user_id={post_user_id}
-        onDeletePost={onDeletePost}
         onEditPost={onEditPost}
       />
     </div>
   );
-}
+};
 export default PostHeader;

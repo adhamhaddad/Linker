@@ -1,13 +1,24 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
-import Passwords from '../models/Passwords';
+import Passwords from '../models/Password';
 import config from '../config';
 import verifyToken from '../middlewares/verifyToken';
 import searchValidation from '../middlewares/searchHandler';
+import nodemailer from 'nodemailer';
 
 const user = new User();
 const passwords = new Passwords();
+
+const sendgridTransport = require('nodemailer-sendgrid-transport');
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key:
+        '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'
+    }
+  })
+);
 
 const createUser = async (req: Request, res: Response) => {
   try {
@@ -22,6 +33,16 @@ const createUser = async (req: Request, res: Response) => {
       data: { ...response, token },
       message: 'User created successfully!'
     });
+    transporter.sendMail(
+      {
+        to: response.email,
+        from: 'socialnetwork.linker@gmail.com',
+        subject: 'Signup succeeded',
+        text: 'Thank you for using Linker',
+        html: '<h1>Welcome to our community!</h1>'
+      },
+      (err, info) => (err && console.log(err.message))
+    );
   } catch (err) {
     res.status(400).json({
       status: false,

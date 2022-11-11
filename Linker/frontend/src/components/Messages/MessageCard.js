@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classes from '../../css/MessageCard.module.css';
 
-const MessageCard = ({ profile, message, timedate, lang, className }) => {
+const MessageCard = ({ profile, message, timedate, lang, className, message_id }) => {
   const [messageStatus, setMessageStatus] = useState('seen');
   const format = (time) =>
     new Date(time).toLocaleString('en-US', { timeStyle: 'short' });
@@ -18,7 +18,7 @@ const MessageCard = ({ profile, message, timedate, lang, className }) => {
   //   return <i className='fa-regular fa-error'></i>
   // }
   return (
-    <div className={`${classes['message-container']} ${classes[className]}`}>
+    <div className={`${classes['message-container']} ${classes[className]}`} id={message_id}>
       <div className={classes['message-profile']}></div>
       <div className={classes['message-info']}>
         <span className={classes['message-content']} lang={lang}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchBar from './Searchbar';
-import Logo from '../utils/Logo';
+import Logo from './Logo';
 import classes from '../css/MiniNavigationBar.module.css';
 
 const MiniNavigationBar = () => {

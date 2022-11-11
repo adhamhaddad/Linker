@@ -3,7 +3,14 @@ import { Link } from 'react-router-dom';
 import NotificationDate from '../Validation/NotificationDate';
 import classes from '../css/NotificationCard.module.css';
 
-function NotificationCard({ username, fname, lname, profile, content, time }) {
+const NotificationCard = ({
+  username,
+  fname,
+  lname,
+  profile,
+  content,
+  time
+}) => {
   const onDeleteNotification = () => {};
   return (
     <li>
@@ -25,5 +32,5 @@ function NotificationCard({ username, fname, lname, profile, content, time }) {
       </Link>
     </li>
   );
-}
+};
 export default NotificationCard;

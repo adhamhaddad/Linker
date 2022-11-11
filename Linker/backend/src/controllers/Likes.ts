@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import verifyToken from '../middlewares/verifyToken';
-import Likes from '../models/Likes';
+import Likes from '../models/Like';
 
 const like = new Likes();
 

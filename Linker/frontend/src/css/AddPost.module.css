@@ -42,7 +42,6 @@
     background-color: var(--base-color-dark);
     color: var(--base-color-light);
     transition: .4s background ease-in-out;
-
 }
 
 .create-post__content {
@@ -89,6 +88,7 @@
     background-color: var(--base-color-dark);
     color: var(--base-color-light);
     transition: .4s background ease-in-out;
+    border-radius: 4px;
 }
 .discard-button:hover,
 .post-button:hover {

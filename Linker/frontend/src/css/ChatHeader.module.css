@@ -5,21 +5,21 @@
     flex-direction: row;
     position: relative;
     align-items: center;
-    background-color: var(--base-background-dark);
+    background-color: var(--base-color-dark);
     color: var(--base-color-light);
 }
 .chat-header > button {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: var(--base-background-dark);
+    background-color: var(--base-color-dark);
     color: var(--base-color-light);
     transition-property: background, color;
     transition-duration: .4s;
     transition-timing-function: ease-in-out;
 }
 .chat-header > button:hover {
-    background-color: var(--base-background-light);
+    background-color: var(--base-color-light);
     color: var(--base-color-dark);
     transition-property: background, color;
     transition-duration: .4s;
@@ -63,14 +63,14 @@
     line-height: 40px;
     padding: 0 10px;
     color: var(--base-color-light);
-    background-color: var(--base-background-dark);
+    background-color: var(--base-color-dark);
     text-align: left;
     font-size: 14px;
     transition: background .5s ease-in-out;
     text-transform: capitalize;
 }
 .menu > li > a:hover {
-    background-color: var(--base-background-hovered);
+    background-color: var(--base-color-hovered);
     transition: background .5s ease-in-out;
 }
 .menu > li > a > i {width: 25px}

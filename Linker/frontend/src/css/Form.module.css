@@ -62,7 +62,7 @@
 .switch-box a.active {
     border-radius: 20px;
     color: var(--base-color-light);
-    background-color: var(--base-background-dark);
+    background-color: var(--base-color-dark);
 }
 
 .form>input.passValidation::after {
@@ -83,7 +83,7 @@
 }
 
 .form button:hover {
-    background-color: var(--base-background-hovered);
+    background-color: var(--base-hover-color);
     transition: background .7s
 }
 

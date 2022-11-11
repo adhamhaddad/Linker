@@ -7,7 +7,6 @@ function PostController({
   post_id,
   post_user_id,
   onSavePost,
-  onDeletePost,
   onEditPost
 }) {
   const authCtx = useContext(AuthenticateContext);
@@ -18,11 +17,10 @@ function PostController({
   };
 
   const onDeleteHandler = () => {
-    onDeletePost((prev) => prev.filter((post) => post.post_id !== post_id));
     sendRequest(
       'user/post',
       'DELETE',
-      { user_id: authCtx.user.user_id, post_id: post_id },
+      { post_id: post_id },
       null
     );
   };

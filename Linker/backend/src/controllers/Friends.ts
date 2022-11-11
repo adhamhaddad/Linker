@@ -1,12 +1,17 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import verifyToken from '../middlewares/verifyToken';
-import Friend from '../models/Friends';
+import Friend from '../models/Friend';
+import { io } from '../server';
 
 const friend = new Friend();
 
 const addFriend = async (req: Request, res: Response) => {
   try {
     const response = await friend.addFriend(req.body);
+    io.emit('friends', {
+      action: 'FRIEND_REQUEST',
+      data: { ...response }
+    });
     res.status(201).json({
       status: true,
       data: { ...response },
@@ -35,9 +40,12 @@ const getFriends = async (req: Request, res: Response) => {
     });
   }
 };
-const getFriend = async (req: Request, res: Response) => {
+const checkFriend = async (req: Request, res: Response) => {
   try {
-    const response = await friend.getFriend(req.body);
+    const response = await friend.checkFriend(
+      req.query.sender_id as string,
+      req.query.receiver_id as string
+    );
     res.status(200).json({
       status: true,
       data: { ...response },
@@ -69,6 +77,10 @@ const friendRequest = async (req: Request, res: Response) => {
 const acceptFriend = async (req: Request, res: Response) => {
   try {
     const response = await friend.acceptFriend(req.body);
+    io.emit('friends', {
+      action: 'ACCEPT_REQUEST',
+      data: { ...response }
+    });
     res.status(200).json({
       status: true,
       data: { ...response },
@@ -82,13 +94,14 @@ const acceptFriend = async (req: Request, res: Response) => {
   }
 };
 
-const ignoreRequest = async (req: Request, res: Response) => {
+const cancelRequest = async (req: Request, res: Response) => {
   try {
-    const response = await friend.ignoreFriend(req.body);
-    res.status(201).json({
+    const response = await friend.deleteFriend(req.body);
+    io.emit('friends', { action: 'CANCEL_REQUEST', data: { ...response } });
+    res.status(200).json({
       status: true,
       data: { ...response },
-      message: 'Request canceled successfully!'
+      message: 'Friend deleted successfully!'
     });
   } catch (err) {
     res.status(400).json({
@@ -98,13 +111,14 @@ const ignoreRequest = async (req: Request, res: Response) => {
   }
 };
 
-const cancelRequest = async (req: Request, res: Response) => {
+const ignoreRequest = async (req: Request, res: Response) => {
   try {
     const response = await friend.deleteFriend(req.body);
-    res.status(201).json({
+    io.emit('friends', { action: 'IGNORE_REQUEST', data: { ...response } });
+    res.status(200).json({
       status: true,
       data: { ...response },
-      message: 'Request canceled successfully!'
+      message: 'Friend deleted successfully!'
     });
   } catch (err) {
     res.status(400).json({
@@ -113,9 +127,11 @@ const cancelRequest = async (req: Request, res: Response) => {
     });
   }
 };
+
 const deleteFriend = async (req: Request, res: Response) => {
   try {
     const response = await friend.deleteFriend(req.body);
+    io.emit('friends', { action: 'DELETE_FRIEND', data: { ...response } });
     res.status(200).json({
       status: true,
       data: { ...response },
@@ -131,12 +147,12 @@ const deleteFriend = async (req: Request, res: Response) => {
 
 const friends_controller_routes = (app: Application, logger: NextFunction) => {
   app.get('/user/friends', logger, verifyToken, getFriends);
-  app.get('/user/friend', logger, verifyToken, friendRequest);
-  app.post('/user/friend-check', logger, verifyToken, getFriend);
+  app.get('/user/friend-request', logger, verifyToken, friendRequest);
+  app.get('/user/friend-check', logger, verifyToken, checkFriend);
   app.post('/user/add-friend', logger, verifyToken, addFriend);
   app.patch('/user/accept-request', logger, verifyToken, acceptFriend);
-  app.delete('/user/ignore-request', logger, verifyToken, ignoreRequest);
   app.delete('/user/cancel-request', logger, verifyToken, cancelRequest);
+  app.delete('/user/ignore-request', logger, verifyToken, ignoreRequest);
   app.delete('/user/delete-friend', logger, verifyToken, deleteFriend);
 };
 export default friends_controller_routes;

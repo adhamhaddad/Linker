@@ -5,11 +5,14 @@
     line-height: 40px;
     font-weight: bold;
     text-transform: capitalize;
-    transition: background .7s;
+    transition: background .7s ease-in-out;
     background-color: transparent;
     cursor: pointer;
 }
-
+.button:hover {
+    background-color: var(--base-hover-color);
+    transition: background .7s ease-in-out;
+}
 .button:disabled {
     cursor: not-allowed;
 }
@@ -17,7 +20,7 @@
 .btn-form {
     border-radius: 20px;
     margin: 20px auto 0;
-    background-color: var(--base-background-dark);
+    background-color: var(--base-color-dark);
     color: var(--base-color-light);
 }
 .btn-logout {

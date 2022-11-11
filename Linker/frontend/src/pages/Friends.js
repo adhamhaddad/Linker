@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import useHttp from '../hooks/use-http';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';
 import classes from '../css/Friends.module.css';
@@ -17,7 +16,7 @@ const Friends = ({
   const showFriendsHandler = () => {
     setListSize((prev) => !prev);
   };
-  
+
   const List =
     friendsList.length > 0 &&
     friendsList.map((friend) => (

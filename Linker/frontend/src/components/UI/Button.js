@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from '../../css/Button.module.css';
 
-function Button(props) {
+const Button = (props) => {
   return (
     <button
       className={`${classes.button} ${classes[props.className]}`}
@@ -12,5 +12,5 @@ function Button(props) {
       {props.children}
     </button>
   );
-}
+};
 export default Button;

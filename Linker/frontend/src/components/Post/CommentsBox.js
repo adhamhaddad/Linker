@@ -2,12 +2,7 @@ import React, { useEffect } from 'react';
 import CommentCard from './CommentCard';
 import classes from '../../css/CommentsBox.module.css';
 
-function CommentsBox({
-  comments,
-  post_user_id,
-  onHide,
-  onChangeComment
-}) {
+const CommentsBox = ({ comments, post_user_id, onHide, onChangeComment }) => {
   const commentsList =
     comments.length &&
     comments
@@ -48,5 +43,5 @@ function CommentsBox({
       <ul className={classes['comments-list']}>{commentsList}</ul>
     </div>
   );
-}
+};
 export default CommentsBox;

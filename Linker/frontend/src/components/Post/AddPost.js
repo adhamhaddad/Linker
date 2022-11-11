@@ -2,7 +2,13 @@ import React, { useRef } from 'react';
 import Modal from '../Modal';
 import classes from '../../css/AddPost.module.css';
 
-function AddPost({ user_id, first_name, last_name, onCreatePost, onClosePost }) {
+const AddPost = ({
+  user_id,
+  first_name,
+  last_name,
+  onCreatePost,
+  onClosePost
+}) => {
   const caption = useRef('');
   const img = useRef('');
   const video = useRef('');
@@ -63,5 +69,5 @@ function AddPost({ user_id, first_name, last_name, onCreatePost, onClosePost }) 
       </div>
     </Modal>
   );
-}
+};
 export default AddPost;

@@ -6,9 +6,8 @@ import Signup from '../pages/Signup';
 import Signin from '../pages/Signin';
 import Header from './Header';
 import Main from './Main';
-// import io from 'socket.io-client';
 import '../css/App.css';
-// const socket = io.connect('http://192.168.1.6:8000');
+
 const App = () => {
   const authCtx = useContext(Authenticate);
   const windowSize = useContext(WindowContext);

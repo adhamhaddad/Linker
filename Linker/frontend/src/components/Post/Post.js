@@ -22,8 +22,7 @@ const Post = ({
   post_last_name,
   post_profile,
   post_timedate,
-  post_content,
-  onDeletePost
+  post_content
 }) => {
   const { sendRequest } = useHttp();
   const [isEdit, setIsEdit] = useState(false);
@@ -60,7 +59,6 @@ const Post = ({
         post_last_name={post_last_name}
         post_profile={post_profile}
         post_timedate={post_timedate}
-        onDeletePost={onDeletePost}
         isEdit={isEdit}
         onEditPost={setIsEdit}
       />

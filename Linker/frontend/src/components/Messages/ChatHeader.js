@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import BackButton from '../UI/BackButton';
 import classes from '../../css/ChatHeader.module.css';
 
-function ChatHeader({receiver_id, username, fname, lname }) {
+const ChatHeader = ({ receiver_id, username, fname, lname }) => {
   const [menuState, setMenuState] = useState(false);
   const toggleMenu = () => {
     setMenuState((prev) => !prev);
@@ -56,5 +56,5 @@ function ChatHeader({receiver_id, username, fname, lname }) {
       )}
     </div>
   );
-}
+};
 export default ChatHeader;

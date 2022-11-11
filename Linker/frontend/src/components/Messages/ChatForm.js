@@ -16,8 +16,12 @@ function ChatForm({ onAddNewMessage }) {
   };
   const submitFormHandler = (e) => {
     e.preventDefault();
-    validateMessage(newMesasgeRef);
+    // validateMessage(newMesasgeRef);
+    if (newMesasgeRef.current.value.trim().length === 0) {
+      return <p>please type something</p>;
+    }
     onAddNewMessage(newMesasgeRef);
+
     setMessageBox('');
   };
 
@@ -28,6 +32,7 @@ function ChatForm({ onAddNewMessage }) {
       autoSave='off'
       onSubmit={submitFormHandler}
       className={classes.form}
+      id='form-input'
     >
       <textarea
         ref={newMesasgeRef}
@@ -35,13 +40,10 @@ function ChatForm({ onAddNewMessage }) {
         placeholder='Type a Message ..'
         name='message'
         accessKey='off'
-        className={classes.input}
         value={messageBox}
         onChange={onMessageChange}
       />
-      <button>
-        send
-      </button>
+      <button className='fa-solid fa-paper-plane'></button>
     </form>
   );
 }

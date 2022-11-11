@@ -59,6 +59,31 @@ class Message {
     }
   }
 
+  async getMessagesList(user_id: string): Promise<Messages[]> {
+    try {
+      const connection = await database.connect();
+      const user_friends_SQL = `SELECT * FROM friends WHERE sender_id=$1 AND isFriend='1' OR receiver_id=$1 AND isFriend='1'`;
+      const result_SQL = await connection.query(user_friends_SQL, [user_id]);
+      console.log(result_SQL.rows);
+      const receiver_id = result_SQL.rows[0].user_id;
+      const sql = `
+        SELECT DISTINCT u.username, u.first_name, u.last_name, m.*
+        FROM messages m, users u
+        WHERE
+        m.sender_id=$1 AND m.receiver_id=$2 AND u.user_id=$1
+        OR
+        m.sender_id=$2 AND m.receiver_id=$1 AND u.user_id=$2
+        `;
+      const result = await connection.query(sql, [user_id]);
+      connection.release();
+      return result.rows;
+    } catch (err) {
+      throw new Error(
+        `Could not get the messages. Error ${(err as Error).message}`
+      );
+    }
+  }
+
   //! Need Fix
   async updateMessage(m: Messages, user_id: string): Promise<Messages> {
     try {

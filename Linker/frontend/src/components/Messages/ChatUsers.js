@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import SearchBar from '../Searchbar';
 import SpinnerLoading from '../Loading/Spinner';
 import Error from '../Error';
+import openSocket from 'socket.io-client';
 import classes from '../../css/ChatUsers.module.css';
 
 const ChatUsers = ({ windowSize }) => {
@@ -14,32 +15,36 @@ const ChatUsers = ({ windowSize }) => {
 
   const list =
     friendsList.length > 0 &&
-    friendsList.map((friend) => (
-      <li key={friend.user_id}>
-        <NavLink
-          to={
-            windowSize <= 600
-              ? `/messages/${friend.username}/phone-screen`
-              : `/messages/${friend.username}`
-          }
-          className={classes['user-card']}
-          activeClassName={classes.active}
-        >
-          <div className={classes.profile} alt={friend.username}></div>
-          <div className={classes['content']}>
-            <span className={classes.username}>
-              {friend.first_name} {friend.last_name}
-            </span>
-            <p className={classes.message}>Call me later</p>
-          </div>
-          <div className={classes.time}>19 m</div>
-        </NavLink>
-      </li>
-    ));
+    friendsList.map((friend) => {
+      return (
+        <li key={friend.user_id}>
+          <NavLink
+            to={
+              windowSize <= 600
+                ? `/messages/${friend.username}/phone-screen`
+                : `/messages/${friend.username}`
+            }
+            className={classes['user-card']}
+            activeClassName={classes.active}
+          >
+            <div className={classes.profile} alt={friend.username}></div>
+            <div className={classes['content']}>
+              <span className={classes.username}>
+                {friend.first_name} {friend.last_name}
+              </span>
+              <p className={classes.message}>Call me later</p>
+            </div>
+            <div className={classes.time}>19 m</div>
+          </NavLink>
+        </li>
+      );
+    });
 
+  const newMessage = (message) => {};
   useEffect(() => {
     sendRequest(
       `user/friends?username=${authCtx.user.username}`,
+      // `user/all-messages?user_id=${authCtx.user.user_id}`,
       'GET',
       {},
       setFriendsList
@@ -47,7 +52,7 @@ const ChatUsers = ({ windowSize }) => {
   }, []);
   return (
     <div className={classes['chat-users']}>
-      <SearchBar theme='chat-search'/>
+      <SearchBar theme='chat-search' />
       {isLoading && <SpinnerLoading color='light' />}
       {isError !== null && <Error message={isError} />}
       {list.length === 0 && <p>Friends is {list.length}</p>}

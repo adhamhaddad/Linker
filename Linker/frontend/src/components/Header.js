@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../utils/Logo';
+import Logo from './Logo';
 import SearchBar from './Searchbar';
 import NavigationBar from './NavigationBar';
 import Container from './UI/Container';

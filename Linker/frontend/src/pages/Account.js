@@ -84,8 +84,8 @@ const Account = ({ user_id }) => {
       {
         user_id: authCtx.user.user_id
       },
-      (response) => {
-        response.status && authCtx.onLogout();
+      () => {
+        authCtx.onLogout();
       }
     );
   };

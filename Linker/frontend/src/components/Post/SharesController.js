@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Modal from '../Modal';
 import classes from '../../css/SharesController.module.css';
 
-function SharesController({ shares, onHide }) {
+const SharesController = ({ shares, onHide }) => {
   const sharesList = shares
     .map((share) => (
       <li key={new Date(share.timedate).getTime()}>
@@ -31,5 +31,5 @@ function SharesController({ shares, onHide }) {
       </div>
     </Modal>
   );
-}
+};
 export default SharesController;

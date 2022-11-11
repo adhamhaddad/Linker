@@ -39,43 +39,53 @@
     font-size: 14px;
     text-transform: capitalize;
     margin-right: auto;
+    padding: 0 10px;
 }
 
 .information div p.information-links {
     text-transform: lowercase;
 }
-
-.information div button {
+.information div select {
     width: 100px;
-    height: 30px;
-    text-transform: capitalize;
-    color: var(--base-color-light);
-    background-color: var(--base-color-dark);
-    border-radius: 4px;
-    cursor: pointer;
+    border: 1px solid var(--base-color-dark);
+    border-radius: 2px;
+    margin: 0 auto 0 10px;
+    background-color: transparent;
 }
 
-.information div button:hover {
-    background-color: rgb(45, 45, 45);
-    transition: background .5s ease-in-out;
-}
 
 .information div input {
-    width: 90%;
+    /* width: 90%; */
     border: 1px solid rgb(219, 219, 219);
-    margin-right: 5px;
-    padding: 10px;
+    margin: 0 5px;
+    height: 40px;
 }
 .information div input:last-of-type {
     margin-right: auto;
 }
 .story {
-    width: 65%;
+    width: 75%;
     height: 150px;
     padding: 5px;
     margin-right: auto;
     border: 1px solid rgb(219, 219, 219);
+    font-size: 14px;
     resize: none;
+}
+
+.information div button {
+    width: 80px;
+    height: 30px;
+    text-transform: capitalize;
+    color: var(--base-color-light);
+    background-color: var(--base-color-dark);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.information div button:hover {
+    background-color: var(--base-hover-color);
+    transition: background .5s ease-in-out;
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
