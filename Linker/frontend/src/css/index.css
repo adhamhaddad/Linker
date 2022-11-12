@@ -3,6 +3,7 @@
     --base-color-light: #FFF;
     --base-color-dark: rgb(32, 32, 32);
     --base-hover-color: rgb(22, 22, 22);
+    --base-hover-light: rgb(220, 220, 220);
     --base-light-gray: rgb(180, 180, 180);
     /* Main Font Sizes for Post */
     --post-header-size: 14px;

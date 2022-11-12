@@ -79,11 +79,11 @@ const acceptFriend = async (req: Request, res: Response) => {
     const response = await friend.acceptFriend(req.body);
     io.emit('friends', {
       action: 'ACCEPT_REQUEST',
-      data: { ...response }
+      data: response
     });
     res.status(200).json({
       status: true,
-      data: { ...response },
+      data: response,
       message: 'Retrieved Friend successfully!'
     });
   } catch (err) {
@@ -147,7 +147,7 @@ const deleteFriend = async (req: Request, res: Response) => {
 
 const friends_controller_routes = (app: Application, logger: NextFunction) => {
   app.get('/user/friends', logger, verifyToken, getFriends);
-  app.get('/user/friend-request', logger, verifyToken, friendRequest);
+  app.get('/user/requests', logger, verifyToken, friendRequest);
   app.get('/user/friend-check', logger, verifyToken, checkFriend);
   app.post('/user/add-friend', logger, verifyToken, addFriend);
   app.patch('/user/accept-request', logger, verifyToken, acceptFriend);

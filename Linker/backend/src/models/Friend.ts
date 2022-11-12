@@ -20,7 +20,7 @@ class Friend {
       ]);
       const user_id = add_friend_result.rows[0].sender_id;
       const friend_SQL = `
-      SELECT username, first_name, last_name
+      SELECT user_id, username, first_name, last_name
       FROM users
       WHERE
       user_id=$1
@@ -103,7 +103,7 @@ class Friend {
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT friend_id, f.sender_id, u.username, u.first_name, u.last_name, f.timedate
+      SELECT DISTINCT friend_id, f.sender_id, u.user_id, u.username, u.first_name, u.last_name, f.timedate
       FROM friends f, users u
       WHERE
       f.sender_id=u.user_id
@@ -123,31 +123,37 @@ class Friend {
   }
 
   //! In this case I'am receiver_id
-  async acceptFriend(f: Friends): Promise<Friends> {
+  async acceptFriend(f: Friends): Promise<Friends[] | {}> {
     try {
       const connection = await database.connect();
-      const add_friend_SQL = `
+
+      const accept_friend_SQL = `
         UPDATE friends
-        SET isFriend='1'
-        WHERE friend_id=$1
+        SET isFriend='1', timedate=$2
+        WHERE sender_id=$1
         RETURNING
-        *
-        `;
-      const add_friend_result = await connection.query(add_friend_SQL, [
-        f.friend_id
+        isFriend, timedate
+      `;
+      const accepted_friend_result = await connection.query(accept_friend_SQL, [
+        f.sender_id,
+        new Date()
       ]);
-      const user_id = add_friend_result.rows[0].friend_id;
-      const friend_SQL = `
-        SELECT username, first_name, last_name
+      const accepted_user_SQL = `
+        SELECT user_id, username, first_name, last_name
         FROM users
         WHERE user_id=$1
         `;
-      const friend_result = await connection.query(friend_SQL, [user_id]);
+      const accepted_user_result = await connection.query(accepted_user_SQL, [
+        f.sender_id
+      ]);
       connection.release();
-      return { ...add_friend_result.rows[0], ...friend_result.rows[0] };
+      return {
+        ...accepted_friend_result.rows[0],
+        ...accepted_user_result.rows[0]
+      };
     } catch (err) {
       throw new Error(
-        `Could not update the friend. Error ${(err as Error).message}`
+        `Could not accept the friend request. Error ${(err as Error).message}`
       );
     }
   }

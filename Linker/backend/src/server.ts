@@ -61,44 +61,6 @@ password_controller_routes(app, logger as NextFunction);
 profile_controller_routes(app, logger as NextFunction);
 // Express Server
 
-/*
-const io = new Server(server, {
-  cors: corsOptions
-});
-
-const CHAT_BOT = 'ChatBot';
-let chatRoom = '';
-let all_users: any = [];
-let chatRoomUsers: any = [];
-
-io.on('connection', (socket) => {
-  console.log('User connected', socket.id);
-  socket.on('join-chat', (data) => {
-    const { username, chat } = data;
-    socket.join(chat);
-
-    let createdTime = Date.now();
-    socket.to(chat).emit('receive_message', {
-      message: `${username}`,
-      username: CHAT_BOT,
-      createdTime
-    });
-
-    socket.emit('receive_message', {
-      message: `Welcome ${username}`,
-      username: CHAT_BOT,
-      createdTime
-    });
-
-    chatRoom = chat;
-    all_users.push({ id: socket.id, username, chat });
-    chatRoomUsers = all_users.filter((user: any) => user.chat === chat);
-    socket.to(chat).emit('chatroom_users', chatRoomUsers);
-    socket.emit('chatroom_users', chatRoomUsers);
-  });
-});
-*/
-
 const server = app.listen(port, () => {
   console.log(`Backend server is listening on http://${ip}:${config.port}`);
   console.log(`press CTRL+C to stop the server`);
@@ -109,7 +71,7 @@ export const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-  console.log('Client Connected!', socket.id);
+  console.log('Client Connected!');
 });
 
 export default app;

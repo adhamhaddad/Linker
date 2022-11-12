@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import classes from '../../css/MessageCard.module.css';
 
-const MessageCard = ({ profile, message, timedate, lang, className, message_id }) => {
+const MessageCard = ({
+  profile,
+  username,
+  message,
+  timedate,
+  lang,
+  className,
+  message_id
+}) => {
   const [messageStatus, setMessageStatus] = useState('seen');
   const format = (time) =>
     new Date(time).toLocaleString('en-US', { timeStyle: 'short' });
@@ -18,8 +27,14 @@ const MessageCard = ({ profile, message, timedate, lang, className, message_id }
   //   return <i className='fa-regular fa-error'></i>
   // }
   return (
-    <div className={`${classes['message-container']} ${classes[className]}`} id={message_id}>
-      <div className={classes['message-profile']}></div>
+    <div
+      className={`${classes['message-container']} ${classes[className]}`}
+      id={message_id}
+    >
+      <Link
+        to={`/profile/${username}`}
+        className={classes['message-profile']}
+      ></Link>
       <div className={classes['message-info']}>
         <span className={classes['message-content']} lang={lang}>
           {message}

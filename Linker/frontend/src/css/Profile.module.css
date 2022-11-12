@@ -20,10 +20,9 @@
 }
 
 .friend-actions {
-    height: 30px;
     padding: 0 5px;
     border-radius: 2px;
-    margin-left: 10px;
+    margin-right: 4px;
     background-color: var(--base-color-light);
     cursor: pointer;
     font-size: 12px;

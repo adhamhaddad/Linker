@@ -11,8 +11,8 @@ import ProfilePicture from '../components/ProfilePicture';
 import Friends from './Friends';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';
-import classes from '../css/Profile.module.css';
 import openSocket from 'socket.io-client';
+import classes from '../css/Profile.module.css';
 
 const Profile = ({ user_id }) => {
   const authCtx = useContext(AuthenticateContext);
@@ -75,17 +75,15 @@ const Profile = ({ user_id }) => {
   // CHECK IS FRIEND
   const checkIsFriendHandler = (data) => {
     if (data.isfriend == '1') {
-      setCheckFriend((prev) => {
-        return { ...prev, ...data, isFriend: true };
-      });
+      setCheckFriend({ sender_id: null, receiver_id: null, isFriend: true });
     } else if (data.isfriend == '0') {
-      setCheckFriend((prev) => {
-        return { ...prev, ...data, isFriend: false };
+      setCheckFriend({
+        sender_id: data.sender_id,
+        receiver_id: data.receiver_id,
+        isFriend: false
       });
     } else {
-      setCheckFriend((prev) => {
-        return { ...prev, ...data, isFriend: null };
-      });
+      setCheckFriend({ sender_id: null, receiver_id: null, isFriend: null });
     }
   };
   const checkIsFriend = () => {
@@ -132,15 +130,34 @@ const Profile = ({ user_id }) => {
   };
 
   // REQUEST ACCEPTED
+  const acceptRequest = () => {
+    sendRequest(
+      'user/accept-request',
+      'PATCH',
+      { sender_id: user.user_id },
+      null
+    );
+  };
   const newAcceptedRequest = (data) => {
+    console.log('Logged at Line 142 in Profile.js');
+    setFriendsList((prev) => [...prev, data]);
     checkIsFriendHandler(data);
   };
 
   // REQUEST IGNORED
+  const ignoreRequest = () => {
+    sendRequest(
+      'user/ignore-request',
+      'DELETE',
+      {
+        sender_id: user.user_id,
+        receiver_id: authCtx.user.user_id
+      },
+      null
+    );
+  };
   const newRequestIgnored = () => {
-    setCheckFriend((prev) => {
-      return { ...prev, isFriend: null };
-    });
+    setCheckFriend({ sender_id: null, receiver_id: null, isFriend: null });
   };
 
   // DELETE FRIEND
@@ -227,9 +244,9 @@ const Profile = ({ user_id }) => {
     }
     const socket = openSocket('http://192.168.1.6:4000');
     socket.on('posts', (data) => {
-      if (data.action === 'CREATE') {
-        newPostAdded(data.data);
-      }
+      // if (data.action === 'CREATE') {
+      //   newPostAdded(data.data);
+      // }
       if (data.action === 'UPDATE') {
         newPostUpdate(data.data);
       }
@@ -267,52 +284,62 @@ const Profile = ({ user_id }) => {
             />
             <span className={classes.username}>
               {user.first_name} {user.last_name}
-              {!isLoading && authCtx.user.username !== params.username && (
-                <>
-                  {checkFriend.isFriend === true && (
-                    <button
-                      className={classes['friend-actions']}
-                      onClick={deleteFriend}
-                    >
-                      <span>Remove Friend</span>
-                      <i className='fa-solid fa-user-xmark'></i>
-                    </button>
-                  )}
-
-                  {checkFriend.isFriend === false &&
-                    authCtx.user.user_id === checkFriend.receiver_id && (
-                      <button
-                        className={classes['friend-actions']}
-                        onClick={cancelRequest}
-                      >
-                        <span>Ignore Request</span>
-                        <i className='fa-solid fa-user-xmark'></i>
-                      </button>
-                    )}
-                  {checkFriend.isFriend === false &&
-                    authCtx.user.user_id === checkFriend.sender_id && (
-                      <button
-                        className={classes['friend-actions']}
-                        onClick={cancelRequest}
-                      >
-                        <span>Cancel Request</span>
-                        <i className='fa-solid fa-user-xmark'></i>
-                      </button>
-                    )}
-
-                  {checkFriend.isFriend === null && (
-                    <button
-                      className={classes['friend-actions']}
-                      onClick={friendRequest}
-                    >
-                      <span>Add Friend</span>
-                      <i className='fa-solid fa-user-plus'></i>
-                    </button>
-                  )}
-                </>
-              )}
             </span>
           </div>
+          {!isLoading && authCtx.user.username !== params.username && (
+            <div className={classes['request-actions']}>
+              {checkFriend.isFriend === true && (
+                <button
+                  className={classes['friend-actions']}
+                  onClick={deleteFriend}
+                >
+                  <span>Remove Friend</span>
+                  <i className='fa-solid fa-user-xmark'></i>
+                </button>
+              )}
+
+              {checkFriend.isFriend === false &&
+                authCtx.user.user_id === checkFriend.receiver_id && (
+                  <>
+                    <button
+                      className={classes['friend-actions']}
+                      onClick={acceptRequest}
+                    >
+                      <span>Accept Request</span>
+                      <i className='fa-solid fa-user-check'></i>
+                    </button>
+
+                    <button
+                      className={classes['friend-actions']}
+                      onClick={ignoreRequest}
+                    >
+                      <span>Ignore Request</span>
+                      <i className='fa-solid fa-user-xmark'></i>
+                    </button>
+                  </>
+                )}
+              {checkFriend.isFriend === false &&
+                authCtx.user.user_id === checkFriend.sender_id && (
+                  <button
+                    className={classes['friend-actions']}
+                    onClick={cancelRequest}
+                  >
+                    <span>Cancel Request</span>
+                    <i className='fa-solid fa-user-xmark'></i>
+                  </button>
+                )}
+
+              {checkFriend.isFriend === null && (
+                <button
+                  className={classes['friend-actions']}
+                  onClick={friendRequest}
+                >
+                  <span>Add Friend</span>
+                  <i className='fa-solid fa-user-plus'></i>
+                </button>
+              )}
+            </div>
+          )}
           <ProfileInformation
             job_title={information.job_title}
             relationship={information.relationship}

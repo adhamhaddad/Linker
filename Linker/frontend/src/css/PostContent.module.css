@@ -10,7 +10,8 @@
 }
 .post-content p {
     padding: 5px;
-    font-size: var(--post-content-size)
+    font-size: var(--post-content-size);
+    word-wrap: break-word;
 }
 
 .image-content {

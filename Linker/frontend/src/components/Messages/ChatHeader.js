@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import BackButton from '../UI/BackButton';
 import classes from '../../css/ChatHeader.module.css';
 
-const ChatHeader = ({ receiver_id, username, fname, lname }) => {
+const ChatHeader = ({ username, first_name, last_name }) => {
   const [menuState, setMenuState] = useState(false);
   const toggleMenu = () => {
     setMenuState((prev) => !prev);
@@ -13,8 +13,8 @@ const ChatHeader = ({ receiver_id, username, fname, lname }) => {
       <BackButton path='/messages' />
 
       <span className={classes.username}>
-        <Link to={`/profile/${username}?user_id=${receiver_id}`}>
-          {fname} {lname}
+        <Link to={`/profile/${username}`}>
+          {first_name} {last_name}
         </Link>
       </span>
       <span className={classes.status}></span>
@@ -42,8 +42,14 @@ const ChatHeader = ({ receiver_id, username, fname, lname }) => {
           </li>
           <li>
             <a href='#'>
-              <i className='fa-solid fa-rectangle-xmark'></i>
-              <span>close</span>
+              <i className='fa-solid fa-comment-slash'></i>
+              <span>close conversation</span>
+            </a>
+          </li>
+          <li>
+            <a href='#'>
+              <i className='fa-solid fa-trash-can'></i>
+              <span>delete conversation</span>
             </a>
           </li>
           <li>

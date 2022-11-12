@@ -21,7 +21,7 @@ const Requests = ({ user_id }) => {
     sendRequest(
       'user/accept-request',
       'PATCH',
-      { friend_id: user.friend_id },
+      { sender_id: user.user_id },
       null
     );
   };
@@ -78,12 +78,7 @@ const Requests = ({ user_id }) => {
     });
 
   useEffect(() => {
-    sendRequest(
-      `user/friend-request?user_id=${user_id}`,
-      'GET',
-      {},
-      setRequests
-    );
+    sendRequest(`user/requests?user_id=${user_id}`, 'GET', {}, setRequests);
 
     const socket = openSocket('http://192.168.1.6:4000');
     socket.on('friends', (data) => {

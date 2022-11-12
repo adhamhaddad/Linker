@@ -21,7 +21,6 @@ function ChatForm({ onAddNewMessage }) {
       return <p>please type something</p>;
     }
     onAddNewMessage(newMesasgeRef);
-
     setMessageBox('');
   };
 

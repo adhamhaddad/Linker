@@ -40,7 +40,6 @@ const ChatUsers = ({ windowSize }) => {
       );
     });
 
-  const newMessage = (message) => {};
   useEffect(() => {
     sendRequest(
       `user/friends?username=${authCtx.user.username}`,
@@ -50,6 +49,7 @@ const ChatUsers = ({ windowSize }) => {
       setFriendsList
     );
   }, []);
+
   return (
     <div className={classes['chat-users']}>
       <SearchBar theme='chat-search' />

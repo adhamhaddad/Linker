@@ -10,18 +10,23 @@ import { useParams } from 'react-router-dom';
 import openSocket from 'socket.io-client';
 import classes from '../../css/Conversation.module.css';
 
-const Conversation = ({ user_id }) => {
+const Conversation = () => {
   const authCtx = useContext(AuthenticateContext);
-  const query = new URLSearchParams(location.search);
   const params = useParams();
-  const { isLoading, isError, sendRequest } = useHttp();
   const [messages, setMessages] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
+  const { isLoading, isError, sendRequest } = useHttp();
 
   const currentUserHandler = (user) => {
-    setCurrentUser({ user_fname: user.first_name, user_lname: user.last_name });
+    setCurrentUser({
+      user_id: user.user_id,
+      username: user.username,
+      first_name: user.first_name,
+      last_name: user.last_name
+    });
   };
 
+  // NEW MESSAGE
   const newMessageHander = (res) => {
     setMessages((prev) => [...prev, res]);
   };
@@ -38,13 +43,17 @@ const Conversation = ({ user_id }) => {
       null
     );
   };
+
   const conversationMessages =
     messages.length > 0 &&
     messages
       .map((msg) => {
         return (
           <MessageCard
-            className={msg.sender_id === user_id ? 'sender' : 'receiver'}
+            className={
+              msg.sender_id === authCtx.user.user_id ? 'sender' : 'receiver'
+            }
+            username={msg.username}
             profile={msg.profile}
             message={msg.content}
             timedate={msg.timedate}
@@ -59,11 +68,12 @@ const Conversation = ({ user_id }) => {
   useEffect(() => {
     sendRequest(`users/${params.username}`, 'GET', {}, currentUserHandler);
     sendRequest(
-      `user/messages?sender_id=${user_id}&receiver_id=${params.username}`,
+      `user/messages?sender_id=${authCtx.user.user_id}&receiver_id=${params.username}`,
       'GET',
       {},
       setMessages
     );
+
     const socket = openSocket('http://192.168.1.6:4000');
     socket.on('messages', (data) => {
       if (data.action === 'NEW_MESSAGE') {
@@ -76,14 +86,14 @@ const Conversation = ({ user_id }) => {
         newMessageHander(data.data);
       }
     });
-  }, []);
+  }, [params]);
+
   return (
     <div className={classes['chat-conversation']}>
       <ChatHeader
-        receiver_id={query.get('user_id')}
-        username={currentUser.user_username}
-        fname={currentUser.user_fname}
-        lname={currentUser.user_lname}
+        username={currentUser.username}
+        first_name={currentUser.first_name}
+        last_name={currentUser.last_name}
       />
       <div className={classes.conversation} id='conversation'>
         {messages.length > 0 && conversationMessages}
@@ -95,11 +105,7 @@ const Conversation = ({ user_id }) => {
         {/* <p className={classes['conversation-first-time']}>Conversation started at ... End-To-End Encryption</p> */}
         {/* <p className={classes['conversation-date']}>{new Date().getTime()}</p> */}
       </div>
-      <ChatForm
-        user_id={user_id}
-        receiver_id={query.get('user_id')}
-        onAddNewMessage={addNewMessage}
-      />
+      <ChatForm onAddNewMessage={addNewMessage} />
     </div>
   );
 };
