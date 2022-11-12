@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import AuthenticateContext from '../utils/authentication';
 import useHttp from '../hooks/use-http';
 import Post from '../components/Post/Post';
@@ -289,13 +289,22 @@ const Profile = ({ user_id }) => {
           {!isLoading && authCtx.user.username !== params.username && (
             <div className={classes['request-actions']}>
               {checkFriend.isFriend === true && (
-                <button
-                  className={classes['friend-actions']}
-                  onClick={deleteFriend}
-                >
-                  <span>Remove Friend</span>
-                  <i className='fa-solid fa-user-xmark'></i>
-                </button>
+                <>
+                  <Link
+                    to={`/messages/${user.username}`}
+                    className={`${classes['friend-actions']} ${classes['message-friend']}`}
+                  >
+                    <span>Message</span>
+                    <i className='fa-solid fa-comment'></i>
+                  </Link>
+                  <button
+                    className={classes['friend-actions']}
+                    onClick={deleteFriend}
+                  >
+                    <span>Remove</span>
+                    <i className='fa-solid fa-user-xmark'></i>
+                  </button>
+                </>
               )}
 
               {checkFriend.isFriend === false &&

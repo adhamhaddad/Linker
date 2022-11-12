@@ -2,9 +2,11 @@
     flex-grow: 0.3;
     width: 240px;
 }
+
 .story-section {
     width: 400px;
 }
+
 .friends-section {
     margin-top: 5px;
     width: 100%;
@@ -20,18 +22,28 @@
 }
 
 .friend-actions {
-    padding: 0 5px;
+    /* height: 24px; */
+    padding: 5px;
     border-radius: 2px;
     margin-right: 4px;
     background-color: var(--base-color-light);
     cursor: pointer;
     font-size: 12px;
 }
-.friend-actions > i {
-    width: 20px;
-    line-height: 27px;
-    /* background-color: green; */
+
+.friend-actions>i,
+.message-friend>i {
+    display: inline-block;
+    width: 17px;
+    text-align: right;
+    /* line-height: 27px; */
 }
+
+.message-friend {
+    display: inline-block;
+    color: var(--base-color-dark)
+}
+
 .add-friend:hover {
     border: 1px solid var(--base-color-light)
 }
@@ -49,11 +61,13 @@
     background-color: var(--base-color-light);
     transition: .4s background, color ease-in-out;
 }
+
 .create-post-btn:hover {
     background-color: var(--base-hover-color);
     color: var(--base-color-light);
     transition: .4s background, color ease-in-out;
 }
+
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {}
 

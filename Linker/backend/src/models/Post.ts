@@ -34,25 +34,21 @@ class Post {
   }
   // `
   // SELECT DISTINCT u.username, i.fname, i.lname, p.*
-  // FROM posts p, information i, users u, friends f
+  // FROM posts p, users u, friends f
   // WHERE
-  // p.user_id=i.user_id AND i.user_id=u.user_id AND u.user_id=$1
+  // p.user_id=i.user_id AND u.user_id=$1
   // OR
-  // p.user_id=f.friend_id AND f.friend_id=i.user_id AND i.user_id=u.user_id AND f.user_id=$1
+  // p.user_id=f.friend_id AND f.friend_id=i.user_id AND f.user_id=$1
   // OR
-  // p.user_id=f.user_id AND f.user_id=i.user_id AND i.user_id=u.user_id AND f.friend_id=$1
+  // p.user_id=f.user_id AND f.user_id=i.user_id AND f.friend_id=$1
 
   // `
-  // p.user_id=i.user_id AND i.user_id=u.user_id AND u.username=$1
+  // p.user_id=i.user_id AND u.username=$1
 
   /*
   OR
 
       p.user_id=f.user_id
-      AND
-      f.user_id=i.user_id
-      AND
-      i.user_id=u.user_id
       AND
       u.user_id=$1
       AND
@@ -71,6 +67,8 @@ class Post {
       AND
       f.sender_id=u.user_id
       AND
+      f.receiver_id=$1
+      AND
       f.isFriend='1'
       
       OR
@@ -79,9 +77,15 @@ class Post {
       AND
       f.receiver_id=u.user_id
       AND
-      f.isFriend='1'
+      f.sender_id=$1
       AND
-      p.user_id=$1
+      f.isFriend='1'
+
+      OR
+      
+      p.user_id=u.user_id
+      AND
+      u.user_id=$1
       `;
       const result = await connection.query(sql, [user_id]);
       connection.release();
