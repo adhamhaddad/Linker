@@ -63,6 +63,13 @@
 .information div input:last-of-type {
     margin-right: auto;
 }
+
+.profile-picture {
+    width: 150px;
+    border-radius: 2px;
+    border: 1px solid var(--base-light-gray);
+    height: 150px;
+}
 .story {
     width: 75%;
     height: 150px;

@@ -7,10 +7,9 @@ import SpinnerLoading from '../Loading/Spinner';
 import Error from '../Error';
 import MessageCard from './MessageCard';
 import { useParams } from 'react-router-dom';
-import openSocket from 'socket.io-client';
 import classes from '../../css/Conversation.module.css';
 
-const Conversation = () => {
+const Conversation = ({socket}) => {
   const authCtx = useContext(AuthenticateContext);
   const params = useParams();
   const [messages, setMessages] = useState([]);
@@ -74,7 +73,6 @@ const Conversation = () => {
       setMessages
     );
 
-    const socket = openSocket('http://192.168.1.6:4000');
     socket.on('messages', (data) => {
       if (data.action === 'NEW_MESSAGE') {
         newMessageHander(data.data);

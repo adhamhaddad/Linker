@@ -5,10 +5,9 @@ import { NavLink } from 'react-router-dom';
 import SearchBar from '../Searchbar';
 import SpinnerLoading from '../Loading/Spinner';
 import Error from '../Error';
-import openSocket from 'socket.io-client';
 import classes from '../../css/ChatUsers.module.css';
 
-const ChatUsers = ({ windowSize }) => {
+const ChatUsers = ({ windowSize, socket }) => {
   const authCtx = useContext(AuthenticateContext);
   const [friendsList, setFriendsList] = useState([]);
   const { isLoading, isError, sendRequest } = useHttp();
@@ -43,7 +42,6 @@ const ChatUsers = ({ windowSize }) => {
   useEffect(() => {
     sendRequest(
       `user/friends?username=${authCtx.user.username}`,
-      // `user/all-messages?user_id=${authCtx.user.user_id}`,
       'GET',
       {},
       setFriendsList

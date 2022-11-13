@@ -5,6 +5,7 @@ const useHttp = () => {
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const authCtx = useContext(AuthenticateContext);
+
   const sendRequest = useCallback(async (url, method, body, responseData) => {
     try {
       setIsLoading(true);

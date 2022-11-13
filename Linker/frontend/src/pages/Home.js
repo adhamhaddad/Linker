@@ -7,7 +7,7 @@ import Post from '../components/Post/Post';
 import openSocket from 'socket.io-client';
 import classes from '../css/Home.module.css';
 
-const Home = ({ user_id }) => {
+const Home = ({ user_id, socket }) => {
   const { isLoading, isError, sendRequest } = useHttp();
   const [allPosts, setAllPosts] = useState([]);
 
@@ -47,7 +47,6 @@ const Home = ({ user_id }) => {
   };
   useEffect(() => {
     sendRequest(`posts?user_id=${user_id}`, 'GET', {}, transformPost);
-    const socket = openSocket('http://192.168.1.6:4000');
     socket.on('posts', (data) => {
       if (data.action === 'CREATE') {
         newPostAdded(data.data);

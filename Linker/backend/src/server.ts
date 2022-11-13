@@ -71,7 +71,10 @@ export const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-  console.log('Client Connected!');
+  console.log('User is Connected!');
+  socket.on('disconnect', () => {
+    console.log('User is disconnected')
+  })
 });
 
 export default app;

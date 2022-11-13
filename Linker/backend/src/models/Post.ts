@@ -32,29 +32,7 @@ class Post {
       );
     }
   }
-  // `
-  // SELECT DISTINCT u.username, i.fname, i.lname, p.*
-  // FROM posts p, users u, friends f
-  // WHERE
-  // p.user_id=i.user_id AND u.user_id=$1
-  // OR
-  // p.user_id=f.friend_id AND f.friend_id=i.user_id AND f.user_id=$1
-  // OR
-  // p.user_id=f.user_id AND f.user_id=i.user_id AND f.friend_id=$1
-
-  // `
-  // p.user_id=i.user_id AND u.username=$1
-
-  /*
-  OR
-
-      p.user_id=f.user_id
-      AND
-      u.user_id=$1
-      AND
-      f.isFriend='1'
-  */
-  //! Need Fix
+  
   async getAllPosts(user_id: string): Promise<Posts[]> {
     try {
       const connection = await database.connect();

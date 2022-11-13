@@ -10,6 +10,14 @@
     margin: 20px 0;
 }
 
+.dark {
+    color: var(--base-color-dark)
+}
+
+.light {
+    color: var(--base-color-light);
+}
+
 .content-animation {
     width: 100px;
     height: fit-content;

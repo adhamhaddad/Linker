@@ -7,6 +7,9 @@ import Signin from '../pages/Signin';
 import Header from './Header';
 import Main from './Main';
 import '../css/App.css';
+import io from 'socket.io-client';
+
+const socket = io.connect('http://192.168.1.6:4000');
 
 const App = () => {
   const authCtx = useContext(Authenticate);
@@ -28,6 +31,7 @@ const App = () => {
             user_id={authCtx.user.user_id}
             username={authCtx.user.username}
             windowSize={windowSize.windowSize}
+            socket={socket}
           />
         </Route>
       </Switch>

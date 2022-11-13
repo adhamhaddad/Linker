@@ -117,22 +117,22 @@ function Settings({ windowSize }) {
             <Information windowSize={windowSize} />
           </Route>
           <Route path='/settings/privacy' exact>
-            <UnderDevelopment />
+            <UnderDevelopment color='light' />
           </Route>
           <Route path='/settings/emails' exact>
-            <UnderDevelopment />
+            <UnderDevelopment color='light' />
           </Route>
           <Route path='/settings/notifications' exact>
-            <UnderDevelopment />
+            <UnderDevelopment color='light' />
           </Route>
           <Route path='/settings/language' exact>
-            <UnderDevelopment />
+            <UnderDevelopment color='light' />
           </Route>
           <Route path='/settings/account' exact>
             <Account windowSize={windowSize} />
           </Route>
           <Route path='/settings/help' exact>
-            <UnderDevelopment />
+            <UnderDevelopment color='light' />
           </Route>
         </section>
       )}

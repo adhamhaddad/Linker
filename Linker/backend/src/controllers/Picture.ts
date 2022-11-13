@@ -1,18 +1,16 @@
 import { Request, Response, NextFunction, Application } from 'express';
+import { fileUpload } from '../middlewares/imagesHandler';
 import verifyToken from '../middlewares/verifyToken';
 import Picture from '../models/Picture';
 
 const picture = new Picture();
 
 const createProfile = async (req: Request, res: Response) => {
-  console.log(req.file);
-  console.log(req.body);
-
-  return;
   const image = {
     user_id: req.body.user_id as string,
     profile_picture: req.body.profile_picture as string
   };
+
   try {
     const response = await picture.createPicture(image);
     res.status(201).json({
@@ -77,7 +75,7 @@ const deleteProfile = async (req: Request, res: Response) => {
 };
 
 const profile_controller_routes = (app: Application, logger: NextFunction) => {
-  app.post('/profile-picture', logger, verifyToken, createProfile);
+  app.post('/profile-picture', logger, fileUpload.single('profile'));
   app.get('/profile-picture', logger, getProfile);
   app.delete('/profile-picture', logger, verifyToken, deleteProfile);
 };

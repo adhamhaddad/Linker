@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import useHttp from '../hooks/use-http';
-import Footer from '../components/Footer';
 import AuthenticateContext from '../utils/authentication';
 import BackButton from '../components/UI/BackButton';
+import FilePicker from '../components/FilePicker';
 import classes from '../css/Information.module.css';
 
 const Information = ({ windowSize }) => {
@@ -14,7 +14,8 @@ const Information = ({ windowSize }) => {
     job_title: '',
     education: ''
   });
-
+  const [pickedImage, setPickedImage] = useState();
+  const [editPicture, setEditPicture] = useState(false);
   const [editStory, setEditStory] = useState(false);
   const [editRelation, setEditRelation] = useState(false);
   const [editLocation, setEditLocation] = useState(false);
@@ -24,12 +25,14 @@ const Information = ({ windowSize }) => {
   const authCtx = useContext(AuthenticateContext);
   const { isLoading, isError, sendRequest } = useHttp();
 
-  const editLocationToggle = () => {
-    setEditLocation((prev) => !prev);
+  const editPictureToggle = () => {
+    setEditPicture((prev) => !prev);
   };
-
   const editStoryToggle = () => {
     setEditStory((prev) => !prev);
+  };
+  const editLocationToggle = () => {
+    setEditLocation((prev) => !prev);
   };
   const editRelationToggle = () => {
     setEditRelation((prev) => !prev);
@@ -44,6 +47,17 @@ const Information = ({ windowSize }) => {
     setEditJobTitle((prev) => !prev);
   };
 
+  console.log(pickedImage)
+  const savePicture = () => {
+    const formData = new FormData();
+    formData.append('user_id', authCtx.user.user_id);
+    formData.append('profile', pickedImage);
+    const response = fetch('http://192.168.1.6:4000/profile-picture', {
+      method: 'POST',
+      body: formData
+    });
+    console.log(response);
+  };
   const saveStory = () => {
     sendRequest(
       'user/information/story',
@@ -54,7 +68,7 @@ const Information = ({ windowSize }) => {
       },
       (data) => {
         setInformationData((prev) => ({ ...prev, story: data.story }));
-        setEditStory();
+        editStoryToggle();
       }
     );
   };
@@ -71,7 +85,7 @@ const Information = ({ windowSize }) => {
           ...prev,
           relationship: data.relationship
         }));
-        setEditRelation();
+        editRelationToggle();
       }
     );
   };
@@ -87,7 +101,7 @@ const Information = ({ windowSize }) => {
       },
       (data) => {
         setInformationData((prev) => ({ ...prev, location: data.location }));
-        setEditLocation();
+        editLocationToggle();
       }
     );
   };
@@ -102,7 +116,7 @@ const Information = ({ windowSize }) => {
       },
       (data) => {
         setInformationData((prev) => ({ ...prev, birthday: data.birthday }));
-        setEditBirthday();
+        editBirthdayToggle();
       }
     );
   };
@@ -117,7 +131,7 @@ const Information = ({ windowSize }) => {
       },
       (data) => {
         setInformationData((prev) => ({ ...prev, job_title: data.job_title }));
-        setEditJobTitle();
+        editJobTitleToggle();
       }
     );
   };
@@ -132,9 +146,14 @@ const Information = ({ windowSize }) => {
       },
       (data) => {
         setInformationData((prev) => ({ ...prev, education: data.education }));
-        setEditEducation();
+        editEducationToggle();
       }
     );
+  };
+
+  const onPictureChange = (e) => {
+    console.log(e);
+    setPickedImage(e);
   };
 
   const onStoryChange = (e) => {
@@ -174,6 +193,24 @@ const Information = ({ windowSize }) => {
     <div className={classes['information']}>
       {windowSize <= 600 && <BackButton path='/settings' />}
       <h3>information</h3>
+
+      <div>
+        <span>Profile Picture</span>
+        {!editPicture && (
+          <>
+            <div className={classes['profile-picture']}></div>
+            <button onClick={editPictureToggle}>edit</button>
+          </>
+        )}
+        {editPicture && (
+          <>
+            <FilePicker onPicture={onPictureChange} />
+            <button onClick={editPictureToggle}>cancel</button>
+            <button onClick={savePicture}>save</button>
+          </>
+        )}
+      </div>
+
       <div>
         <span>story</span>
         {!editStory && (
@@ -189,6 +226,7 @@ const Information = ({ windowSize }) => {
               value={informationData.story}
               onChange={onStoryChange}
             ></textarea>
+            <button onClick={editStoryToggle}>cancel</button>
             <button onClick={saveStory}>save</button>
           </>
         )}
@@ -219,6 +257,7 @@ const Information = ({ windowSize }) => {
               <option value='engaged'>Engaged</option>
               <option value='married'>Married</option>
             </select>
+            <button onClick={editRelationToggle}>cancel</button>
             <button onClick={saveRelation}>save</button>
           </>
         )}
@@ -240,6 +279,7 @@ const Information = ({ windowSize }) => {
               placeholder='Location'
               onChange={onLocationChange}
             />
+            <button onClick={editLocationToggle}>cancel</button>
             <button onClick={saveLocation}>save</button>
           </>
         )}
@@ -259,6 +299,7 @@ const Information = ({ windowSize }) => {
               value={informationData.birthday}
               onChange={onBirthdayChange}
             />
+            <button onClick={editBirthdayToggle}>cancel</button>
             <button onClick={saveBirthday}>save</button>
           </>
         )}
@@ -280,6 +321,7 @@ const Information = ({ windowSize }) => {
               value={informationData.job_title}
               onChange={onJobTitleChange}
             />
+            <button onClick={editJobTitleToggle}>cancel</button>
             <button onClick={saveJobTitle}>save</button>
           </>
         )}
@@ -299,11 +341,11 @@ const Information = ({ windowSize }) => {
               value={informationData.education}
               onChange={onEducationChange}
             />
+            <button onClick={editEducationToggle}>cancel</button>
             <button onClick={saveEducation}>save</button>
           </>
         )}
       </div>
-      {windowSize > 600 && <Footer />}
     </div>
   );
 };

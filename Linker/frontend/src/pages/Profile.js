@@ -14,7 +14,7 @@ import Error from '../components/Error';
 import openSocket from 'socket.io-client';
 import classes from '../css/Profile.module.css';
 
-const Profile = ({ user_id }) => {
+const Profile = ({ user_id, socket }) => {
   const authCtx = useContext(AuthenticateContext);
   const params = useParams();
   const [user, setUser] = useState({});
@@ -242,7 +242,6 @@ const Profile = ({ user_id }) => {
     if (params.username !== authCtx.user.username) {
       checkIsFriend();
     }
-    const socket = openSocket('http://192.168.1.6:4000');
     socket.on('posts', (data) => {
       // if (data.action === 'CREATE') {
       //   newPostAdded(data.data);

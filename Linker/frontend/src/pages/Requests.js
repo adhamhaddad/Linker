@@ -4,10 +4,9 @@ import useHttp from '../hooks/use-http';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';
 import Container from '../components/UI/Container';
-import openSocket from 'socket.io-client';
 import classes from '../css/Requests.module.css';
 
-const Requests = ({ user_id }) => {
+const Requests = ({ user_id, socket }) => {
   const [requests, setRequests] = useState([]);
   const { isLoading, isError, sendRequest } = useHttp();
 
@@ -79,8 +78,6 @@ const Requests = ({ user_id }) => {
 
   useEffect(() => {
     sendRequest(`user/requests?user_id=${user_id}`, 'GET', {}, setRequests);
-
-    const socket = openSocket('http://192.168.1.6:4000');
     socket.on('friends', (data) => {
       if (data.action === 'FRIEND_REQUEST') {
         newFriendRequest(data.data);

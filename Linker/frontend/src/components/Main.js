@@ -13,7 +13,7 @@ import UnderDevelopment from '../pages/NotAvailable';
 import Requests from '../pages/Requests';
 import classes from '../css/Main.module.css';
 
-const Main = ({ user_id, username, windowSize }) => {
+const Main = ({ user_id, username, windowSize, socket }) => {
   return (
     <main className={classes.main}>
       <Switch>
@@ -24,6 +24,7 @@ const Main = ({ user_id, username, windowSize }) => {
             user_id={user_id}
             username={username}
             windowSize={windowSize}
+            socket={socket}
           />
         </Route>
         <Route path='/profile/:username' exact>
@@ -33,6 +34,7 @@ const Main = ({ user_id, username, windowSize }) => {
             user_id={user_id}
             username={username}
             windowSize={windowSize}
+            socket={socket}
           />
         </Route>
         <Route
@@ -45,16 +47,17 @@ const Main = ({ user_id, username, windowSize }) => {
             user_id={user_id}
             username={username}
             windowSize={windowSize}
+            socket={socket}
           />
         </Route>
 
         <Route path='/requests' exact>
           {windowSize <= 600 && <MiniNavigationBar />}
-          <Requests user_id={user_id} />
+          <Requests user_id={user_id} socket={socket} />
         </Route>
         <Route path='/requests/:phone-screen' exact={windowSize <= 600 && true}>
           <MiniNavigationBar />
-          <Requests user_id={user_id} />
+          <Requests user_id={user_id} socket={socket} />
         </Route>
 
         <Route path='/messages' exact={windowSize <= 600 && true}>
@@ -63,10 +66,11 @@ const Main = ({ user_id, username, windowSize }) => {
             user_id={user_id}
             username={username}
             windowSize={windowSize}
+            socket={socket}
           />
         </Route>
         <Route path='/messages/:username/:phone-screen' exact>
-          <Conversation user_id={user_id} />
+          <Conversation user_id={user_id} socket={socket} />
         </Route>
 
         <Route path='/notifications'>
