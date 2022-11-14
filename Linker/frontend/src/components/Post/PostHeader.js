@@ -8,6 +8,7 @@ const PostHeader = ({
   user_id,
   post_id,
   post_user_id,
+  post_profile_picture,
   post_username,
   post_timedate,
   post_first_name,
@@ -21,8 +22,14 @@ const PostHeader = ({
       <div className={classes['post-info']}>
         <Link
           to={`/profile/${post_username}`}
-          className={classes['profile-image']}
-        ></Link>
+            className={classes['profile-image']}
+          >
+          <img
+            crossOrigin='anonymous'
+            src={`http://192.168.1.6:4000/${post_profile_picture}`}
+            alt={post_profile_picture}
+          />
+        </Link>
 
         <div>
           <Link

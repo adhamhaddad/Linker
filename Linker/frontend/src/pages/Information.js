@@ -47,17 +47,17 @@ const Information = ({ windowSize }) => {
     setEditJobTitle((prev) => !prev);
   };
 
-  console.log(pickedImage)
   const savePicture = () => {
     const formData = new FormData();
     formData.append('user_id', authCtx.user.user_id);
     formData.append('profile', pickedImage);
-    const response = fetch('http://192.168.1.6:4000/profile-picture', {
-      method: 'POST',
+    fetch('http://192.168.1.6:4000/profile-picture', {
+      method: 'PATCH',
+      headers: { Authorization: `Bearer ${authCtx.accessToken}` },
       body: formData
     });
-    console.log(response);
   };
+
   const saveStory = () => {
     sendRequest(
       'user/information/story',
@@ -182,7 +182,7 @@ const Information = ({ windowSize }) => {
 
   useEffect(() => {
     sendRequest(
-      `user/information/${authCtx.user.username}`,
+      `user/information?username=${authCtx.user.username}`,
       'GET',
       {},
       (data) => setInformationData({ ...(data == null ? '' : data) })

@@ -4,7 +4,6 @@ import Container from '../components/UI/Container';
 import Error from '../components/Error';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Post from '../components/Post/Post';
-import openSocket from 'socket.io-client';
 import classes from '../css/Home.module.css';
 
 const Home = ({ user_id, socket }) => {
@@ -68,6 +67,7 @@ const Home = ({ user_id, socket }) => {
           user_id={user_id}
           post_id={post.post_id}
           post_user_id={post.user_id}
+          post_profile_picture={post.profile_picture}
           post_username={post.username}
           post_first_name={post.first_name}
           post_last_name={post.last_name}

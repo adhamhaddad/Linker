@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import verifyToken from '../middlewares/verifyToken';
 import Post from '../models/Post';
-// import io from 'socket.io'
 import { io } from '../server';
 
 const post = new Post();
@@ -41,7 +40,7 @@ const getAllPosts = async (req: Request, res: Response) => {
 
 const getUserPosts = async (req: Request, res: Response) => {
   try {
-    const response = await post.getUserPosts(req.params.username);
+    const response = await post.getUserPosts(req.query.username as string);
     res.status(200).json({
       status: true,
       data: response,
@@ -92,7 +91,7 @@ const deletePost = async (req: Request, res: Response) => {
 const posts_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/user/posts', logger, verifyToken, createPost);
   app.get('/posts', logger, verifyToken, getAllPosts);
-  app.get('/user/posts/:username', logger, verifyToken, getUserPosts);
+  app.get('/user/posts', logger, verifyToken, getUserPosts);
   app.patch('/user/posts', logger, verifyToken, updatePost);
   app.delete('/user/post', logger, verifyToken, deletePost);
 };

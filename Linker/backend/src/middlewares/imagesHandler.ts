@@ -1,64 +1,60 @@
 import { Request, Response, NextFunction } from 'express';
 import multer from 'multer';
-import path from 'path';
+import uuidv4 from 'uuid/v4';
 
-type MIME = {
-  'image/png': string;
-  'image/jpg': string;
-  'image/jpeg': string;
-};
+const PROFILE_UPLOADS = 'uploads/profile-pictures';
+const POST_UPLOADS = 'uploads/post-pictures';
 
-const MIME_TYPE_MAP = {
-  'image/png': 'png',
-  'image/jpg': 'jpg',
-  'image/jpeg': 'jpeg'
-};
-
-export const fileUpload = multer({
-  storage: multer.diskStorage({
-    destination: (req, file, cb) => {
-      console.log(file);
-      cb(null, 'uploads/images');
-    },
-    filename: (req, file, cb) => {
-      console.log(file);
-      const ext = file.mimetype;
-      cb(null, 'adham' + '.' + ext);
-    }
-  }),
-  fileFilter: (req, file, cb) => {
-    let isValid: boolean = false;
-    if (
-      file.mimetype !== 'png' &&
-      file.mimetype !== 'jpg' &&
-      file.mimetype !== 'jpeg'
-    ) {
-      isValid = false;
-    } else {
-      isValid = true;
-    }
-
-    cb(null, isValid);
+const PROFILES_STORAGE = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, PROFILE_UPLOADS);
+  },
+  filename: (req, file, cb) => {
+    const fileName = file.originalname.toLocaleLowerCase().split(' ').join('-');
+    cb(null, uuidv4() + '-' + fileName);
+  }
+});
+const POSTS_STORAGE = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, POST_UPLOADS);
+  },
+  filename: (req, file, cb) => {
+    const fileName = file.originalname.toLocaleLowerCase().split(' ').join('-');
+    cb(null, uuidv4() + '-' + fileName);
   }
 });
 
-export const createProfileImage = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const image = req.body.img;
-  console.log(image);
-
-  try {
-    console.log(image);
-  } catch (error) {
-    return res.status(400).json({
-      status: false,
-      message: (error as Error).message
-    });
+export const profileUpload = multer({
+  storage: PROFILES_STORAGE,
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype === 'image/png' ||
+      file.mimetype === 'image/jpg' ||
+      file.mimetype === 'image/jpeg'
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error('Only .png, .jpg, .jpeg format allowed!'));
+    }
   }
-};
+});
+
+export const postUpload = multer({
+  storage: POSTS_STORAGE,
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype === 'image/png' ||
+      file.mimetype === 'image/jpg' ||
+      file.mimetype === 'image/jpeg'
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error('Only .png, .jpg, .jpeg format allowed!'));
+    }
+  }
+});
 
 export const createPostImage = (
   req: Request,

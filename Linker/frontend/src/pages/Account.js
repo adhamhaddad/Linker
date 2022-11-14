@@ -99,7 +99,7 @@ const Account = ({ user_id }) => {
     setAccountData((prev) => ({ ...prev, last_name: e.target.value }));
   };
   useEffect(() => {
-    sendRequest(`users/${authCtx.user.username}`, 'GET', {}, setAccountData);
+    sendRequest(`users?username=${authCtx.user.username}`, 'GET', {}, setAccountData);
   }, []);
   return (
     <section className={classes.sections}>

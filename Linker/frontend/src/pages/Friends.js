@@ -27,7 +27,15 @@ const Friends = ({
             listSize ? classes.max : `${classes.profile} ${classes.min}`
           }
         >
-          <div className={classes.profile}></div>
+          <div className={classes['profile-picture']}>
+            {friend.profile_picture !== null && (
+              <img
+                crossOrigin='anonymous'
+                src={`http://192.168.1.6:4000/${friend.profile_picture}`}
+                alt={friend.username}
+              />
+            )}
+          </div>
           <div className={classes.username}>
             {friend.first_name} {friend.last_name}
           </div>

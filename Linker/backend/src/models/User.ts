@@ -42,6 +42,17 @@ class User {
         null,
         null
       ]);
+      const createProfile = `
+      INSERT INTO pictures
+      (user_id, timedate, profile_picture )
+      VALUES
+      ($1, $2, $3)
+      `
+      const profileResult = await connection.query(createProfile, [
+        result.rows[0].user_id,
+        null,
+        null
+      ])
       connection.release();
       return result.rows[0];
     } catch (err) {

@@ -10,6 +10,7 @@ const AuthenticateContext = createContext({
 export const Authentication = (props) => {
   const [user, setUser] = useState({
     user_id: localStorage.getItem('user_id'),
+    profile_picture: localStorage.getItem('profile'),
     username: localStorage.getItem('username'),
     first_name: localStorage.getItem('first_name'),
     last_name: localStorage.getItem('first_name')
@@ -24,6 +25,10 @@ export const Authentication = (props) => {
     setUser(user);
 
     localStorage.setItem('user_id', user.user_id);
+    localStorage.setItem(
+      'profile',
+      user.profile_picture === null ? 'null' : user.profile_picture
+    );
     localStorage.setItem('username', user.username);
     localStorage.setItem('first_name', user.first_name);
     localStorage.setItem('last_name', user.last_name);
@@ -33,6 +38,7 @@ export const Authentication = (props) => {
     setAccessToken(null);
     localStorage.removeItem('accessToken');
     localStorage.removeItem('user_id');
+    localStorage.removeItem('profile');
     localStorage.removeItem('username');
     localStorage.removeItem('first_name');
     localStorage.removeItem('last_name');

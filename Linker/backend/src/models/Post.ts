@@ -32,18 +32,20 @@ class Post {
       );
     }
   }
-  
+
   async getAllPosts(user_id: string): Promise<Posts[]> {
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT p.user_id, u.username, u.first_name, u.last_name, p.*
-      FROM posts p, users u, friends f
+      SELECT DISTINCT p.user_id, pic.profile_picture, u.username, u.first_name, u.last_name, p.*
+      FROM posts p, users u, pictures pic, friends f
       WHERE
       
       p.user_id=f.sender_id
       AND
       f.sender_id=u.user_id
+      AND
+      f.sender_id=pic.user_id
       AND
       f.receiver_id=$1
       AND
@@ -55,6 +57,8 @@ class Post {
       AND
       f.receiver_id=u.user_id
       AND
+      f.receiver_id=pic.user_id
+      AND
       f.sender_id=$1
       AND
       f.isFriend='1'
@@ -62,6 +66,8 @@ class Post {
       OR
       
       p.user_id=u.user_id
+      AND
+      pic.user_id=u.user_id
       AND
       u.user_id=$1
       `;
@@ -79,10 +85,10 @@ class Post {
     try {
       const connection = await database.connect();
       const sql = `
-        SELECT DISTINCT p.user_id, u.username, u.first_name, u.last_name, p.*
-        FROM posts p, users u
+        SELECT DISTINCT p.user_id, pic.profile_picture, u.username, u.first_name, u.last_name, p.*
+        FROM posts p, users u, pictures pic
         WHERE
-        p.user_id=u.user_id AND u.username=$1
+        p.user_id=u.user_id AND pic.user_id=u.user_id AND u.username=$1
         `;
       const result = await connection.query(sql, [username]);
       connection.release();

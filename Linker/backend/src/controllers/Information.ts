@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction, Application } from 'express';
-import { createProfileImage } from '../middlewares/imagesHandler';
 import verifyToken from '../middlewares/verifyToken';
 import Information from '../models/Information';
 
@@ -23,7 +22,7 @@ const createInfo = async (req: Request, res: Response) => {
 
 const getInfo = async (req: Request, res: Response) => {
   try {
-    const response = await info.getInfo(req.params.username);
+    const response = await info.getInfo(req.query.username as string);
     res.status(200).json({
       status: true,
       data: { ...response },
@@ -134,7 +133,7 @@ const updateLocation = async (req: Request, res: Response) => {
 };
 
 const updateBirthday = async (req: Request, res: Response) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
     const response = await info.updateBirthday(req.body);
     res.status(201).json({
@@ -187,12 +186,22 @@ const information_controller_routes = (
   logger: NextFunction
 ) => {
   app.post('/user/information', logger, verifyToken, createInfo);
-  app.get('/user/information/:username', logger, verifyToken, getInfo);
+  app.get('/user/information', logger, verifyToken, getInfo);
   app.patch('/user/information/story', logger, verifyToken, updateStory);
-  app.patch('/user/information/relationship', logger, verifyToken, updateRelationship);
+  app.patch(
+    '/user/information/relationship',
+    logger,
+    verifyToken,
+    updateRelationship
+  );
   app.patch('/user/information/location', logger, verifyToken, updateLocation);
   app.patch('/user/information/birthday', logger, verifyToken, updateBirthday);
   app.patch('/user/information/job-title', logger, verifyToken, updateJobTitle);
-  app.patch('/user/information/education', logger, verifyToken, updateEducation);
+  app.patch(
+    '/user/information/education',
+    logger,
+    verifyToken,
+    updateEducation
+  );
 };
 export default information_controller_routes;

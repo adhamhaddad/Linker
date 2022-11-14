@@ -48,7 +48,7 @@
 
 
 
-.profile {
+.profile-picture {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -57,8 +57,13 @@
     background-position: center;
     background-repeat: no-repeat;
     margin-right: 5px;
+    overflow: hidden;
 }
-
+.profile-picture > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 .username {
     margin-right: auto;
     font-size: 13px;
@@ -74,7 +79,6 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: 14px;
-    /* background-color: green; */
     cursor: pointer;
 }
 
@@ -92,11 +96,7 @@
     color: var(--base-color-dark)
 }
 
-.friends-list li a.min {
-    width: 40px;
-}
-
-.friends-list li a.min>div,
+.friends-list li a.min>div.username,
 .friends-list li a.min>button {
     display: none;
 }

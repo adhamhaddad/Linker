@@ -42,12 +42,12 @@ class Friend {
       const user_id_result = await connection.query(user_id_SQL, [username]);
       const user_id = user_id_result.rows[0].user_id;
       const sql = `
-      SELECT DISTINCT f.friend_id, u.user_id, u.username, u.first_name, u.last_name
-      FROM friends f, users u
+      SELECT DISTINCT f.friend_id, u.user_id, p.profile_picture, u.username, u.first_name, u.last_name
+      FROM friends f, users u, pictures p
       WHERE
-      f.sender_id=u.user_id AND f.isFriend='1' AND f.receiver_id=$1
+      f.sender_id=u.user_id AND p.user_id=u.user_id AND f.isFriend='1' AND f.receiver_id=$1
       OR
-      f.receiver_id=u.user_id AND f.isFriend='1' AND f.sender_id=$1
+      f.receiver_id=u.user_id AND p.user_id=u.user_id AND f.isFriend='1' AND f.sender_id=$1
       `;
       const result = await connection.query(sql, [user_id]);
       connection.release();

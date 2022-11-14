@@ -17,6 +17,7 @@ const Post = ({
   last_name,
   post_id,
   post_user_id,
+  post_profile_picture,
   post_username,
   post_first_name,
   post_last_name,
@@ -54,6 +55,7 @@ const Post = ({
         user_id={user_id}
         post_id={post_id}
         post_user_id={post_user_id}
+        post_profile_picture={post_profile_picture}
         post_username={post_username}
         post_first_name={post_first_name}
         post_last_name={post_last_name}

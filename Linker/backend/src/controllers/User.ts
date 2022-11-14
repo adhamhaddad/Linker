@@ -41,7 +41,7 @@ const createUser = async (req: Request, res: Response) => {
         text: 'Thank you for using Linker',
         html: '<h1>Welcome to our community!</h1>'
       },
-      (err, info) => (err && console.log(err.message))
+      (err, info) => err && console.log(err.message)
     );
   } catch (err) {
     res.status(400).json({
@@ -52,6 +52,8 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const getAllUsers = async (_req: Request, res: Response) => {
+  console.log('GET ALL USERS LOGGED')
+
   try {
     const response = await user.getAllUsers();
     res.status(200).json({
@@ -68,8 +70,9 @@ const getAllUsers = async (_req: Request, res: Response) => {
 };
 
 const getUser = async (req: Request, res: Response) => {
+  console.log('GET USER LOGGED')
   try {
-    const response = await user.getUser(req.params.username as string);
+    const response = await user.getUser(req.query.username as string);
     res.status(200).json({
       status: true,
       data: { ...response },
@@ -151,8 +154,8 @@ const deleteUser = async (req: Request, res: Response) => {
 
 const user_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/users', logger, createUser);
+  app.get('/users', logger, verifyToken, getUser);
   app.get('/users', logger, verifyToken, getAllUsers);
-  app.get('/users/:username', logger, verifyToken, getUser);
   app.patch('/users', logger, verifyToken, updateUser);
   app.delete('/users', logger, verifyToken, deleteUser);
   app.post('/search', logger, verifyToken, searchByName);

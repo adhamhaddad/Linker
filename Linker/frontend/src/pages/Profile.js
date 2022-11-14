@@ -11,7 +11,6 @@ import ProfilePicture from '../components/ProfilePicture';
 import Friends from './Friends';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';
-import openSocket from 'socket.io-client';
 import classes from '../css/Profile.module.css';
 
 const Profile = ({ user_id, socket }) => {
@@ -50,11 +49,26 @@ const Profile = ({ user_id, socket }) => {
 
   // PROFILE REQUESTS
   const getUser = () => {
-    sendRequest(`users/${params.username}`, 'GET', {}, setUser);
+    sendRequest(`users?username=${params.username}`, 'GET', {}, setUser);
+  };
+  const getProfilePic = () => {
+    sendRequest(
+      `profile-picture?username=${params.username}`,
+      'GET',
+      {},
+      (data) => {
+        setUser((prev) => {
+          return {
+            ...prev,
+            ...data
+          };
+        });
+      }
+    );
   };
   const getInformation = () => {
     sendRequest(
-      `user/information/${params.username}`,
+      `user/information?username=${params.username}`,
       'GET',
       {},
       setInformation
@@ -69,7 +83,12 @@ const Profile = ({ user_id, socket }) => {
     );
   };
   const getUserPosts = () => {
-    sendRequest(`user/posts/${params.username}`, 'GET', {}, transformPosts);
+    sendRequest(
+      `user/posts?username=${params.username}`,
+      'GET',
+      {},
+      transformPosts
+    );
   };
 
   // CHECK IS FRIEND
@@ -139,7 +158,6 @@ const Profile = ({ user_id, socket }) => {
     );
   };
   const newAcceptedRequest = (data) => {
-    console.log('Logged at Line 142 in Profile.js');
     setFriendsList((prev) => [...prev, data]);
     checkIsFriendHandler(data);
   };
@@ -221,6 +239,7 @@ const Profile = ({ user_id, socket }) => {
             first_name={authCtx.user.first_name}
             last_name={authCtx.user.last_name}
             post_id={post.post_id}
+            post_profile_picture={post.profile_picture}
             post_user_id={post.user_id}
             post_username={post.username}
             post_first_name={post.first_name}
@@ -236,6 +255,7 @@ const Profile = ({ user_id, socket }) => {
 
   useEffect(() => {
     getUser();
+    getProfilePic();
     getInformation();
     getFriends();
     getUserPosts();
@@ -278,8 +298,8 @@ const Profile = ({ user_id, socket }) => {
         <section className={classes['information-section']}>
           <div className={classes['user-id']}>
             <ProfilePicture
-              user_id={authCtx.user.user_id}
-              information={information.profile}
+              user_id={user.user_id}
+              profile_picture={user.profile_picture}
             />
             <span className={classes.username}>
               {user.first_name} {user.last_name}
@@ -382,6 +402,7 @@ const Profile = ({ user_id, socket }) => {
         {postPort && (
           <AddPost
             user_id={user_id}
+            profile={user.profile_picture}
             first_name={user.first_name}
             last_name={user.last_name}
             onCreatePost={createNewPost}

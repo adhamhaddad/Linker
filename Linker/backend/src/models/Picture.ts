@@ -20,11 +20,14 @@ class Picture {
     }
   }
 
-  async getPicture(p: Pictures): Promise<Pictures[]> {
+  async getPicture(username: string): Promise<Pictures[]> {
     try {
       const connection = await database.connect();
+      const user_id_SQL = 'SELECT user_id FROM users WHERE username=$1';
+      const user_id_result = await connection.query(user_id_SQL, [username]);
+      const user_id = user_id_result.rows[0].user_id;
       const sql = `SELECT timedate, profile_picture FROM pictures WHERE user_id=$1`;
-      const result = await connection.query(sql, [p.user_id]);
+      const result = await connection.query(sql, [user_id]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -37,9 +40,10 @@ class Picture {
   async updatePicture(p: Pictures): Promise<Pictures[]> {
     try {
       const connection = await database.connect();
-      const sql = `UPDATE pictures SET profile_picture=$2 WHERE user_id=$1 RETURNING *`;
+      const sql = `UPDATE pictures SET timedate=$2, profile_picture=$3 WHERE user_id=$1 RETURNING *`;
       const result = await connection.query(sql, [
         p.user_id,
+        new Date(),
         p.profile_picture
       ]);
       connection.release();

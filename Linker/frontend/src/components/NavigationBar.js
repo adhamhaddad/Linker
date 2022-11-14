@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classes from '../css/NavigationBar.module.css';
 
-const NavigationBar = ({ username, user_id, windowSize }) => {
+const NavigationBar = ({ username, profile, windowSize }) => {
   return (
     <ul className={classes.navigation}>
       <li>
@@ -31,7 +31,17 @@ const NavigationBar = ({ username, user_id, windowSize }) => {
           activeClassName={classes.active}
           title='Profile'
         >
-          <div className={classes.profile}></div>
+          <div className={classes['profile-picture']}>
+            {profile !== 'null' &&
+              profile !== undefined &&
+              profile.length > 0 && (
+                <img
+                  crossOrigin='anonymous'
+                  src={`http://192.168.1.6:4000/${profile}`}
+                  alt=''
+                />
+              )}
+          </div>
           <span>profile</span>
         </NavLink>
       </li>

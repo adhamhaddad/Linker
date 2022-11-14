@@ -3,13 +3,15 @@ import Modal from './Modal';
 import useHttp from '../hooks/use-http';
 import classes from '../css/ProfilePicture.module.css';
 
-const ProfilePicture = ({ user_id, profile }) => {
+const ProfilePicture = ({ user_id, profile_picture }) => {
   const { sendRequest } = useHttp();
+  const [pickedPicture, setPickedPicture] = useState();
   const [fPP, setFPP] = useState(false);
 
   const profileFullSizeHandler = () => {
     setFPP((prev) => !prev);
   };
+
   const consoleResponse = (res) => {
     console.log(res);
   };
@@ -17,31 +19,43 @@ const ProfilePicture = ({ user_id, profile }) => {
   const onFormSubmit = (e) => {
     e.preventDefault();
     const file = e.target.files[0];
-
-    sendRequest(
-      'profile-picture',
-      'POST',
-      { user_id: user_id, profile_picture: file },
-      consoleResponse
-    );
+    const formData = new FormData();
+    setPickedPicture(e.target.files[0]);
+    if (e.target.files[0].length) {
+      formData.append('user_id', user_id);
+      formData.append('profile', user_id);
+      sendRequest(
+        'profile-picture',
+        'PATCH',
+        { user_id: user_id, profile_picture: file },
+        consoleResponse
+      );
+    } else {
+      console.log('Please choose a picture');
+      return;
+    }
   };
 
   return (
     <>
       <div className={classes['image-card']}>
-        <div
-          id='profile'
-          alt='Profile'
-          title='Profile Picture'
-          // style={{ backgroundImage: profile.length > 0 && `url(${profile})` }}
-          className={classes['profile-picture']}
-          onClick={profileFullSizeHandler}
-        ></div>
-        <div className={classes['select-image']}>
+        <div className={classes['profile-picture']}>
+          {profile_picture !== null &&
+           profile_picture !== undefined &&
+           profile_picture.length > 0 && (
+              <img
+                id='profile'
+                alt='Profile'
+                title='Profile Picture'
+                className={classes['profile-picture']}
+                onClick={profileFullSizeHandler}
+                crossOrigin='anonymous'
+                src={`http://localhost:4000/${profile_picture}`}
+              />
+            )}
+        </div>
+        {/* <div className={classes['select-image']}>
           <form
-            action='http://192.168.1.6:4000/profile-picture'
-            method='POST'
-            encType='multipart/form-data'
             onSubmit={onFormSubmit}
           >
             <label htmlFor='upload-profile' className={classes.select}>
@@ -57,17 +71,20 @@ const ProfilePicture = ({ user_id, profile }) => {
               onChange={onFormSubmit}
             />
           </form>
-        </div>
+        </div> */}
       </div>
 
       {fPP && (
         <>
           <Modal onClick={profileFullSizeHandler}>
-            <div
-              // style={{backgroundImage: profile.length > 0 && `url(${profile})`}}
-              title='Profile'
+            <img
+              id='profile'
+              alt='Profile'
+              title='Profile Picture'
               className={classes['profile-picture']}
-            ></div>
+              crossOrigin='anonymous'
+              src={`http://localhost:4000/${profile_picture}`}
+            />
           </Modal>
         </>
       )}

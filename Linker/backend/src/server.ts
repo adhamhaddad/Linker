@@ -2,7 +2,6 @@ import express, { Application, NextFunction } from 'express';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import cors from 'cors';
-import multer from 'multer';
 import logger from './middlewares/logger';
 import user_controller_routes from './controllers/User';
 import information_controller_routes from './controllers/Information';
@@ -17,6 +16,7 @@ import password_controller_routes from './controllers/Passwords';
 import profile_controller_routes from './controllers/Picture';
 import config from './config';
 import os from 'os';
+import path from 'path';
 import { Server } from 'socket.io';
 
 // Express App
@@ -27,17 +27,16 @@ const ip = os.networkInterfaces()['wlan0']?.[0].address;
 export const corsOptions = {
   origin: '*',
   optionsSucessStatus: 200,
-  methods: 'GET, HEAD, PUT, PATCH, DELETE, POST'
+  methods: 'GET, POST, PATCH, DELETE, HEAD, PUT'
 };
-
-const imageOptions = {};
+const UPLOADS = path.join(__dirname, '..', 'uploads/profile-pictures');
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(cors(corsOptions));
-app.use(multer().single('profile-picture'));
+app.use('/uploads/profile-pictures', express.static(UPLOADS));
 
 // app.use(rateLimit({
 //     windowMs: 30 * 1000, // 30 seconds
@@ -73,8 +72,8 @@ export const io = new Server(server, {
 io.on('connection', (socket) => {
   console.log('User is Connected!');
   socket.on('disconnect', () => {
-    console.log('User is disconnected')
-  })
+    console.log('User is disconnected');
+  });
 });
 
 export default app;
