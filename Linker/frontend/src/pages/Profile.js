@@ -17,6 +17,7 @@ const Profile = ({ user_id, socket }) => {
   const authCtx = useContext(AuthenticateContext);
   const params = useParams();
   const [user, setUser] = useState({});
+  const [profilePicture, setProfilePicture] = useState({});
   const [information, setInformation] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [postPort, setPostPort] = useState(false);
@@ -56,14 +57,7 @@ const Profile = ({ user_id, socket }) => {
       `profile-picture?username=${params.username}`,
       'GET',
       {},
-      (data) => {
-        setUser((prev) => {
-          return {
-            ...prev,
-            ...data
-          };
-        });
-      }
+      setProfilePicture
     );
   };
   const getInformation = () => {
@@ -299,7 +293,7 @@ const Profile = ({ user_id, socket }) => {
           <div className={classes['user-id']}>
             <ProfilePicture
               user_id={user.user_id}
-              profile_picture={user.profile_picture}
+              profile_picture={profilePicture.profile_picture}
             />
             <span className={classes.username}>
               {user.first_name} {user.last_name}
@@ -402,7 +396,7 @@ const Profile = ({ user_id, socket }) => {
         {postPort && (
           <AddPost
             user_id={user_id}
-            profile={user.profile_picture}
+            profile={profilePicture.profile_picture}
             first_name={user.first_name}
             last_name={user.last_name}
             onCreatePost={createNewPost}

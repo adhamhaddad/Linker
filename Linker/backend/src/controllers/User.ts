@@ -52,7 +52,7 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const getAllUsers = async (_req: Request, res: Response) => {
-  console.log('GET ALL USERS LOGGED')
+  console.log('GET ALL USERS LOGGED');
 
   try {
     const response = await user.getAllUsers();
@@ -70,7 +70,6 @@ const getAllUsers = async (_req: Request, res: Response) => {
 };
 
 const getUser = async (req: Request, res: Response) => {
-  console.log('GET USER LOGGED')
   try {
     const response = await user.getUser(req.query.username as string);
     res.status(200).json({

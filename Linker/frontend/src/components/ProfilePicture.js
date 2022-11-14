@@ -50,7 +50,7 @@ const ProfilePicture = ({ user_id, profile_picture }) => {
                 className={classes['profile-picture']}
                 onClick={profileFullSizeHandler}
                 crossOrigin='anonymous'
-                src={`http://localhost:4000/${profile_picture}`}
+                src={`http://192.168.1.6:4000/${profile_picture}`}
               />
             )}
         </div>
@@ -83,7 +83,7 @@ const ProfilePicture = ({ user_id, profile_picture }) => {
               title='Profile Picture'
               className={classes['profile-picture']}
               crossOrigin='anonymous'
-              src={`http://localhost:4000/${profile_picture}`}
+              src={`http://192.168.1.6:4000/${profile_picture}`}
             />
           </Modal>
         </>

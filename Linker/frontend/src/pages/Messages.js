@@ -4,12 +4,12 @@ import Container from '../components/UI/Container';
 import ChatUsers from '../components/Messages/ChatUsers';
 import Conversation from '../components/Messages/Conversation';
 
-const Messages = ({ user_id, windowSize, socket }) => {
+const Messages = ({ windowSize, socket }) => {
   return (
     <Container className='chat'>
-      <ChatUsers user_id={user_id} windowSize={windowSize} socket={socket} />
+      <ChatUsers windowSize={windowSize} socket={socket} />
       <Route path='/messages/:username' exact>
-        <Conversation user_id={user_id} socket={socket} />
+        <Conversation socket={socket} />
       </Route>
     </Container>
   );

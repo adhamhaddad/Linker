@@ -17,6 +17,12 @@
     background-size: cover;
     background-position: center;
     cursor: pointer;
+    overflow: hidden;
+}
+
+.message-profile>img {
+    width: 100%;
+    height: 100%;
 }
 
 .message-info {
@@ -100,17 +106,19 @@
     overflow: hidden;
     align-self: flex-end;
 }
+
 @media screen and (max-width: 600px) {
     .message-profile {
         width: 30px;
         height: 30px;
     }
-    .message-info {
-    }
+
+    .message-info {}
+
     .message-content {
         font-size: 12px;
         padding: 5px 10px;
     }
-    .sender .message-info {
-    }
+
+    .sender .message-info {}
 }

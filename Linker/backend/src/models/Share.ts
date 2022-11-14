@@ -25,10 +25,10 @@ class Shares {
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT u.username, u.first_name, u.last_name
-      FROM users u, shares s
+      SELECT DISTINCT p.profile_picture, u.username, u.first_name, u.last_name
+      FROM users u, shares s, pictures p
       WHERE
-      s.post_id=$1 AND s.user_id=u.user_id
+      s.post_id=$1 AND s.user_id=p.user_id AND s.user_id=u.user_id
       `;
       const result = await connection.query(sql, [post_id]);
       connection.release();
@@ -48,9 +48,7 @@ class Shares {
       UPDATE shares SET caption=$3 WHERE
       share_id=$2 AND user_id=$1
       `;
-      const result = await connection.query(sql, [
-        share.user_id,
-      ]);
+      const result = await connection.query(sql, [share.user_id]);
       connection.release();
       return result.rows;
     } catch (error) {

@@ -42,12 +42,12 @@ class Message {
       const result_SQL = await connection.query(user_id_SQL, [username]);
       const receiver_id = result_SQL.rows[0].user_id;
       const sql = `
-        SELECT DISTINCT u.username, u.first_name, u.last_name, m.*
-        FROM messages m, users u
+        SELECT DISTINCT p.profile_picture, u.username, u.first_name, u.last_name, m.*
+        FROM messages m, users u, pictures p
         WHERE
-        m.sender_id=$1 AND m.receiver_id=$2 AND u.user_id=$1
+        m.sender_id=$1 AND m.receiver_id=$2 AND p.user_id=$1 AND u.user_id=$1
         OR
-        m.sender_id=$2 AND m.receiver_id=$1 AND u.user_id=$2
+        m.sender_id=$2 AND m.receiver_id=$1 AND p.user_id=$2 AND u.user_id=$2
         `;
       const result = await connection.query(sql, [sender_id, receiver_id]);
       connection.release();
@@ -67,8 +67,8 @@ class Message {
       console.log(result_SQL.rows);
       const receiver_id = result_SQL.rows[0].user_id;
       const sql = `
-        SELECT DISTINCT u.username, u.first_name, u.last_name, m.*
-        FROM messages m, users u
+        SELECT DISTINCT p.profile_picture, u.username, u.first_name, u.last_name, m.*
+        FROM messages m, users u, pictures p
         WHERE
         m.sender_id=$1 AND m.receiver_id=$2 AND u.user_id=$1
         OR

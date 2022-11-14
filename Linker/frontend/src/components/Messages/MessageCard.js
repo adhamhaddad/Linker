@@ -31,10 +31,15 @@ const MessageCard = ({
       className={`${classes['message-container']} ${classes[className]}`}
       id={message_id}
     >
-      <Link
-        to={`/profile/${username}`}
-        className={classes['message-profile']}
-      ></Link>
+      <Link to={`/profile/${username}`} className={classes['message-profile']}>
+        {profile !== null && (
+          <img
+            crossOrigin='anonymous'
+            src={`http://192.168.1.6:4000/${profile}`}
+            alt={username}
+          />
+        )}
+      </Link>
       <div className={classes['message-info']}>
         <span className={classes['message-content']} lang={lang}>
           {message}

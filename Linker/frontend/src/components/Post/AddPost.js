@@ -4,6 +4,7 @@ import classes from '../../css/AddPost.module.css';
 
 const AddPost = ({
   user_id,
+  profile,
   first_name,
   last_name,
   onCreatePost,
@@ -38,7 +39,14 @@ const AddPost = ({
     <Modal>
       <div className={classes['create-post']}>
         <div className={classes['create-post__header']}>
-          <div className={classes['create-post__user-photo']}></div>
+          <div className={classes['profile-picture']}>
+            {profile !== null && profile.length > 0 && (
+              <img
+                crossOrigin='anonymous'
+                src={`http://192.168.1.6:4000/${profile}`}
+              />
+            )}
+          </div>
           <h4 className={classes.username}>
             {first_name} {last_name}
           </h4>

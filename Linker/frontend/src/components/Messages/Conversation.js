@@ -9,7 +9,7 @@ import MessageCard from './MessageCard';
 import { useParams } from 'react-router-dom';
 import classes from '../../css/Conversation.module.css';
 
-const Conversation = ({socket}) => {
+const Conversation = ({ socket }) => {
   const authCtx = useContext(AuthenticateContext);
   const params = useParams();
   const [messages, setMessages] = useState([]);
@@ -53,7 +53,7 @@ const Conversation = ({socket}) => {
               msg.sender_id === authCtx.user.user_id ? 'sender' : 'receiver'
             }
             username={msg.username}
-            profile={msg.profile}
+            profile={msg.profile_picture}
             message={msg.content}
             timedate={msg.timedate}
             key={`$${msg.message_id} ${new Date(msg.timedate).getTime()}`}
@@ -65,7 +65,12 @@ const Conversation = ({socket}) => {
 
   // Get All Messages
   useEffect(() => {
-    sendRequest(`users/${params.username}`, 'GET', {}, currentUserHandler);
+    sendRequest(
+      `users?username=${params.username}`,
+      'GET',
+      {},
+      currentUserHandler
+    );
     sendRequest(
       `user/messages?sender_id=${authCtx.user.user_id}&receiver_id=${params.username}`,
       'GET',

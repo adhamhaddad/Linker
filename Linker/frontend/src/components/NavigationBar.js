@@ -32,15 +32,12 @@ const NavigationBar = ({ username, profile, windowSize }) => {
           title='Profile'
         >
           <div className={classes['profile-picture']}>
-            {profile !== 'null' &&
-              profile !== undefined &&
-              profile.length > 0 && (
-                <img
-                  crossOrigin='anonymous'
-                  src={`http://192.168.1.6:4000/${profile}`}
-                  alt=''
-                />
-              )}
+            {profile !== 'null' && profile.length > 0 && (
+              <img
+                crossOrigin='anonymous'
+                src={`http://192.168.1.6:4000/${profile}`}
+              />
+            )}
           </div>
           <span>profile</span>
         </NavLink>

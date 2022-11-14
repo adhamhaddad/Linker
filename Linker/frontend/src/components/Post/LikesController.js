@@ -10,7 +10,15 @@ const LikesController = ({ likes, onHide }) => {
         <Link
           to={`/profile/${like.username}`}
           className={classes['like-profile']}
-        ></Link>
+        >
+          {like.profile_picture !== null && (
+            <img
+              crossOrigin='anonymous'
+              src={`http://192.168.1.6:4000/${like.profile_picture}`}
+              alt={like.username}
+            />
+          )}
+        </Link>
         <Link
           to={`/profile/${like.username}`}
           className={classes['like-username']}
