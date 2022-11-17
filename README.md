@@ -1,4 +1,4 @@
-# Social-Network
+# Linker
 
 ## Description
 
@@ -46,7 +46,7 @@ SECRET_PEPER=thor-thunder
 
 3. Without closing the terminal in step 1, navigate to the frontend `cd frontend` to intall the node_modules `npm install` or `yarn`. After installation is done start the api in dev mode with `npm run start` or `yarn start`.
 
-Note: open `Social-Network/Linker/frontend/src/hooks/use-http.js`
+Note: open `Linker/frontend/src/hooks/use-http.js`
 
 ## Unit Tests:
 
