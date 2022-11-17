@@ -1,11 +1,11 @@
 import database from '../database';
-import config from '../config';
+import configs from '../configs';
 import bcrypt from 'bcrypt';
 import Password from '../types/Passwords';
 import Users from '../types/Users';
 
 const hash = (pass: string) =>
-  bcrypt.hashSync(pass + config.peper, config.salt);
+  bcrypt.hashSync(pass + configs.peper, configs.salt);
 
 class Passwords {
   async createPassword(user_id: string, p: Password): Promise<Password> {
@@ -94,7 +94,7 @@ class Passwords {
       if (result.rows.length) {
         const currentPassword = result.rows[0].current_password;
         const checkPass = bcrypt.compareSync(
-          `${p.current_password}${config.peper}`,
+          `${p.current_password}${configs.peper}`,
           currentPassword
         );
 

@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const config = {
+const configs = {
   environment: process.env.ENV,
   port: Number(process.env.PORT),
   db_host: process.env.POSTGRES_HOST,
@@ -16,4 +16,4 @@ const config = {
   salt: Number(process.env.SALT_ROUNDS),
   url: process.env.URL
 };
-export default config;
+export default configs;

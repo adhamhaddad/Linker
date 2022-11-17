@@ -2,7 +2,7 @@ import { Request, Response, NextFunction, Application } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import Passwords from '../models/Password';
-import config from '../config';
+import config from '../configs';
 import verifyToken from '../middlewares/verifyToken';
 import searchValidation from '../middlewares/searchHandler';
 import nodemailer from 'nodemailer';

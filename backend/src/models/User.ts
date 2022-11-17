@@ -1,6 +1,5 @@
 import database from '../database';
 import Users from '../types/Users';
-import config from '../config';
 import Info from '../types/Information';
 
 class User {

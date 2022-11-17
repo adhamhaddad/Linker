@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import config from '../config';
+import configs from '../configs';
 
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   try {
     const authorization = req.headers.authorization as string;
     const token = authorization.split(' ')[1];
-    const decode = jwt.verify(token, config.token as string);
+    const decode = jwt.verify(token, configs.token as string);
     if (decode) {
       next();
     }

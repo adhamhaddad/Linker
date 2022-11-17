@@ -14,14 +14,14 @@ import comments_controller_routes from './controllers/Comments';
 import shares_controller_routes from './controllers/Shares';
 import password_controller_routes from './controllers/Passwords';
 import profile_controller_routes from './controllers/Picture';
-import config from './config';
+import configs from './configs';
 import os from 'os';
 import path from 'path';
 import { Server } from 'socket.io';
 
 // Express App
 const app: Application = express();
-export const port = config.port || 8080;
+export const port = configs.port || 8080;
 const ip = os.networkInterfaces()['wlan0']?.[0].address;
 
 export const corsOptions = {
@@ -61,7 +61,7 @@ profile_controller_routes(app, logger as NextFunction);
 // Express Server
 
 const server = app.listen(port, () => {
-  console.log(`Backend server is listening on http://${ip}:${config.port}`);
+  console.log(`Backend server is listening on http://${ip}:${configs.port}`);
   console.log(`press CTRL+C to stop the server`);
 });
 

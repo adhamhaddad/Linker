@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import verifyToken from '../middlewares/verifyToken';
-import config from '../config';
+import config from '../configs';
 import Passwords from '../models/Password';
 import jwt from 'jsonwebtoken';
 
