@@ -53,11 +53,11 @@ const Main = ({ user_id, username, windowSize, socket }) => {
 
         <Route path='/requests' exact>
           {windowSize <= 600 && <MiniNavigationBar />}
-          <Requests user_id={user_id} socket={socket} />
+          <Requests socket={socket} />
         </Route>
         <Route path='/requests/:phone-screen' exact={windowSize <= 600 && true}>
           <MiniNavigationBar />
-          <Requests user_id={user_id} socket={socket} />
+          <Requests socket={socket} />
         </Route>
 
         <Route path='/messages' exact={windowSize <= 600 && true}>

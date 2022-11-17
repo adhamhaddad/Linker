@@ -11,7 +11,15 @@ const CommentCard = ({ comment, onChangeComment, post_user_id }) => {
         <Link
           to={`/profile/${comment.username}`}
           className={classes['comment-profile']}
-        ></Link>
+        >
+          {comment.profile_picture !== null && (
+            <img
+              crossOrigin='anonymous'
+              src={`http://192.168.1.6:4000/${comment.profile_picture}`}
+              alt={comment.username}
+            />
+          )}
+        </Link>
         <Link
           to={`/profile/${comment.username}`}
           className={classes['comment-username']}

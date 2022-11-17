@@ -97,10 +97,10 @@ const acceptFriend = async (req: Request, res: Response) => {
 const cancelRequest = async (req: Request, res: Response) => {
   try {
     const response = await friend.deleteFriend(req.body);
-    io.emit('friends', { action: 'CANCEL_REQUEST', data: { ...response } });
+    io.emit('friends', { action: 'CANCEL_REQUEST', data: response });
     res.status(200).json({
       status: true,
-      data: { ...response },
+      data: response,
       message: 'Friend deleted successfully!'
     });
   } catch (err) {
@@ -114,10 +114,10 @@ const cancelRequest = async (req: Request, res: Response) => {
 const ignoreRequest = async (req: Request, res: Response) => {
   try {
     const response = await friend.deleteFriend(req.body);
-    io.emit('friends', { action: 'IGNORE_REQUEST', data: { ...response } });
+    io.emit('friends', { action: 'IGNORE_REQUEST', data: response });
     res.status(200).json({
       status: true,
-      data: { ...response },
+      data: response,
       message: 'Friend deleted successfully!'
     });
   } catch (err) {
@@ -131,10 +131,10 @@ const ignoreRequest = async (req: Request, res: Response) => {
 const deleteFriend = async (req: Request, res: Response) => {
   try {
     const response = await friend.deleteFriend(req.body);
-    io.emit('friends', { action: 'DELETE_FRIEND', data: { ...response } });
+    io.emit('friends', { action: 'DELETE_FRIEND', data: response });
     res.status(200).json({
       status: true,
-      data: { ...response },
+      data: response,
       message: 'Friend deleted successfully!'
     });
   } catch (err) {
@@ -147,12 +147,12 @@ const deleteFriend = async (req: Request, res: Response) => {
 
 const friends_controller_routes = (app: Application, logger: NextFunction) => {
   app.get('/user/friends', logger, verifyToken, getFriends);
-  app.get('/user/requests', logger, verifyToken, friendRequest);
-  app.get('/user/friend-check', logger, verifyToken, checkFriend);
-  app.post('/user/add-friend', logger, verifyToken, addFriend);
-  app.patch('/user/accept-request', logger, verifyToken, acceptFriend);
-  app.delete('/user/cancel-request', logger, verifyToken, cancelRequest);
-  app.delete('/user/ignore-request', logger, verifyToken, ignoreRequest);
-  app.delete('/user/delete-friend', logger, verifyToken, deleteFriend);
+  app.get('/requests', logger, verifyToken, friendRequest);
+  app.get('/friend-check', logger, verifyToken, checkFriend);
+  app.post('/add-friend', logger, verifyToken, addFriend);
+  app.patch('/accept-request', logger, verifyToken, acceptFriend);
+  app.delete('/cancel-request', logger, verifyToken, cancelRequest);
+  app.delete('/ignore-request', logger, verifyToken, ignoreRequest);
+  app.delete('/delete-friend', logger, verifyToken, deleteFriend);
 };
 export default friends_controller_routes;

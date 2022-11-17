@@ -27,7 +27,11 @@
     overflow: hidden;
     /* border: 1px solid var(--base-color-dark) */
 }
-
+.comment-profile > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 .comment-username {
     font-size: 11.5px;
     text-transform: capitalize;

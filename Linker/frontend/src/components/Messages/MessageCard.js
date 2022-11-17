@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import classes from '../../css/MessageCard.module.css';
 
@@ -9,9 +9,15 @@ const MessageCard = ({
   timedate,
   lang,
   className,
-  message_id
+  message_id,
+  updateMessage,
+  deleteMessage
 }) => {
   const [messageStatus, setMessageStatus] = useState('seen');
+  const [control, setControl] = useState(false);
+  const [isEditMessage, setIsEditMessage] = useState(false);
+  const [editedMessage, setEditedMessage] = useState(message);
+
   const format = (time) =>
     new Date(time).toLocaleString('en-US', { timeStyle: 'short' });
 
@@ -26,10 +32,20 @@ const MessageCard = ({
   // } else {
   //   return <i className='fa-regular fa-error'></i>
   // }
+  const toggleControl = () => {
+    setControl((prev) => !prev);
+  };
+  const editMessage = () => {
+    setIsEditMessage((prev) => !prev);
+  };
+  const onEditMessage = (e) => {
+    setEditedMessage(e.target.value);
+  };
   return (
     <div
       className={`${classes['message-container']} ${classes[className]}`}
       id={message_id}
+      onMouseLeave={() => setControl(false)}
     >
       <Link to={`/profile/${username}`} className={classes['message-profile']}>
         {profile !== null && (
@@ -42,11 +58,56 @@ const MessageCard = ({
       </Link>
       <div className={classes['message-info']}>
         <span className={classes['message-content']} lang={lang}>
-          {message}
+          {!isEditMessage && message}
+          {isEditMessage && (
+            <>
+              <textarea
+                autoFocus
+                value={editedMessage}
+                // onBlur={editMessage}
+                onChange={onEditMessage}
+              >
+                {message}
+              </textarea>
+              <button
+                onClick={() =>
+                  updateMessage({
+                    message_id: message_id,
+                    content: editedMessage
+                  })
+                }
+              >
+                save
+              </button>
+            </>
+          )}
         </span>
         <span className={classes['message-time']}>{format(timedate)}</span>
       </div>
-      <div className={classes['message-status']}></div>
+      {/* <div className={classes['message-status']}></div> */}
+      <div className={classes['message-control']}>
+        <button onClick={toggleControl} className={classes['control-button']}>
+          <i className='fa-solid fa-ellipsis'></i>
+        </button>
+        {control && (
+          <ul>
+            <li>
+              <button onClick={editMessage}>
+                <i className='fa-solid fa-edit'></i>
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  deleteMessage(message_id);
+                }}
+              >
+                <i className='fa-solid fa-trash'></i>
+              </button>
+            </li>
+          </ul>
+        )}
+      </div>
     </div>
   );
 };

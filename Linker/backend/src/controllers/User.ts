@@ -52,7 +52,6 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const getAllUsers = async (_req: Request, res: Response) => {
-  console.log('GET ALL USERS LOGGED');
 
   try {
     const response = await user.getAllUsers();

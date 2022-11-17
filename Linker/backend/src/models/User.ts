@@ -47,12 +47,12 @@ class User {
       (user_id, timedate, profile_picture )
       VALUES
       ($1, $2, $3)
-      `
+      `;
       const profileResult = await connection.query(createProfile, [
         result.rows[0].user_id,
         null,
         null
-      ])
+      ]);
       connection.release();
       return result.rows[0];
     } catch (err) {
@@ -178,18 +178,23 @@ class User {
     lname: string | undefined,
     user_id: string
   ): Promise<Info[]> {
-    console.log(user_id);
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT user_id, username, first_name, last_name
-      FROM users
+      SELECT DISTINCT u.user_id, p.profile_picture, u.username, u.first_name, u.last_name
+      FROM users u, pictures p
       WHERE
-      first_name LIKE '${fname.toLowerCase()}%'
-      AND user_id != '${user_id}'
+      u.first_name LIKE '${fname.toLowerCase()}%'
+      AND
+      u.user_id != '${user_id}'
+      AND
+      p.user_id=u.user_id
       OR
-      last_name LIKE '${lname !== undefined && lname.toLowerCase()}%'
-      AND user_id != '${user_id}'
+      u.last_name LIKE '${lname !== undefined && lname.toLowerCase()}%'
+      AND
+      u.user_id != '${user_id}'
+      AND
+      p.user_id=u.user_id
       `;
       const result = await connection.query(sql);
       connection.release();

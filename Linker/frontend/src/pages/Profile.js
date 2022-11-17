@@ -101,7 +101,7 @@ const Profile = ({ user_id, socket }) => {
   };
   const checkIsFriend = () => {
     sendRequest(
-      `user/friend-check?sender_id=${authCtx.user.username}&receiver_id=${params.username}`,
+      `friend-check?sender_id=${authCtx.user.username}&receiver_id=${params.username}`,
       'GET',
       {},
       checkIsFriendHandler
@@ -111,7 +111,7 @@ const Profile = ({ user_id, socket }) => {
   // ADD FRIEND
   const friendRequest = () => {
     sendRequest(
-      'user/add-friend',
+      'add-friend',
       'POST',
       {
         sender_id: authCtx.user.user_id,
@@ -127,7 +127,7 @@ const Profile = ({ user_id, socket }) => {
   // CANCEL REQUEST
   const cancelRequest = () => {
     sendRequest(
-      'user/cancel-request',
+      'cancel-request',
       'DELETE',
       {
         sender_id: user.user_id,
@@ -144,12 +144,7 @@ const Profile = ({ user_id, socket }) => {
 
   // REQUEST ACCEPTED
   const acceptRequest = () => {
-    sendRequest(
-      'user/accept-request',
-      'PATCH',
-      { sender_id: user.user_id },
-      null
-    );
+    sendRequest('accept-request', 'PATCH', { sender_id: user.user_id }, null);
   };
   const newAcceptedRequest = (data) => {
     setFriendsList((prev) => [...prev, data]);
@@ -159,7 +154,7 @@ const Profile = ({ user_id, socket }) => {
   // REQUEST IGNORED
   const ignoreRequest = () => {
     sendRequest(
-      'user/ignore-request',
+      'ignore-request',
       'DELETE',
       {
         sender_id: user.user_id,
@@ -175,7 +170,7 @@ const Profile = ({ user_id, socket }) => {
   // DELETE FRIEND
   const deleteFriend = (friend) => {
     sendRequest(
-      'user/delete-friend',
+      'delete-friend',
       'DELETE',
       { sender_id: user.user_id, receiver_id: authCtx.user.user_id },
       null
@@ -269,19 +264,51 @@ const Profile = ({ user_id, socket }) => {
     });
     socket.on('friends', (data) => {
       if (data.action === 'FRIEND_REQUEST') {
-        newFriendRequest(data.data);
+        if (
+          data.data.username === params.username &&
+          data.data.receiver_id === authCtx.user.user_id
+        ) {
+          console.log(data.data)
+          newFriendRequest(data.data);
+        }
       }
       if (data.action === 'DELETE_FRIEND') {
-        newDeletedFriend(data.data);
+        if (
+          data.data.username === params.username &&
+          data.data.receiver_id === authCtx.user.user_id
+        ) {
+          newDeletedFriend(data.data);
+        }
       }
       if (data.action === 'CANCEL_REQUEST') {
-        newRequestCanceled();
+        if (
+          data.data.username === params.username &&
+          data.data.receiver_id === authCtx.user.user_id
+          ||
+          data.data.username === params.username &&
+          data.data.sender_id === authCtx.user.user_id
+        ) {
+          newRequestCanceled();
+        }
       }
       if (data.action === 'ACCEPT_REQUEST') {
-        newAcceptedRequest(data.data);
+        if (
+          data.data.username === params.username &&
+          data.data.receiver_id === authCtx.user.user_id
+        ) {
+          newAcceptedRequest(data.data);
+        }
       }
       if (data.action === 'IGNORE_REQUEST') {
-        newRequestIgnored();
+        if (
+          data.data.username === params.username &&
+          data.data.receiver_id === authCtx.user.user_id
+          ||
+          data.data.username === params.username &&
+          data.data.sender_id === authCtx.user.user_id
+        ) {
+          newRequestIgnored();
+        }
       }
     });
   }, [params]);

@@ -2,6 +2,7 @@
     padding: 10px;
     height: 100%;
     background-color: var(--base-color-light);
+    overflow-y: auto;
 }
 
 .form div {

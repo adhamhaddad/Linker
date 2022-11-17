@@ -25,11 +25,15 @@ const SearchBar = ({ theme }) => {
       return (
         <li key={user.user_id}>
           <Link to={`/profile/${user.username}`} onClick={closeListHandler}>
-            <div
-              style={{ backgroundImage: `url${user.profile}` }}
-              title={user.username}
-              className={classes.profilePic}
-            ></div>
+            <div title={user.username} className={classes['profile-picture']}>
+              {user.profile_picture !== null && (
+                <img
+                  crossOrigin='anonymous'
+                  src={`http://192.168.1.6:4000/${user.profile_picture}`}
+                  alt={user.username}
+                />
+              )}
+            </div>
             <span>
               {user.first_name} {user.last_name}
             </span>

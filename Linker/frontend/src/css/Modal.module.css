@@ -28,12 +28,15 @@
     width: 550px;
     height: 560.15px;
 }
-
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
     .overlay>div {
         width: 100vw;
         padding: 0px;
 
+    }
+    .overlay>div>img {
+        width: 100%;
+        height: auto;
     }
 }

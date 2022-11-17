@@ -41,8 +41,8 @@ const ProfilePicture = ({ user_id, profile_picture }) => {
       <div className={classes['image-card']}>
         <div className={classes['profile-picture']}>
           {profile_picture !== null &&
-           profile_picture !== undefined &&
-           profile_picture.length > 0 && (
+            profile_picture !== undefined &&
+            profile_picture.length > 0 && (
               <img
                 id='profile'
                 alt='Profile'
@@ -77,14 +77,14 @@ const ProfilePicture = ({ user_id, profile_picture }) => {
       {fPP && (
         <>
           <Modal onClick={profileFullSizeHandler}>
-            <img
-              id='profile'
-              alt='Profile'
-              title='Profile Picture'
-              className={classes['profile-picture']}
-              crossOrigin='anonymous'
-              src={`http://192.168.1.6:4000/${profile_picture}`}
-            />
+              <img
+                id='profile'
+                alt='Profile'
+                title='Profile Picture'
+                // className={classes['profile-picture']}
+                crossOrigin='anonymous'
+                src={`http://192.168.1.6:4000/${profile_picture}`}
+              />
           </Modal>
         </>
       )}

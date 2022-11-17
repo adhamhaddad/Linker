@@ -6,8 +6,12 @@ class Comments {
     console.log('Create Comment Logged');
     try {
       const connection = await database.connect();
-      const user_SQL =
-        'SELECT username, first_name, last_name FROM users WHERE user_id=$1';
+      const user_SQL = `
+      SELECT DISTINCT u.username, p.profile_picture, u.first_name, u.last_name
+      FROM
+      users u, pictures p
+      WHERE p.user_id=u.user_id AND u.user_id=$1
+      `;
       const user_SQL_result = await connection.query(user_SQL, [c.user_id]);
       const sql = `
       INSERT INTO comments
@@ -38,11 +42,11 @@ class Comments {
       const connection = await database.connect();
       const sql = `
       SELECT DISTINCT
-      u.user_id, u.username, u.first_name, u.last_name,
+      u.user_id, p.profile_picture, u.username, u.first_name, u.last_name,
       c.comment_id, c.timedate, c.comment_caption, c.comment_img, c.comment_video
-      FROM users u, comments c
+      FROM users u, pictures p, comments c 
       WHERE
-      c.post_id=$1 AND c.user_id=u.user_id
+      c.post_id=$1 AND c.user_id=p.user_id AND c.user_id=u.user_id
       `;
       const result = await connection.query(sql, [post_id]);
       connection.release();

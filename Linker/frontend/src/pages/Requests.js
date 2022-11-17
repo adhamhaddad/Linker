@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AuthenticateContext from '../utils/authentication';
 import useHttp from '../hooks/use-http';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';
 import Container from '../components/UI/Container';
 import classes from '../css/Requests.module.css';
 
-const Requests = ({ user_id, socket }) => {
+const Requests = ({ socket }) => {
   const [requests, setRequests] = useState([]);
   const { isLoading, isError, sendRequest } = useHttp();
+  const authCtx = useContext(AuthenticateContext);
 
   // NEW REQUEST
   const newFriendRequest = (data) => {
@@ -18,9 +20,9 @@ const Requests = ({ user_id, socket }) => {
   // ACCEPT REQUEST
   const acceptRequest = (user) => {
     sendRequest(
-      'user/accept-request',
+      'accept-request',
       'PATCH',
-      { sender_id: user.user_id },
+      { sender_id: user.user_id, receiver_id: authCtx.user.user_id },
       null
     );
   };
@@ -33,9 +35,9 @@ const Requests = ({ user_id, socket }) => {
   // IGNORE REQUEST
   const ignoreRequest = (user) => {
     sendRequest(
-      'user/ignore-request',
+      'ignore-request',
       'DELETE',
-      { sender_id: user.sender_id, receiver_id: user_id },
+      { sender_id: user.sender_id, receiver_id: authCtx.user.user_id },
       null
     );
   };
@@ -53,7 +55,15 @@ const Requests = ({ user_id, socket }) => {
           <Link
             to={`/profile/${request.username}`}
             className={classes['request-profile']}
-          ></Link>
+          >
+            {request.profile_picture !== null && (
+              <img
+                crossOrigin='anonymous'
+                src={`http://192.168.1.6:4000/${request.profile_picture}`}
+                alt={request.username}
+              />
+            )}
+          </Link>
           <Link
             to={`/profile/${request.username}`}
             className={classes['request-name']}
@@ -77,19 +87,33 @@ const Requests = ({ user_id, socket }) => {
     });
 
   useEffect(() => {
-    sendRequest(`user/requests?user_id=${user_id}`, 'GET', {}, setRequests);
+    sendRequest(
+      `requests?user_id=${authCtx.user.user_id}`,
+      'GET',
+      {},
+      setRequests
+    );
     socket.on('friends', (data) => {
       if (data.action === 'FRIEND_REQUEST') {
-        newFriendRequest(data.data);
+        // console.log(data.data)
+        if (data.data.receiver_id === authCtx.user.user_id) {
+          newFriendRequest(data.data);
+        }
       }
       if (data.action === 'ACCEPT_REQUEST') {
-        newAcceptedRequest(data.data);
+        if (data.data.receiver_id === authCtx.user.user_id) {
+          newAcceptedRequest(data.data);
+        }
       }
       if (data.action === 'CANCEL_REQUEST') {
-        newRequestIgnored(data.data);
+        if (data.data.receiver_id === authCtx.user.user_id) {
+          newRequestIgnored(data.data);
+        }
       }
       if (data.action === 'IGNORE_REQUEST') {
-        newRequestIgnored(data.data);
+        if (data.data.receiver_id === authCtx.user.user_id) {
+          newRequestIgnored(data.data);
+        }
       }
     });
   }, []);
@@ -107,7 +131,7 @@ const Requests = ({ user_id, socket }) => {
                 <i className='fa-solid fa-xmark'></i>
               </button>
             </div>
-            <h2>{requests.length} requests</h2>
+            <h2>requests ({requests.length})</h2>
             <ul className={classes['requests-list']}>{requestsList}</ul>
           </>
         )}

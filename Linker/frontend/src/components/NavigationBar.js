@@ -8,7 +8,7 @@ const NavigationBar = ({ username, profile, windowSize }) => {
       <li>
         <NavLink
           to='/home'
-          className={classes['new']}
+          // className={classes['new']}
           activeClassName={classes.active}
           title='Home'
         >
@@ -32,7 +32,7 @@ const NavigationBar = ({ username, profile, windowSize }) => {
           title='Profile'
         >
           <div className={classes['profile-picture']}>
-            {profile !== 'null' && profile.length > 0 && (
+            {profile !== null && profile !== 'null' && (
               <img
                 crossOrigin='anonymous'
                 src={`http://192.168.1.6:4000/${profile}`}

@@ -25,21 +25,77 @@ const Conversation = ({ socket }) => {
     });
   };
 
-  // NEW MESSAGE
-  const newMessageHander = (res) => {
-    setMessages((prev) => [...prev, res]);
+  const getCurrentUser = () => {
+    sendRequest(
+      `users?username=${params.username}`,
+      'GET',
+      {},
+      currentUserHandler
+    );
+  };
+  const getMessages = () => {
+    sendRequest(
+      `messages?sender_username=${authCtx.user.username}&receiver_username=${params.username}`,
+      'GET',
+      {},
+      setMessages
+    );
   };
 
-  const addNewMessage = (newMesasge) => {
+  // NEW MESSAGE
+  const addMessage = (newMesasge) => {
     sendRequest(
-      'user/message',
+      'messages',
       'POST',
       {
-        sender_id: authCtx.user.user_id,
-        receiver_id: params.username,
+        sender_username: authCtx.user.username,
+        receiver_username: params.username,
         content: newMesasge.current.value
       },
       null
+    );
+  };
+  const newMessage = (data) => {
+    setMessages((prev) => [...prev, data]);
+  };
+
+  // UPDATE MESSAGE
+  const updateMessage = (data) => {
+    sendRequest(
+      'messages',
+      'PATCH',
+      {
+        sender_username: authCtx.user.username,
+        receiver_username: params.username,
+        message_id: data.message_id,
+        content: data.content
+      },
+      null
+    );
+  };
+  const newUpdatedMessage = (data) => {
+    setMessages((prev) =>
+      prev.map((message) =>
+        message.message_id === data.message_id ? data : message
+      )
+    );
+  };
+  // DELETE MESSAGE
+  const deleteMessage = (message_id) => {
+    sendRequest(
+      'messages',
+      'DELETE',
+      {
+        sender_username: authCtx.user.username,
+        receiver_username: params.username,
+        message_id: message_id
+      },
+      null
+    );
+  };
+  const newDeletedMessage = (data) => {
+    setMessages((prev) =>
+      prev.filter((message) => message.message_id !== data.message_id)
     );
   };
 
@@ -58,6 +114,8 @@ const Conversation = ({ socket }) => {
             timedate={msg.timedate}
             key={`$${msg.message_id} ${new Date(msg.timedate).getTime()}`}
             message_id={msg.message_id}
+            updateMessage={updateMessage}
+            deleteMessage={deleteMessage}
           />
         );
       })
@@ -65,28 +123,32 @@ const Conversation = ({ socket }) => {
 
   // Get All Messages
   useEffect(() => {
-    sendRequest(
-      `users?username=${params.username}`,
-      'GET',
-      {},
-      currentUserHandler
-    );
-    sendRequest(
-      `user/messages?sender_id=${authCtx.user.user_id}&receiver_id=${params.username}`,
-      'GET',
-      {},
-      setMessages
-    );
+    getCurrentUser();
+    getMessages();
 
     socket.on('messages', (data) => {
       if (data.action === 'NEW_MESSAGE') {
-        newMessageHander(data.data);
+        if (
+          (data.data.receiver_username === authCtx.user.username &&
+            data.data.sender_username === params.username) ||
+          (data.data.receiver_username === params.username &&
+            data.data.sender_username === authCtx.user.username)
+        ) {
+          newMessage(data.data);
+        }
       }
       if (data.action === 'UPDATE_MESSAGE') {
-        newMessageHander(data.data);
+        newUpdatedMessage(data.data);
       }
       if (data.action === 'DELETE_MESSAGE') {
-        newMessageHander(data.data);
+        if (
+          (data.data.receiver_username === authCtx.user.username &&
+            data.data.sender_username === params.username) ||
+          (data.data.receiver_username === params.username &&
+            data.data.sender_username === authCtx.user.username)
+        ) {
+          newDeletedMessage(data.data);
+        }
       }
     });
   }, [params]);
@@ -108,7 +170,7 @@ const Conversation = ({ socket }) => {
         {/* <p className={classes['conversation-first-time']}>Conversation started at ... End-To-End Encryption</p> */}
         {/* <p className={classes['conversation-date']}>{new Date().getTime()}</p> */}
       </div>
-      <ChatForm onAddNewMessage={addNewMessage} />
+      <ChatForm onAddNewMessage={addMessage} />
     </div>
   );
 };
