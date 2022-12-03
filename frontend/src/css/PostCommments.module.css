@@ -1,7 +1,6 @@
 .post-comments {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     border: 1px solid rgb(219, 219, 219);
     margin-top: 5px;
     background-color: rgb(219, 219, 219);
@@ -24,8 +23,9 @@
     background-color: var(--base-color-light);
 }
 .comments-list {
-    max-height: 300px;
-    overflow-y: scroll;
+    max-height: 250px;
+    height: auto;
+    overflow-y: auto;
 }
 @media only screen and (max-width: 600px) {
     .comments-controller {

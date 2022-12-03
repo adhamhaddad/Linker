@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Modal from './Modal';
 import useHttp from '../hooks/use-http';
+import apiUrlContext from '../utils/api-urls';
 import classes from '../css/ProfilePicture.module.css';
 
-const ProfilePicture = ({ user_id, profile_picture }) => {
+const ProfilePicture = ({ isLoading, user_id, profile_picture }) => {
   const { sendRequest } = useHttp();
   const [pickedPicture, setPickedPicture] = useState();
   const [fPP, setFPP] = useState(false);
+  const apiCtx = useContext(apiUrlContext);
 
   const profileFullSizeHandler = () => {
     setFPP((prev) => !prev);
@@ -39,18 +41,22 @@ const ProfilePicture = ({ user_id, profile_picture }) => {
   return (
     <>
       <div className={classes['image-card']}>
-        <div className={classes['profile-picture']}>
-          {profile_picture !== null &&
+        <div
+          className={`${classes['profile-picture']} ${
+            isLoading ? classes['loading'] : null
+          }`}
+        >
+          {!isLoading &&
+            profile_picture !== null &&
             profile_picture !== undefined &&
             profile_picture.length > 0 && (
               <img
                 id='profile'
                 alt='Profile'
                 title='Profile Picture'
-                className={classes['profile-picture']}
                 onClick={profileFullSizeHandler}
                 crossOrigin='anonymous'
-                src={`http://192.168.1.6:4000/${profile_picture}`}
+                src={`${apiCtx.url}/${profile_picture}`}
               />
             )}
         </div>
@@ -77,14 +83,14 @@ const ProfilePicture = ({ user_id, profile_picture }) => {
       {fPP && (
         <>
           <Modal onClick={profileFullSizeHandler}>
-              <img
-                id='profile'
-                alt='Profile'
-                title='Profile Picture'
-                // className={classes['profile-picture']}
-                crossOrigin='anonymous'
-                src={`http://192.168.1.6:4000/${profile_picture}`}
-              />
+            <img
+              id='profile'
+              alt='Profile'
+              title='Profile Picture'
+              // className={classes['profile-picture']}
+              crossOrigin='anonymous'
+              src={`${apiCtx.url}/${profile_picture}`}
+            />
           </Modal>
         </>
       )}

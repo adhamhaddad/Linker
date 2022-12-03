@@ -3,7 +3,7 @@ import useHttp from '../hooks/use-http';
 import Container from '../components/UI/Container';
 import Error from '../components/Error';
 import SpinnerLoading from '../components/Loading/Spinner';
-import Post from '../components/Post/Post';
+import Post from '../components/Post/PostCard';
 import classes from '../css/Home.module.css';
 
 const Home = ({ user_id, socket }) => {
@@ -74,6 +74,7 @@ const Home = ({ user_id, socket }) => {
           post_profile={post.profile}
           post_timedate={post.timedate}
           post_content={post.content}
+          socket={socket}
           key={new Date(post.timedate).getTime()}
         />
       ))

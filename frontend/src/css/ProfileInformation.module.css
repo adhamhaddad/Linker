@@ -17,6 +17,20 @@
     text-align: center;
 }
 
+.user-info ul li.load {
+    display: flex;
+    width: 160px;
+    padding: 10px 0;
+    margin: 4px 0;
+    border-radius: 2px;
+    background-color: #FFF;
+    animation-name: load;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
     .user-info ul li {
@@ -26,5 +40,13 @@
 
     .user-info ul li>i {
         width: 22px
+    }
+}
+@keyframes load {
+    0% {
+        opacity: 0.2
+    }
+    100% {
+        opacity: 1
     }
 }

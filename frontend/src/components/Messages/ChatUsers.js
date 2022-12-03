@@ -6,9 +6,11 @@ import SearchBar from '../Searchbar';
 import SpinnerLoading from '../Loading/Spinner';
 import Error from '../Error';
 import classes from '../../css/ChatUsers.module.css';
+import apiUrlContext from '../../utils/api-urls';
 
 const ChatUsers = ({ windowSize, socket }) => {
   const authCtx = useContext(AuthenticateContext);
+  const apiCtx = useContext(apiUrlContext);
   const [friendsList, setFriendsList] = useState([]);
   const { isLoading, isError, sendRequest } = useHttp();
 
@@ -30,7 +32,7 @@ const ChatUsers = ({ windowSize, socket }) => {
               {friend.profile_picture !== null && (
                 <img
                   crossOrigin='anonymous'
-                  src={`http://192.168.1.6:4000/${friend.profile_picture}`}
+                  src={`${apiCtx.url}/${friend.profile_picture}`}
                   alt={friend.username}
                 />
               )}

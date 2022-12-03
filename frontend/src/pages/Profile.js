@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import AuthenticateContext from '../utils/authentication';
 import useHttp from '../hooks/use-http';
-import Post from '../components/Post/Post';
+import Post from '../components/Post/PostCard';
 import AddPost from '../components/Post/AddPost';
 import ProfileInformation from '../components/ProfileInformation';
 import ProfileStory from '../components/ProfileStory';
@@ -13,21 +13,19 @@ import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';
 import classes from '../css/Profile.module.css';
 
-const Profile = ({ user_id, socket }) => {
-  const authCtx = useContext(AuthenticateContext);
-  const params = useParams();
+const Profile = ({ socket }) => {
   const [user, setUser] = useState({});
-  const [profilePicture, setProfilePicture] = useState({});
-  const [information, setInformation] = useState({});
   const [userPosts, setUserPosts] = useState([]);
-  const [postPort, setPostPort] = useState(false);
   const [friendsList, setFriendsList] = useState([]);
   const [checkFriend, setCheckFriend] = useState({
     isFriend: null,
     sender_id: null,
     receiver_id: null
   });
+  const [postPort, setPostPort] = useState(false);
   const { isLoading, isError, sendRequest } = useHttp();
+  const authCtx = useContext(AuthenticateContext);
+  const params = useParams();
 
   const closePostPort = () => {
     setPostPort((prev) => !prev);
@@ -52,22 +50,7 @@ const Profile = ({ user_id, socket }) => {
   const getUser = () => {
     sendRequest(`users?username=${params.username}`, 'GET', {}, setUser);
   };
-  const getProfilePic = () => {
-    sendRequest(
-      `profile-picture?username=${params.username}`,
-      'GET',
-      {},
-      setProfilePicture
-    );
-  };
-  const getInformation = () => {
-    sendRequest(
-      `user/information?username=${params.username}`,
-      'GET',
-      {},
-      setInformation
-    );
-  };
+
   const getFriends = () => {
     sendRequest(
       `user/friends?username=${params.username}`,
@@ -78,7 +61,7 @@ const Profile = ({ user_id, socket }) => {
   };
   const getUserPosts = () => {
     sendRequest(
-      `user/posts?username=${params.username}`,
+      `user-posts?username=${params.username}`,
       'GET',
       {},
       transformPosts
@@ -147,8 +130,8 @@ const Profile = ({ user_id, socket }) => {
     sendRequest('accept-request', 'PATCH', { sender_id: user.user_id }, null);
   };
   const newAcceptedRequest = (data) => {
-    setFriendsList((prev) => [...prev, data]);
-    checkIsFriendHandler(data);
+    setFriendsList((prev) => [...prev, data.sender_user]);
+    checkIsFriendHandler(data.result);
   };
 
   // REQUEST IGNORED
@@ -186,9 +169,6 @@ const Profile = ({ user_id, socket }) => {
   };
 
   // CREATE POST
-  const createNewPost = (data) => {
-    sendRequest('user/posts', 'POST', data, null);
-  };
   const newPostAdded = (post) => {
     setUserPosts((prev) => {
       return [
@@ -223,7 +203,7 @@ const Profile = ({ user_id, socket }) => {
       .map((post) => {
         return (
           <Post
-            user_id={user_id}
+            user_id={authCtx.user.user_id}
             username={authCtx.user.username}
             first_name={authCtx.user.first_name}
             last_name={authCtx.user.last_name}
@@ -236,6 +216,7 @@ const Profile = ({ user_id, socket }) => {
             post_profile={post.profile}
             post_timedate={post.timedate}
             post_content={post.content}
+            socket={socket}
             key={new Date(post.timedate).getTime()}
           />
         );
@@ -244,32 +225,74 @@ const Profile = ({ user_id, socket }) => {
 
   useEffect(() => {
     getUser();
-    getProfilePic();
-    getInformation();
     getFriends();
     getUserPosts();
     if (params.username !== authCtx.user.username) {
       checkIsFriend();
     }
     socket.on('posts', (data) => {
-      // if (data.action === 'CREATE') {
-      //   newPostAdded(data.data);
-      // }
-      if (data.action === 'UPDATE') {
-        newPostUpdate(data.data);
+      if (data.action === 'CREATE_POST') {
+        if (
+          params.username === authCtx.user.username ||
+          params.username === user.username
+        ) {
+          newPostAdded(data.data);
+        }
       }
-      if (data.action === 'DELETE') {
-        newPostDelete(data.data);
+      if (data.action === 'UPDATE_POST') {
+        if (
+          params.username === authCtx.user.username ||
+          params.username === user.username
+        ) {
+          newPostUpdate(data.data);
+        }
+      }
+      if (data.action === 'DELETE_POST') {
+        if (
+          params.username === authCtx.user.username ||
+          params.username === user.username
+        ) {
+          newPostDelete(data.data);
+        }
       }
     });
     socket.on('friends', (data) => {
       if (data.action === 'FRIEND_REQUEST') {
         if (
           data.data.username === params.username &&
-          data.data.receiver_id === authCtx.user.user_id
+          data.data.sender_id === authCtx.user.user_id
         ) {
-          console.log(data.data)
+          console.log(data.data);
           newFriendRequest(data.data);
+        }
+      }
+      if (data.action === 'CANCEL_REQUEST') {
+        if (
+          (data.data.username === params.username &&
+            data.data.receiver_id === authCtx.user.user_id) ||
+          (data.data.username === params.username &&
+            data.data.sender_id === authCtx.user.user_id)
+        ) {
+          newRequestCanceled();
+        }
+      }
+      if (data.action === 'ACCEPT_REQUEST') {
+        if (
+          data.data.sender_user.user_id === authCtx.user.user_id &&
+          data.data.receiver_user.username === params.username
+        ) {
+          newAcceptedRequest(data.data);
+        }
+      }
+      if (data.action === 'IGNORE_REQUEST') {
+        if (
+          (data.data.sender_user.username === params.username &&
+            data.data.receiver_user.username === authCtx.user.username) ||
+          (data.data.sender_user.username === authCtx.user.username &&
+            data.data.receiver_user.username === params.username)
+        ) {
+          console.log(data.data);
+          newRequestIgnored();
         }
       }
       if (data.action === 'DELETE_FRIEND') {
@@ -278,36 +301,6 @@ const Profile = ({ user_id, socket }) => {
           data.data.receiver_id === authCtx.user.user_id
         ) {
           newDeletedFriend(data.data);
-        }
-      }
-      if (data.action === 'CANCEL_REQUEST') {
-        if (
-          data.data.username === params.username &&
-          data.data.receiver_id === authCtx.user.user_id
-          ||
-          data.data.username === params.username &&
-          data.data.sender_id === authCtx.user.user_id
-        ) {
-          newRequestCanceled();
-        }
-      }
-      if (data.action === 'ACCEPT_REQUEST') {
-        if (
-          data.data.username === params.username &&
-          data.data.receiver_id === authCtx.user.user_id
-        ) {
-          newAcceptedRequest(data.data);
-        }
-      }
-      if (data.action === 'IGNORE_REQUEST') {
-        if (
-          data.data.username === params.username &&
-          data.data.receiver_id === authCtx.user.user_id
-          ||
-          data.data.username === params.username &&
-          data.data.sender_id === authCtx.user.user_id
-        ) {
-          newRequestIgnored();
         }
       }
     });
@@ -319,8 +312,9 @@ const Profile = ({ user_id, socket }) => {
         <section className={classes['information-section']}>
           <div className={classes['user-id']}>
             <ProfilePicture
+              isLoading={isLoading}
               user_id={user.user_id}
-              profile_picture={profilePicture.profile_picture}
+              profile_picture={user.profile_picture}
             />
             <span className={classes.username}>
               {user.first_name} {user.last_name}
@@ -389,16 +383,19 @@ const Profile = ({ user_id, socket }) => {
               )}
             </div>
           )}
-          <ProfileInformation
-            job_title={information.job_title}
-            relationship={information.relationship}
-            education={information.education}
-            location={information.location}
-          />
+          {!isLoading && isError === null && (
+            <ProfileInformation
+              isLoading={isLoading}
+              job_title={user.job_title}
+              relationship={user.relationship}
+              education={user.education}
+              location={user.location}
+            />
+          )}
         </section>
-        {information.story !== null && (
+        {!isLoading && isError === null && user.story !== null && (
           <section className={classes['story-section']}>
-            <ProfileStory story={information.story} />
+            <ProfileStory story={user.story} />
           </section>
         )}
         <section className={classes['friends-section']}>
@@ -422,11 +419,7 @@ const Profile = ({ user_id, socket }) => {
         )}
         {postPort && (
           <AddPost
-            user_id={user_id}
-            profile={profilePicture.profile_picture}
-            first_name={user.first_name}
-            last_name={user.last_name}
-            onCreatePost={createNewPost}
+            profile={user.profile_picture}
             onClosePost={closePostPort}
           />
         )}

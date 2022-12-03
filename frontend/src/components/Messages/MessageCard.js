@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import classes from '../../css/MessageCard.module.css';
+import apiUrlContext from '../../utils/api-urls';
 
 const MessageCard = ({
   profile,
@@ -17,7 +18,7 @@ const MessageCard = ({
   const [control, setControl] = useState(false);
   const [isEditMessage, setIsEditMessage] = useState(false);
   const [editedMessage, setEditedMessage] = useState(message);
-
+  const apiCtx = useContext(apiUrlContext);
   const format = (time) =>
     new Date(time).toLocaleString('en-US', { timeStyle: 'short' });
 
@@ -51,7 +52,7 @@ const MessageCard = ({
         {profile !== null && (
           <img
             crossOrigin='anonymous'
-            src={`http://192.168.1.6:4000/${profile}`}
+            src={`${apiCtx.url}/${profile}`}
             alt={username}
           />
         )}

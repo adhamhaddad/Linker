@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useHttp from '../../hooks/use-http';
-import CommentsController from './CommentsBox';
-import Reactions from './Reactions';
+import PostCommments from './PostComments';
+import Reactions from './PostReactions';
 import PostContent from './PostContent';
 import PostHeader from './PostHeader';
 import PostBottom from './PostBottom';
 import LikesController from './LikesController';
 import SharesController from './SharesController';
-import classes from '../../css/Post.module.css';
+import classes from '../../css/PostCard.module.css';
 
-const Post = ({
+const PostCard = ({
   user_id,
   username,
   first_name,
@@ -21,11 +22,12 @@ const Post = ({
   post_username,
   post_first_name,
   post_last_name,
-  post_profile,
   post_timedate,
-  post_content
+  post_content,
+  socket
 }) => {
-  const { sendRequest } = useHttp();
+  const history = useHistory();
+  const { isLoading, isError, sendRequest } = useHttp();
   const [isEdit, setIsEdit] = useState(false);
   const [likesList, setLikesList] = useState([]);
   const [commentsList, setCommentsList] = useState([]);
@@ -33,6 +35,10 @@ const Post = ({
   const [likesPort, setLikesPort] = useState(false);
   const [commentsPort, setCommentsPort] = useState(false);
   const [sharesPort, setSharesPort] = useState(false);
+
+  const openPost = () => {
+    history.push(`/${post_username}/${post_id}`);
+  };
 
   const showLikesHandler = () => {
     setLikesPort((prev) => !prev);
@@ -46,11 +52,11 @@ const Post = ({
 
   useEffect(() => {
     sendRequest(`post/likes?post_id=${post_id}`, 'GET', {}, setLikesList);
-    sendRequest(`post/comments?post_id=${post_id}`, 'GET', {}, setCommentsList);
+    sendRequest(`comments?post_id=${post_id}`, 'GET', {}, setCommentsList);
     sendRequest(`post/shares?post_id=${post_id}`, 'GET', {}, setSharesList);
   }, []);
   return (
-    <div className={classes.posts}>
+    <div className={classes['posts']}>
       <PostHeader
         user_id={user_id}
         post_id={post_id}
@@ -59,12 +65,16 @@ const Post = ({
         post_username={post_username}
         post_first_name={post_first_name}
         post_last_name={post_last_name}
-        post_profile={post_profile}
         post_timedate={post_timedate}
         isEdit={isEdit}
         onEditPost={setIsEdit}
       />
-      <PostContent content={post_content} post_id={post_id} isEdit={isEdit} />
+      <PostContent
+        content={post_content}
+        post_id={post_id}
+        isEdit={isEdit}
+        onClick={openPost}
+      />
       <Reactions
         post_id={post_id}
         user_id={user_id}
@@ -86,12 +96,13 @@ const Post = ({
         setLikesList={setLikesList}
         setCommentsList={setCommentsList}
         setSharesList={setSharesList}
+        socket={socket}
       />
       {likesPort && (
         <LikesController likes={likesList} onHide={showLikesHandler} />
       )}
       {commentsPort && (
-        <CommentsController
+        <PostCommments
           post_user_id={post_user_id}
           comments={commentsList}
           onChangeComment={setCommentsList}
@@ -104,7 +115,7 @@ const Post = ({
     </div>
   );
 };
-Post.propTypes = {
+PostCard.propTypes = {
   user_id: PropTypes.string.isRequired,
   post_username: PropTypes.string.isRequired,
   post_first_name: PropTypes.string.isRequired,
@@ -114,4 +125,4 @@ Post.propTypes = {
   post_timedate: PropTypes.string.isRequired,
   post_content: PropTypes.object.isRequired
 };
-export default Post;
+export default PostCard;

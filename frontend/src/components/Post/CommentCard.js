@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import CommentDate from '../../Validation/CommentDate';
 import CommentController from './CommentController';
+import apiUrlContext from '../../utils/api-urls';
 import classes from '../../css/CommentCard.module.css';
 
 const CommentCard = ({ comment, onChangeComment, post_user_id }) => {
+  const apiCtx = useContext(apiUrlContext);
   return (
     <li className={classes['comment-card']}>
       <div className={classes['comment-header']}>
@@ -15,7 +17,7 @@ const CommentCard = ({ comment, onChangeComment, post_user_id }) => {
           {comment.profile_picture !== null && (
             <img
               crossOrigin='anonymous'
-              src={`http://192.168.1.6:4000/${comment.profile_picture}`}
+              src={`${apiCtx.url}/${comment.profile_picture}`}
               alt={comment.username}
             />
           )}

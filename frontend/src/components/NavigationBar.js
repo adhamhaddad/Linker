@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import classes from '../css/NavigationBar.module.css';
+import apiUrlContext from '../utils/api-urls';
 
 const NavigationBar = ({ username, profile, windowSize }) => {
+  const apiCtx = useContext(apiUrlContext);
   return (
     <ul className={classes.navigation}>
       <li>
@@ -33,10 +35,7 @@ const NavigationBar = ({ username, profile, windowSize }) => {
         >
           <div className={classes['profile-picture']}>
             {profile !== null && profile !== 'null' && (
-              <img
-                crossOrigin='anonymous'
-                src={`http://192.168.1.6:4000/${profile}`}
-              />
+              <img crossOrigin='anonymous' src={`${apiCtx.url}/${profile}`} />
             )}
           </div>
           <span>profile</span>

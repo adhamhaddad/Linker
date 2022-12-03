@@ -1,22 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
+import AuthenticateContext from '../../utils/authentication';
 import useHttp from '../../hooks/use-http';
 import classes from '../../css/PostBottom.module.css';
 
-const PostBottom = ({
-  post_id,
-  user_id,
-  first_name,
-  last_name,
-  username,
-  likesList,
-  setLikesList,
-  setCommentsList,
-  setSharesList
-}) => {
-  const { sendRequest } = useHttp();
+const PostBottom = ({ post_id, likesList, setLikesList, socket }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [commentContent, setCommentContent] = useState('');
   const commentContentRef = useRef();
+  const authCtx = useContext(AuthenticateContext);
+  const { isLoading, isError, sendRequest } = useHttp();
+
   const commentContentHandler = (e) => {
     setCommentContent(e.target.value);
   };
@@ -27,36 +20,36 @@ const PostBottom = ({
         'post/like',
         'POST',
         {
-          post_id,
-          user_id
+          post_id: post_id,
+          user_id: authCtx.user.user_id
         },
         null
       );
       setLikesList((prev) => [
         ...prev,
         {
-          user_id: user_id,
-          username: username,
-          first_name: first_name,
-          last_name: last_name,
+          user_id: authCtx.user.user_id,
+          username: authCtx.user.username,
+          first_name: authCtx.user.first_name,
+          last_name: authCtx.user.last_name,
           timedate: new Date()
         }
       ]);
       setIsLiked(true);
     } else {
       likesList.map((like) => {
-        if (like.user_id === user_id) {
+        if (like.user_id === authCtx.user.user_id) {
           sendRequest(
             'post/like',
             'DELETE',
             {
-              post_id,
-              user_id
+              post_id: post_id,
+              user_id: authCtx.user.user_id
             },
             null
           );
           setLikesList((prev) =>
-            prev.filter((like) => like.user_id !== user_id)
+            prev.filter((like) => like.user_id !== authCtx.user.user_id)
           );
           setIsLiked(false);
         } else {
@@ -64,18 +57,18 @@ const PostBottom = ({
             'post/like',
             'POST',
             {
-              post_id,
-              user_id
+              post_id: post_id,
+              user_id: authCtx.user.user_id
             },
             null
           );
           setLikesList((prev) => [
             ...prev,
             {
-              user_id: user_id,
-              username: username,
-              first_name: first_name,
-              last_name: last_name,
+              user_id: authCtx.user.user_id,
+              username: authCtx.user.username,
+              first_name: authCtx.user.first_name,
+              last_name: authCtx.user.last_name,
               timedate: new Date()
             }
           ]);
@@ -85,53 +78,67 @@ const PostBottom = ({
     }
   };
 
-  const onSharePost = () => {
-    sendRequest(
-      'post/share',
-      'POST',
-      {
-        user_id,
-        post_id
-      },
-      () => {
-        setSharesList((prev) => [
-          {
-            user_id: user_id,
-            username: username,
-            first_name: first_name,
-            last_name: last_name,
-            timedate: new Date()
-          },
-          ...prev
-        ]);
-      }
-    );
-  };
-  const onAddComment = (e) => {
+  // const onSharePost = () => {
+  //   sendRequest(
+  //     'post/share',
+  //     'POST',
+  //     {
+  //       post_id: post_id,
+  //       user_id: authCtx.user.user_id
+  //     },
+  //     () => {
+  //       setSharesList((prev) => [
+  //         {
+  //           user_id: authCtx.user.user_id,
+  //           username: authCtx.user.username,
+  //           first_name: authCtx.user.first_name,
+  //           last_name: authCtx.user.last_name,
+  //           timedate: new Date()
+  //         },
+  //         ...prev
+  //       ]);
+  //     }
+  //   );
+  // };
+
+  const createComment = (e) => {
     e.preventDefault();
     if (commentContentRef.current.value.trim().length === 0) {
       return;
     }
     sendRequest(
-      'post/comment',
+      'comment',
       'POST',
       {
-        post_id,
-        user_id,
+        post_id: post_id,
+        user_id: authCtx.user.user_id,
         comment_caption: commentContentRef.current.value,
         comment_img: null,
         comment_video: null
       },
-      (data) => {
-        console.log(data);
-        setCommentsList((prev) => [...prev, data]);
-      }
+      null
     );
     setCommentContent('');
   };
-  // console.log(user_id); // me
-  // console.log(post_id); // post id
-  // console.log(post_user_id); // who posted this
+  const createShare = () => {
+    sendRequest(
+      'share',
+      'POST',
+      {
+        user_id: authCtx.user.user_id,
+        post_id: post_id
+      },
+      null
+    );
+  };
+  useEffect(() => {
+    socket.on('comments', (data) => {
+      if (data.action === 'CREATE_COMMENT') {
+        console.log(data.data);
+      }
+    });
+  }, []);
+
   return (
     <div className={classes['post-bottom']} id='post-bottom'>
       <button
@@ -142,7 +149,7 @@ const PostBottom = ({
         {isLiked ? 'liked' : 'like'}
       </button>
       <div className={classes['comment-box']}>
-        <form onSubmit={onAddComment}>
+        <form onSubmit={createComment}>
           <input
             ref={commentContentRef}
             type='text'
@@ -152,7 +159,7 @@ const PostBottom = ({
             onChange={commentContentHandler}
             className={classes['comment-input']}
           />
-          <button className={classes['send-button']} onClick={onAddComment}>
+          <button className={classes['send-button']} onClick={createComment}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               fill='#323232'
@@ -163,7 +170,7 @@ const PostBottom = ({
           </button>
         </form>
       </div>
-      <button title='Share' onClick={onSharePost}>
+      <button title='Share' onClick={createShare}>
         share
       </button>
     </div>

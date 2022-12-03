@@ -1,0 +1,37 @@
+.card {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 2.5px 0px var(--base-light-gray);
+}
+
+.card:last-of-type {
+    margin-bottom: 0;
+}
+
+.card-profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-image: url('../images/anonymous_user.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-right: 10px;
+    overflow: hidden;
+}
+
+.card-profile>img {
+    width: 100%;
+    height: 100%;
+}
+
+.card-username {
+    font-size: 13px;
+    text-transform: capitalize;
+    color: var(--base-color-dark);
+    font-weight: bold;
+}

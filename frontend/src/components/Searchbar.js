@@ -5,9 +5,11 @@ import AuthenticateContext from '../utils/authentication';
 import SpinnerLoading from './Loading/Spinner';
 import Error from './Error';
 import classes from '../css/Searchbar.module.css';
+import apiUrlContext from '../utils/api-urls';
 
 const SearchBar = ({ theme }) => {
   const authCtx = useContext(AuthenticateContext);
+  const apiCtx = useContext(apiUrlContext);
   const { isError, isLoading, sendRequest } = useHttp();
   const [query, setQuery] = useState('');
   const [fetchedUsers, setFetchedUsers] = useState([]);
@@ -29,7 +31,7 @@ const SearchBar = ({ theme }) => {
               {user.profile_picture !== null && (
                 <img
                   crossOrigin='anonymous'
-                  src={`http://192.168.1.6:4000/${user.profile_picture}`}
+                  src={`${apiCtx.url}/${user.profile_picture}`}
                   alt={user.username}
                 />
               )}

@@ -1,34 +1,38 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PostDate from '../../Validation/PostDate';
 import PostController from './PostController';
+import apiUrlContext from '../../utils/api-urls';
 import classes from '../../css/PostHeader.module.css';
 
 const PostHeader = ({
-  user_id,
   post_id,
   post_user_id,
   post_profile_picture,
   post_username,
-  post_timedate,
   post_first_name,
   post_last_name,
+  post_timedate,
   isEdit,
   onEditPost,
   onSaveChanges
 }) => {
+  const apiCtx = useContext(apiUrlContext);
   return (
     <div className={classes['post-header']}>
       <div className={classes['post-info']}>
         <Link
           to={`/profile/${post_username}`}
-            className={classes['profile-image']}
-          >
-          <img
-            crossOrigin='anonymous'
-            src={`http://192.168.1.6:4000/${post_profile_picture}`}
-            alt={post_profile_picture}
-          />
+          className={classes['profile-image']}
+        >
+          {post_profile_picture !== undefined &&
+            post_profile_picture.length > 0 && (
+              <img
+                crossOrigin='anonymous'
+                src={`${apiCtx.url}/${post_profile_picture}`}
+                alt={post_profile_picture}
+              />
+            )}
         </Link>
 
         <div>
@@ -52,7 +56,6 @@ const PostHeader = ({
         </div>
       )}
       <PostController
-        user_id={user_id}
         post_id={post_id}
         post_user_id={post_user_id}
         onEditPost={onEditPost}

@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';
+import apiUrlContext from '../utils/api-urls';
 import classes from '../css/Friends.module.css';
 
-const Friends = ({
-  username,
-  friendsList,
-  onDeleteFriend,
-  isLoading,
-  isError
-}) => {
+const Friends = ({ friendsList, onDeleteFriend, isLoading, isError }) => {
   const [listSize, setListSize] = useState(false);
+  const apiCtx = useContext(apiUrlContext);
 
   const showFriendsHandler = () => {
     setListSize((prev) => !prev);
@@ -28,13 +24,15 @@ const Friends = ({
           }
         >
           <div className={classes['profile-picture']}>
-            {friend.profile_picture !== null && (
-              <img
-                crossOrigin='anonymous'
-                src={`http://192.168.1.6:4000/${friend.profile_picture}`}
-                alt={friend.username}
-              />
-            )}
+            {!isLoading &&
+              isError === null &&
+              friend.profile_picture !== null && (
+                <img
+                  crossOrigin='anonymous'
+                  src={`${apiCtx.url}/${friend.profile_picture}`}
+                  alt={friend.username}
+                />
+              )}
           </div>
           <div className={classes.username}>
             {friend.first_name} {friend.last_name}

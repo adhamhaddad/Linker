@@ -1,7 +1,7 @@
 import React from 'react';
-import classes from '../../css/Reactions.module.css';
+import classes from '../../css/PostReactions.module.css';
 
-const Reactions = ({
+const PostReactions = ({
   likes,
   comments,
   shares,
@@ -45,4 +45,4 @@ const Reactions = ({
   }
   return reactionBar;
 };
-export default Reactions;
+export default PostReactions;

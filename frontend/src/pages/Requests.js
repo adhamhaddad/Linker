@@ -6,12 +6,13 @@ import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';
 import Container from '../components/UI/Container';
 import classes from '../css/Requests.module.css';
+import apiUrlContext from '../utils/api-urls';
 
 const Requests = ({ socket }) => {
   const [requests, setRequests] = useState([]);
   const { isLoading, isError, sendRequest } = useHttp();
   const authCtx = useContext(AuthenticateContext);
-
+  const apiCtx = useContext(apiUrlContext)
   // NEW REQUEST
   const newFriendRequest = (data) => {
     setRequests((prev) => [...prev, data]);
@@ -28,7 +29,7 @@ const Requests = ({ socket }) => {
   };
   const newAcceptedRequest = (data) => {
     setRequests((prev) =>
-      prev.filter((request) => request.user_id !== data.user_id)
+      prev.filter((request) => request.user_id !== data.sender_user.user_id)
     );
   };
 
@@ -59,7 +60,7 @@ const Requests = ({ socket }) => {
             {request.profile_picture !== null && (
               <img
                 crossOrigin='anonymous'
-                src={`http://192.168.1.6:4000/${request.profile_picture}`}
+                src={`${apiCtx.url}/${request.profile_picture}`}
                 alt={request.username}
               />
             )}
@@ -101,7 +102,7 @@ const Requests = ({ socket }) => {
         }
       }
       if (data.action === 'ACCEPT_REQUEST') {
-        if (data.data.receiver_id === authCtx.user.user_id) {
+        if (data.data.result.receiver_id === authCtx.user.user_id) {
           newAcceptedRequest(data.data);
         }
       }

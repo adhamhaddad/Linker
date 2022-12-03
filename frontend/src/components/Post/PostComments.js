@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import CommentCard from './CommentCard';
-import classes from '../../css/CommentsBox.module.css';
+import classes from '../../css/PostCommments.module.css';
 
-const CommentsBox = ({ comments, post_user_id, onHide, onChangeComment }) => {
+const PostCommments = ({ comments, post_user_id, onHide, onChangeComment }) => {
   const commentsList =
     comments.length &&
     comments
@@ -32,6 +32,7 @@ const CommentsBox = ({ comments, post_user_id, onHide, onChangeComment }) => {
           top: document.querySelector('#post-bottom').offsetTop,
           behavior: 'smooth'
         });
+        
   }, []);
 
   return (
@@ -44,4 +45,4 @@ const CommentsBox = ({ comments, post_user_id, onHide, onChangeComment }) => {
     </div>
   );
 };
-export default CommentsBox;
+export default PostCommments;

@@ -4,7 +4,7 @@ import useHttp from '../../hooks/use-http';
 import Modal from '../Modal';
 import classes from '../../css/PostContent.module.css';
 
-const PostContent = ({ content, post_id, isEdit }) => {
+const PostContent = ({ onClick, content, post_id, isEdit }) => {
   const authCtx = useContext(AuthenticateContext);
   const { isLoading, isError, sendRequest } = useHttp();
   const [contentStatus, setContentStatus] = useState(false);
@@ -27,7 +27,7 @@ const PostContent = ({ content, post_id, isEdit }) => {
     });
   };
   return (
-    <>
+    <div onClick={onClick}>
       {contentStatus && (
         <>
           <Modal onClick={viewContent}>
@@ -68,7 +68,7 @@ const PostContent = ({ content, post_id, isEdit }) => {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 export default PostContent;

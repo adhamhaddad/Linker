@@ -51,7 +51,7 @@ const Information = ({ windowSize }) => {
     const formData = new FormData();
     formData.append('user_id', authCtx.user.user_id);
     formData.append('profile', pickedImage);
-    fetch('http://192.168.1.6:4000/profile-picture', {
+    fetch('http://192.168.1.6:4000/information', {
       method: 'PATCH',
       headers: { Authorization: `Bearer ${authCtx.accessToken}` },
       body: formData
@@ -60,7 +60,7 @@ const Information = ({ windowSize }) => {
 
   const saveStory = () => {
     sendRequest(
-      'user/information/story',
+      'information',
       'PATCH',
       {
         user_id: authCtx.user.user_id,
@@ -74,7 +74,7 @@ const Information = ({ windowSize }) => {
   };
   const saveRelation = () => {
     sendRequest(
-      'user/information/relationship',
+      'information',
       'PATCH',
       {
         user_id: authCtx.user.user_id,
@@ -92,7 +92,7 @@ const Information = ({ windowSize }) => {
 
   const saveLocation = () => {
     sendRequest(
-      'user/information/location',
+      'information',
       'PATCH',
       {
         user_id: authCtx.user.user_id,
@@ -108,7 +108,7 @@ const Information = ({ windowSize }) => {
 
   const saveBirthday = () => {
     sendRequest(
-      'user/information/birthday',
+      'information',
       'PATCH',
       {
         user_id: authCtx.user.user_id,
@@ -123,7 +123,7 @@ const Information = ({ windowSize }) => {
 
   const saveJobTitle = () => {
     sendRequest(
-      'user/information/job-title',
+      'information',
       'PATCH',
       {
         user_id: authCtx.user.user_id,
@@ -138,7 +138,7 @@ const Information = ({ windowSize }) => {
 
   const saveEducation = () => {
     sendRequest(
-      'user/information/education',
+      'information',
       'PATCH',
       {
         user_id: authCtx.user.user_id,
@@ -182,7 +182,7 @@ const Information = ({ windowSize }) => {
 
   useEffect(() => {
     sendRequest(
-      `user/information?username=${authCtx.user.username}`,
+      `information?username=${authCtx.user.username}`,
       'GET',
       {},
       (data) => setInformationData({ ...(data == null ? '' : data) })

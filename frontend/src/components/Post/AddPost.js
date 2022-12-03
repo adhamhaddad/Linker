@@ -1,24 +1,28 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import Modal from '../Modal';
+import useHttp from '../../hooks/use-http';
+import AuthenticateContext from '../../utils/authentication';
+import apiUrlContext from '../../utils/api-urls';
 import classes from '../../css/AddPost.module.css';
 
-const AddPost = ({
-  user_id,
-  profile,
-  first_name,
-  last_name,
-  onCreatePost,
-  onClosePost
-}) => {
+const AddPost = ({ profile, onClosePost }) => {
   const caption = useRef('');
   const img = useRef('');
   const video = useRef('');
+  const apiCtx = useContext(apiUrlContext);
+  const authCtx = useContext(AuthenticateContext);
+  const { isLoading, isError, sendRequest } = useHttp();
 
-  const postFormHandler = (e) => {
+  const createPost = (data) => {
+    sendRequest('posts', 'POST', data, null);
+  };
+
+  const onFormSubmit = (e) => {
     e.preventDefault();
     const captionValue = caption.current.value;
     const imgValue = img.current.value;
     const videoValue = video.current.value;
+
     if (
       captionValue.trim().length == 0 &&
       img.trim().length == 0 &&
@@ -26,8 +30,9 @@ const AddPost = ({
     ) {
       return;
     }
-    onCreatePost({
-      user_id: user_id,
+
+    createPost({
+      user_id: authCtx.user.user_id,
       post_caption: captionValue,
       post_img: imgValue,
       post_video: videoValue
@@ -41,21 +46,18 @@ const AddPost = ({
         <div className={classes['create-post__header']}>
           <div className={classes['profile-picture']}>
             {profile !== null && profile.length > 0 && (
-              <img
-                crossOrigin='anonymous'
-                src={`http://192.168.1.6:4000/${profile}`}
-              />
+              <img crossOrigin='anonymous' src={`${apiCtx.url}/${profile}`} />
             )}
           </div>
           <h4 className={classes.username}>
-            {first_name} {last_name}
+            {authCtx.user.first_name} {authCtx.user.last_name}
           </h4>
           <button className={classes['discard-button']} onClick={onClosePost}>
             discard
           </button>
         </div>
 
-        <form method='POST' onSubmit={postFormHandler}>
+        <form method='POST' onSubmit={onFormSubmit}>
           <div className={classes['create-post__content']}>
             <textarea
               type='text'

@@ -53,8 +53,8 @@ const Account = ({ user_id }) => {
     last_name: '',
     username: '',
     email: '',
-    password: '',
-    gender: ''
+    gender: '',
+    changed: ''
   });
   const { isLoading, isError, sendRequest } = useHttp();
   const windowCtx = useContext(WindowContext);
@@ -99,7 +99,12 @@ const Account = ({ user_id }) => {
     setAccountData((prev) => ({ ...prev, last_name: e.target.value }));
   };
   useEffect(() => {
-    sendRequest(`users?username=${authCtx.user.username}`, 'GET', {}, setAccountData);
+    sendRequest(
+      `user-account?username=${authCtx.user.username}`,
+      'GET',
+      {},
+      setAccountData
+    );
   }, []);
   return (
     <section className={classes.sections}>
@@ -158,9 +163,15 @@ const Account = ({ user_id }) => {
         <div>
           <label htmlFor='password'>Password</label>
           <input
-            type='password'
-            value={accountForm.password}
+            type='text'
+            value={`Last changed ${new Date(accountData.changed).toLocaleString(
+              'en-US',
+              {
+                dateStyle: 'full'
+              }
+            )}`}
             onChange={onChangeHandler}
+            disabled
           />
         </div>
         <div>
