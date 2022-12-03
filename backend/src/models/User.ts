@@ -6,7 +6,7 @@ class User {
   async createUser(u: Users, i: Info): Promise<Users> {
     try {
       const connection = await database.connect();
-      const sql = `
+      const createUser_SQL = `
       INSERT INTO users
       (first_name, last_name, username, email, gender, joined)
       VALUES
@@ -14,15 +14,7 @@ class User {
       RETURNING
       user_id, first_name, last_name, username, email, gender, joined
       `;
-      const result = await connection.query(sql, [
-        u.first_name.toLowerCase().trim(),
-        u.last_name.toLowerCase().trim(),
-        u.username.toLowerCase().trim(),
-        u.email.toLowerCase(),
-        u.gender.toLowerCase(),
-        new Date()
-      ]);
-      const createInfo = `
+      const createInfo_SQL = `
       INSERT INTO information
       (
         user_id, job_title,
@@ -32,28 +24,39 @@ class User {
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *
       `;
-      const infoResult = await connection.query(createInfo, [
-        result.rows[0].user_id,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ]);
-      const createProfile = `
+      const createProfile_SQL = `
       INSERT INTO pictures
       (user_id, timedate, profile_picture )
       VALUES
       ($1, $2, $3)
       `;
-      const profileResult = await connection.query(createProfile, [
-        result.rows[0].user_id,
+
+      const createUser_result = await connection.query(createUser_SQL, [
+        u.first_name.toLowerCase().trim(),
+        u.last_name.toLowerCase().trim(),
+        u.username.toLowerCase().trim(),
+        u.email.toLowerCase(),
+        u.gender.toLowerCase(),
+        new Date()
+      ]);
+      // Create Information ROW
+      await connection.query(createInfo_SQL, [
+        createUser_result.rows[0].user_id,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]);
+      // Create Profile Picture ROW
+      await connection.query(createProfile_SQL, [
+        createUser_result.rows[0].user_id,
         null,
         null
       ]);
       connection.release();
-      return result.rows[0];
+      return createUser_result.rows[0];
     } catch (err) {
       if ((err as Error).message.includes('duplicate key')) {
         throw new Error(
@@ -79,8 +82,15 @@ class User {
   async getUser(username: string): Promise<Users> {
     try {
       const connection = await database.connect();
-      const sql =
-        'SELECT user_id, username, first_name, last_name, email, gender, joined FROM users WHERE username=$1';
+      const sql = `
+      SELECT DISTINCT
+      u.user_id, u.username, u.first_name, u.last_name, u.email, u.gender, u.joined,
+      i.job_title, i.relationship, i.education, i.location, i.story,
+      p.profile_picture
+      FROM users u, pictures p, information i
+      WHERE
+      p.user_id=u.user_id AND i.user_id=u.user_id AND u.username=$1
+      `;
       const result = await connection.query(sql, [username]);
       connection.release();
       return result.rows[0];
@@ -89,69 +99,39 @@ class User {
     }
   }
 
-  //! Not Done
-  async updateUser(u: Users): Promise<Users> {
+  async getUserAccount(username: string): Promise<Users[] | {}> {
     try {
       const connection = await database.connect();
-      const sql =
-        'UPDATE users SET username=$2, email=$3, password=$4, gender=$5 WHERE user_id=$($1) RETURNING user_id, username, email, gender';
+      const userSQL = `SELECT user_id, username, first_name, last_name, email, gender, joined FROM users WHERE username=$1`;
+      const passSQL = 'SELECT changed FROM passwords WHERE user_id=$1';
+      const user_result = await connection.query(userSQL, [username]);
+      const pass_result = await connection.query(passSQL, [
+        user_result.rows[0].user_id
+      ]);
+      connection.release();
+      return { ...user_result.rows[0], ...pass_result.rows[0] };
+    } catch (err) {
+      throw new Error(`Could not get user. Error ${(err as Error).message}`);
+    }
+  }
+
+  async updateUser(u: Users): Promise<Users[]> {
+    try {
+      const connection = await database.connect();
+      const sql = `
+        UPDATE users SET 
+        ${Object.keys(u)[1]}=$2
+        WHERE user_id=$1 RETURNING
+        ${Object.keys(u)[1]}
+      `;
       const result = await connection.query(sql, [
         u.user_id,
-        u.username,
-        u.email,
-        u.gender
+        Object.keys(u)[1]
       ]);
       connection.release();
       return result.rows[0];
     } catch (err) {
       throw new Error(`Could not update user. Error ${(err as Error).message}`);
-    }
-  }
-
-  async updateFname(u: Users) {
-    try {
-      const connection = await database.connect();
-      const sql = 'UPDATE information SET fname=$2 WHERE username=$1';
-      const result = await connection.query(sql, [
-        u.username,
-        u.first_name.toLowerCase()
-      ]);
-      connection.release();
-      return result.rows[0];
-    } catch (err) {
-      throw new Error(
-        `Could not update the first name. Error ${(err as Error).message}`
-      );
-    }
-  }
-  async updateLname(u: Users): Promise<Users> {
-    try {
-      const connection = await database.connect();
-      const sql = 'UPDATE users SET last_name=$2 WHERE user_id=$1';
-      const result = await connection.query(sql, [
-        u.user_id,
-        u.last_name.toLowerCase()
-      ]);
-      connection.release();
-      return result.rows[0];
-    } catch (err) {
-      throw new Error(
-        `Could not update the last name. Error ${(err as Error).message}`
-      );
-    }
-  }
-
-  async updatePhone(u: Users): Promise<Users> {
-    try {
-      const connection = await database.connect();
-      const sql = 'UPDATE users SET phone_number=$2 WHERE user_id=$1';
-      const result = await connection.query(sql, [u.user_id, u.phone_number]);
-      connection.release();
-      return result.rows[0];
-    } catch (err) {
-      throw new Error(
-        `Could not update the last name. Error ${(err as Error).message}`
-      );
     }
   }
 

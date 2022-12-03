@@ -52,7 +52,6 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const getAllUsers = async (_req: Request, res: Response) => {
-
   try {
     const response = await user.getAllUsers();
     res.status(200).json({
@@ -83,7 +82,21 @@ const getUser = async (req: Request, res: Response) => {
     });
   }
 };
-
+const getUserAccount = async (req: Request, res: Response) => {
+  try {
+    const response = await user.getUserAccount(req.query.username as string);
+    res.status(200).json({
+      status: true,
+      data: response,
+      message: 'User account retrieved successfully!'
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: false,
+      message: (err as Error).message
+    });
+  }
+};
 const updateUser = async (req: Request, res: Response) => {
   try {
     const response = await user.updateUser(req.body);
@@ -156,6 +169,7 @@ const user_controller_routes = (app: Application, logger: NextFunction) => {
   app.get('/users', logger, verifyToken, getAllUsers);
   app.patch('/users', logger, verifyToken, updateUser);
   app.delete('/users', logger, verifyToken, deleteUser);
+  app.get('/user-account', logger, verifyToken, getUserAccount);
   app.post('/search', logger, verifyToken, searchByName);
   app.post('/search/:username', logger, verifyToken, searchByUsername);
 };

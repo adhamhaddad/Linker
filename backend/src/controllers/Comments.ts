@@ -1,12 +1,14 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import verifyToken from '../middlewares/verifyToken';
 import Comments from '../models/Comment';
+import { io } from '../server';
 
 const comment = new Comments();
 
-const addcomment = async (req: Request, res: Response) => {
+const createComment = async (req: Request, res: Response) => {
   try {
     const response = await comment.createComment(req.body);
+    io.emit('comments', { action: 'CREATE_COMMENT', data: { ...response } });
     res.status(201).json({
       status: true,
       data: { ...response },
@@ -26,7 +28,7 @@ const getAllComments = async (req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: response,
-      message: 'Retrieved the all Comments successfully!'
+      message: 'Retrieved the all comments successfully!'
     });
   } catch (err) {
     res.status(400).json({
@@ -37,10 +39,12 @@ const getAllComments = async (req: Request, res: Response) => {
 };
 const updateComment = async (req: Request, res: Response) => {
   try {
-    await comment.updateComment(req.body);
+    const response = await comment.updateComment(req.body);
+    io.emit('comments', { action: 'UPDATE_COMMENT', data: { ...response } });
     res.status(200).json({
       status: true,
-      message: 'Comment deleted successfully!'
+      data: { ...response },
+      message: 'Comment updated successfully!'
     });
   } catch (err) {
     res.status(400).json({
@@ -53,6 +57,7 @@ const updateComment = async (req: Request, res: Response) => {
 const deleteComment = async (req: Request, res: Response) => {
   try {
     const response = await comment.deleteComment(req.body.comment_id);
+    io.emit('comments', { action: 'DELETE_COMMENT', data: { ...response } });
     res.status(200).json({
       status: true,
       data: { ...response },
@@ -67,9 +72,9 @@ const deleteComment = async (req: Request, res: Response) => {
 };
 
 const comments_controller_routes = (app: Application, logger: NextFunction) => {
-  app.post('/post/comment', logger, verifyToken, addcomment);
-  app.get('/post/comments', logger, verifyToken, getAllComments);
-  app.patch('/post/comments', logger, verifyToken, updateComment);
-  app.delete('/post/comment', logger, verifyToken, deleteComment);
+  app.post('/comment', logger, verifyToken, createComment);
+  app.get('/comments', logger, verifyToken, getAllComments);
+  app.patch('/comments', logger, verifyToken, updateComment);
+  app.delete('/comment', logger, verifyToken, deleteComment);
 };
 export default comments_controller_routes;

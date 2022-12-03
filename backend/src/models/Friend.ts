@@ -18,14 +18,13 @@ class Friend {
         new Date(),
         0
       ]);
-      const user_id = add_friend_result.rows[0].sender_id;
       const friend_SQL = `
       SELECT DISTINCT u.user_id, p.profile_picture, u.username, u.first_name, u.last_name
       FROM users u, pictures p
       WHERE
       p.user_id=$1 AND u.user_id=$1
       `;
-      const friend_result = await connection.query(friend_SQL, [user_id]);
+      const friend_result = await connection.query(friend_SQL, [f.sender_id]);
       connection.release();
       return { ...add_friend_result.rows[0], ...friend_result.rows[0] };
     } catch (err) {
@@ -126,7 +125,6 @@ class Friend {
 
   //! In this case I'am receiver_id
   async acceptFriend(f: Friends): Promise<Friends[] | {}> {
-    
     try {
       const connection = await database.connect();
       const accept_friend_SQL = `
@@ -141,19 +139,37 @@ class Friend {
         f.receiver_id,
         new Date()
       ]);
-      const accepted_user_SQL = `
+      const user_SQL = `
         SELECT DISTINCT u.user_id, p.profile_picture, u.username, u.first_name, u.last_name
         FROM users u, pictures p
         WHERE
         p.user_id=$1 AND u.user_id=$1
         `;
-      const accepted_user_result = await connection.query(accepted_user_SQL, [
+      const sender_user_result = await connection.query(user_SQL, [
         f.sender_id
       ]);
+      const receiver_user_result = await connection.query(user_SQL, [
+        f.receiver_id
+      ]);
       connection.release();
+      const sender_user = {
+        username: sender_user_result.rows[0].username,
+        user_id: sender_user_result.rows[0].user_id,
+        profile_picture: sender_user_result.rows[0].profile_picture,
+        first_name: sender_user_result.rows[0].first_name,
+        last_name: sender_user_result.rows[0].last_name
+      };
+      const receiver_user = {
+        username: receiver_user_result.rows[0].username,
+        user_id: receiver_user_result.rows[0].user_id,
+        profile_picture: receiver_user_result.rows[0].profile_picture,
+        first_name: receiver_user_result.rows[0].first_name,
+        last_name: receiver_user_result.rows[0].last_name
+      };
       return {
-        ...accepted_friend_result.rows[0],
-        ...accepted_user_result.rows[0]
+        result: { ...accepted_friend_result.rows[0] },
+        sender_user: sender_user,
+        receiver_user: receiver_user
       };
     } catch (err) {
       throw new Error(
@@ -189,8 +205,27 @@ class Friend {
       `;
 
       const result = await connection.query(sql, [f.sender_id, f.receiver_id]);
+      const user_SQL = 'SELECT user_id, username FROM users WHERE user_id=$1';
+      const sender_user_result = await connection.query(user_SQL, [
+        f.sender_id
+      ]);
+      const receiver_user_result = await connection.query(user_SQL, [
+        f.receiver_id
+      ]);
       connection.release();
-      return { ...result.rows[0], ...[f.sender_id], ...[f.receiver_id] };
+      const sender_user = {
+        user_id: sender_user_result.rows[0].user_id,
+        username: sender_user_result.rows[0].username
+      };
+      const receiver_user = {
+        user_id: receiver_user_result.rows[0].user_id,
+        username: receiver_user_result.rows[0].username
+      };
+      return {
+        result: { ...result.rows[0] },
+        sender_user: sender_user,
+        receiver_user: receiver_user
+      };
     } catch (err) {
       throw new Error(
         `Could not delete the friend. Error ${(err as Error).message}`
