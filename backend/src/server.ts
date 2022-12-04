@@ -13,6 +13,7 @@ import comments_controller_routes from './controllers/Comments';
 import shares_controller_routes from './controllers/Shares';
 import password_controller_routes from './controllers/Passwords';
 import profile_controller_routes from './controllers/Picture';
+import theme_controller_routes from './controllers/Themes';
 import configs from './configs';
 import os from 'os';
 import path from 'path';
@@ -56,6 +57,7 @@ comments_controller_routes(app, logger as NextFunction);
 shares_controller_routes(app, logger as NextFunction);
 password_controller_routes(app, logger as NextFunction);
 profile_controller_routes(app, logger as NextFunction);
+theme_controller_routes(app, logger as NextFunction);
 // Express Server
 
 const server = app.listen(port, () => {

@@ -15,6 +15,7 @@ import classes from '../css/Profile.module.css';
 
 const Profile = ({ socket }) => {
   const [user, setUser] = useState({});
+  const [theme, setTheme] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [friendsList, setFriendsList] = useState([]);
   const [checkFriend, setCheckFriend] = useState({
@@ -53,6 +54,10 @@ const Profile = ({ socket }) => {
       {},
       setFriendsList
     );
+  };
+  // GET USER THEME
+  const getUserTheme = () => {
+    sendRequest(`theme?username=${params.username}`, 'GET', {}, setTheme);
   };
   const getUserPosts = () => {
     sendRequest(
@@ -222,6 +227,8 @@ const Profile = ({ socket }) => {
     getUser();
     getFriends();
     getUserPosts();
+    getUserTheme();
+
     if (params.username !== authCtx.user.username) {
       checkIsFriend();
     }
@@ -299,108 +306,122 @@ const Profile = ({ socket }) => {
         }
       }
     });
+    return () => {
+      setUser({});
+      setTheme({});
+      setFriendsList([]);
+      setUserPosts([]);
+    };
   }, [params]);
 
   return (
     <>
-      <Container className='profile'>
-        <section className={classes['information-section']}>
-          <div className={classes['user-id']}>
-            <ProfilePicture
-              isLoading={isLoading}
-              user_id={user.user_id}
-              profile_picture={user.profile_picture}
-            />
-            <span className={classes.username}>
-              {user.first_name} {user.last_name}
-            </span>
-          </div>
-          {!isLoading && authCtx.user.username !== params.username && (
-            <div className={classes['request-actions']}>
-              {checkFriend.isFriend === true && (
-                <>
-                  <Link
-                    to={`/messages/${user.username}`}
-                    className={`${classes['friend-actions']} ${classes['message-friend']}`}
-                  >
-                    <span>Message</span>
-                    <i className='fa-solid fa-comment'></i>
-                  </Link>
-                  <button
-                    className={classes['friend-actions']}
-                    onClick={deleteFriend}
-                  >
-                    <span>Remove</span>
-                    <i className='fa-solid fa-user-xmark'></i>
-                  </button>
-                </>
-              )}
-
-              {checkFriend.isFriend === false &&
-                authCtx.user.user_id === checkFriend.receiver_id && (
+      <Container>
+        <div
+          className={classes['profile']}
+          style={{
+            backgroundColor:
+              !isLoading && isError === null && theme.profile_cover
+          }}
+        >
+          <section className={classes['information-section']}>
+            <div className={classes['user-id']}>
+              <ProfilePicture
+                isLoading={isLoading}
+                user_id={user.user_id}
+                profile_picture={user.profile_picture}
+              />
+              <span className={classes.username}>
+                {user.first_name} {user.last_name}
+              </span>
+            </div>
+            {!isLoading && authCtx.user.username !== params.username && (
+              <div className={classes['request-actions']}>
+                {checkFriend.isFriend === true && (
                   <>
+                    <Link
+                      to={`/messages/${user.username}`}
+                      className={`${classes['friend-actions']} ${classes['message-friend']}`}
+                    >
+                      <span>Message</span>
+                      <i className='fa-solid fa-comment'></i>
+                    </Link>
                     <button
                       className={classes['friend-actions']}
-                      onClick={acceptRequest}
+                      onClick={deleteFriend}
                     >
-                      <span>Accept Request</span>
-                      <i className='fa-solid fa-user-check'></i>
-                    </button>
-
-                    <button
-                      className={classes['friend-actions']}
-                      onClick={ignoreRequest}
-                    >
-                      <span>Ignore Request</span>
+                      <span>Remove</span>
                       <i className='fa-solid fa-user-xmark'></i>
                     </button>
                   </>
                 )}
-              {checkFriend.isFriend === false &&
-                authCtx.user.user_id === checkFriend.sender_id && (
+
+                {checkFriend.isFriend === false &&
+                  authCtx.user.user_id === checkFriend.receiver_id && (
+                    <>
+                      <button
+                        className={classes['friend-actions']}
+                        onClick={acceptRequest}
+                      >
+                        <span>Accept Request</span>
+                        <i className='fa-solid fa-user-check'></i>
+                      </button>
+
+                      <button
+                        className={classes['friend-actions']}
+                        onClick={ignoreRequest}
+                      >
+                        <span>Ignore Request</span>
+                        <i className='fa-solid fa-user-xmark'></i>
+                      </button>
+                    </>
+                  )}
+                {checkFriend.isFriend === false &&
+                  authCtx.user.user_id === checkFriend.sender_id && (
+                    <button
+                      className={classes['friend-actions']}
+                      onClick={cancelRequest}
+                    >
+                      <span>Cancel Request</span>
+                      <i className='fa-solid fa-user-xmark'></i>
+                    </button>
+                  )}
+
+                {checkFriend.isFriend === null && (
                   <button
                     className={classes['friend-actions']}
-                    onClick={cancelRequest}
+                    onClick={friendRequest}
                   >
-                    <span>Cancel Request</span>
-                    <i className='fa-solid fa-user-xmark'></i>
+                    <span>Add Friend</span>
+                    <i className='fa-solid fa-user-plus'></i>
                   </button>
                 )}
-
-              {checkFriend.isFriend === null && (
-                <button
-                  className={classes['friend-actions']}
-                  onClick={friendRequest}
-                >
-                  <span>Add Friend</span>
-                  <i className='fa-solid fa-user-plus'></i>
-                </button>
-              )}
-            </div>
-          )}
-          {!isLoading && isError === null && (
-            <ProfileInformation
-              isLoading={isLoading}
-              job_title={user.job_title}
-              relationship={user.relationship}
-              education={user.education}
-              location={user.location}
-            />
-          )}
-        </section>
-        {!isLoading && isError === null && user.story !== null && (
-          <section className={classes['story-section']}>
-            <ProfileStory story={user.story} />
+              </div>
+            )}
+            {!isLoading && isError === null && (
+              <ProfileInformation
+                isLoading={isLoading}
+                job_title={user.job_title}
+                relationship={user.relationship}
+                education={user.education}
+                location={user.location}
+              />
+            )}
           </section>
-        )}
-        <section className={classes['friends-section']}>
-          <Friends
-            friendsList={friendsList}
-            onDeleteFriend={deleteFriend}
-            isLoading={isLoading}
-            isError={isError}
-          />
-        </section>
+          {!isLoading && isError === null && user.story !== null && (
+            <section className={classes['story-section']}>
+              <ProfileStory story={user.story} />
+            </section>
+          )}
+          <section className={classes['friends-section']}>
+            <Friends
+              friendsList={friendsList}
+              onDeleteFriend={deleteFriend}
+              isLoading={isLoading}
+              isError={isError}
+            />
+          </section>
+        </div>
       </Container>
 
       <Container className='posts'>

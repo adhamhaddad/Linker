@@ -53,7 +53,7 @@ const Signin = () => {
   };
 
   const authenticationHandler = (data) => {
-    authContext.onLogin(data.token, data.user);
+    authContext.onLogin(data.token, data.user, data.theme);
     history.replace(`/profile/${data.user.username}`);
   };
 

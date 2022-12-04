@@ -1,0 +1,11 @@
+.theme {
+    background-color: var(--base-color-light);
+    height: 100%;
+}
+.theme div {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: space-between;
+    font-size: 14px;
+}

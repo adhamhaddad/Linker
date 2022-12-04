@@ -12,6 +12,7 @@ import Conversation from './Messages/Conversation';
 import UnderDevelopment from '../pages/NotAvailable';
 import Requests from '../pages/Requests';
 import Post from '../pages/Post';
+import Theme from '../pages/Theme';
 import classes from '../css/Main.module.css';
 
 const Main = ({ user_id, username, windowSize, socket }) => {
@@ -114,9 +115,11 @@ const Main = ({ user_id, username, windowSize, socket }) => {
         <Route path='/settings/help/:phone-screen' exact>
           <UnderDevelopment />
         </Route>
-
+        <Route path='/settings/theme/:phone-screen' exact>
+          <Theme />
+        </Route>
         <Route path='/:username/:post_id' exact>
-          <Post socket={socket}/>
+          <Post socket={socket} />
         </Route>
       </Switch>
     </main>

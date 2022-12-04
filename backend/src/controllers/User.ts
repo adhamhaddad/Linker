@@ -4,7 +4,6 @@ import User from '../models/User';
 import Passwords from '../models/Password';
 import config from '../configs';
 import verifyToken from '../middlewares/verifyToken';
-import searchValidation from '../middlewares/searchHandler';
 import nodemailer from 'nodemailer';
 
 const user = new User();
@@ -23,10 +22,7 @@ const transporter = nodemailer.createTransport(
 const createUser = async (req: Request, res: Response) => {
   try {
     const response = await user.createUser(req.body, req.body);
-    const password = await passwords.createPassword(
-      response.user_id as string,
-      req.body.password
-    );
+    await passwords.createPassword({ ...response, ...req.body.password });
     const token = jwt.sign({ response }, config.token as string);
     res.status(201).json({
       status: true,

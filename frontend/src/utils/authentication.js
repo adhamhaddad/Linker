@@ -15,14 +15,18 @@ export const Authentication = (props) => {
     first_name: localStorage.getItem('first_name'),
     last_name: localStorage.getItem('first_name')
   });
+  const [theme, setTheme] = useState({
+    profile_cover: localStorage.getItem('profile_cover')
+  });
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem('accessToken')
   );
   const isUserLoggedIn = !!accessToken;
 
-  const loginHandler = (token, user) => {
+  const loginHandler = (token, user, theme) => {
     setAccessToken(token);
     setUser(user);
+    setTheme(theme);
 
     localStorage.setItem('user_id', user.user_id);
     localStorage.setItem(
@@ -33,6 +37,7 @@ export const Authentication = (props) => {
     localStorage.setItem('first_name', user.first_name);
     localStorage.setItem('last_name', user.last_name);
     localStorage.setItem('accessToken', token);
+    localStorage.setItem('profile_cover', theme.profile_cover);
   };
   const logoutHandler = () => {
     setAccessToken(null);
@@ -42,9 +47,11 @@ export const Authentication = (props) => {
     localStorage.removeItem('username');
     localStorage.removeItem('first_name');
     localStorage.removeItem('last_name');
+    localStorage.removeItem('profile_cover');
   };
   const contextValue = {
     user: user,
+    theme: theme,
     accessToken: accessToken,
     isLoggedIn: isUserLoggedIn,
     onLogin: loginHandler,

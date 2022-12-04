@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, NavLink } from 'react-router-dom';
 import Container from '../components/UI/Container';
 import Information from './Information';
+import Theme from './Theme';
 import Account from './Account';
 import UnderDevelopment from './NotAvailable';
 import classes from '../css/Settings.module.css';
@@ -86,6 +87,21 @@ function Settings({ windowSize }) {
               activeClassName={classes.active}
               to={
                 windowSize <= 600
+                  ? '/settings/theme/phone-screen'
+                  : '/settings/theme'
+              }
+              title='Theme'
+            >
+              <i className='fa-solid fa-image'></i>
+              theme
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              activeClassName={classes.active}
+              to={
+                windowSize <= 600
                   ? '/settings/account/phone-screen'
                   : '/settings/account'
               }
@@ -127,6 +143,9 @@ function Settings({ windowSize }) {
           </Route>
           <Route path='/settings/language' exact>
             <UnderDevelopment color='light' />
+          </Route>
+          <Route path='/settings/theme' exact>
+            <Theme windowSize={windowSize} />
           </Route>
           <Route path='/settings/account' exact>
             <Account windowSize={windowSize} />

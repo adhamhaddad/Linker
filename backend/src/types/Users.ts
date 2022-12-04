@@ -9,5 +9,6 @@ type Users = {
   password: string;
   gender: string;
   joined: string;
+  current_password: string;
 };
 export default Users;
