@@ -2,14 +2,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import AuthenticateContext from '../utils/authentication';
 import useHttp from '../hooks/use-http';
-import Post from '../components/Post/PostCard';
-import AddPost from '../components/Post/AddPost';
+import PostCard from '../components/Post/PostCard';
 import ProfileInformation from '../components/ProfileInformation';
 import ProfileStory from '../components/ProfileStory';
 import Container from '../components/UI/Container';
 import ProfilePicture from '../components/ProfilePicture';
 import Friends from './Friends';
 import SpinnerLoading from '../components/Loading/Spinner';
+import PostBox from '../components/Post/PostBox';
 import Error from '../components/Error';
 import classes from '../css/Profile.module.css';
 
@@ -22,14 +22,9 @@ const Profile = ({ socket }) => {
     sender_id: null,
     receiver_id: null
   });
-  const [postPort, setPostPort] = useState(false);
   const { isLoading, isError, sendRequest } = useHttp();
   const authCtx = useContext(AuthenticateContext);
   const params = useParams();
-
-  const closePostPort = () => {
-    setPostPort((prev) => !prev);
-  };
 
   // TRANSFORM POSTS
   const transformPosts = (data) => {
@@ -202,7 +197,7 @@ const Profile = ({ socket }) => {
     userPosts
       .map((post) => {
         return (
-          <Post
+          <PostCard
             user_id={authCtx.user.user_id}
             username={authCtx.user.username}
             first_name={authCtx.user.first_name}
@@ -409,20 +404,7 @@ const Profile = ({ socket }) => {
       </Container>
 
       <Container className='posts'>
-        {authCtx.user.username == params.username && (
-          <button
-            className={classes['create-post-btn']}
-            onClick={closePostPort}
-          >
-            Create a post
-          </button>
-        )}
-        {postPort && (
-          <AddPost
-            profile={user.profile_picture}
-            onClosePost={closePostPort}
-          />
-        )}
+        {authCtx.user.username == params.username && <PostBox />}
         {posts.length > 0 && posts}
       </Container>
       {isLoading && <SpinnerLoading color='dark' />}

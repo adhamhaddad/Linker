@@ -6,9 +6,9 @@ import classes from '../../css/PostContent.module.css';
 
 const PostContent = ({ onClick, content, post_id, isEdit }) => {
   const authCtx = useContext(AuthenticateContext);
-  const { isLoading, isError, sendRequest } = useHttp();
+  const { sendRequest } = useHttp();
   const [contentStatus, setContentStatus] = useState(false);
-  const [editCaption, setEditCaption] = useState(content.caption);
+  const [editCaption, setEditCaption] = useState();
 
   const viewContent = () => {
     setContentStatus((prev) => (prev ? false : true));

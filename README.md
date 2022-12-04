@@ -44,9 +44,9 @@ SECRET_PEPER=thor-thunder
 
 2. Second to install the node_modules run `npm install` or `yarn`. After installation is done start the api in dev mode with `npm run dev` or `yarn dev`.
 
-3. Without closing the terminal in step 1, navigate to the frontend `cd frontend` to intall the node_modules `npm install` or `yarn`. After installation is done start the api in dev mode with `npm run start` or `yarn start`.
+3. Third without closing the terminal in step 2, navigate to the frontend `cd frontend` to intall the node_modules `npm install` or `yarn`. After installation is done start the frontend server with `npm run start` or `yarn start`.
 
-Note: open `Linker/frontend/src/hooks/use-http.js`
+Note: open `Linker/frontend/src/utils/api-urls.js`
 
 ## Unit Tests:
 

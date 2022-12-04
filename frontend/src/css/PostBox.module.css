@@ -1,0 +1,63 @@
+.post-box {
+    width: 500px;
+    border-radius: 2px;
+    padding: 10px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--base-color-dark);
+    justify-content: space-between;
+}
+
+.post-box .profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-image: url(../images/anonymous_user.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-right: 10px;
+}
+
+.post-box .profile img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.post-box .create-post-btn {
+    font-size: 12px;
+    flex-grow: 1;
+    height: 40px;
+    line-height: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 20px;
+    color: var(--base-color-dark);
+    background-color: var(--base-color-light);
+    transition: .4s background, color ease-in-out;
+}
+
+.post-box .create-post-btn:hover {
+    background-color: rgb(250, 250, 250);
+    transition: .4s background ease-in-out;
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+    .post-box {
+        width: 100%;
+    }
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+    .post-box .profile {
+        width: 45px;
+        height: 45px;
+    }
+}

@@ -26,7 +26,8 @@ const Friends = ({ friendsList, onDeleteFriend, isLoading, isError }) => {
           <div className={classes['profile-picture']}>
             {!isLoading &&
               isError === null &&
-              friend.profile_picture !== null && (
+              friend.profile_picture !== null &&
+              friend.profile_picture.length > 0 && (
                 <img
                   crossOrigin='anonymous'
                   src={`${apiCtx.url}/${friend.profile_picture}`}
@@ -64,7 +65,7 @@ const Friends = ({ friendsList, onDeleteFriend, isLoading, isError }) => {
             listSize ? classes.max : classes.min
           }`}
         >
-          {List}
+          {List.length > 0 && List}
         </ul>
       )}
     </section>

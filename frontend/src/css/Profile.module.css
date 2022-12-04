@@ -48,25 +48,6 @@
     border: 1px solid var(--base-color-light)
 }
 
-.create-post-btn {
-    font-size: 12px;
-    width: 200px;
-    height: 40px;
-    line-height: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    margin: 10px 0;
-    border: 1px solid var(--base-color-dark);
-    border-radius: 4px;
-    background-color: var(--base-color-light);
-    transition: .4s background, color ease-in-out;
-}
-
-.create-post-btn:hover {
-    background-color: var(--base-hover-color);
-    color: var(--base-color-light);
-    transition: .4s background, color ease-in-out;
-}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {}

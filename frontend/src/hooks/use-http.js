@@ -11,8 +11,6 @@ const useHttp = () => {
   const sendRequest = useCallback(async (url, method, body, responseData) => {
     try {
       setIsLoading(true);
-      //! IMPORTANT. replace 192.168.1.6 with your IP. you can find it in the terminal message
-      //! Keep the port to 4000. don't change it
       const response = await fetch(`${apiCtx.url}/${url}`, {
         method: method,
         headers: {

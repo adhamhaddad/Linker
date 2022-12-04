@@ -79,7 +79,16 @@ const Post = ({ socket }) => {
 
   useEffect(() => {
     getPost();
+    socket.on('post_likes', (data) => {
+      if (data.action === 'SET_LIKE') {
+        console.log(data.data);
+      }
+      if (data.action === 'UNSET_LIKE') {
+        console.log(data.data);
+      }
+    });
   }, [params]);
+
   return (
     <div className={classes['post']}>
       {isLoading && isError === null && 'Loading'}
@@ -118,10 +127,12 @@ const Post = ({ socket }) => {
               setSharesList={setSharesList}
               socket={socket}
             />
-            <PostCommments
-              comments={commentsList}
-              post_user_id={post.user_id}
-            />
+            {commentsList.length > 0 && (
+              <PostCommments
+                comments={commentsList}
+                post_user_id={post.user_id}
+              />
+            )}
           </section>
           {shares.length > 0 && (
             <section className={classes['shares-section']}>

@@ -3,8 +3,14 @@ import AuthenticateContext from '../../utils/authentication';
 import useHttp from '../../hooks/use-http';
 import classes from '../../css/PostBottom.module.css';
 
-const PostBottom = ({ post_id, likesList, setLikesList, socket }) => {
-  const [isLiked, setIsLiked] = useState(false);
+const PostBottom = ({
+  post_id,
+  likesList,
+  setLikesList,
+  setCommentList,
+  socket
+}) => {
+  const [isLiked, setIsLiked] = useState(null);
   const [commentContent, setCommentContent] = useState('');
   const commentContentRef = useRef();
   const authCtx = useContext(AuthenticateContext);
@@ -13,94 +19,46 @@ const PostBottom = ({ post_id, likesList, setLikesList, socket }) => {
   const commentContentHandler = (e) => {
     setCommentContent(e.target.value);
   };
-
-  const toggleLikehandler = () => {
-    if (likesList.length === 0) {
-      sendRequest(
-        'post/like',
-        'POST',
-        {
-          post_id: post_id,
-          user_id: authCtx.user.user_id
-        },
-        null
-      );
-      setLikesList((prev) => [
-        ...prev,
-        {
-          user_id: authCtx.user.user_id,
-          username: authCtx.user.username,
-          first_name: authCtx.user.first_name,
-          last_name: authCtx.user.last_name,
-          timedate: new Date()
-        }
-      ]);
-      setIsLiked(true);
-    } else {
-      likesList.map((like) => {
-        if (like.user_id === authCtx.user.user_id) {
-          sendRequest(
-            'post/like',
-            'DELETE',
-            {
-              post_id: post_id,
-              user_id: authCtx.user.user_id
-            },
-            null
-          );
-          setLikesList((prev) =>
-            prev.filter((like) => like.user_id !== authCtx.user.user_id)
-          );
-          setIsLiked(false);
-        } else {
-          sendRequest(
-            'post/like',
-            'POST',
-            {
-              post_id: post_id,
-              user_id: authCtx.user.user_id
-            },
-            null
-          );
-          setLikesList((prev) => [
-            ...prev,
-            {
-              user_id: authCtx.user.user_id,
-              username: authCtx.user.username,
-              first_name: authCtx.user.first_name,
-              last_name: authCtx.user.last_name,
-              timedate: new Date()
-            }
-          ]);
-          setIsLiked(true);
-        }
-      });
-    }
+  const checkIsLiked = () => {
+    sendRequest(
+      `post/like-check?post_id=${post_id}&user_id=${authCtx.user.user_id}`,
+      'GET',
+      {},
+      setIsLiked
+    );
   };
 
-  // const onSharePost = () => {
-  //   sendRequest(
-  //     'post/share',
-  //     'POST',
-  //     {
-  //       post_id: post_id,
-  //       user_id: authCtx.user.user_id
-  //     },
-  //     () => {
-  //       setSharesList((prev) => [
-  //         {
-  //           user_id: authCtx.user.user_id,
-  //           username: authCtx.user.username,
-  //           first_name: authCtx.user.first_name,
-  //           last_name: authCtx.user.last_name,
-  //           timedate: new Date()
-  //         },
-  //         ...prev
-  //       ]);
-  //     }
-  //   );
-  // };
-
+  // Like Handlers
+  const addLike = () => {
+    sendRequest(
+      'post/likes',
+      'POST',
+      {
+        post_id: post_id,
+        user_id: authCtx.user.user_id
+      },
+      null
+    );
+  };
+  const removeLike = () => {
+    sendRequest('post/likes', 'DELETE', { isLiked }, null);
+  };
+  const newLikeAdded = (data) => {
+    setLikesList((prev) => [...prev, data]);
+  };
+  const newLikeRemoved = (data) => {
+    setLikesList((prev) =>
+      prev.filter((like) => like.like_id !== data.like_id)
+    );
+  };
+  const likeHandler = () => {
+    if (isLiked.length) {
+      removeLike();
+    } else {
+      addLike();
+    }
+  };
+  // Comment Handlers
   const createComment = (e) => {
     e.preventDefault();
     if (commentContentRef.current.value.trim().length === 0) {
@@ -120,21 +78,43 @@ const PostBottom = ({ post_id, likesList, setLikesList, socket }) => {
     );
     setCommentContent('');
   };
-  const createShare = () => {
-    sendRequest(
-      'share',
-      'POST',
-      {
-        user_id: authCtx.user.user_id,
-        post_id: post_id
-      },
-      null
+  const newCommentAdded = (data) => {
+    setCommentList((prev) => [...prev, data]);
+  };
+  const newCommentUpdated = (data) => {
+    setCommentList((prev) =>
+      prev.map((comment) =>
+        comment.comment_id === data.comment_id
+          ? { ...comment, ...data }
+          : comment
+      )
     );
   };
+  const newCommentRemoved = (data) => {
+    setCommentList((prev) =>
+      prev.filter((comment) => comment.comment_id !== data.comment_id)
+    );
+  };
+
   useEffect(() => {
+    checkIsLiked();
     socket.on('comments', (data) => {
       if (data.action === 'CREATE_COMMENT') {
-        console.log(data.data);
+        newCommentAdded(data.data);
+      }
+      if (data.action === 'UPDATE_COMMENT') {
+        newCommentUpdated(data.data);
+      }
+      if (data.action === 'DELETE_COMMENT') {
+        newCommentRemoved(data.data);
+      }
+    });
+    socket.on('likes', (data) => {
+      if (data.action === 'SET_LIKE') {
+        newLikeAdded(data.data);
+      }
+      if (data.action === 'UNSET_LIKE') {
+        newLikeRemoved(data.data);
       }
     });
   }, []);
@@ -144,7 +124,7 @@ const PostBottom = ({ post_id, likesList, setLikesList, socket }) => {
       <button
         className={classes['like-button']}
         title='Like'
-        onClick={toggleLikehandler}
+        onClick={likeHandler}
       >
         {isLiked ? 'liked' : 'like'}
       </button>
@@ -170,9 +150,7 @@ const PostBottom = ({ post_id, likesList, setLikesList, socket }) => {
           </button>
         </form>
       </div>
-      <button title='Share' onClick={createShare}>
-        share
-      </button>
+      <button title='Share'>share</button>
     </div>
   );
 };

@@ -34,6 +34,7 @@
 
 .container.home {
     overflow-y: auto;
+    padding: 5px 0;
     background-color: var(--base-color-light);
 }
 
@@ -43,7 +44,9 @@
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
 }
-
+.container.posts {
+    padding: 5px 0;
+}
 .container.notifications {
     height: 100%;
 }

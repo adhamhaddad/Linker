@@ -11,7 +11,7 @@ const UserCard = ({ value }) => {
         to={`/profile/${value.username}`}
         className={classes['card-profile']}
       >
-        {value.profile_picture !== null && (
+        {value.profile_picture !== null && value.profile_picture.length > 0 && (
           <img
             crossOrigin='anonymous'
             src={`${apiCtx.url}/${value.profile_picture}`}

@@ -3,7 +3,8 @@ import useHttp from '../hooks/use-http';
 import Container from '../components/UI/Container';
 import Error from '../components/Error';
 import SpinnerLoading from '../components/Loading/Spinner';
-import Post from '../components/Post/PostCard';
+import PostCard from '../components/Post/PostCard';
+import PostBox from '../components/Post/PostBox';
 import classes from '../css/Home.module.css';
 
 const Home = ({ user_id, socket }) => {
@@ -63,7 +64,7 @@ const Home = ({ user_id, socket }) => {
     allPosts.length > 0 &&
     allPosts
       .map((post) => (
-        <Post
+        <PostCard
           user_id={user_id}
           post_id={post.post_id}
           post_user_id={post.user_id}
@@ -82,13 +83,15 @@ const Home = ({ user_id, socket }) => {
   return (
     <div className={classes['home-page']}>
       <Container className='home'>
-        {posts && posts}
         {!isLoading && isError === null && !posts && (
           <div className={classes['no-posts']}>
             <p>No posts found.</p>
             <p>please add friends to see there posts</p>
           </div>
         )}
+        <PostBox />
+
+        {posts && posts}
         {isLoading && <SpinnerLoading color='dark' />}
         {!isLoading && isError !== null && <Error message={isError} />}
       </Container>

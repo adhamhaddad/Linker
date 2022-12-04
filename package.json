@@ -6,10 +6,12 @@
     "frontend:build": "cd frontend && npm run build",
     "frontend:test": "cd frontend && npm run test",
     "frontend:deploy": "cd frontend && npm run deploy",
-    "backend:install": "cd backend && npm install .",
+    "backend:install": "cd backend && npm install",
     "backend:start": "cd backend && npm run dev",
     "backend:build": "cd backend && npm run build",
     "backend:deploy": "cd backend && npm run deploy",
-    "deploy": "npm run backend:deploy && npm run frontend:deploy"
+    "deploy": "npm run backend:deploy && npm run frontend:deploy",
+    "dev": "npm run frontend:install && npm run frontend:start && npm run backend:install && npm run backend:start",
+    "start": "npm run frontend:install && npm run "
   }
 }

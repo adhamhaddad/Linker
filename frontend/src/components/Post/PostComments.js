@@ -4,7 +4,7 @@ import classes from '../../css/PostCommments.module.css';
 
 const PostCommments = ({ comments, post_user_id, onHide, onChangeComment }) => {
   const commentsList =
-    comments.length &&
+    comments.length > 0 &&
     comments
       .map((comment) => {
         return (
@@ -32,7 +32,6 @@ const PostCommments = ({ comments, post_user_id, onHide, onChangeComment }) => {
           top: document.querySelector('#post-bottom').offsetTop,
           behavior: 'smooth'
         });
-        
   }, []);
 
   return (
