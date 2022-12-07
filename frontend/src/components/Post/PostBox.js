@@ -4,7 +4,7 @@ import apiUrlContext from '../../utils/api-urls';
 import AddPost from './AddPost';
 import classes from '../../css/PostBox.module.css';
 
-const PostBox = () => {
+const PostBox = ({ theme }) => {
   const authCtx = useContext(AuthenticateContext);
   const apiCtx = useContext(apiUrlContext);
   const [postPort, setPostPort] = useState(false);
@@ -15,7 +15,12 @@ const PostBox = () => {
 
   return (
     <>
-      <div className={classes['post-box']}>
+      <div
+        className={classes['post-box']}
+        style={{
+          backgroundColor: theme !== undefined && theme !== 'null' && theme
+        }}
+      >
         <div className={classes['profile']}>
           {authCtx.user.profile_picture !== undefined &&
             authCtx.user.profile_picture.length > 0 && (

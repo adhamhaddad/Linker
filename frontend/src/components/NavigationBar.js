@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import classes from '../css/NavigationBar.module.css';
 import apiUrlContext from '../utils/api-urls';
+import classes from '../css/NavigationBar.module.css';
 
-const NavigationBar = ({ username, profile, windowSize }) => {
+const NavigationBar = ({ username, profile, windowSize, theme }) => {
   const apiCtx = useContext(apiUrlContext);
   return (
-    <ul className={classes.navigation}>
+    <ul className={classes.navigation} style={{color: theme}}>
       <li>
         <NavLink
           to='/home'

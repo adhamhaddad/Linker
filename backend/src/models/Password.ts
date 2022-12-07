@@ -105,7 +105,7 @@ class Password {
             FROM pictures p, users u
             WHERE p.user_id=u.user_id AND u.user_id=$1
           `;
-          const theme_SQL = `SELECT profile_cover FROM themes WHERE user_id=$1`;
+          const theme_SQL = `SELECT profile_cover, header_color, home_color FROM themes WHERE user_id=$1`;
           const theme_result = await connection.query(theme_SQL, [
             user_id_result.rows[0].user_id
           ]);

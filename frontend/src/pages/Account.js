@@ -4,6 +4,7 @@ import AuthenticateContext from '../utils/authentication';
 import useHttp from '../hooks/use-http';
 import Button from '../components/UI/Button';
 import BackButton from '../components/UI/BackButton';
+import Modal from '../components/Modal';
 import classes from '../css/Account.module.css';
 
 const accountFormReducer = (state, action) => {
@@ -47,7 +48,8 @@ const accountFormReducer = (state, action) => {
     gender: ''
   };
 };
-const Account = ({ user_id }) => {
+const Account = () => {
+  const [deleteAccount, setDeleteAccount] = useState(false);
   const [accountData, setAccountData] = useState({
     first_name: '',
     last_name: '',
@@ -59,6 +61,7 @@ const Account = ({ user_id }) => {
   const { isLoading, isError, sendRequest } = useHttp();
   const windowCtx = useContext(WindowContext);
   const authCtx = useContext(AuthenticateContext);
+
   const [accountForm, dispatch] = useReducer(accountFormReducer, {
     first_name: '',
     last_name: '',
@@ -74,7 +77,6 @@ const Account = ({ user_id }) => {
 
   const onFormSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(accountForm);
   };
 
   const onDeleteAccount = () => {
@@ -89,6 +91,11 @@ const Account = ({ user_id }) => {
       }
     );
   };
+
+  const deletePortalToggle = () => {
+    setDeleteAccount((prev) => !prev);
+  };
+
   const changeUsernameHandler = (e) => {
     setAccountData((prev) => ({ ...prev, username: e.target.value }));
   };
@@ -192,11 +199,40 @@ const Account = ({ user_id }) => {
       {!isLoading && (
         <Button
           type='button'
-          onClick={onDeleteAccount}
+          onClick={deletePortalToggle}
           className='delete-account'
         >
           delete account
         </Button>
+      )}
+      {deleteAccount && (
+        <Modal>
+          <div className={classes['delete-account']}>
+            <div className={classes['question']}>
+              <p>Are you sure thet you want to delete your account?</p>
+              <button
+                className='fa-solid fa-xmark'
+                onClick={deletePortalToggle}
+              ></button>
+            </div>
+            <div className={classes['actions']}>
+              <Button
+                type='button'
+                onClick={onDeleteAccount}
+                className='delete-account'
+              >
+                delete
+              </Button>
+              <Button
+                type='button'
+                onClick={deletePortalToggle}
+                className='cancel-deletion'
+              >
+                cancel
+              </Button>
+            </div>
+          </div>
+        </Modal>
       )}
     </section>
   );

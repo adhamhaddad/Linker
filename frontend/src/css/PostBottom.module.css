@@ -6,6 +6,7 @@
     align-items: center;
     height: 40px;
     font-size: var(--post-bottom-size);
+    background-color: var(--base-color-light);
 }
 
 /* Buttons Section */

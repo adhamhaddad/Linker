@@ -8,6 +8,7 @@
     align-items: center;
     background-color: var(--base-color-dark);
     justify-content: space-between;
+    /* background-color: green; */
 }
 
 .post-box .profile {
@@ -48,14 +49,14 @@
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 768px) {
-    .post-box {
-        width: 100%;
-    }
-
+    
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
+    .post-box {
+        width: 100%;
+    }
     .post-box .profile {
         width: 45px;
         height: 45px;

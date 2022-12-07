@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import AuthenticateContext from '../utils/authentication';
 import useHttp from '../hooks/use-http';
 import SpinnerLoading from '../components/Loading/Spinner';
 import Error from '../components/Error';
 import Container from '../components/UI/Container';
+import RequestCard from '../components/RequestCard';
 import classes from '../css/Requests.module.css';
-import apiUrlContext from '../utils/api-urls';
 
 const Requests = ({ socket }) => {
   const [requests, setRequests] = useState([]);
   const { isLoading, isError, sendRequest } = useHttp();
   const authCtx = useContext(AuthenticateContext);
-  const apiCtx = useContext(apiUrlContext)
+
   // NEW REQUEST
   const newFriendRequest = (data) => {
     setRequests((prev) => [...prev, data]);
@@ -52,38 +51,12 @@ const Requests = ({ socket }) => {
     requests.length > 0 &&
     requests.map((request) => {
       return (
-        <li key={request.sender_id}>
-          <Link
-            to={`/profile/${request.username}`}
-            className={classes['request-profile']}
-          >
-            {request.profile_picture !== null && (
-              <img
-                crossOrigin='anonymous'
-                src={`${apiCtx.url}/${request.profile_picture}`}
-                alt={request.username}
-              />
-            )}
-          </Link>
-          <Link
-            to={`/profile/${request.username}`}
-            className={classes['request-name']}
-          >
-            {request.first_name} {request.last_name}
-          </Link>
-          <button
-            className={`${classes['request-accept']} ${classes['actions']}`}
-            onClick={() => acceptRequest(request)}
-          >
-            <i className='fa-solid fa-check'></i>
-          </button>
-          <button
-            className={`${classes['request-ignore']} ${classes['actions']}`}
-            onClick={() => ignoreRequest(request)}
-          >
-            <i className='fa-solid fa-xmark'></i>
-          </button>
-        </li>
+        <RequestCard
+          key={request.sender_id}
+          request={request}
+          acceptRequest={acceptRequest}
+          ignoreRequest={ignoreRequest}
+        />
       );
     });
 
@@ -117,6 +90,9 @@ const Requests = ({ socket }) => {
         }
       }
     });
+    return () => {
+      setRequests([]);
+    };
   }, []);
 
   return (

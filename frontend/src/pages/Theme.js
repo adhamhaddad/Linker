@@ -5,23 +5,23 @@ import classes from '../css/Theme.module.css';
 
 const Theme = () => {
   const [themes, setThemes] = useState({
-    post_color: '',
-    profile_cover: '',
-    home_color: '',
-    header_color: '',
-    body_color: ''
+    profile_cover: null,
+    home_color: null,
+    header_color: null
   });
   const authCtx = useContext(AuthenticateContext);
   const { isLoading, isError, sendRequest } = useHttp();
 
   const getTheme = () => {
-    sendRequest(`theme?user_id=${authCtx.user.user_id}`, 'GET', {}, setThemes);
+    sendRequest(
+      `theme?username=${authCtx.user.username}`,
+      'GET',
+      {},
+      setThemes
+    );
   };
 
-  const onColorChange = (e) => {
-    // setThemes((prev) => {
-    //   return { ...prev, profile_cover: e.target.value };
-    // });
+  const onProfileChange = (e) => {
     sendRequest(
       'theme',
       'POST',
@@ -33,55 +33,84 @@ const Theme = () => {
     });
   };
 
+  const onChangeHeader = (e) => {
+    sendRequest(
+      'theme',
+      'POST',
+      { user_id: authCtx.user.user_id, header_color: e.target.value },
+      null
+    );
+    setThemes((prev) => {
+      return { ...prev, header_color: e.target.value };
+    });
+  };
+
   useEffect(() => {
     getTheme();
+
+    return () => {
+      setThemes({});
+    };
   }, []);
 
   return (
     <div className={classes['theme']}>
       <div>
         <label htmlFor='theme'>Choose theme</label>
-        <select id='theme' defaultValue={themes.profile_cover}>
-          <option value=''>Default</option>
-          <option value=''>user choosed color 1</option>
-          <option value=''>user choosed color 2</option>
+        <select id='theme'>
+          <option>Default</option>
+          <option>user choosed color 1</option>
         </select>
       </div>
       <div>
-        <label htmlFor='post_color'>Post Color?</label>
-        <input type='color' id='post_color' />
-      </div>
-      <div>
-        <label htmlFor='body_color'>Body Color?</label>
-        <input type='color' id='body_color' />
-      </div>
-      <div>
-        <label htmlFor='profile_cover'>Profile Color?</label>
-        {themes.profile_cover !== 'null' && themes.profile_cover.length > 0 && (
-          <p>
-            {themes.profile_cover !== 'null' &&
-              themes.profile_cover.length > 0 &&
-              themes.profile_cover}
-          </p>
-        )}
+        <label htmlFor='profile_cover'>Profile Cover</label>
+        <p>
+          {themes.profile_cover !== undefined &&
+            themes.profile_cover !== null &&
+            themes.profile_cover.length > 0 &&
+            themes.profile_cover}
+        </p>
         <input
           type='color'
           id='profile_cover'
           value={
-            themes.profile_cover !== 'null' &&
+            themes.profile_cover !== undefined &&
+            themes.profile_cover !== null &&
             themes.profile_cover.length > 0 &&
             themes.profile_cover
           }
-          onChange={onColorChange}
+          onChange={onProfileChange}
         />
       </div>
       <div>
-        <label htmlFor='home_color'>Home Color?</label>
+        <label htmlFor='home_color'>Home Color</label>
+        <p>
+          {themes.home_color !== undefined &&
+            themes.home_color !== null &&
+            themes.home_color.length > 0 &&
+            themes.home_color}
+        </p>
         <input type='color' id='home_color' />
       </div>
       <div>
-        <label htmlFor='header_color'>Header Color?</label>
-        <input type='color' id='header_color' />
+        <label htmlFor='header_color'>Header Color</label>
+        <p>
+          {themes.header_color !== undefined &&
+            themes.header_color !== null &&
+            themes.header_color.length > 0 &&
+            themes.header_color}
+        </p>
+        <input
+          type='color'
+          id='header_color'
+          value={
+            themes.header_color !== undefined &&
+            themes.header_color !== null &&
+            themes.header_color.length > 0 &&
+            themes.header_color
+          }
+          onChange={onChangeHeader}
+        />
       </div>
     </div>
   );

@@ -1,0 +1,54 @@
+
+.request-card {
+    display: flex;
+    padding: 5px;
+    align-items: center;
+}
+
+.request-profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-image: url('../images/anonymous_user.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+.request-profile > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.request-name {
+    color: var(--base-color-dark);
+    text-transform: capitalize;
+    margin-right: auto;
+}
+
+.actions {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 0 2px;
+    background-color: var(--base-color-light);
+    color: var(--base-color-dark);
+    border: 1px solid var(--base-color-dark);
+    font-size: 16px;
+    cursor: pointer;
+}
+.actions i {
+    display: block;
+    height: 100%;
+    line-height: 30px;
+    text-align: center;
+}
+.request-ignore {
+    border-color: red;
+    color: red;
+}
+.request-accept {
+    border-color: green;
+    color: green
+}

@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import useHttp from '../hooks/use-http';
 import Container from '../components/UI/Container';
 import Error from '../components/Error';
 import SpinnerLoading from '../components/Loading/Spinner';
 import PostCard from '../components/Post/PostCard';
 import PostBox from '../components/Post/PostBox';
+import AuthenticateContext from '../utils/authentication';
 import classes from '../css/Home.module.css';
 
 const Home = ({ user_id, socket }) => {
   const { isLoading, isError, sendRequest } = useHttp();
+  const authCtx = useContext(AuthenticateContext);
   const [allPosts, setAllPosts] = useState([]);
+  const [themes, setThemes] = useState({
+    profile_cover: authCtx.theme.profile_cover,
+    home_color: authCtx.theme.home_color
+  });
 
   const transformPost = (data) => {
     const transformedData = data.map((post) => {
@@ -89,7 +95,7 @@ const Home = ({ user_id, socket }) => {
             <p>please add friends to see there posts</p>
           </div>
         )}
-        <PostBox />
+        <PostBox theme={themes.profile_cover} />
 
         {posts && posts}
         {isLoading && <SpinnerLoading color='dark' />}

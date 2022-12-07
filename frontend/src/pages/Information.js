@@ -187,6 +187,9 @@ const Information = ({ windowSize }) => {
       {},
       (data) => setInformationData({ ...(data == null ? '' : data) })
     );
+    return () => {
+      setInformationData({});
+    };
   }, []);
 
   return (

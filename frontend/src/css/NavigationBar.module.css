@@ -4,6 +4,7 @@
     align-items: center;
     margin-left: auto;
     font-size: 14px;
+    color: #909090;
 }
 
 .navigation li {
@@ -20,7 +21,7 @@
     cursor: pointer;
     transition: color .5s ease-in-out;
     padding: 0 10px;
-    color: #909090;
+    color: currentColor
 
 }
 

@@ -28,7 +28,10 @@
     font-size: 15px;
     font-weight: 800;
 }
-
+.visitors {
+    font-size: 12px;
+    margin: 0 5px;
+}
 .friend-actions {
     /* height: 24px; */
     padding: 5px;

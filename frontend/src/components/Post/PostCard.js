@@ -24,7 +24,7 @@ const PostCard = ({
   post_last_name,
   post_timedate,
   post_content,
-  socket
+  socket,
 }) => {
   const history = useHistory();
   const { isLoading, isError, sendRequest } = useHttp();
@@ -56,7 +56,9 @@ const PostCard = ({
     sendRequest(`post/shares?post_id=${post_id}`, 'GET', {}, setSharesList);
   }, []);
   return (
-    <div className={classes['posts']}>
+    <div
+      className={classes['posts']}
+    >
       <PostHeader
         user_id={user_id}
         post_id={post_id}

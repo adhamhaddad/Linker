@@ -6,13 +6,7 @@
     margin: 10px auto;
     background-color: var(--base-color-light);
     color: var(--base-color-dark);
-    border: 1px solid rgb(219, 219, 219)
-}
-.posts > .post-header,
-.posts .post-bottom {
-    display: flex;
-    height: 50px;
-    font-size: 12px;
+    border: 1px solid rgb(219, 219, 219);
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {

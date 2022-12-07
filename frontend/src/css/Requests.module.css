@@ -14,20 +14,26 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    display: none;
 }
-
 .request-news>.hide-notifi {
     width: 20px;
     height: 20px;
     border-radius: 50%;
     cursor: pointer;
 }
+.request-news .hide-notifi i {
+    text-align: center;
+    font-size: 12px;
+}
 
 .requests-page h2 {
     font-size: 14px;
     text-transform: capitalize;
     padding: 10px;
-    color: var(--base-color-dark)
+    color: var(--base-color-dark);
+    width: 350px;
+    margin: auto;
 }
 
 .requests-list {
@@ -35,56 +41,4 @@
     height: 100%;
     margin: auto;
     background-color: var(--base-color-light);
-}
-
-.requests-list li {
-    display: flex;
-    padding: 5px;
-    align-items: center;
-}
-
-.request-profile {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-    background-image: url('../images/anonymous_user.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    overflow: hidden;
-}
-.request-profile > img {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-.request-name {
-    color: var(--base-color-dark);
-    text-transform: capitalize;
-    margin-right: auto;
-}
-
-.requests-page .actions {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin: 0 2px;
-    background-color: var(--base-color-light);
-    color: var(--base-color-dark);
-    border: 1px solid var(--base-color-dark);
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.requests-page .actions i {
-    display: block;
-    height: 100%;
-    line-height: 30px;
-    text-align: center;
-}
-
-.request-news .hide-notifi i {
-    text-align: center;
-    font-size: 12px;
 }

@@ -26,6 +26,8 @@
 .btn-logout {
     width: 120px;
     height: 30px;
+    font-weight: normal;
+    font-size: 12px;
     line-height: 30px;
     border-radius: 2px;
     background-color: var(--base-color-dark);
@@ -36,8 +38,19 @@
     width: 120px;
     font-size: 12px;
     height: auto;
+    font-weight: normal;
     line-height: 30px;
     background-color: rgb(153, 16, 16);
     color: var(--base-color-light);
     border-radius: 2px;
+}
+.delete-account:hover {
+    background-color: rgb(130, 16, 16);
+}
+.cancel-deletion {
+    font-weight: normal;
+    background-color: rgb(229, 229, 229);
+}
+.cancel-deletion:hover {
+    background-color: rgb(210, 210, 210);
 }

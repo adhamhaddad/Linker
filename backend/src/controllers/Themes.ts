@@ -39,7 +39,6 @@ const getThemes = async (req: Request, res: Response) => {
 const theme_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/theme', logger, verifyToken, createTheme);
   app.get('/theme', logger, verifyToken, getThemes);
-  app.patch('/theme', logger, verifyToken, getThemes);
   app.delete('/theme', logger, verifyToken, getThemes);
 };
 export default theme_controller_routes;

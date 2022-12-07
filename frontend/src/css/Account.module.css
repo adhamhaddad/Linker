@@ -31,15 +31,18 @@
 .form div select {
     text-transform: capitalize;
 }
+
 .form .nameInputs {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .form div .name {
     width: 49%;
     margin: 0;
 }
+
 .confirm {
     width: 100%;
     display: block;
@@ -49,6 +52,56 @@
     background-color: var(--base-color-dark);
     margin: 10px 0;
     cursor: pointer;
+}
+
+.delete-account {
+    width: 400px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    background-color: var(--base-color-light);
+}
+
+.delete-account .question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+.delete-account .question p {
+    width: 70%;
+}
+
+.question button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgb(229, 229, 229);
+    cursor: pointer;
+    transition: background 1s ease-in-out;
+
+}
+
+.question button:hover {
+    background-color: rgb(210, 210, 210);
+    transition: background 1s ease-in-out;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.actions button {
+    width: 80px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0px 5px;
+    border-radius: 4px;
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

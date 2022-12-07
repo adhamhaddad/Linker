@@ -5,7 +5,7 @@ import NavigationBar from './NavigationBar';
 import Container from './UI/Container';
 import classes from '../css/Header.module.css';
 
-const Header = ({ user_id, username, profile, windowSize }) => {
+const Header = ({ user_id, username, profile, windowSize, theme }) => {
   return (
     <nav className={classes.navbar}>
       <Container className='header'>
@@ -20,6 +20,7 @@ const Header = ({ user_id, username, profile, windowSize }) => {
           profile={profile}
           username={username}
           windowSize={windowSize}
+          theme={theme}
         />
       </Container>
     </nav>

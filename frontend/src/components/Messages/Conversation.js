@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import useHttp from '../../hooks/use-http';
 import AuthenticateContext from '../../utils/authentication';
 import ChatHeader from './ChatHeader';
 import ChatForm from './ChatForm';
+import MessageCard from './MessageCard';
 import SpinnerLoading from '../Loading/Spinner';
 import Error from '../Error';
-import MessageCard from './MessageCard';
-import { useParams } from 'react-router-dom';
 import classes from '../../css/Conversation.module.css';
 
 const Conversation = ({ socket }) => {
@@ -151,6 +151,10 @@ const Conversation = ({ socket }) => {
         }
       }
     });
+    return () => {
+      setCurrentUser({});
+      setMessages([]);
+    };
   }, [params]);
 
   return (

@@ -16,6 +16,7 @@ import classes from '../css/Profile.module.css';
 const Profile = ({ socket }) => {
   const [user, setUser] = useState({});
   const [theme, setTheme] = useState({});
+  const [visitors, setVisitors] = useState([]);
   const [userPosts, setUserPosts] = useState([]);
   const [friendsList, setFriendsList] = useState([]);
   const [checkFriend, setCheckFriend] = useState({
@@ -41,7 +42,6 @@ const Profile = ({ socket }) => {
     });
     setUserPosts(transformedData);
   };
-
   // PROFILE REQUESTS
   const getUser = () => {
     sendRequest(`users?username=${params.username}`, 'GET', {}, setUser);
@@ -197,6 +197,38 @@ const Profile = ({ socket }) => {
     );
   };
 
+  // VISITORS
+  const getVisitors = () => {
+    sendRequest(`visitors?username=${params.username}`, 'GET', {}, setVisitors);
+  };
+
+  const createVisitor = () => {
+    sendRequest(
+      'visitors',
+      'POST',
+      {
+        visitor_id: authCtx.user.user_id,
+        profile_id: params.username
+      },
+      null
+    );
+  };
+
+  const newVisitor = (data) => {
+    setVisitors((prev) => {
+      return prev.map((visitor) => {
+        console.log(visitor.visitor_id, data.visitor_id);
+        if (visitor.visitor_id === data.visitor_id) {
+          return { ...visitor, ...data };
+        } else if (visitor.visitor_id !== data.visitor_id) {
+          return visitor;
+        } else {
+          return data;
+        }
+      });
+    });
+  };
+
   const posts =
     userPosts.length > 0 &&
     userPosts
@@ -228,8 +260,10 @@ const Profile = ({ socket }) => {
     getFriends();
     getUserPosts();
     getUserTheme();
+    getVisitors();
 
     if (params.username !== authCtx.user.username) {
+      createVisitor();
       checkIsFriend();
     }
     socket.on('posts', (data) => {
@@ -306,11 +340,21 @@ const Profile = ({ socket }) => {
         }
       }
     });
+
+    socket.on('visits', (data) => {
+      if (data.action === 'CREATE_VISIT') {
+        if (data.data.username === params.username) {
+          newVisitor(data.data);
+        }
+      }
+    });
+
     return () => {
       setUser({});
       setTheme({});
       setFriendsList([]);
       setUserPosts([]);
+      setVisitors([]);
     };
   }, [params]);
 
@@ -333,6 +377,10 @@ const Profile = ({ socket }) => {
               />
               <span className={classes.username}>
                 {user.first_name} {user.last_name}
+                <span className={classes['visitors']}>
+                  <i className='fa-solid fa-eye'></i>{' '}
+                  {visitors !== undefined && visitors.length}
+                </span>
               </span>
             </div>
             {!isLoading && authCtx.user.username !== params.username && (
@@ -425,7 +473,9 @@ const Profile = ({ socket }) => {
       </Container>
 
       <Container className='posts'>
-        {authCtx.user.username == params.username && <PostBox />}
+        {authCtx.user.username == params.username && (
+          <PostBox theme={theme.profile_cover} />
+        )}
         {posts.length > 0 && posts}
       </Container>
       {isLoading && <SpinnerLoading color='dark' />}

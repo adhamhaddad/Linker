@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import Authenticate from '../utils/authentication';
+import apiUrlContext from '../utils/api-urls';
 import WindowContext from '../store/windowSize';
 import Signup from '../pages/Signup';
 import Signin from '../pages/Signin';
@@ -9,9 +10,9 @@ import Main from './Main';
 import io from 'socket.io-client';
 import '../css/App.css';
 
-const socket = io.connect('http://192.168.1.6:4000');
-
 const App = () => {
+  const apiCtx = useContext(apiUrlContext);
+  const socket = io.connect(apiCtx.url);
   const authCtx = useContext(Authenticate);
   const windowSize = useContext(WindowContext);
   return authCtx.isLoggedIn ? (
@@ -21,6 +22,7 @@ const App = () => {
         user_id={authCtx.user.user_id}
         username={authCtx.user.username}
         windowSize={windowSize.windowSize}
+        theme={authCtx.theme.header_color}
       />
       <Switch>
         <Route path='/' exact>
