@@ -10,11 +10,11 @@ const addFriend = async (req: Request, res: Response) => {
     const response = await friend.addFriend(req.body);
     io.emit('friends', {
       action: 'FRIEND_REQUEST',
-      data: { ...response }
+      data: response
     });
     res.status(201).json({
       status: true,
-      data: { ...response },
+      data: response,
       message: 'Friend request sent successfully!'
     });
   } catch (err) {
@@ -58,6 +58,7 @@ const checkFriend = async (req: Request, res: Response) => {
     });
   }
 };
+
 const friendRequest = async (req: Request, res: Response) => {
   try {
     const response = await friend.friendRequest(req.query.user_id as string);
@@ -84,7 +85,7 @@ const acceptFriend = async (req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: response,
-      message: 'Retrieved Friend successfully!'
+      message: 'Friend accepted successfully!'
     });
   } catch (err) {
     res.status(400).json({
@@ -101,7 +102,7 @@ const cancelRequest = async (req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: response,
-      message: 'Friend deleted successfully!'
+      message: 'Friend request canceled successfully!'
     });
   } catch (err) {
     res.status(400).json({
@@ -118,7 +119,7 @@ const ignoreRequest = async (req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       data: response,
-      message: 'Friend deleted successfully!'
+      message: 'Friend request ignored successfully!'
     });
   } catch (err) {
     res.status(400).json({

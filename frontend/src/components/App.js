@@ -22,6 +22,7 @@ const App = () => {
         user_id={authCtx.user.user_id}
         username={authCtx.user.username}
         windowSize={windowSize.windowSize}
+        socket={socket}
         theme={authCtx.theme.header_color}
       />
       <Switch>

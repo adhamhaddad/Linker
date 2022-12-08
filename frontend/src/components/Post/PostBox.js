@@ -18,7 +18,7 @@ const PostBox = ({ theme }) => {
       <div
         className={classes['post-box']}
         style={{
-          backgroundColor: theme !== undefined && theme !== 'null' && theme
+          backgroundColor: theme !== undefined && theme !== null && theme
         }}
       >
         <div className={classes['profile']}>
@@ -39,6 +39,7 @@ const PostBox = ({ theme }) => {
         <AddPost
           profile={authCtx.user.profile_picture}
           onClosePost={closePostPort}
+          theme={theme}
         />
       )}
     </>

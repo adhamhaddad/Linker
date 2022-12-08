@@ -17,6 +17,7 @@
     align-items: center;
     justify-content: center;
     height: 50px;
+    position: relative;
     text-transform: capitalize;
     cursor: pointer;
     transition: color .5s ease-in-out;
@@ -26,27 +27,23 @@
 }
 
 .profile-picture {
-    border: 1px solid #909090;
     display: block;
     background-image: url('../images/anonymous_user.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    width: 22px;
-    height: 22px;
+    width: 25px;
+    height: 25px;
+    border: 2px solid #909090;
     border-radius: 50%;
     opacity: 0.65;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     overflow: hidden;
 }
 
 .profile-picture>img {
     width: 100%;
     height: 100%;
-}
-
-.navigation li a {
-    position: relative
 }
 
 .navigation li a.active {
@@ -67,35 +64,20 @@
     font-size: 12px;
 }
 
-.new::after {
-    content: '';
-    display: block;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background-color: var(--base-color-light);
-    outline: 4px solid red;
+.requests .new {
     position: absolute;
-    top: 9px;
-    right: 15.2px;
+    top: 1px;
+    left: 12px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    color: var(--base-color-light);
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
-/*
-.navigation > li > a > span {
-    width: 18px;
-    height: 18px;
-    text-align: center;
-    line-height: 18px;
-    border-radius: 50%;
-    top: -8.5px;
-    left: -9px;
-    position: absolute;
-    font-weight: 800;
-    font-size: 10px;
-    text-shadow: .5px .5px var(--base-background-dark);
-    background-color: #F00;
-    display: block;
-} */
 
 /*** Effects ***/
 .navigation li a:hover {
@@ -112,10 +94,13 @@
 @media only screen and (max-width: 600px) {
     .navigation {
         width: 100%;
+        margin: 0;
     }
-
     .navigation li {
         flex-grow: 1;
+    }
+    .navigation li.settings {
+        display: none;
     }
 
     .navigation li a span {
@@ -123,17 +108,19 @@
     }
 
     .navigation li a svg {
-        width: 22px;
+        width: 25px;
+        height: 25px;
+        /* background-color: red; */
     }
 
-    .profile {
-        width: 20px;
-        height: 20px;
+    .profile-picture {
+        width: 25px;
+        height: 25px;
     }
-
-    .new::after {
+/* 
+    .new {
         right: 30px;
-    }
+    } */
 
 
 }

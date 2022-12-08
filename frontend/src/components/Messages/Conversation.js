@@ -125,7 +125,9 @@ const Conversation = ({ socket }) => {
   useEffect(() => {
     getCurrentUser();
     getMessages();
-
+    socket.on('connection', (data) => {
+      console.log(data)
+    });
     socket.on('messages', (data) => {
       if (data.action === 'NEW_MESSAGE') {
         if (

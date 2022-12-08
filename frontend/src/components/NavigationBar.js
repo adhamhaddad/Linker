@@ -3,10 +3,10 @@ import { NavLink } from 'react-router-dom';
 import apiUrlContext from '../utils/api-urls';
 import classes from '../css/NavigationBar.module.css';
 
-const NavigationBar = ({ username, profile, windowSize, theme }) => {
+const NavigationBar = ({ username, profile, windowSize, theme, requests }) => {
   const apiCtx = useContext(apiUrlContext);
   return (
-    <ul className={classes.navigation} style={{color: theme}}>
+    <ul className={classes['navigation']} style={{ color: theme }}>
       <li>
         <NavLink
           to='/home'
@@ -33,9 +33,16 @@ const NavigationBar = ({ username, profile, windowSize, theme }) => {
           activeClassName={classes.active}
           title='Profile'
         >
-          <div className={classes['profile-picture']}>
-            {profile !== null && profile !== 'null' && (
-              <img crossOrigin='anonymous' src={`${apiCtx.url}/${profile}`} />
+          <div
+            className={classes['profile-picture']}
+            style={{ borderColor: theme }}
+          >
+            {profile !== null && profile.length > 0 && (
+              <img
+                crossOrigin='anonymous'
+                src={`${apiCtx.url}/${profile}`}
+                alt={username}
+              />
             )}
           </div>
           <span>profile</span>
@@ -46,6 +53,7 @@ const NavigationBar = ({ username, profile, windowSize, theme }) => {
           to={windowSize <= 600 ? '/requests/phone-screen' : '/requests'}
           activeClassName={classes.active}
           title='Friend-Request'
+          className={classes['requests']}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -58,6 +66,9 @@ const NavigationBar = ({ username, profile, windowSize, theme }) => {
             <path d='M12 16v6H3v-6a3 3 0 013-3h3a3 3 0 013 3zm5.5-3A3.5 3.5 0 1014 9.5a3.5 3.5 0 003.5 3.5zm1 2h-2a2.5 2.5 0 00-2.5 2.5V22h7v-4.5a2.5 2.5 0 00-2.5-2.5zM7.5 2A4.5 4.5 0 1012 6.5 4.49 4.49 0 007.5 2z'></path>
           </svg>
           <span>requests</span>
+          {requests.length > 0 && (
+            <span className={classes['new']}>{requests.length}</span>
+          )}
         </NavLink>
       </li>
       <li>
@@ -100,7 +111,7 @@ const NavigationBar = ({ username, profile, windowSize, theme }) => {
         </NavLink>
       </li>
 
-      <li>
+      <li className={classes['settings']}>
         <NavLink
           title='Settings'
           activeClassName={classes.active}

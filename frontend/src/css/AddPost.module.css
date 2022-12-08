@@ -61,27 +61,22 @@
     background-color: transparent;
     font-size: 14px;
 }
-
-.create-post__content>label {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 18px;
+.attachments {
+    display: flex;
+    padding: 5px 0;
+}
+.attachments label {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    display: inline-block;
+    display: flex;
     cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
 }
 
-.video-input {
-    background-image: url('../icons/video-solid.svg');
-}
-
-.image-input {
-    background-image: url('../icons/camera-solid.svg');
-}
-
-.create-post__content>input {
+.attachments input {
     display: none;
 }
 

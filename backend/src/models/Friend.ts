@@ -2,7 +2,7 @@ import database from '../database';
 import Friends from '../types/Friends';
 
 class Friend {
-  async addFriend(f: Friends): Promise<Friends> {
+  async addFriend(f: Friends): Promise<Friends[] | {}> {
     try {
       const connection = await database.connect();
       const add_friend_SQL = `
@@ -18,15 +18,24 @@ class Friend {
         new Date(),
         0
       ]);
-      const friend_SQL = `
-      SELECT DISTINCT u.user_id, p.profile_picture, u.username, u.first_name, u.last_name
-      FROM users u, pictures p
-      WHERE
-      p.user_id=$1 AND u.user_id=$1
+      const user_SQL = `
+        SELECT DISTINCT u.user_id, u.username, u.first_name, u.last_name, p.profile_picture
+        FROM users u, pictures p
+        WHERE p.user_id=u.user_id AND u.user_id=$1
       `;
-      const friend_result = await connection.query(friend_SQL, [f.sender_id]);
+      const sender_user_result = await connection.query(user_SQL, [
+        f.sender_id
+      ]);
+      const receiver_user_result = await connection.query(user_SQL, [
+        f.receiver_id
+      ]);
+
       connection.release();
-      return { ...add_friend_result.rows[0], ...friend_result.rows[0] };
+      return {
+        result: { ...add_friend_result.rows[0] },
+        sender_user: { ...sender_user_result.rows[0] },
+        receiver_user: { ...receiver_user_result.rows[0] }
+      };
     } catch (err) {
       throw new Error(
         `Could not save a new friend. Error ${(err as Error).message}`
@@ -123,13 +132,12 @@ class Friend {
     }
   }
 
-  //! In this case I'am receiver_id
   async acceptFriend(f: Friends): Promise<Friends[] | {}> {
     try {
       const connection = await database.connect();
       const accept_friend_SQL = `
         UPDATE friends
-        SET isFriend='1', timedate=$3
+        SET isFriend=$4, timedate=$3
         WHERE sender_id=$1 AND receiver_id=$2
         RETURNING
         isFriend, timedate, receiver_id, sender_id
@@ -137,14 +145,14 @@ class Friend {
       const accepted_friend_result = await connection.query(accept_friend_SQL, [
         f.sender_id,
         f.receiver_id,
-        new Date()
+        new Date(),
+        1
       ]);
       const user_SQL = `
-        SELECT DISTINCT u.user_id, p.profile_picture, u.username, u.first_name, u.last_name
+        SELECT DISTINCT u.user_id, u.username, u.first_name, u.last_name, p.profile_picture
         FROM users u, pictures p
-        WHERE
-        p.user_id=$1 AND u.user_id=$1
-        `;
+        WHERE p.user_id=u.user_id AND u.user_id=$1
+      `;
       const sender_user_result = await connection.query(user_SQL, [
         f.sender_id
       ]);
@@ -152,24 +160,10 @@ class Friend {
         f.receiver_id
       ]);
       connection.release();
-      const sender_user = {
-        username: sender_user_result.rows[0].username,
-        user_id: sender_user_result.rows[0].user_id,
-        profile_picture: sender_user_result.rows[0].profile_picture,
-        first_name: sender_user_result.rows[0].first_name,
-        last_name: sender_user_result.rows[0].last_name
-      };
-      const receiver_user = {
-        username: receiver_user_result.rows[0].username,
-        user_id: receiver_user_result.rows[0].user_id,
-        profile_picture: receiver_user_result.rows[0].profile_picture,
-        first_name: receiver_user_result.rows[0].first_name,
-        last_name: receiver_user_result.rows[0].last_name
-      };
       return {
         result: { ...accepted_friend_result.rows[0] },
-        sender_user: sender_user,
-        receiver_user: receiver_user
+        sender_user: { ...sender_user_result.rows[0] },
+        receiver_user: { ...receiver_user_result.rows[0] }
       };
     } catch (err) {
       throw new Error(
@@ -196,12 +190,12 @@ class Friend {
     try {
       const connection = await database.connect();
       const sql = `
-      DELETE FROM friends
-      WHERE
-      sender_id=$1 AND receiver_id=$2
-      OR
-      sender_id=$2 AND receiver_id=$1
-      RETURNING *
+        DELETE FROM friends
+        WHERE
+        sender_id=$1 AND receiver_id=$2
+        OR
+        sender_id=$2 AND receiver_id=$1
+        RETURNING *
       `;
 
       const result = await connection.query(sql, [f.sender_id, f.receiver_id]);
@@ -213,18 +207,16 @@ class Friend {
         f.receiver_id
       ]);
       connection.release();
-      const sender_user = {
-        user_id: sender_user_result.rows[0].user_id,
-        username: sender_user_result.rows[0].username
-      };
-      const receiver_user = {
-        user_id: receiver_user_result.rows[0].user_id,
-        username: receiver_user_result.rows[0].username
-      };
       return {
         result: { ...result.rows[0] },
-        sender_user: sender_user,
-        receiver_user: receiver_user
+        sender_user: {
+          user_id: result.rows[0].sender_id,
+          username: sender_user_result.rows[0].username
+        },
+        receiver_user: {
+          user_id: result.rows[0].receiver_id,
+          username: receiver_user_result.rows[0].username
+        }
       };
     } catch (err) {
       throw new Error(

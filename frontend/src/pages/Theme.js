@@ -45,6 +45,18 @@ const Theme = () => {
     });
   };
 
+  const onChangeHome = (e) => {
+    sendRequest(
+      'theme',
+      'POST',
+      { user_id: authCtx.user.user_id, home_color: e.target.value },
+      null
+    );
+    setThemes((prev) => {
+      return { ...prev, home_color: e.target.value };
+    });
+  };
+
   useEffect(() => {
     getTheme();
 
@@ -90,7 +102,17 @@ const Theme = () => {
             themes.home_color.length > 0 &&
             themes.home_color}
         </p>
-        <input type='color' id='home_color' />
+        <input
+          type='color'
+          id='home_color'
+          value={
+            themes.home_color !== undefined &&
+            themes.home_color !== null &&
+            themes.home_color.length > 0 &&
+            themes.home_color
+          }
+          onChange={onChangeHome}
+        />
       </div>
       <div>
         <label htmlFor='header_color'>Header Color</label>
@@ -111,6 +133,12 @@ const Theme = () => {
           }
           onChange={onChangeHeader}
         />
+      </div>
+      <div>
+        <p>
+          Note: when you change the header or home color you will need to logout and
+          login again to see the changes
+        </p>
       </div>
     </div>
   );

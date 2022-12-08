@@ -8,8 +8,11 @@ class Visitor {
       const user_id = 'SELECT user_id from users WHERE username=$1';
       const user_id_result = await connection.query(user_id, [v.profile_id]);
 
-      const check_SQL = 'SELECT * FROM visitors WHERE visitor_id=$1 AND profile_id=$2';
-      const check_result = await connection.query(check_SQL, [v.visitor_id, user_id_result.rows[0].user_id]);
+      const check_SQL = `SELECT * FROM visitors WHERE visitor_id=$1 AND profile_id=$2`;
+      const check_result = await connection.query(check_SQL, [
+        v.visitor_id,
+        user_id_result.rows[0].user_id
+      ]);
 
       const user_SQL = `
         SELECT DISTINCT u.user_id, u.username, u.first_name, u.last_name, p.profile_picture
@@ -21,9 +24,10 @@ class Visitor {
       ]);
 
       if (check_result.rows.length) {
-        const update_SQL = `UPDATE visitors SET timedate=$2 WHERE visitor_id=$1 RETURNING *`;
+        const update_SQL = `UPDATE visitors SET timedate=$3 WHERE visitor_id=$1 AND profile_id=$2 RETURNING *`;
         const update_result = await connection.query(update_SQL, [
           v.visitor_id,
+          user_id_result.rows[0].user_id,
           new Date()
         ]);
         connection.release();

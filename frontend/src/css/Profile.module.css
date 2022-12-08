@@ -31,7 +31,42 @@
 .visitors {
     font-size: 12px;
     margin: 0 5px;
+    cursor: pointer;
 }
+
+.visitors-section {
+    background-color: var(--base-color-light);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.visitors-section .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+}
+.visitors-section .header h3 {
+    font-size: 14px;
+    color: var(--base-color-dark);
+}
+.visitors-section .header button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: var(--base-color-dark);
+    color: var(--base-color-light)
+}
+.visitors-section ul {
+    overflow-y: auto;
+    max-height: 200px;
+    padding: 5px;
+}
+
+
 .friend-actions {
     /* height: 24px; */
     padding: 5px;

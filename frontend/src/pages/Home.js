@@ -11,7 +11,7 @@ import classes from '../css/Home.module.css';
 const Home = ({ user_id, socket }) => {
   const { isLoading, isError, sendRequest } = useHttp();
   const authCtx = useContext(AuthenticateContext);
-  const [allPosts, setAllPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [themes, setThemes] = useState({
     profile_cover: authCtx.theme.profile_cover,
     home_color: authCtx.theme.home_color
@@ -28,10 +28,10 @@ const Home = ({ user_id, socket }) => {
         }
       };
     });
-    setAllPosts(transformedData);
+    setPosts(transformedData);
   };
   const newPostAdded = (post) => {
-    setAllPosts((prev) => {
+    setPosts((prev) => {
       return [
         ...prev,
         {
@@ -46,13 +46,18 @@ const Home = ({ user_id, socket }) => {
     });
   };
   const newPostUpdate = (data) => {
-    setAllPosts((prev) => [...prev, data]);
+    setPosts((prev) => [...prev, data]);
   };
   const newPostDelete = (data) => {
-    setAllPosts((prev) => prev.filter((post) => post.post_id !== data.post_id));
+    setPosts((prev) => prev.filter((post) => post.post_id !== data.post_id));
   };
-  useEffect(() => {
+
+  const getPosts = () => {
     sendRequest(`posts?user_id=${user_id}`, 'GET', {}, transformPost);
+  };
+
+  useEffect(() => {
+    getPosts();
     socket.on('posts', (data) => {
       if (data.action === 'CREATE') {
         newPostAdded(data.data);
@@ -64,11 +69,14 @@ const Home = ({ user_id, socket }) => {
         newPostDelete(data.data);
       }
     });
+    return () => {
+      setPosts([]);
+    };
   }, []);
 
-  const posts =
-    allPosts.length > 0 &&
-    allPosts
+  const postsList =
+    posts.length > 0 &&
+    posts
       .map((post) => (
         <PostCard
           user_id={user_id}
@@ -82,24 +90,27 @@ const Home = ({ user_id, socket }) => {
           post_timedate={post.timedate}
           post_content={post.content}
           socket={socket}
-          key={new Date(post.timedate).getTime()}
+          key={`${post.post_id} ${new Date(post.timedate).getTime()}`}
         />
       ))
-      .sort((a, b) => b.key - a.key);
+      .sort((a, b) => b.key.split(' ')[1] - a.key.split(' ')[1]);
+
   return (
-    <div className={classes['home-page']}>
-      <Container className='home'>
+    <div
+      className={classes['home-page']}
+      style={{ backgroundColor: themes.home_color }}
+    >
+      <Container>
+        <PostBox theme={themes.profile_cover} />
+        {isLoading && isError === null && <SpinnerLoading color='dark' />}
+        {!isLoading && isError !== null && <Error message={isError} />}
         {!isLoading && isError === null && !posts && (
           <div className={classes['no-posts']}>
             <p>No posts found.</p>
             <p>please add friends to see there posts</p>
           </div>
         )}
-        <PostBox theme={themes.profile_cover} />
-
-        {posts && posts}
-        {isLoading && <SpinnerLoading color='dark' />}
-        {!isLoading && isError !== null && <Error message={isError} />}
+        {postsList && postsList}
       </Container>
     </div>
   );

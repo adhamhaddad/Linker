@@ -5,7 +5,7 @@ import AuthenticateContext from '../../utils/authentication';
 import apiUrlContext from '../../utils/api-urls';
 import classes from '../../css/AddPost.module.css';
 
-const AddPost = ({ profile, onClosePost }) => {
+const AddPost = ({ profile, onClosePost, theme }) => {
   const caption = useRef('');
   const img = useRef('');
   const video = useRef('');
@@ -52,7 +52,11 @@ const AddPost = ({ profile, onClosePost }) => {
           <h4 className={classes.username}>
             {authCtx.user.first_name} {authCtx.user.last_name}
           </h4>
-          <button className={classes['discard-button']} onClick={onClosePost}>
+          <button
+            className={classes['discard-button']}
+            onClick={onClosePost}
+            style={{ backgroundColor: theme }}
+          >
             discard
           </button>
         </div>
@@ -64,14 +68,28 @@ const AddPost = ({ profile, onClosePost }) => {
               placeholder='What do you want to talk about?'
               ref={caption}
             ></textarea>
-            <label htmlFor='video' className={classes['video-input']}></label>
-            <label htmlFor='image' className={classes['image-input']}></label>
-            <input type='file' id='image' name='video' ref={img} />
-            <input type='file' id='video' ref={video} />
+            <div className={classes['attachments']}>
+              <label
+                htmlFor='video'
+                className='fa-solid fa-video'
+                style={{ color: theme }}
+              ></label>
+              <label
+                htmlFor='image'
+                className='fa-solid fa-camera'
+                style={{ color: theme }}
+              ></label>
+              <input type='file' id='image' name='video' ref={img} />
+              <input type='file' id='video' ref={video} />
+            </div>
           </div>
 
           <div className={classes['create-post__footer']}>
-            <button type='submit' className={classes['post-button']}>
+            <button
+              type='submit'
+              className={classes['post-button']}
+              style={{ backgroundColor: theme }}
+            >
               Post
             </button>
           </div>

@@ -28,7 +28,7 @@ const Requests = ({ socket }) => {
   };
   const newAcceptedRequest = (data) => {
     setRequests((prev) =>
-      prev.filter((request) => request.user_id !== data.sender_user.user_id)
+      prev.filter((request) => request.user_id !== data.user_id)
     );
   };
 
@@ -37,13 +37,13 @@ const Requests = ({ socket }) => {
     sendRequest(
       'ignore-request',
       'DELETE',
-      { sender_id: user.sender_id, receiver_id: authCtx.user.user_id },
+      { sender_id: user.user_id, receiver_id: authCtx.user.user_id },
       null
     );
   };
   const newRequestIgnored = (data) => {
     setRequests((prev) =>
-      prev.filter((request) => request.friend_id !== data.friend_id)
+      prev.filter((request) => request.user_id !== data.user_id)
     );
   };
 
@@ -52,7 +52,7 @@ const Requests = ({ socket }) => {
     requests.map((request) => {
       return (
         <RequestCard
-          key={request.sender_id}
+          key={request.user_id}
           request={request}
           acceptRequest={acceptRequest}
           ignoreRequest={ignoreRequest}
@@ -60,36 +60,40 @@ const Requests = ({ socket }) => {
       );
     });
 
-  useEffect(() => {
+  const getRequests = () => {
     sendRequest(
       `requests?user_id=${authCtx.user.user_id}`,
       'GET',
       {},
       setRequests
     );
+  };
+  useEffect(() => {
+    getRequests();
+
     socket.on('friends', (data) => {
       if (data.action === 'FRIEND_REQUEST') {
-        // console.log(data.data)
-        if (data.data.receiver_id === authCtx.user.user_id) {
-          newFriendRequest(data.data);
+        if (data.data.receiver_user.user_id === authCtx.user.user_id) {
+          newFriendRequest(data.data.sender_user);
         }
       }
       if (data.action === 'ACCEPT_REQUEST') {
-        if (data.data.result.receiver_id === authCtx.user.user_id) {
-          newAcceptedRequest(data.data);
+        if (data.data.receiver_user.user_id === authCtx.user.user_id) {
+          newAcceptedRequest(data.data.sender_user);
         }
       }
       if (data.action === 'CANCEL_REQUEST') {
-        if (data.data.receiver_id === authCtx.user.user_id) {
-          newRequestIgnored(data.data);
+        if (data.data.receiver_user.user_id === authCtx.user.user_id) {
+          newRequestIgnored(data.data.sender_user);
         }
       }
       if (data.action === 'IGNORE_REQUEST') {
-        if (data.data.receiver_id === authCtx.user.user_id) {
-          newRequestIgnored(data.data);
+        if (data.data.receiver_user.user_id === authCtx.user.user_id) {
+          newRequestIgnored(data.data.sender_user);
         }
       }
     });
+
     return () => {
       setRequests([]);
     };

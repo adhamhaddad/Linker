@@ -12,6 +12,8 @@ import SpinnerLoading from '../components/Loading/Spinner';
 import PostBox from '../components/Post/PostBox';
 import Error from '../components/Error';
 import classes from '../css/Profile.module.css';
+import Modal from '../components/Modal';
+import UserCard from '../components/Post/UserCard';
 
 const Profile = ({ socket }) => {
   const [user, setUser] = useState({});
@@ -27,7 +29,7 @@ const Profile = ({ socket }) => {
   const { isLoading, isError, sendRequest } = useHttp();
   const authCtx = useContext(AuthenticateContext);
   const params = useParams();
-
+  const [viewVisitors, setViewVisitors] = useState(false);
   // TRANSFORM POSTS
   const transformPosts = (data) => {
     const transformedData = data.map((post) => {
@@ -104,7 +106,7 @@ const Profile = ({ socket }) => {
     );
   };
   const newFriendRequest = (data) => {
-    checkIsFriendHandler(data);
+    checkIsFriendHandler(data.result);
   };
 
   // CANCEL REQUEST
@@ -119,7 +121,7 @@ const Profile = ({ socket }) => {
       null
     );
   };
-  const newRequestCanceled = () => {
+  const newRequestCanceled = (data) => {
     setCheckFriend((prev) => {
       return { ...prev, isFriend: null };
     });
@@ -127,7 +129,12 @@ const Profile = ({ socket }) => {
 
   // REQUEST ACCEPTED
   const acceptRequest = () => {
-    sendRequest('accept-request', 'PATCH', { sender_id: user.user_id }, null);
+    sendRequest(
+      'accept-request',
+      'PATCH',
+      { sender_id: user.user_id, receiver_id: authCtx.user.user_id },
+      null
+    );
   };
   const newAcceptedRequest = (data) => {
     setFriendsList((prev) => [...prev, data.sender_user]);
@@ -161,7 +168,7 @@ const Profile = ({ socket }) => {
   };
   const newDeletedFriend = (data) => {
     setFriendsList((prev) =>
-      prev.filter((friend) => friend.friend_id !== data.friend_id)
+      prev.filter((friend) => friend.friend_id !== data.result.friend_id)
     );
     setCheckFriend((prev) => {
       return { ...prev, isFriend: null };
@@ -217,7 +224,6 @@ const Profile = ({ socket }) => {
   const newVisitor = (data) => {
     setVisitors((prev) => {
       return prev.map((visitor) => {
-        console.log(visitor.visitor_id, data.visitor_id);
         if (visitor.visitor_id === data.visitor_id) {
           return { ...visitor, ...data };
         } else if (visitor.visitor_id !== data.visitor_id) {
@@ -255,16 +261,20 @@ const Profile = ({ socket }) => {
       })
       .sort((a, b) => b.key - a.key);
 
+  const onViewVisitors = () => {
+    setViewVisitors((prev) => !prev);
+  };
+
   useEffect(() => {
     getUser();
+    getUserTheme();
     getFriends();
     getUserPosts();
-    getUserTheme();
     getVisitors();
 
     if (params.username !== authCtx.user.username) {
-      createVisitor();
       checkIsFriend();
+      createVisitor();
     }
     socket.on('posts', (data) => {
       if (data.action === 'CREATE_POST') {
@@ -292,49 +302,56 @@ const Profile = ({ socket }) => {
         }
       }
     });
+
     socket.on('friends', (data) => {
       if (data.action === 'FRIEND_REQUEST') {
         if (
-          data.data.username === params.username &&
-          data.data.sender_id === authCtx.user.user_id
+          (data.data.receiver_user.username === params.username &&
+            data.data.sender_user.username === authCtx.user.username) ||
+          (data.data.sender_user.username === params.username &&
+            data.data.receiver_user.username === authCtx.user.username)
         ) {
-          console.log(data.data);
           newFriendRequest(data.data);
         }
       }
+
       if (data.action === 'CANCEL_REQUEST') {
         if (
-          (data.data.username === params.username &&
-            data.data.receiver_id === authCtx.user.user_id) ||
-          (data.data.username === params.username &&
-            data.data.sender_id === authCtx.user.user_id)
+          (data.data.receiver_user.username === params.username &&
+            data.data.sender_user.username === authCtx.user.username) ||
+          (data.data.sender_user.username === params.username &&
+            data.data.receiver_user.username === authCtx.user.username)
         ) {
-          newRequestCanceled();
+          newRequestCanceled(data.data);
         }
       }
       if (data.action === 'ACCEPT_REQUEST') {
         if (
-          data.data.sender_user.user_id === authCtx.user.user_id &&
-          data.data.receiver_user.username === params.username
+          (data.data.receiver_user.username === params.username &&
+            data.data.sender_user.username === authCtx.user.username) ||
+          (data.data.sender_user.username === params.username &&
+            data.data.receiver_user.username === authCtx.user.username)
         ) {
           newAcceptedRequest(data.data);
         }
       }
+
       if (data.action === 'IGNORE_REQUEST') {
         if (
+          (data.data.receiver_user.username === params.username &&
+            data.data.sender_user.username === authCtx.user.username) ||
           (data.data.sender_user.username === params.username &&
-            data.data.receiver_user.username === authCtx.user.username) ||
-          (data.data.sender_user.username === authCtx.user.username &&
-            data.data.receiver_user.username === params.username)
+            data.data.receiver_user.username === authCtx.user.username)
         ) {
-          console.log(data.data);
           newRequestIgnored();
         }
       }
       if (data.action === 'DELETE_FRIEND') {
         if (
-          data.data.username === params.username &&
-          data.data.receiver_id === authCtx.user.user_id
+          (data.data.receiver_user.username === params.username &&
+            data.data.sender_user.username === authCtx.user.username) ||
+          (data.data.sender_user.username === params.username &&
+            data.data.receiver_user.username === authCtx.user.username)
         ) {
           newDeletedFriend(data.data);
         }
@@ -344,7 +361,7 @@ const Profile = ({ socket }) => {
     socket.on('visits', (data) => {
       if (data.action === 'CREATE_VISIT') {
         if (data.data.username === params.username) {
-          newVisitor(data.data);
+          // newVisitor(data.data);
         }
       }
     });
@@ -377,7 +394,7 @@ const Profile = ({ socket }) => {
               />
               <span className={classes.username}>
                 {user.first_name} {user.last_name}
-                <span className={classes['visitors']}>
+                <span className={classes['visitors']} onClick={onViewVisitors}>
                   <i className='fa-solid fa-eye'></i>{' '}
                   {visitors !== undefined && visitors.length}
                 </span>
@@ -471,7 +488,26 @@ const Profile = ({ socket }) => {
           </section>
         </div>
       </Container>
-
+      {viewVisitors && (
+        <Modal>
+          <section className={classes['visitors-section']}>
+            <div className={classes['header']}>
+              <h3>Visitors ({visitors.length})</h3>
+              <button
+                className='fa-solid fa-xmark'
+                onClick={onViewVisitors}
+                style={{ backgroundColor: theme.profile_cover }}
+              ></button>
+            </div>
+            <ul>
+              {visitors.length > 0 &&
+                visitors.map((visitor) => (
+                  <UserCard key={visitor.visitor_id} value={visitor} />
+                ))}
+            </ul>
+          </section>
+        </Modal>
+      )}
       <Container className='posts'>
         {authCtx.user.username == params.username && (
           <PostBox theme={theme.profile_cover} />

@@ -32,12 +32,6 @@
     background-color: var(--base-color-dark);
 }
 
-.container.home {
-    overflow-y: auto;
-    padding: 5px 0;
-    background-color: var(--base-color-light);
-}
-
 .container.profile.loading {
     animation-name: loading;
     animation-duration: 1s;
