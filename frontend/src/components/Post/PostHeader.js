@@ -44,6 +44,7 @@ const PostHeader = ({
           </Link>
           <span className={classes['post-date']}>
             <PostDate timedate={post_timedate} />
+            <i className='fa-solid fa-earth-africa'></i>
           </span>
         </div>
       </div>

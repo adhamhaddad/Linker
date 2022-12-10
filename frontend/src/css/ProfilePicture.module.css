@@ -1,6 +1,6 @@
 .image-card {
     position: relative;
-    border: 2px inset var(--base-color-light);
+    border: 2px solid var(--base-color-light);
     width: fit-content;
 }
 

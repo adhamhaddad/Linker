@@ -1,21 +1,19 @@
 import React from 'react';
 import { TimeDiff, DateDiff } from './DateControllers';
 
-function PostDate(props) {
+const PostDate = (props) => {
   const postDate = (time) => {
     if (TimeDiff.inSeconds(time) <= 60) {
       return 'just now';
     }
     if (TimeDiff.inMinutes(time) <= 60) {
-      return `${TimeDiff.inMinutes(time)} min`;
+      return `${TimeDiff.inMinutes(time)}m`;
     }
     if (TimeDiff.inHours(time) <= 24) {
-      const hours = TimeDiff.inHours(time) > 1 ? 'hours': 'hour'
-      return `${TimeDiff.inHours(time)} ${hours}`;
+      return `${TimeDiff.inHours(time)}h`;
     }
     if (DateDiff.inDays(time) <= 7) {
-      const days = DateDiff.inDays(time) > 1 ? 'days' : 'day';
-      return `${DateDiff.inDays(time)} ${days}`;
+      return `${DateDiff.inDays(time)}d`;
     }
     if (DateDiff.inWeeks(time) <= 4) {
       const weeks = DateDiff.inWeeks(time) > 1 ? 'weeks' : 'week';

@@ -139,8 +139,7 @@ class Friend {
         UPDATE friends
         SET isFriend=$4, timedate=$3
         WHERE sender_id=$1 AND receiver_id=$2
-        RETURNING
-        isFriend, timedate, receiver_id, sender_id
+        RETURNING *
       `;
       const accepted_friend_result = await connection.query(accept_friend_SQL, [
         f.sender_id,
@@ -162,8 +161,14 @@ class Friend {
       connection.release();
       return {
         result: { ...accepted_friend_result.rows[0] },
-        sender_user: { ...sender_user_result.rows[0] },
-        receiver_user: { ...receiver_user_result.rows[0] }
+        sender_user: {
+          ...sender_user_result.rows[0],
+          friend_id: accepted_friend_result.rows[0].friend_id
+        },
+        receiver_user: {
+          ...receiver_user_result.rows[0],
+          friend_id: accepted_friend_result.rows[0].friend_id
+        }
       };
     } catch (err) {
       throw new Error(

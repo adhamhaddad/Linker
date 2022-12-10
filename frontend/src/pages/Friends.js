@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import SpinnerLoading from '../components/Loading/Spinner';
+import FriendsLoader from '../components/Loading/FriendsLoader';
 import Error from '../components/Error';
 import apiUrlContext from '../utils/api-urls';
 import classes from '../css/Friends.module.css';
@@ -50,24 +50,22 @@ const Friends = ({ friendsList, onDeleteFriend, isLoading, isError }) => {
     <section className={classes.friends}>
       <h3>
         <i className='fa-solid fa-users'></i>
-        friends {friendsList.length}
+        friends {!isLoading && friendsList.length}
         {friendsList.length > 0 && (
           <button className={classes['show-all']} onClick={showFriendsHandler}>
             {listSize ? 'hide' : 'show'}
           </button>
         )}
       </h3>
-      {isLoading && <SpinnerLoading color='light' />}
       {isError !== null && <Error message={isError} />}
-      {friendsList.length > 0 && (
-        <ul
-          className={`${classes['friends-list']} ${
-            listSize ? classes.max : classes.min
-          }`}
-        >
-          {List.length > 0 && List}
-        </ul>
-      )}
+      <ul
+        className={`${classes['friends-list']} ${
+          listSize ? classes.max : classes.min
+        }`}
+      >
+        {isLoading && <FriendsLoader />}
+        {List.length > 0 && List}
+      </ul>
     </section>
   );
 };

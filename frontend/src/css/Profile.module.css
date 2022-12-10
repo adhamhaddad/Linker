@@ -20,21 +20,7 @@
     width: 100%;
 }
 
-.username {
-    display: block;
-    width: fit-content;
-    padding: 10px 0;
-    text-transform: capitalize;
-    font-size: 15px;
-    font-weight: 800;
-}
-.visitors {
-    font-size: 12px;
-    margin: 0 5px;
-    cursor: pointer;
-}
-
-.visitors-section {
+.visits-section {
     background-color: var(--base-color-light);
     width: 300px;
     display: flex;
@@ -42,17 +28,20 @@
     border-radius: 4px;
     overflow: hidden;
 }
-.visitors-section .header {
+.visits-section .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 5px;
 }
-.visitors-section .header h3 {
+.visits-section .header h3 {
     font-size: 14px;
+    height: 30px;
+    line-height: 30px;
     color: var(--base-color-dark);
+    cursor: pointer;
 }
-.visitors-section .header button {
+.visits-section .header button {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -60,9 +49,9 @@
     background-color: var(--base-color-dark);
     color: var(--base-color-light)
 }
-.visitors-section ul {
+.visits-section ul {
     overflow-y: auto;
-    max-height: 200px;
+    max-height: 300px;
     padding: 5px;
 }
 
@@ -106,9 +95,6 @@
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
-    .username {
-        font-size: 14px;
-    }
     button.create-post-btn {
         margin: 5px;
     }

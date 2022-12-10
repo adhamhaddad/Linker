@@ -49,6 +49,6 @@
     color: red;
 }
 .request-accept {
-    border-color: green;
-    color: green
+    border-color: var(--base-color-dark);
+    color: var(--base-color-dark)
 }

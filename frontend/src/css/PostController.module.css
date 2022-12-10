@@ -10,12 +10,9 @@
     height: 30px;
     border-radius: 50%;
     cursor: pointer;
+    color: var(--base-color-dark);
     background-color: var(--base-color-light);
     transition: background .5s ease-in-out;
-    background-image: url('../icons/sliders-solid.svg');
-    background-repeat: no-repeat;
-    background-size: 15px;
-    background-position: center;
 }
 
 .post-options {
@@ -31,25 +28,25 @@
     overflow: hidden;
 }
 
-.post-options button {
-    display: block;
-    text-align: left;
+.post-options > button {
+    display: flex;
+    align-items: center;
     font-size: 12px;
     width: 100%;
     height: 40px;
-    line-height: 40px;
+    text-align: left;
     text-transform: capitalize;
     border-bottom: 1px solid rgb(219, 219, 219);
     cursor: pointer;
-    padding: 0 5px 0 22px;
-    background-repeat: no-repeat;
-    background-position: 4px;
-    background-size: 12px;
+    padding: 0px 5px;
     background-color: var(--base-color-light);
     transition: background .5s ease-in-out;
 }
+.post-options > button i {
+    margin-right: 5px;
+}
 
-.post-options button:hover {
+.post-options > button:hover {
     background-color: rgb(230, 230, 230);
     transition: background .5s ease-in-out;
 }
@@ -58,20 +55,6 @@
     border-bottom: none;
 }
 
-.save-post {
-    background-image: url('../icons/bookmark-regular.svg');
-}
-
-.delete-post {
-    background-image: url('../icons/trash-can-solid.svg');
-}
-.edit-post {
-    background-image: url('../icons/pen-to-square-regular.svg');
-    
-}
-.report-post {
-    background-image: url('../icons/triangle-exclamation-solid.svg');
-}
 /*** Media Querry ***/
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {}

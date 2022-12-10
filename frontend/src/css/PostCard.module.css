@@ -3,10 +3,14 @@
     max-width: 500px;
     /* max-height: 600px; */
     padding: 5px;
-    margin: 10px auto;
+    margin-bottom: 10px;
     background-color: var(--base-color-light);
     color: var(--base-color-dark);
-    border: 1px solid rgb(219, 219, 219);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.posts:last-child {
+    margin-bottom: 0;
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {

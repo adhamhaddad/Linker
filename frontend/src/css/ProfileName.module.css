@@ -1,0 +1,51 @@
+.name-section {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    padding: 10px 0;
+    text-transform: capitalize;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.visitors {
+    font-size: 12px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.username.loading {
+    width: 135px;
+    height: 12px;
+    background-color: #FFF;
+    border-radius: 2px;
+    display: inline-block;
+    animation-name: name-animate;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+.visitors.loading  {
+    animation-name: name-animate;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+
+@keyframes name-animate {
+    0% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+    .username {
+        font-size: 14px;
+    }
+}

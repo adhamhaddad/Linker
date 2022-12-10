@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     background-color: var(--base-color-light);
-    padding: 5px;
+    /* padding: 5px; */
 }
 
 .post-info {
@@ -17,6 +17,7 @@
     margin-right: 10px;
     font-size: 12px;
     text-align: center;
+    border: 2px solid var(--base-hover-light);
     background-image: url('../images/anonymous_user.png');
     background-size: cover;
     background-position: center;
@@ -44,13 +45,12 @@
 .post-date {
     font-size: 11px;
     width: max-content;
-    background-image: url('../icons/earth-africa-solid.svg');
-    background-repeat: no-repeat;
-    background-position: right;
-    background-size: 11px;
-    padding: 0 14px 0 0;
+    display: flex;
+    align-items: center;
 }
-
+.post-date > i {
+    margin-left: 5px;
+}
 .update-post, .discard-update {
     width: fit-content;
     font-size: 12px;

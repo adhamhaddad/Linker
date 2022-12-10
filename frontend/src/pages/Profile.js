@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, NavLink, useParams } from 'react-router-dom';
 import AuthenticateContext from '../utils/authentication';
 import useHttp from '../hooks/use-http';
 import PostCard from '../components/Post/PostCard';
@@ -11,14 +11,17 @@ import Friends from './Friends';
 import SpinnerLoading from '../components/Loading/Spinner';
 import PostBox from '../components/Post/PostBox';
 import Error from '../components/Error';
-import classes from '../css/Profile.module.css';
 import Modal from '../components/Modal';
-import UserCard from '../components/Post/UserCard';
+import UserCard from '../components/UserCard';
+import PostsList from '../components/PostsList';
+import ProfileName from '../components/ProfileName';
+import classes from '../css/Profile.module.css';
 
-const Profile = ({ socket }) => {
+const Profile = ({ socket, windowSize }) => {
   const [user, setUser] = useState({});
   const [theme, setTheme] = useState({});
   const [visitors, setVisitors] = useState([]);
+  const [visited, setVisited] = useState([]);
   const [userPosts, setUserPosts] = useState([]);
   const [friendsList, setFriendsList] = useState([]);
   const [checkFriend, setCheckFriend] = useState({
@@ -26,10 +29,12 @@ const Profile = ({ socket }) => {
     sender_id: null,
     receiver_id: null
   });
+  const [visits, setVisits] = useState(false);
   const { isLoading, isError, sendRequest } = useHttp();
   const authCtx = useContext(AuthenticateContext);
   const params = useParams();
   const [viewVisitors, setViewVisitors] = useState(false);
+
   // TRANSFORM POSTS
   const transformPosts = (data) => {
     const transformedData = data.map((post) => {
@@ -44,11 +49,23 @@ const Profile = ({ socket }) => {
     });
     setUserPosts(transformedData);
   };
+
   // PROFILE REQUESTS
   const getUser = () => {
     sendRequest(`users?username=${params.username}`, 'GET', {}, setUser);
   };
 
+  // VISITORS
+  const getVisitors = () => {
+    sendRequest(`visitors?username=${params.username}`, 'GET', {}, setVisitors);
+  };
+
+  // VISITED
+  const getVisited = () => {
+    sendRequest(`visited?username=${params.username}`, 'GET', {}, setVisited);
+  };
+
+  // FREINDS
   const getFriends = () => {
     sendRequest(
       `user/friends?username=${params.username}`,
@@ -57,10 +74,12 @@ const Profile = ({ socket }) => {
       setFriendsList
     );
   };
-  // GET USER THEME
+  // THEME
   const getUserTheme = () => {
     sendRequest(`theme?username=${params.username}`, 'GET', {}, setTheme);
   };
+
+  // POSTS
   const getUserPosts = () => {
     sendRequest(
       `user-posts?username=${params.username}`,
@@ -121,7 +140,7 @@ const Profile = ({ socket }) => {
       null
     );
   };
-  const newRequestCanceled = (data) => {
+  const newRequestCanceled = () => {
     setCheckFriend((prev) => {
       return { ...prev, isFriend: null };
     });
@@ -166,9 +185,10 @@ const Profile = ({ socket }) => {
       null
     );
   };
+
   const newDeletedFriend = (data) => {
     setFriendsList((prev) =>
-      prev.filter((friend) => friend.friend_id !== data.result.friend_id)
+      prev.filter((friend) => friend.friend_id !== data.friend_id)
     );
     setCheckFriend((prev) => {
       return { ...prev, isFriend: null };
@@ -204,11 +224,7 @@ const Profile = ({ socket }) => {
     );
   };
 
-  // VISITORS
-  const getVisitors = () => {
-    sendRequest(`visitors?username=${params.username}`, 'GET', {}, setVisitors);
-  };
-
+  // CREATE VISITOR
   const createVisitor = () => {
     sendRequest(
       'visitors',
@@ -235,7 +251,51 @@ const Profile = ({ socket }) => {
     });
   };
 
-  const posts =
+  const newVisited = (data) => {
+    setVisited((prev) => {
+      return prev.map((user) => {
+        if (user.visitor_id === data.visitor_id) {
+          return { ...user, ...data };
+        } else if (user.visitor_id !== data.visitor_id) {
+          return user;
+        } else {
+          return data;
+        }
+      });
+    });
+  };
+
+  const onVisits = () => {
+    setVisits((prev) => !prev);
+  };
+  const onViewVisitors = () => {
+    setViewVisitors((prev) => !prev);
+    setVisits(false);
+  };
+
+  const visitorsList =
+    visitors.length > 0 &&
+    visitors
+      .map((visitor) => (
+        <UserCard
+          key={`${visitor.visitor_id} ${new Date(visitor.timedate).getTime()}`}
+          value={visitor}
+        />
+      ))
+      .sort((a, b) => b.key.split(' ')[1] - a.key.split(' ')[1]);
+
+  const visitedList =
+    visited.length > 0 &&
+    visited
+      .map((user) => (
+        <UserCard
+          key={`${user.visitor_id} ${new Date(user.timedate).getTime()}`}
+          value={user}
+        />
+      ))
+      .sort((a, b) => b.key.split(' ')[1] - a.key.split(' ')[1]);
+
+  const postsList =
     userPosts.length > 0 &&
     userPosts
       .map((post) => {
@@ -261,16 +321,13 @@ const Profile = ({ socket }) => {
       })
       .sort((a, b) => b.key - a.key);
 
-  const onViewVisitors = () => {
-    setViewVisitors((prev) => !prev);
-  };
-
   useEffect(() => {
     getUser();
     getUserTheme();
     getFriends();
     getUserPosts();
     getVisitors();
+    getVisited();
 
     if (params.username !== authCtx.user.username) {
       checkIsFriend();
@@ -351,9 +408,11 @@ const Profile = ({ socket }) => {
           (data.data.receiver_user.username === params.username &&
             data.data.sender_user.username === authCtx.user.username) ||
           (data.data.sender_user.username === params.username &&
-            data.data.receiver_user.username === authCtx.user.username)
+            data.data.receiver_user.username === authCtx.user.username) ||
+          data.data.receiver_user.username === params.username ||
+          data.data.sender_user.username === params.username
         ) {
-          newDeletedFriend(data.data);
+          newDeletedFriend(data.data.result);
         }
       }
     });
@@ -361,7 +420,12 @@ const Profile = ({ socket }) => {
     socket.on('visits', (data) => {
       if (data.action === 'CREATE_VISIT') {
         if (data.data.username === params.username) {
-          // newVisitor(data.data);
+          newVisitor(data.data);
+        }
+      }
+      if (data.action === 'CREATE_VISIT') {
+        if (data.data.username === params.username) {
+          newVisited(data.data);
         }
       }
     });
@@ -372,9 +436,11 @@ const Profile = ({ socket }) => {
       setFriendsList([]);
       setUserPosts([]);
       setVisitors([]);
+      setVisited([]);
+      setViewVisitors(false);
+      setVisits(false);
     };
   }, [params]);
-
   return (
     <>
       <Container>
@@ -392,20 +458,58 @@ const Profile = ({ socket }) => {
                 user_id={user.user_id}
                 profile_picture={user.profile_picture}
               />
-              <span className={classes.username}>
-                {user.first_name} {user.last_name}
-                <span className={classes['visitors']} onClick={onViewVisitors}>
-                  <i className='fa-solid fa-eye'></i>{' '}
-                  {visitors !== undefined && visitors.length}
-                </span>
-              </span>
+              <ProfileName
+                first_name={user.first_name}
+                last_name={user.last_name}
+                visitors={visitors}
+                onViewVisitors={onViewVisitors}
+                isLoading={isLoading}
+              />
+
+              {viewVisitors && (
+                <Modal>
+                  <section
+                    className={classes['visits-section']}
+                    style={{ color: theme.profile_cover }}
+                  >
+                    <div className={classes['header']}>
+                      <h3
+                        onClick={onVisits}
+                        style={{ color: !visits && 'currentcolor' }}
+                      >
+                        Visitors ({visitors.length})
+                      </h3>
+                      <h3
+                        onClick={onVisits}
+                        style={{ color: visits && 'currentcolor' }}
+                      >
+                        Visited ({visited.length})
+                      </h3>
+                      <button
+                        className='fa-solid fa-xmark'
+                        onClick={onViewVisitors}
+                        style={{ backgroundColor: theme.profile_cover }}
+                      ></button>
+                    </div>
+                    <ul>
+                      {!visits && visitorsList.length > 0 && visitorsList}
+                      {visits && visitedList.length > 0 && visitedList}
+                    </ul>
+                  </section>
+                </Modal>
+              )}
             </div>
+
             {!isLoading && authCtx.user.username !== params.username && (
               <div className={classes['request-actions']}>
                 {checkFriend.isFriend === true && (
                   <>
                     <Link
-                      to={`/messages/${user.username}`}
+                      to={
+                        windowSize <= 600
+                          ? `/messages/${user.username}/phone-screen`
+                          : `/messages/${user.username}`
+                      }
                       className={`${classes['friend-actions']} ${classes['message-friend']}`}
                     >
                       <span>Message</span>
@@ -488,33 +592,16 @@ const Profile = ({ socket }) => {
           </section>
         </div>
       </Container>
-      {viewVisitors && (
-        <Modal>
-          <section className={classes['visitors-section']}>
-            <div className={classes['header']}>
-              <h3>Visitors ({visitors.length})</h3>
-              <button
-                className='fa-solid fa-xmark'
-                onClick={onViewVisitors}
-                style={{ backgroundColor: theme.profile_cover }}
-              ></button>
-            </div>
-            <ul>
-              {visitors.length > 0 &&
-                visitors.map((visitor) => (
-                  <UserCard key={visitor.visitor_id} value={visitor} />
-                ))}
-            </ul>
-          </section>
-        </Modal>
-      )}
+
       <Container className='posts'>
         {authCtx.user.username == params.username && (
           <PostBox theme={theme.profile_cover} />
         )}
-        {posts.length > 0 && posts}
+        {postsList.length > 0 && (
+          <PostsList posts={postsList} theme={theme.profile_cover} />
+        )}
       </Container>
-      {isLoading && <SpinnerLoading color='dark' />}
+      {isLoading && <SpinnerLoading color='dark' theme={theme.profile_cover} />}
       {isError !== null && <Error message={isError} />}
     </>
   );

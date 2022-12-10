@@ -36,3 +36,8 @@
     color: var(--base-color-dark);
     font-weight: bold;
 }
+.card-time {
+    font-size: 12px;
+    margin-left: auto;
+    color: var(--base-color-dark)
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from '../Modal';
-import UserCard from './UserCard';
+import UserCard from '../UserCard';
 import classes from '../../css/LikesController.module.css';
 
 const LikesController = ({ likes, onHide }) => {

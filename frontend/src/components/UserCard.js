@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import apiUrlContext from '../../utils/api-urls';
-import classes from '../../css/UserCard.module.css';
+import apiUrlContext from '../utils/api-urls';
+import PostDate from '../Validation/PostDate';
+import classes from '../css/UserCard.module.css';
 
 const UserCard = ({ value }) => {
   const apiCtx = useContext(apiUrlContext);
@@ -25,6 +26,11 @@ const UserCard = ({ value }) => {
       >
         {value.first_name} {value.last_name}
       </Link>
+      {value.timedate !== undefined &&
+        value.timedate !== null &&
+        value.timedate.length > 0 && (
+          <div className={classes['card-time']}><PostDate timedate={value.timedate} /></div>
+        )}
     </li>
   );
 };

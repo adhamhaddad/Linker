@@ -6,7 +6,7 @@ import PostContent from '../components/Post/PostContent';
 import PostBottom from '../components/Post/PostBottom';
 import PostReactions from '../components/Post/PostReactions';
 import PostCommments from '../components/Post/PostComments';
-import UserCard from '../components/Post/UserCard';
+import UserCard from '../components/UserCard';
 import classes from '../css/Post.module.css';
 
 const Post = ({ socket }) => {
@@ -21,9 +21,9 @@ const Post = ({ socket }) => {
     timedate: '',
     content: { caption: '', img: '', video: '' }
   });
-  const [likesList, setLikesList] = useState([]);
-  const [commentsList, setCommentsList] = useState([]);
-  const [sharesList, setSharesList] = useState([]);
+  const [likes, setLikes] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [shares, setShares] = useState([]);
   const params = useParams();
 
   // TRANSFORM POST
@@ -46,34 +46,19 @@ const Post = ({ socket }) => {
       {},
       transformPost
     );
-    sendRequest(
-      `post/likes?post_id=${params.post_id}`,
-      'GET',
-      {},
-      setLikesList
-    );
-    sendRequest(
-      `comments?post_id=${params.post_id}`,
-      'GET',
-      {},
-      setCommentsList
-    );
-    sendRequest(
-      `post/shares?post_id=${params.post_id}`,
-      'GET',
-      {},
-      setSharesList
-    );
+    sendRequest(`post/likes?post_id=${params.post_id}`, 'GET', {}, setLikes);
+    sendRequest(`comments?post_id=${params.post_id}`, 'GET', {}, setComments);
+    sendRequest(`post/shares?post_id=${params.post_id}`, 'GET', {}, setShares);
   };
 
-  const likes =
-    likesList.length > 0 &&
-    likesList.map((like) => (
+  const likesList =
+    likes.length > 0 &&
+    likes.map((like) => (
       <UserCard key={new Date(like.timedate).getTime()} value={like} />
     ));
-  const shares =
-    sharesList.length > 0 &&
-    sharesList.map((share) => (
+  const sharesList =
+    shares.length > 0 &&
+    shares.map((share) => (
       <UserCard key={new Date(share.timedate).getTime()} value={share} />
     ));
 
@@ -87,6 +72,12 @@ const Post = ({ socket }) => {
         console.log(data.data);
       }
     });
+    return () => {
+      setPost({});
+      setLikes([]);
+      setComments([]);
+      setShares([]);
+    };
   }, [params]);
 
   return (
@@ -97,7 +88,7 @@ const Post = ({ socket }) => {
         <>
           {likes.length > 0 && (
             <section className={classes['likes-section']}>
-              <ul>{likes}</ul>
+              <ul>{likesList}</ul>
             </section>
           )}
           <section className={classes['post-section']}>
@@ -115,28 +106,28 @@ const Post = ({ socket }) => {
             <PostReactions
               post_id={post.post_id}
               post_user_id={post.user_id}
-              likes={likesList}
-              comments={commentsList}
-              shares={sharesList}
+              likes={likes}
+              comments={comments}
+              shares={shares}
             />
             <PostBottom
               post_id={post.post_id}
               likesList={likesList}
-              setLikesList={setLikesList}
-              setCommentsList={setCommentsList}
-              setSharesList={setSharesList}
+              setLikesList={setLikes}
+              setCommentsList={setComments}
+              setSharesList={setShares}
               socket={socket}
             />
-            {commentsList.length > 0 && (
+            {comments.length > 0 && (
               <PostCommments
-                comments={commentsList}
+                comments={comments}
                 post_user_id={post.user_id}
               />
             )}
           </section>
           {shares.length > 0 && (
             <section className={classes['shares-section']}>
-              <ul className={classes['likes-list']}>{shares}</ul>
+              <ul className={classes['likes-list']}>{sharesList}</ul>
             </section>
           )}
         </>

@@ -6,15 +6,14 @@
 }
 
 .logo {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     border: 2.5px solid var(--base-color-dark);
-    background-image: url('../icons/link-solid.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 22.5px;
+    color: var(--base-color-dark)
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -22,11 +21,9 @@
     .app-logo {
         width: auto;
     }
-
     .logo {
         width: 35px;
         height: 35px;
-        /* background-size: 25px; */
     }
 
 }

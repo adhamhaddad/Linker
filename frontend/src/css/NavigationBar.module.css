@@ -34,7 +34,7 @@
     background-size: cover;
     width: 25px;
     height: 25px;
-    border: 2px solid #909090;
+    border: 2px solid currentColor;
     border-radius: 50%;
     opacity: 0.65;
     margin-bottom: 5px;
@@ -51,7 +51,7 @@
 }
 
 .navigation li a.active .profile-picture {
-    opacity: 1
+    opacity: 1;
 }
 
 .navigation li a svg {

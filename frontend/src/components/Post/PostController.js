@@ -21,10 +21,11 @@ function PostController({ post_id, post_user_id, onSavePost, onEditPost }) {
   };
   return (
     <div className={classes['post-controller']}>
-      <button onClick={slidersHandler}></button>
+      <button onClick={slidersHandler} className='fa-solid fa-sliders'></button>
       {sliders && (
         <div className={classes['post-options']}>
-          <button onClick={onSavePost} className={classes['save-post']}>
+          <button onClick={onSavePost}>
+            <i className='fa-regular fa-bookmark'></i>
             save
           </button>
           {post_user_id === authCtx.user.user_id && (
@@ -33,18 +34,23 @@ function PostController({ post_id, post_user_id, onSavePost, onEditPost }) {
                 onClick={onEditPostToggle}
                 className={classes['edit-post']}
               >
+                <i className='fa-regular fa-pen-to-square'></i>
                 edit
               </button>
               <button
                 onClick={onDeleteHandler}
                 className={classes['delete-post']}
               >
+                <i className='fa-regular fa-trash-can'></i>
                 {isLoading ? 'deleting..' : 'delete'}
               </button>
             </>
           )}
           {post_user_id !== authCtx.user.user_id && (
-            <button className={classes['report-post']}>report</button>
+            <button className={classes['report-post']}>
+              <i className='fa-solid fa-triangle-exclamation'></i>
+              report
+            </button>
           )}
         </div>
       )}

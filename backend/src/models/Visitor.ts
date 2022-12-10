@@ -65,5 +65,25 @@ class Visitor {
       throw new Error(`Could'nt get visitors. Error ${(err as Error).message}`);
     }
   }
+
+  async getVisited(username: string): Promise<Visitors[]> {
+    try {
+      const connection = await database.connect();
+      const user_id_SQL = 'SELECT user_id FROM users WHERE username=$1';
+      const user_id_result = await connection.query(user_id_SQL, [username]);
+      const visits_SQL = `
+        SELECT DISTINCT u.username, u.first_name, u.last_name, p.profile_picture, v.timedate, v.visitor_id
+        FROM visitors v, users u, pictures p
+        WHERE v.profile_id=u.user_id AND p.user_id=u.user_id AND v.visitor_id=$1
+      `;
+      const visits_result = await connection.query(visits_SQL, [
+        user_id_result.rows[0].user_id
+      ]);
+      connection.release();
+      return visits_result.rows;
+    } catch (err) {
+      throw new Error(`Could'nt get visited. Error ${(err as Error).message}`);
+    }
+  }
 }
 export default Visitor;

@@ -16,7 +16,7 @@ const PostReactions = ({
       <div className={classes['post-reactions']}>
         {likes.length > 0 && (
           <span className={classes['reactions-content']}>
-            <span className={classes['like-icon']}></span>
+            <span className='fa-solid fa-heart'></span>
             <span onClick={onShowLikes} className={classes['like-name']}>
               {likes[0].first_name} {likes[0].last_name}{' '}
               {likes.length > 1 && (

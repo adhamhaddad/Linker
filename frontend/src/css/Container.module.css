@@ -39,7 +39,7 @@
     animation-iteration-count: infinite;
 }
 .container.posts {
-    padding: 5px 0;
+    /* padding: 5px 0; */
 }
 .container.notifications {
     height: 100%;

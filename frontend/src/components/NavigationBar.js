@@ -8,12 +8,7 @@ const NavigationBar = ({ username, profile, windowSize, theme, requests }) => {
   return (
     <ul className={classes['navigation']} style={{ color: theme }}>
       <li>
-        <NavLink
-          to='/home'
-          // className={classes['new']}
-          activeClassName={classes.active}
-          title='Home'
-        >
+        <NavLink to='/home' activeClassName={classes.active} title='Home'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 24 24'
@@ -33,10 +28,7 @@ const NavigationBar = ({ username, profile, windowSize, theme, requests }) => {
           activeClassName={classes.active}
           title='Profile'
         >
-          <div
-            className={classes['profile-picture']}
-            style={{ borderColor: theme }}
-          >
+          <div className={classes['profile-picture']}>
             {profile !== null && profile.length > 0 && (
               <img
                 crossOrigin='anonymous'
@@ -66,9 +58,7 @@ const NavigationBar = ({ username, profile, windowSize, theme, requests }) => {
             <path d='M12 16v6H3v-6a3 3 0 013-3h3a3 3 0 013 3zm5.5-3A3.5 3.5 0 1014 9.5a3.5 3.5 0 003.5 3.5zm1 2h-2a2.5 2.5 0 00-2.5 2.5V22h7v-4.5a2.5 2.5 0 00-2.5-2.5zM7.5 2A4.5 4.5 0 1012 6.5 4.49 4.49 0 007.5 2z'></path>
           </svg>
           <span>requests</span>
-          {requests.length > 0 && (
-            <span className={classes['new']}>{requests.length}</span>
-          )}
+          {requests.length > 0 && <span>{requests.length}</span>}
         </NavLink>
       </li>
       <li>

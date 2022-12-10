@@ -4,10 +4,10 @@ import useHttp from '../hooks/use-http';
 import AuthenticateContext from '../utils/authentication';
 import SpinnerLoading from './Loading/Spinner';
 import Error from './Error';
-import classes from '../css/Searchbar.module.css';
 import apiUrlContext from '../utils/api-urls';
+import classes from '../css/Searchbar.module.css';
 
-const SearchBar = ({ theme }) => {
+const SearchBar = () => {
   const authCtx = useContext(AuthenticateContext);
   const apiCtx = useContext(apiUrlContext);
   const { isError, isLoading, sendRequest } = useHttp();
@@ -59,7 +59,7 @@ const SearchBar = ({ theme }) => {
   }, [query]);
 
   return (
-    <div className={`${classes.searchbox} ${classes[theme]}`}>
+    <div className={classes['searchbox']}>
       <input
         type='search'
         placeholder='Type to Search ..'
@@ -67,7 +67,7 @@ const SearchBar = ({ theme }) => {
         onChange={queryChangeHandler}
       />
       {usersList.length > 0 && (
-        <ul className={classes.usersList}>
+        <ul className={classes['usersList']}>
           {isError !== null && <Error />}
           {isLoading && <SpinnerLoading />}
           {usersList.length > 0 && usersList}
