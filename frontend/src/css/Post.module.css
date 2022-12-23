@@ -14,6 +14,9 @@
     border: 1px solid var(--base-hover-light);
     border-radius: 4px;
     margin: 0 10px;
+    overflow-y: auto;
+    max-height: 100%;
+    height: fit-content;
 }
 
 .likes-section,

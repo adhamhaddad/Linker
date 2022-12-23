@@ -15,6 +15,8 @@ const Conversation = ({ socket }) => {
   const [messages, setMessages] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const { isLoading, isError, sendRequest } = useHttp();
+  const [isEditMessage, setIsEditMessage] = useState(false);
+  const [message, setMessage] = useState({});
 
   const currentUserHandler = (user) => {
     setCurrentUser({
@@ -42,37 +44,15 @@ const Conversation = ({ socket }) => {
     );
   };
 
-  // NEW MESSAGE
-  const addMessage = (newMesasge) => {
-    sendRequest(
-      'messages',
-      'POST',
-      {
-        sender_username: authCtx.user.username,
-        receiver_username: params.username,
-        content: newMesasge.current.value
-      },
-      null
-    );
+  const updateMessage = (data) => {
+    setMessage(data);
+    setIsEditMessage(true);
   };
+
   const newMessage = (data) => {
     setMessages((prev) => [...prev, data]);
   };
 
-  // UPDATE MESSAGE
-  const updateMessage = (data) => {
-    sendRequest(
-      'messages',
-      'PATCH',
-      {
-        sender_username: authCtx.user.username,
-        receiver_username: params.username,
-        message_id: data.message_id,
-        content: data.content
-      },
-      null
-    );
-  };
   const newUpdatedMessage = (data) => {
     setMessages((prev) =>
       prev.map((message) =>
@@ -80,6 +60,7 @@ const Conversation = ({ socket }) => {
       )
     );
   };
+
   // DELETE MESSAGE
   const deleteMessage = (message_id) => {
     sendRequest(
@@ -125,9 +106,7 @@ const Conversation = ({ socket }) => {
   useEffect(() => {
     getCurrentUser();
     getMessages();
-    socket.on('connection', (data) => {
-      console.log(data)
-    });
+
     socket.on('messages', (data) => {
       if (data.action === 'NEW_MESSAGE') {
         if (
@@ -140,7 +119,14 @@ const Conversation = ({ socket }) => {
         }
       }
       if (data.action === 'UPDATE_MESSAGE') {
-        newUpdatedMessage(data.data);
+        if (
+          (data.data.receiver_username === authCtx.user.username &&
+            data.data.sender_username === params.username) ||
+          (data.data.receiver_username === params.username &&
+            data.data.sender_username === authCtx.user.username)
+        ) {
+          newUpdatedMessage(data.data);
+        }
       }
       if (data.action === 'DELETE_MESSAGE') {
         if (
@@ -156,6 +142,8 @@ const Conversation = ({ socket }) => {
     return () => {
       setCurrentUser({});
       setMessages([]);
+      // setMessage({});
+      // setIsEditMessage(false)
     };
   }, [params]);
 
@@ -173,10 +161,8 @@ const Conversation = ({ socket }) => {
         {messages.length === 0 && !isLoading && isError === null && (
           <p className={classes.hint}>Chat is empty</p>
         )}
-        {/* <p className={classes['conversation-first-time']}>Conversation started at ... End-To-End Encryption</p> */}
-        {/* <p className={classes['conversation-date']}>{new Date().getTime()}</p> */}
       </div>
-      <ChatForm onAddNewMessage={addMessage} />
+      <ChatForm isEditing={isEditMessage} message={message} />
     </div>
   );
 };

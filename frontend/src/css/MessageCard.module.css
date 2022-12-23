@@ -1,3 +1,7 @@
+.new-day {
+    font-size: 11px;
+    text-align: center;
+}
 .message-container {
     position: relative;
     margin: 10px 0;

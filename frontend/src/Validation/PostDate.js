@@ -16,8 +16,7 @@ const PostDate = (props) => {
       return `${DateDiff.inDays(time)}d`;
     }
     if (DateDiff.inWeeks(time) <= 4) {
-      const weeks = DateDiff.inWeeks(time) > 1 ? 'weeks' : 'week';
-      return `${DateDiff.inWeeks(time)} ${weeks}`;
+      return `${DateDiff.inWeeks(time)}w`;
     }
     if (DateDiff.inMonths(time) <= 12) {
       const months = DateDiff.inMonths(time) > 1 ? 'months' : 'month';
@@ -28,7 +27,7 @@ const PostDate = (props) => {
     }
   };
 
-  return <>{postDate(props.timedate)}</>;
+  return postDate(props.timedate);
 }
 
 export default PostDate;

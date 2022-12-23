@@ -21,7 +21,9 @@
     cursor: pointer;
     height: 100%;
 }
-
+.like-heart {
+    margin-right: 2px;
+}
 .like-name {
     text-transform: capitalize;
 }

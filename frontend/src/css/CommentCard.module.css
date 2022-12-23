@@ -39,6 +39,10 @@
     margin-left: 5px;
     color: var(--base-color-dark)
 }
+.comment-date {
+    font-size: 11px;
+    margin-left: auto;
+}
 .comment-content {
     font-size: 12px;
     padding: 5px 0;
@@ -61,4 +65,11 @@
     font-size: 2.5px;
     margin: 0 6px;
     vertical-align: middle;
+}
+.comment-card .comment-footer span {
+    font-size: 12px;
+    padding: 0px 4px;
+    border-right: 1px solid var(--base-light-gray);
+    margin-right: 4px;
+    cursor: pointer;
 }

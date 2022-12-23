@@ -25,7 +25,6 @@
     color: currentColor
 
 }
-
 .profile-picture {
     display: block;
     background-image: url('../images/anonymous_user.png');
@@ -83,12 +82,6 @@
 .navigation li a:hover {
     color: var(--base-color-dark);
     transition: color .5s ease-in-out;
-}
-
-.notifications a:hover i {
-    animation-name: bell;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
 }
 
 @media only screen and (max-width: 600px) {

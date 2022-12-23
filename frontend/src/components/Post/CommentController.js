@@ -6,7 +6,6 @@ import classes from '../../css/CommentController.module.css';
 const CommentController = ({
   comment_id,
   comment_user_id,
-  post_user_id,
   onChangeComment
 }) => {
   const authCtx = useContext(AuthenticateContext);
@@ -14,7 +13,7 @@ const CommentController = ({
   const { sendRequest } = useHttp();
 
   const onDeleteComment = () => {
-    sendRequest('post/comment', 'DELETE', { comment_id: comment_id }, (data) =>
+    sendRequest('comment', 'DELETE', { comment_id: comment_id }, (data) =>
       onChangeComment((prev) =>
         prev.filter((comment) => comment.comment_id !== data.comment_id)
       )
@@ -22,7 +21,8 @@ const CommentController = ({
   };
 
   const onEditComment = () => {
-    sendRequest('post/comment', 'PATCH', { comment_id: comment_id });
+    
+    // sendRequest('comment', 'PATCH', { comment_id: comment_id });
   };
 
   const toggleOptions = () => {
@@ -30,35 +30,35 @@ const CommentController = ({
   };
   return (
     <div className={classes['comment-controller']}>
-      <button onClick={toggleOptions}></button>
-      <ul
-        className={classes['comment-options']}
-        style={{ display: toggleButton ? 'block' : 'none' }}
-      >
-        {comment_user_id === authCtx.user.user_id ||
-          (post_user_id === authCtx.user.user_id && (
+      <button onClick={toggleOptions} className='fa-solid fa-sliders'></button>
+      {toggleButton && (
+        <ul className={classes['comment-options']}>
+          {comment_user_id === authCtx.user.user_id && (
+            <>
+              <li>
+                <button onClick={onDeleteComment}>
+                  <i className='fa-regular fa-trash-can'></i>
+                  delete
+                </button>
+              </li>
+              <li>
+                <button onClick={onEditComment}>
+                  <i className='fa-regular fa-pen-to-square'></i>
+                  edit
+                </button>
+              </li>
+            </>
+          )}
+          {comment_user_id !== authCtx.user.user_id && (
             <li>
-              <button
-                className={classes['delete-comment']}
-                onClick={onDeleteComment}
-              >
-                delete
+              <button>
+                <i className='fa-solid fa-circle-exclamation'></i>
+                report
               </button>
             </li>
-          ))}
-        {comment_user_id === authCtx.user.user_id && (
-          <li>
-            <button className={classes['edit-comment']} onClick={onEditComment}>
-              edit
-            </button>
-          </li>
-        )}
-        {comment_user_id !== authCtx.user.user_id && (
-          <li>
-            <button className={classes['report-comment']}>report</button>
-          </li>
-        )}
-      </ul>
+          )}
+        </ul>
+      )}
     </div>
   );
 };

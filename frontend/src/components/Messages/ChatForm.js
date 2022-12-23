@@ -1,4 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
+import useHttp from '../../hooks/use-http';
+import { useParams } from 'react-router-dom';
+import AuthenticateContext from '../../utils/authentication';
 import classes from '../../css/ChatForm.module.css';
 
 const validateMessage = (message) => {
@@ -7,20 +10,51 @@ const validateMessage = (message) => {
   }
 };
 
-function ChatForm({ onAddNewMessage }) {
-  const newMesasgeRef = useRef();
-  const [messageBox, setMessageBox] = useState('');
+const ChatForm = ({ isEditing, message }) => {
+  const newMesasgeRef = useRef('');
+  const [messageBox, setMessageBox] = useState(newMesasgeRef.current.value);
+  const { sendRequest } = useHttp();
+  const authCtx = useContext(AuthenticateContext);
+  const params = useParams();
+
+  // NEW MESSAGE
+  const addMessage = (newMesasge) => {
+    sendRequest(
+      'messages',
+      'POST',
+      {
+        sender_username: authCtx.user.username,
+        receiver_username: params.username,
+        content: newMesasge.current.value
+      },
+      null
+    );
+  };
+  // UPDATE MESSAGE
+  const updateMessage = (data) => {
+    sendRequest(
+      'messages',
+      'PATCH',
+      {
+        sender_username: authCtx.user.username,
+        receiver_username: params.username,
+        message_id: data.message_id,
+        content: data.content
+      },
+      null
+    );
+  };
 
   const onMessageChange = (e) => {
     setMessageBox(e.target.value);
   };
+
   const submitFormHandler = (e) => {
     e.preventDefault();
-    // validateMessage(newMesasgeRef);
     if (newMesasgeRef.current.value.trim().length === 0) {
       return <p>please type something</p>;
     }
-    onAddNewMessage(newMesasgeRef);
+    addMessage(newMesasgeRef);
     setMessageBox('');
   };
 
@@ -45,5 +79,5 @@ function ChatForm({ onAddNewMessage }) {
       <button className='fa-solid fa-paper-plane'></button>
     </form>
   );
-}
+};
 export default ChatForm;

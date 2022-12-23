@@ -15,6 +15,7 @@ import password_controller_routes from './controllers/Passwords';
 import profile_controller_routes from './controllers/Picture';
 import theme_controller_routes from './controllers/Themes';
 import visitor_controller_routes from './controllers/Visitor';
+import commentLikes_routes_controller from './controllers/CommentLikes';
 import configs from './configs';
 import os from 'os';
 import path from 'path';
@@ -60,6 +61,7 @@ password_controller_routes(app, logger as NextFunction);
 profile_controller_routes(app, logger as NextFunction);
 theme_controller_routes(app, logger as NextFunction);
 visitor_controller_routes(app, logger as NextFunction);
+commentLikes_routes_controller(app, logger as NextFunction)
 // Express Server
 
 const server = app.listen(port, () => {

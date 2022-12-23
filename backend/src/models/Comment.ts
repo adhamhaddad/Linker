@@ -3,13 +3,11 @@ import Comment from '../types/Comments';
 
 class Comments {
   async createComment(c: Comment): Promise<Comment[]> {
-    console.log('Create Comment Logged');
     try {
       const connection = await database.connect();
       const user_SQL = `
         SELECT DISTINCT u.username, p.profile_picture, u.first_name, u.last_name
-        FROM
-        users u, pictures p
+        FROM users u, pictures p
         WHERE p.user_id=u.user_id AND u.user_id=$1
       `;
       const comment_SQL = `
@@ -19,7 +17,7 @@ class Comments {
         ($1, $2, $3, $4, $5, $6)
         RETURNING *
       `;
-      const user_SQL_result = await connection.query(user_SQL, [c.user_id]);
+      const user_result = await connection.query(user_SQL, [c.user_id]);
       const comment_result = await connection.query(comment_SQL, [
         c.post_id,
         c.user_id,
@@ -29,7 +27,7 @@ class Comments {
         c.comment_video
       ]);
       connection.release();
-      return [...user_SQL_result.rows[0], ...comment_result.rows[0]];
+      return {...user_result.rows[0], ...comment_result.rows[0]};
     } catch (error) {
       throw new Error(
         `Could not create the comment. Error ${(error as Error).message}`

@@ -44,6 +44,7 @@ const resetPassword = async (req: Request, res: Response) => {
     const response = await password.resetPassword(req.body);
     res.status(201).json({
       status: true,
+      data: {...response},
       message: 'Password changed successfully!'
     });
   } catch (err) {
@@ -79,7 +80,7 @@ const authenticate = async (req: Request, res: Response) => {
 };
 const password_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/authenticate', logger, authenticate);
-  app.patch('/password/change', logger, verifyToken, changePassword);
-  app.patch('/password/reset', logger, verifyToken, resetPassword);
+  app.patch('/password-change', logger, verifyToken, changePassword);
+  app.patch('/password-reset', logger, verifyToken, resetPassword);
 };
 export default password_controller_routes;

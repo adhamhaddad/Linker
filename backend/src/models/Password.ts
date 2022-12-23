@@ -52,15 +52,13 @@ class Password {
     }
   }
 
-  //   ! Need work
   async resetPassword(p: Passwords): Promise<Passwords[]> {
     try {
       const connection = await database.connect();
-      const sql =
-        'UPDATE passwords SET old_password=$2 current_password=$3 WHERE user_id=$1';
+      const sql = `UPDATE passwords SET old_password=$2, current_password=$3, changed=$4 WHERE user_id=$1 RETURNING changed`;
       const result = await connection.query(sql, [
         p.user_id,
-        hash(p.old_password),
+        hash(p.current_password),
         hash(p.current_password),
         new Date()
       ]);
@@ -68,7 +66,7 @@ class Password {
       return result.rows[0];
     } catch (error) {
       throw new Error(
-        `Could not change password. Error ${(error as Error).message}`
+        `Could not reset password. Error ${(error as Error).message}`
       );
     }
   }

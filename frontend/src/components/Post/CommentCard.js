@@ -1,12 +1,62 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import CommentDate from '../../Validation/CommentDate';
 import CommentController from './CommentController';
+import useHttp from '../../hooks/use-http';
+import AuthenticateContext from '../../utils/authentication';
 import apiUrlContext from '../../utils/api-urls';
+import PostDate from '../../Validation/PostDate';
 import classes from '../../css/CommentCard.module.css';
 
-const CommentCard = ({ comment, onChangeComment, post_user_id }) => {
+const CommentCard = ({ comment, onChangeComment, socket }) => {
   const apiCtx = useContext(apiUrlContext);
+  const authCtx = useContext(AuthenticateContext);
+  const [showLikes, setShowLikes] = useState(false);
+  const [commentLikes, setCommentLikes] = useState([]);
+  const { sendRequest, isLoading } = useHttp();
+
+  const getCommentLikes = () => {
+    sendRequest(
+      `comment-like?comment_id=${comment.comment_id}`,
+      'GET',
+      {},
+      setCommentLikes
+    );
+  };
+
+  const addLike = () => {
+    sendRequest(
+      'comment-like',
+      'POST',
+      {
+        comment_id: comment.comment_id,
+        user_id: authCtx.user.user_id
+      },
+      null
+    );
+  };
+
+  const showLikesToggle = () => {
+    setShowLikes((prev) => !prev);
+  };
+
+  const newLikeAdded = (data) => {
+    console.log(data);
+    setCommentLikes((prev) => [...prev, data]);
+  };
+
+  useEffect(() => {
+    getCommentLikes();
+    socket.on('likes', (data) => {
+      if (data.action === 'COMMENT_CREATE_LIKE') {
+        newLikeAdded(data.data);
+      }
+    });
+
+    return () => {
+      setCommentLikes([]);
+    };
+  }, []);
+
   return (
     <li className={classes['comment-card']}>
       <div className={classes['comment-header']}>
@@ -28,10 +78,11 @@ const CommentCard = ({ comment, onChangeComment, post_user_id }) => {
         >
           {comment.first_name} {comment.last_name}
         </Link>
-        <CommentDate time={comment.timedate} />
+        <span className={classes['comment-date']}>
+          <PostDate timedate={comment.timedate} />
+        </span>
         <CommentController
           comment_id={comment.comment_id}
-          post_user_id={post_user_id}
           comment_user_id={comment.user_id}
           onChangeComment={onChangeComment}
         />
@@ -40,8 +91,11 @@ const CommentCard = ({ comment, onChangeComment, post_user_id }) => {
         {comment.comment_caption}
       </div>
       <div className={classes['comment-footer']}>
-        <button onClick={(comment) => {}}>like</button>
+        <button onClick={addLike}>like</button>
         <i className='fa-solid fa-circle period'></i>
+        {commentLikes.length > 0 && (
+          <span onClick={showLikesToggle}>{commentLikes.length}</span>
+        )}
         <button>reply</button>
       </div>
     </li>

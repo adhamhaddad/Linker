@@ -11,7 +11,6 @@ const addLike = async (req: Request, res: Response) => {
     io.emit('likes', { action: 'SET_LIKE', data: { ...response } });
     res.status(201).json({
       status: true,
-      data: { ...response },
       message: 'Like added successfully!'
     });
   } catch (err) {
@@ -45,7 +44,7 @@ const checkLike = async (req: Request, res: Response) => {
     );
     res.status(200).json({
       status: true,
-      data: { ...response },
+      data: response,
       message: 'like Found successfully!'
     });
   } catch (err) {
@@ -62,7 +61,6 @@ const deleteLike = async (req: Request, res: Response) => {
     io.emit('likes', { action: 'UNSET_LIKE', data: { ...response } });
     res.status(200).json({
       status: true,
-      data: { ...response },
       message: 'Like removed successfully!'
     });
   } catch (err) {

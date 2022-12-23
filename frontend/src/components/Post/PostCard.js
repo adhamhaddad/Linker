@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useHttp from '../../hooks/use-http';
@@ -9,13 +9,12 @@ import PostHeader from './PostHeader';
 import PostBottom from './PostBottom';
 import LikesController from './LikesController';
 import SharesController from './SharesController';
+import * as postController from '../../utils/post-utiles';
 import classes from '../../css/PostCard.module.css';
+import AuthenticateContext from '../../utils/authentication';
 
 const PostCard = ({
   user_id,
-  username,
-  first_name,
-  last_name,
   post_id,
   post_user_id,
   post_profile_picture,
@@ -24,10 +23,11 @@ const PostCard = ({
   post_last_name,
   post_timedate,
   post_content,
-  socket,
+  socket
 }) => {
   const history = useHistory();
   const { isLoading, isError, sendRequest } = useHttp();
+  const [isLiked, setIsLiked] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [likesList, setLikesList] = useState([]);
   const [commentsList, setCommentsList] = useState([]);
@@ -35,11 +35,11 @@ const PostCard = ({
   const [likesPort, setLikesPort] = useState(false);
   const [commentsPort, setCommentsPort] = useState(false);
   const [sharesPort, setSharesPort] = useState(false);
+  const authCtx = useContext(AuthenticateContext);
 
   const openPost = () => {
     history.push(`/${post_username}/${post_id}`);
   };
-
   const showLikesHandler = () => {
     setLikesPort((prev) => !prev);
   };
@@ -50,15 +50,43 @@ const PostCard = ({
     setSharesPort((prev) => !prev);
   };
 
-  useEffect(() => {
+  const getPost = () => {
     sendRequest(`post/likes?post_id=${post_id}`, 'GET', {}, setLikesList);
     sendRequest(`comments?post_id=${post_id}`, 'GET', {}, setCommentsList);
     sendRequest(`post/shares?post_id=${post_id}`, 'GET', {}, setSharesList);
+  };
+
+  const checkIsLiked = () => {
+    sendRequest(
+      `post/like-check?post_id=${post_id}&user_id=${authCtx.user.user_id}`,
+      'GET',
+      {},
+      setIsLiked
+    );
+  };
+
+  useEffect(() => {
+    getPost();
+    checkIsLiked();
+    
+    socket.on('likes', (data) => {
+      if (data.action === 'SET_LIKE') {
+        if (data.data.post_id === post_id) {
+          postController.newLikeAdded(data.data, setLikesList);
+          checkIsLiked();
+        }
+      }
+      if (data.action === 'UNSET_LIKE') {
+        if (data.data.post_id === post_id) {
+          postController.newLikeRemoved(data.data, setLikesList);
+          checkIsLiked();
+        }
+      }
+    });
+    return () => {};
   }, []);
   return (
-    <div
-      className={classes['posts']}
-    >
+    <div className={classes['posts']}>
       <PostHeader
         user_id={user_id}
         post_id={post_id}
@@ -77,28 +105,22 @@ const PostCard = ({
         isEdit={isEdit}
         onClick={openPost}
       />
-      <Reactions
-        post_id={post_id}
-        user_id={user_id}
-        post_user_id={post_user_id}
-        likes={likesList}
-        comments={commentsList}
-        shares={sharesList}
-        onShowLikes={showLikesHandler}
-        onShowComments={showCommentsHandler}
-        onShowShares={showSharesHandler}
-      />
+      {(likesList.length > 0 ||
+        commentsList.length > 0 ||
+        sharesList.length > 0) && (
+        <Reactions
+          likesList={likesList}
+          commentsList={commentsList}
+          sharesList={sharesList}
+          onShowLikes={showLikesHandler}
+          onShowComments={showCommentsHandler}
+          onShowShares={showSharesHandler}
+        />
+      )}
       <PostBottom
         post_id={post_id}
-        user_id={user_id}
-        username={username}
-        first_name={first_name}
-        last_name={last_name}
-        likesList={likesList}
-        setLikesList={setLikesList}
-        setCommentsList={setCommentsList}
-        setSharesList={setSharesList}
-        socket={socket}
+        isLiked={isLiked}
+        showCommentsHandler={showCommentsHandler}
       />
       {likesPort && (
         <LikesController likes={likesList} onHide={showLikesHandler} />
@@ -106,9 +128,12 @@ const PostCard = ({
       {commentsPort && (
         <PostCommments
           post_user_id={post_user_id}
-          comments={commentsList}
-          onChangeComment={setCommentsList}
+          post_id={post_id}
+          commentsList={commentsList}
+          // onChangeComment={setCommentsList}
+          setCommentsList={setCommentsList}
           onHide={showCommentsHandler}
+          socket={socket}
         />
       )}
       {sharesPort && (

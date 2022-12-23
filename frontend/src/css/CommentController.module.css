@@ -10,13 +10,9 @@
     height: 25px;
     border-radius: 50%;
     cursor: pointer;
-    background-color: var(--base-color-light);
     background-color: transparent;
     transition: background .5s ease-in-out;
-    background-image: url('../icons/sliders-solid.svg');
-    background-repeat: no-repeat;
-    background-size: 14px;
-    background-position: center;
+
 }
 
 .comment-options {
@@ -26,7 +22,6 @@
     border-radius: 5px;
     border: 2px solid rgb(219, 219, 219);
     box-shadow: 0 0 12px 4px rgb(219, 219, 219);
-    background-color: var(--base-color-light);
     background-color: transparent;
     width: 100px;
 }
@@ -41,27 +36,18 @@
     text-transform: capitalize;
     border-bottom: 1px solid rgb(219, 219, 219);
     cursor: pointer;
-    padding: 0 5px 0 20px;
-    background-repeat: no-repeat;
-    background-position: 4px;
-    background-size: 12px;
+    padding: 0 5px;
     background-color: var(--base-color-light);
     transition: background .5s ease-in-out;
 }
-
+.comment-options li button i {
+    margin-right: 4px;
+}
 .comment-options li button:hover {
     background-color: rgb(230, 230, 230);
     transition: background .5s ease-in-out;
 }
-.delete-comment {
-    background-image: url('../icons/trash-can-solid.svg');
-}
-.edit-comment {
-    background-image: url('../icons/pen-to-square-regular.svg');
-}
-.report-comment {
-    background-image: url('../icons/circle-exclamation-solid.svg');
-}
+
 /*** Media Querry ***/
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {

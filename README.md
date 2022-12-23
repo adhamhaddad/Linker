@@ -18,9 +18,11 @@ Open postgres terminal with: `psql postgres`
 
 1- `CREATE DATABASE network_dev;`
 
-2- `CREATE USER admin WITH PASSWORD 'admin123';`
+2- `CREATE ROLE admin WITH PASSWORD 'admin123';`
 
-3- `GRANT ALL PRIVILEGES ON DATABASE network_dev TO admin;`
+3- `ALTER ROLE admin WITH SUPERUSER CREATEROLE CREATEDB LOGIN;`
+
+4- `GRANT ALL PRIVILEGES ON DATABASE network_dev TO admin;`
 
 ### Create Environment
 
@@ -37,7 +39,7 @@ POSTGRES_DB=network_dev
 POSTGRES_DB_TEST=network_test
 POSTGRES_PASSWORD=admin123
 # Secrets keys
-SECRET_TOKEN=love-you
+SECRET_TOKEN=I-Miss-U
 SALT_ROUNDS=10
 SECRET_PEPER=thor-thunder
 ```

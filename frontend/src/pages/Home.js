@@ -7,6 +7,7 @@ import PostCard from '../components/Post/PostCard';
 import PostBox from '../components/Post/PostBox';
 import AuthenticateContext from '../utils/authentication';
 import classes from '../css/Home.module.css';
+import * as post from '../utils/post-utiles';
 import PostsList from '../components/PostsList';
 
 const Home = ({ user_id, socket }) => {
@@ -14,56 +15,23 @@ const Home = ({ user_id, socket }) => {
   const authCtx = useContext(AuthenticateContext);
   const [posts, setPosts] = useState([]);
 
-  const transformPost = (data) => {
-    const transformedData = data.map((post) => {
-      return {
-        ...post,
-        content: {
-          caption: post.post_caption,
-          img: post.post_img,
-          video: post.post_video
-        }
-      };
-    });
-    setPosts(transformedData);
-  };
-  const newPostAdded = (post) => {
-    setPosts((prev) => {
-      return [
-        ...prev,
-        {
-          ...post,
-          content: {
-            caption: post.post_caption,
-            img: post.post_img,
-            video: post.post_video
-          }
-        }
-      ];
-    });
-  };
-  const newPostUpdate = (data) => {
-    setPosts((prev) => [...prev, data]);
-  };
-  const newPostDelete = (data) => {
-    setPosts((prev) => prev.filter((post) => post.post_id !== data.post_id));
-  };
-
   const getPosts = () => {
-    sendRequest(`posts?user_id=${user_id}`, 'GET', {}, transformPost);
+    sendRequest(`posts?user_id=${user_id}`, 'GET', {}, (data) =>
+      post.transformPosts(data, setPosts)
+    );
   };
 
   useEffect(() => {
     getPosts();
     socket.on('posts', (data) => {
-      if (data.action === 'CREATE') {
-        newPostAdded(data.data);
+      if (data.action === 'CREATE_POST') {
+        post.newPostAdded(data.data, setPosts);
       }
-      if (data.action === 'UPDATE') {
-        newPostUpdate(data.data);
+      if (data.action === 'UPDATE_POST') {
+        post.newPostUpdate(data.data, setPosts);
       }
-      if (data.action === 'DELETE') {
-        newPostDelete(data.data);
+      if (data.action === 'DELETE_POST') {
+        post.newPostDelete(data.data, setPosts);
       }
     });
     return () => {

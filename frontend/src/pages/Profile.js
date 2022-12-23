@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, NavLink, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import AuthenticateContext from '../utils/authentication';
 import useHttp from '../hooks/use-http';
 import PostCard from '../components/Post/PostCard';
@@ -15,6 +15,7 @@ import Modal from '../components/Modal';
 import UserCard from '../components/UserCard';
 import PostsList from '../components/PostsList';
 import ProfileName from '../components/ProfileName';
+import * as post from '../utils/post-utiles';
 import classes from '../css/Profile.module.css';
 
 const Profile = ({ socket, windowSize }) => {
@@ -34,21 +35,6 @@ const Profile = ({ socket, windowSize }) => {
   const authCtx = useContext(AuthenticateContext);
   const params = useParams();
   const [viewVisitors, setViewVisitors] = useState(false);
-
-  // TRANSFORM POSTS
-  const transformPosts = (data) => {
-    const transformedData = data.map((post) => {
-      return {
-        ...post,
-        content: {
-          caption: post.post_caption,
-          img: post.post_img,
-          video: post.post_video
-        }
-      };
-    });
-    setUserPosts(transformedData);
-  };
 
   // PROFILE REQUESTS
   const getUser = () => {
@@ -81,11 +67,8 @@ const Profile = ({ socket, windowSize }) => {
 
   // POSTS
   const getUserPosts = () => {
-    sendRequest(
-      `user-posts?username=${params.username}`,
-      'GET',
-      {},
-      transformPosts
+    sendRequest(`user-posts?username=${params.username}`, 'GET', {}, (data) =>
+      post.transformPosts(data, setUserPosts)
     );
   };
 
@@ -193,35 +176,6 @@ const Profile = ({ socket, windowSize }) => {
     setCheckFriend((prev) => {
       return { ...prev, isFriend: null };
     });
-  };
-
-  // CREATE POST
-  const newPostAdded = (post) => {
-    setUserPosts((prev) => {
-      return [
-        ...prev,
-        {
-          ...post,
-          content: {
-            caption: post.post_caption,
-            img: post.post_img,
-            video: post.post_video
-          }
-        }
-      ];
-    });
-  };
-
-  // UPDATE POST
-  const newPostUpdate = (data) => {
-    setUserPosts((prev) => [...prev, data]);
-  };
-
-  // DELETE POST
-  const newPostDelete = (data) => {
-    setUserPosts((prev) =>
-      prev.filter((post) => post.post_id !== data.post_id)
-    );
   };
 
   // CREATE VISITOR
@@ -339,7 +293,7 @@ const Profile = ({ socket, windowSize }) => {
           params.username === authCtx.user.username ||
           params.username === user.username
         ) {
-          newPostAdded(data.data);
+          post.newPostAdded(data.data, setUserPosts);
         }
       }
       if (data.action === 'UPDATE_POST') {
@@ -347,7 +301,7 @@ const Profile = ({ socket, windowSize }) => {
           params.username === authCtx.user.username ||
           params.username === user.username
         ) {
-          newPostUpdate(data.data);
+          post.newPostUpdate(data.data, setUserPosts);
         }
       }
       if (data.action === 'DELETE_POST') {
@@ -355,7 +309,7 @@ const Profile = ({ socket, windowSize }) => {
           params.username === authCtx.user.username ||
           params.username === user.username
         ) {
-          newPostDelete(data.data);
+          post.newPostDelete(data.data, setUserPosts);
         }
       }
     });
