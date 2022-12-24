@@ -23,8 +23,13 @@ class CommentLike {
   async getLikes(comment_id: string): Promise<CL[]> {
     try {
       const connection = await database.connect();
-      const sql = `SELECT * FROM comment_likes WHERE comment_id=$1`;
+      const sql = `
+      SElECT DISTINCT u.user_id, u.username, u.first_name, u.last_name, p.profile_picture, c.comment_id, c.timedate
+      FROM users u, pictures p, comment_likes c
+      WHERE p.user_id=u.user_id AND u.user_id=c.user_id AND c.comment_id=$1
+      `;
       const result = await connection.query(sql, [comment_id]);
+
       connection.release();
       return result.rows;
     } catch (err) {

@@ -82,7 +82,6 @@ const Post = ({ socket }) => {
 
     socket.on('likes', (data) => {
       if (data.action === 'SET_LIKE') {
-        console.log(data.data);
         if (data.data.post_id === post.post_id) {
           postController.newLikeAdded(data.data, setLikesList);
           checkIsLiked();

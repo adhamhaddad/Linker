@@ -6,6 +6,7 @@ import WindowContext from '../store/windowSize';
 import Signup from '../pages/Signup';
 import Signin from '../pages/Signin';
 import Header from './Header';
+import MiniNavigationBar from './MiniNavigationBar';
 import Main from './Main';
 import io from 'socket.io-client';
 import '../css/App.css';
@@ -21,7 +22,6 @@ const App = () => {
         profile={authCtx.user.profile_picture}
         user_id={authCtx.user.user_id}
         username={authCtx.user.username}
-        windowSize={windowSize.windowSize}
         socket={socket}
         theme={authCtx.theme.header_color}
       />
@@ -38,6 +38,7 @@ const App = () => {
           />
         </Route>
       </Switch>
+      {windowSize.windowSize <= 600 && <MiniNavigationBar />}
     </>
   ) : (
     <>

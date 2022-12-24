@@ -82,7 +82,7 @@ class Comments {
   async deleteComment(comment_id: string): Promise<Comment[]> {
     try {
       const connection = await database.connect();
-      const sql = `DELETE FROM comments WHERE comment_id=$1 RETURNING comment_id`;
+      const sql = `DELETE FROM comments WHERE comment_id=$1 RETURNING post_id, comment_id`;
       const result = await connection.query(sql, [comment_id]);
       connection.release();
       return result.rows[0];

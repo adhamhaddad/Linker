@@ -171,12 +171,11 @@ const Account = () => {
           <label htmlFor='password'>Password</label>
           <input
             type='text'
-            value={`Last changed ${new Date(accountData.changed).toLocaleString(
-              'en-US',
-              {
-                dateStyle: 'full'
-              }
-            )}`}
+            value={`Last changed on ${new Date(
+              accountData.changed
+            ).toLocaleString('en-US', {
+              dateStyle: 'full'
+            })}`}
             onChange={onChangeHandler}
             disabled
           />

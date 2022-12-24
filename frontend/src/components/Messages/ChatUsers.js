@@ -2,11 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import AuthenticateContext from '../../utils/authentication';
 import useHttp from '../../hooks/use-http';
 import { NavLink } from 'react-router-dom';
-import SearchBar from '../Searchbar';
 import SpinnerLoading from '../Loading/Spinner';
 import Error from '../Error';
-import classes from '../../css/ChatUsers.module.css';
 import apiUrlContext from '../../utils/api-urls';
+import classes from '../../css/ChatUsers.module.css';
 
 const ChatUsers = ({ windowSize, socket }) => {
   const authCtx = useContext(AuthenticateContext);
@@ -60,7 +59,6 @@ const ChatUsers = ({ windowSize, socket }) => {
 
   return (
     <div className={classes['chat-users']}>
-      <SearchBar theme='chat-search' />
       {isLoading && <SpinnerLoading color='light' />}
       {isError !== null && <Error message={isError} />}
       {list.length === 0 && <p>Friends is {list.length}</p>}

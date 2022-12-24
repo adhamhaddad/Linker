@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import AuthenticateContext from '../../utils/authentication';
 import useHttp from '../../hooks/use-http';
 import Modal from '../Modal';
+import apiUrlContext from '../../utils/api-urls';
 import classes from '../../css/PostContent.module.css';
 
 const PostContent = ({ onClick, content, post_id, isEdit }) => {
@@ -9,6 +10,7 @@ const PostContent = ({ onClick, content, post_id, isEdit }) => {
   const { sendRequest } = useHttp();
   const [contentStatus, setContentStatus] = useState(false);
   const [editCaption, setEditCaption] = useState();
+  const apiCtx = useContext(apiUrlContext);
 
   const viewContent = () => {
     setContentStatus((prev) => (prev ? false : true));
@@ -30,11 +32,15 @@ const PostContent = ({ onClick, content, post_id, isEdit }) => {
     <div onClick={onClick}>
       {contentStatus && (
         <>
-          <Modal onClick={viewContent}>
-            {content.img.trim().length > 0 && (
-              <img src={content.img} alt='content' />
-            )}
-          </Modal>
+          {content.img !== null && content.img.trim().length > 0 && (
+            <Modal onClick={viewContent}>
+              <img
+                crossOrigin='anonymous'
+                src={`${apiCtx.url}/${content.img}`}
+                alt='Post Image'
+              />
+            </Modal>
+          )}
         </>
       )}
 
@@ -47,19 +53,19 @@ const PostContent = ({ onClick, content, post_id, isEdit }) => {
           ></textarea>
         ) : (
           <>
-            <p>
-              {content.caption !== null &&
-                content.caption.trim().length > 0 &&
-                content.caption}
-              {content.caption == null && 'Null for now'}
-            </p>
-            {content.img.trim().length > 0 && (
-              <div
-                onClick={viewContent}
-                className={classes['image-content']}
-              ></div>
+            {content.caption !== null && content.caption.trim().length > 0 && (
+              <p>{content.caption}</p>
             )}
-            {content.video.trim().length > 0 && (
+            {content.img !== null && content.img.trim().length > 0 && (
+              <div onClick={viewContent} className={classes['image-content']}>
+                <img
+                  src={`${apiCtx.url}/${content.img}`}
+                  crossOrigin='anonymous'
+                  alt='Post Image'
+                />
+              </div>
+            )}
+            {content.video !== null && content.video.trim().length > 0 && (
               <video controls>
                 <source src={content.video} onClick={viewContent} />
                 content

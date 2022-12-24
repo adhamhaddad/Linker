@@ -44,7 +44,6 @@ const PostCommments = ({
 
   // Comment Handlers
   const newCommentAdded = (data) => {
-    // console.log(data);
     setCommentsList((prev) => [...prev, data]);
   };
   const newCommentUpdated = (data) => {
@@ -94,13 +93,19 @@ const PostCommments = ({
 
     socket.on('comments', (data) => {
       if (data.action === 'CREATE_COMMENT') {
-        newCommentAdded(data.data);
+        if (data.data.post_id === post_id) {
+          newCommentAdded(data.data);
+        }
       }
       if (data.action === 'UPDATE_COMMENT') {
-        newCommentUpdated(data.data);
+        if (data.data.post_id === post_id) {
+          newCommentUpdated(data.data);
+        }
       }
       if (data.action === 'DELETE_COMMENT') {
-        newCommentRemoved(data.data);
+        if (data.data.post_id === post_id) {
+          newCommentRemoved(data.data);
+        }
       }
     });
   }, []);

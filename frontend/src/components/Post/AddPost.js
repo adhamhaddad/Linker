@@ -1,20 +1,30 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useState } from 'react';
 import Modal from '../Modal';
 import useHttp from '../../hooks/use-http';
 import AuthenticateContext from '../../utils/authentication';
 import apiUrlContext from '../../utils/api-urls';
+import FilePicker from '../FilePicker';
 import classes from '../../css/AddPost.module.css';
 
 const AddPost = ({ profile, onClosePost, theme }) => {
+  const [postImage, setPostImage] = useState();
   const caption = useRef('');
   const img = useRef('');
   const video = useRef('');
   const apiCtx = useContext(apiUrlContext);
   const authCtx = useContext(AuthenticateContext);
-  const { isLoading, isError, sendRequest } = useHttp();
+  const { sendRequest } = useHttp();
 
   const createPost = (data) => {
-    sendRequest('posts', 'POST', data, null);
+    fetch(`${apiCtx.url}/posts`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${authCtx.accessToken}` },
+      body: data
+    });
+  };
+
+  const onPictureChange = (e) => {
+    setPostImage(e);
   };
 
   const onFormSubmit = (e) => {
@@ -22,21 +32,20 @@ const AddPost = ({ profile, onClosePost, theme }) => {
     const captionValue = caption.current.value;
     const imgValue = img.current.value;
     const videoValue = video.current.value;
-
+    const formData = new FormData();
+    formData.append('user_id', authCtx.user.user_id);
+    formData.append('post_caption', captionValue);
+    formData.append('post_img', postImage);
+    formData.append('post_video', videoValue);
     if (
       captionValue.trim().length == 0 &&
-      img.trim().length == 0 &&
+      postImage.length == 0 &&
       video.trim().length == 0
     ) {
       return;
     }
 
-    createPost({
-      user_id: authCtx.user.user_id,
-      post_caption: captionValue,
-      post_img: imgValue,
-      post_video: videoValue
-    });
+    createPost(formData);
     onClosePost();
   };
 
@@ -79,7 +88,8 @@ const AddPost = ({ profile, onClosePost, theme }) => {
                 className='fa-solid fa-camera'
                 style={{ color: theme }}
               ></label>
-              <input type='file' id='image' name='video' ref={img} />
+              <FilePicker onPicture={onPictureChange} />
+              <input type='file' id='image' name='immage' ref={img} />
               <input type='file' id='video' ref={video} />
             </div>
           </div>

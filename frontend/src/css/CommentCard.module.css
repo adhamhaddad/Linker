@@ -61,15 +61,21 @@
     background-color: var(--base-color-light);
 }
 
-.comment-card .comment-footer i {
+.comment-card .comment-footer i.dot {
     font-size: 2.5px;
     margin: 0 6px;
     vertical-align: middle;
 }
-.comment-card .comment-footer span {
-    font-size: 12px;
+.comment-likes {
+    font-size: 11px;
     padding: 0px 4px;
     border-right: 1px solid var(--base-light-gray);
     margin-right: 4px;
     cursor: pointer;
+}
+.comment-likes_list {
+    width: 200px;
+    height: 200px;
+    background-color: orange;
+
 }

@@ -1,7 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
-import MiniNavigationBar from './MiniNavigationBar';
 import UnderDevelopment from '../pages/NotAvailable';
 import SpinnerLoading from './Loading/Spinner';
 import classes from '../css/Main.module.css';
@@ -23,7 +22,6 @@ const Main = ({ user_id, username, windowSize, socket }) => {
       <Suspense fallback={<SpinnerLoading />}>
         <Switch>
           <Route path='/home' exact>
-            {windowSize <= 600 && <MiniNavigationBar />}
             <Home
               title='Home-Page'
               user_id={user_id}
@@ -33,20 +31,7 @@ const Main = ({ user_id, username, windowSize, socket }) => {
             />
           </Route>
           <Route path='/profile/:username' exact>
-            {windowSize <= 600 && <MiniNavigationBar />}
-            <Profile
-              title='Profile-Page'
-              user_id={user_id}
-              username={username}
-              windowSize={windowSize}
-              socket={socket}
-            />
-          </Route>
-          <Route
-            path='/profile/:username/:phone-screen'
-            exact={windowSize <= 600 && true}
-          >
-            {windowSize <= 600 && <MiniNavigationBar />}
+
             <Profile
               title='Profile-Page'
               user_id={user_id}
@@ -57,14 +42,6 @@ const Main = ({ user_id, username, windowSize, socket }) => {
           </Route>
 
           <Route path='/requests' exact>
-            {windowSize <= 600 && <MiniNavigationBar />}
-            <Requests socket={socket} />
-          </Route>
-          <Route
-            path='/requests/:phone-screen'
-            exact={windowSize <= 600 && true}
-          >
-            <MiniNavigationBar />
             <Requests socket={socket} />
           </Route>
 
@@ -83,6 +60,7 @@ const Main = ({ user_id, username, windowSize, socket }) => {
 
           <Route path='/notifications'>
             <UnderDevelopment />
+            {/* <Notifications /> */}
           </Route>
 
           <Route path='/settings' exact={windowSize <= 600 && true}>

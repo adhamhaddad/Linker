@@ -47,7 +47,6 @@ const FilePicker = ({ onPicture }) => {
       />
       <div className={classes['image-upload__preview']}>
         {previewUrl && <img src={previewUrl} alt='Preview' />}
-        {!previewUrl && <p>Choose an image to preview</p>}
       </div>
     </div>
   );

@@ -1,13 +1,21 @@
 import { Request, Response, NextFunction, Application } from 'express';
-import verifyToken from '../middlewares/verifyToken';
 import Post from '../models/Post';
+import verifyToken from '../middlewares/verifyToken';
+import { postUpload } from '../middlewares/imagesHandler';
 import { io } from '../server';
 
 const post = new Post();
 
 const createPost = async (req: Request, res: Response) => {
+  const postData = {
+    user_id: req.body.user_id as string,
+    post_caption: req.body.post_caption as string,
+    post_img: req.file?.path as string,
+    post_video: req.body.post_video as string
+  };
+
   try {
-    const response = await post.createPost(req.body);
+    const response = await post.createPost(postData);
     io.emit('posts', { action: 'CREATE_POST', data: { ...response } });
     res.status(201).json({
       status: true,
@@ -108,7 +116,13 @@ const deletePost = async (req: Request, res: Response) => {
 };
 
 const posts_controller_routes = (app: Application, logger: NextFunction) => {
-  app.post('/posts', logger, verifyToken, createPost);
+  app.post(
+    '/posts',
+    logger,
+    verifyToken,
+    postUpload.single('post_img'),
+    createPost
+  );
   app.get('/post', logger, verifyToken, getPost);
   app.get('/posts', logger, verifyToken, getAllPosts);
   app.get('/user-posts', logger, verifyToken, getUserPosts);

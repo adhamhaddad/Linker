@@ -36,7 +36,7 @@ const ChatHeader = ({ username, first_name, last_name }) => {
           </li>
           <li>
             <a href='#'>
-              <i className='fa-solid fa-bell-slash'></i>
+              <i className='fa-regular fa-bell-slash'></i>
               <span>mute</span>
             </a>
           </li>
@@ -48,7 +48,7 @@ const ChatHeader = ({ username, first_name, last_name }) => {
           </li>
           <li>
             <a href='#'>
-              <i className='fa-solid fa-trash-can'></i>
+              <i className='fa-regular fa-trash-can'></i>
               <span>delete conversation</span>
             </a>
           </li>

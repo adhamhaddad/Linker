@@ -3,6 +3,7 @@ import useHttp from '../hooks/use-http';
 import AuthenticateContext from '../utils/authentication';
 import BackButton from '../components/UI/BackButton';
 import FilePicker from '../components/FilePicker';
+import apiUrlContext from '../utils/api-urls';
 import classes from '../css/Information.module.css';
 
 const Information = ({ windowSize }) => {
@@ -23,6 +24,7 @@ const Information = ({ windowSize }) => {
   const [editJobTitle, setEditJobTitle] = useState(false);
   const [editEducaiton, setEditEducation] = useState(false);
   const authCtx = useContext(AuthenticateContext);
+  const apiCtx = useContext(apiUrlContext);
   const { isLoading, isError, sendRequest } = useHttp();
 
   const editPictureToggle = () => {
@@ -51,7 +53,7 @@ const Information = ({ windowSize }) => {
     const formData = new FormData();
     formData.append('user_id', authCtx.user.user_id);
     formData.append('profile', pickedImage);
-    fetch('http://192.168.1.6:4000/information', {
+    fetch(`${apiCtx.url}/information`, {
       method: 'PATCH',
       headers: { Authorization: `Bearer ${authCtx.accessToken}` },
       body: formData
@@ -152,7 +154,6 @@ const Information = ({ windowSize }) => {
   };
 
   const onPictureChange = (e) => {
-    console.log(e);
     setPickedImage(e);
   };
 

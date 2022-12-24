@@ -8,7 +8,7 @@ const LikesController = ({ likes, onHide }) => {
     likes.length > 0 &&
     likes
       .map((like) => (
-        <UserCard key={new Date(like.timedate).getTime()} like={like} />
+        <UserCard key={new Date(like.timedate).getTime()} value={like} />
       ))
       .sort((a, b) => b.key - a.key);
   return (
@@ -16,7 +16,7 @@ const LikesController = ({ likes, onHide }) => {
       <div className={classes['post-likes']}>
         <div className={classes['likes-header']}>
           <h3>Likes</h3>
-          <button onClick={onHide}></button>
+          <button onClick={onHide} className='fa-solid fa-xmark'></button>
         </div>
         <ul className={classes['likes-list']}>{likesList}</ul>
       </div>

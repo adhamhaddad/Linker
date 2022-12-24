@@ -6,9 +6,9 @@ import SpinnerLoading from '../components/Loading/Spinner';
 import PostCard from '../components/Post/PostCard';
 import PostBox from '../components/Post/PostBox';
 import AuthenticateContext from '../utils/authentication';
-import classes from '../css/Home.module.css';
 import * as post from '../utils/post-utiles';
 import PostsList from '../components/PostsList';
+import classes from '../css/Home.module.css';
 
 const Home = ({ user_id, socket }) => {
   const { isLoading, isError, sendRequest } = useHttp();
@@ -55,6 +55,7 @@ const Home = ({ user_id, socket }) => {
           post_timedate={post.timedate}
           post_content={post.content}
           socket={socket}
+          theme={authCtx.theme.home_color}
           key={`${post.post_id} ${new Date(post.timedate).getTime()}`}
         />
       ))

@@ -14,7 +14,6 @@ import classes from '../../css/PostCard.module.css';
 import AuthenticateContext from '../../utils/authentication';
 
 const PostCard = ({
-  user_id,
   post_id,
   post_user_id,
   post_profile_picture,
@@ -23,10 +22,11 @@ const PostCard = ({
   post_last_name,
   post_timedate,
   post_content,
+  theme,
   socket
 }) => {
   const history = useHistory();
-  const { isLoading, isError, sendRequest } = useHttp();
+  const { sendRequest } = useHttp();
   const [isLiked, setIsLiked] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [likesList, setLikesList] = useState([]);
@@ -68,7 +68,7 @@ const PostCard = ({
   useEffect(() => {
     getPost();
     checkIsLiked();
-    
+
     socket.on('likes', (data) => {
       if (data.action === 'SET_LIKE') {
         if (data.data.post_id === post_id) {
@@ -88,7 +88,6 @@ const PostCard = ({
   return (
     <div className={classes['posts']}>
       <PostHeader
-        user_id={user_id}
         post_id={post_id}
         post_user_id={post_user_id}
         post_profile_picture={post_profile_picture}
@@ -120,6 +119,7 @@ const PostCard = ({
       <PostBottom
         post_id={post_id}
         isLiked={isLiked}
+        theme={theme}
         showCommentsHandler={showCommentsHandler}
       />
       {likesPort && (

@@ -269,6 +269,7 @@ const Profile = ({ socket, windowSize }) => {
             post_timedate={post.timedate}
             post_content={post.content}
             socket={socket}
+            theme={theme.profile_cover}
             key={new Date(post.timedate).getTime()}
           />
         );

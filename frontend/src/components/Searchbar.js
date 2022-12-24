@@ -69,7 +69,7 @@ const SearchBar = () => {
       {usersList.length > 0 && (
         <ul className={classes['usersList']}>
           {isError !== null && <Error />}
-          {isLoading && <SpinnerLoading />}
+          {/* {isLoading && <SpinnerLoading />} */}
           {usersList.length > 0 && usersList}
         </ul>
       )}

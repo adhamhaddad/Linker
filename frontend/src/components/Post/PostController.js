@@ -48,7 +48,7 @@ function PostController({ post_id, post_user_id, onSavePost, onEditPost }) {
           )}
           {post_user_id !== authCtx.user.user_id && (
             <button className={classes['report-post']}>
-              <i className='fa-solid fa-triangle-exclamation'></i>
+              <i className='fa-solid fa-circle-exclamation'></i>
               report
             </button>
           )}

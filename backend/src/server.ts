@@ -31,14 +31,18 @@ export const corsOptions = {
   optionsSucessStatus: 200,
   methods: 'GET, POST, PATCH, DELETE, HEAD, PUT'
 };
-const UPLOADS = path.join(__dirname, '..', 'uploads/profile-pictures');
+const UPLOADS = path.join(__dirname, '..', 'uploads');
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(cors(corsOptions));
-app.use('/uploads/profile-pictures', express.static(UPLOADS));
+app.use(
+  '/uploads/profile-pictures',
+  express.static(`${UPLOADS}/profile-pictures`)
+);
+app.use('/uploads/post-pictures', express.static(`${UPLOADS}/post-pictures`));
 
 // app.use(rateLimit({
 //     windowMs: 30 * 1000, // 30 seconds
@@ -61,7 +65,7 @@ password_controller_routes(app, logger as NextFunction);
 profile_controller_routes(app, logger as NextFunction);
 theme_controller_routes(app, logger as NextFunction);
 visitor_controller_routes(app, logger as NextFunction);
-commentLikes_routes_controller(app, logger as NextFunction)
+commentLikes_routes_controller(app, logger as NextFunction);
 // Express Server
 
 const server = app.listen(port, () => {
