@@ -7,7 +7,7 @@ import NavigationBar from './NavigationBar';
 import Container from './UI/Container';
 import classes from '../css/Header.module.css';
 
-const Header = ({ user_id, username, profile, windowSize, socket, theme }) => {
+const Header = ({ user_id, socket }) => {
   const authCtx = useContext(AuthenticateContext);
   const [requests, setRequests] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -83,24 +83,15 @@ const Header = ({ user_id, username, profile, windowSize, socket, theme }) => {
   }, []);
 
   return (
-    <nav className={classes.navbar}>
+    <nav className={classes['navbar']}>
       <Container className='header'>
-        {windowSize > 600 && (
-          <>
-            <Logo />
-            <SearchBar />
-          </>
-        )}
-        <NavigationBar
-          user_id={user_id}
-          profile={profile}
-          username={username}
-          windowSize={windowSize}
-          theme={theme}
-          requests={requests}
-          messages={messages}
-          posts={posts}
-        />
+        <div className={classes['logo']}>
+          <Logo />
+        </div>
+        <div className={classes['searchbar']}>
+          <SearchBar />
+        </div>
+        <NavigationBar requests={requests} messages={messages} posts={posts} />
       </Container>
     </nav>
   );

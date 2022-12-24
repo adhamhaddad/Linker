@@ -4,8 +4,9 @@
 
 .user-info ul li {
     display: flex;
+    align-items: center;
     text-transform: capitalize;
-    padding: 10px 0;
+    padding: 7px 0;
     font-size: 13.5px;
     color: var(--base-color-light);
     transition: background .7s ease-in-out;
@@ -14,7 +15,13 @@
 
 .user-info ul li i {
     width: 25px;
+    height: 20px;
+    line-height: 20px;
     text-align: center;
+}
+.user-info ul li span {
+    height: 20px;
+    line-height: 20px;
 }
 
 .user-info ul li.load {
@@ -34,7 +41,6 @@
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
     .user-info ul li {
-        font-size: 12px;
         font-size: 13px;
     }
 

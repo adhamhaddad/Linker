@@ -1,19 +1,19 @@
-import React, { useRef, useContext, useState } from 'react';
+import React, { useRef, useContext, useState, useEffect } from 'react';
 import Modal from '../Modal';
-import useHttp from '../../hooks/use-http';
 import AuthenticateContext from '../../utils/authentication';
 import apiUrlContext from '../../utils/api-urls';
-import FilePicker from '../FilePicker';
 import classes from '../../css/AddPost.module.css';
 
+const reader = new FileReader();
 const AddPost = ({ profile, onClosePost, theme }) => {
   const [postImage, setPostImage] = useState();
+  const [pikedImage, setPikedImage] = useState();
+  const [isValid, setIsValid] = useState(false);
   const caption = useRef('');
   const img = useRef('');
   const video = useRef('');
   const apiCtx = useContext(apiUrlContext);
   const authCtx = useContext(AuthenticateContext);
-  const { sendRequest } = useHttp();
 
   const createPost = (data) => {
     fetch(`${apiCtx.url}/posts`, {
@@ -25,12 +25,22 @@ const AddPost = ({ profile, onClosePost, theme }) => {
 
   const onPictureChange = (e) => {
     setPostImage(e);
+    let pickedFile;
+    let fileIsValid = isValid;
+    if (e.target.files && e.target.files.length === 1) {
+      pickedFile = e.target.files[0];
+      setPostImage(pickedFile);
+      setIsValid(true);
+      fileIsValid = true;
+    } else {
+      setIsValid(false);
+      fileIsValid = false;
+    }
   };
 
   const onFormSubmit = (e) => {
     e.preventDefault();
     const captionValue = caption.current.value;
-    const imgValue = img.current.value;
     const videoValue = video.current.value;
     const formData = new FormData();
     formData.append('user_id', authCtx.user.user_id);
@@ -49,6 +59,16 @@ const AddPost = ({ profile, onClosePost, theme }) => {
     onClosePost();
   };
 
+  useEffect(() => {
+    if (!postImage) {
+      return;
+    }
+
+    reader.onload = () => {
+      setPikedImage(reader.result);
+    };
+    reader.readAsDataURL(postImage);
+  }, [postImage]);
   return (
     <Modal>
       <div className={classes['create-post']}>
@@ -77,6 +97,11 @@ const AddPost = ({ profile, onClosePost, theme }) => {
               placeholder='What do you want to talk about?'
               ref={caption}
             ></textarea>
+            {pikedImage && (
+              <div className={classes['post-image']}>
+                <img src={pikedImage} />
+              </div>
+            )}
             <div className={classes['attachments']}>
               <label
                 htmlFor='video'
@@ -88,8 +113,12 @@ const AddPost = ({ profile, onClosePost, theme }) => {
                 className='fa-solid fa-camera'
                 style={{ color: theme }}
               ></label>
-              <FilePicker onPicture={onPictureChange} />
-              <input type='file' id='image' name='immage' ref={img} />
+              <input
+                type='file'
+                id='image'
+                ref={img}
+                onChange={onPictureChange}
+              />
               <input type='file' id='video' ref={video} />
             </div>
           </div>

@@ -54,6 +54,7 @@
     background-repeat: no-repeat;
     margin-right: 5px;
     overflow: hidden;
+    border: 2px solid var(--base-hover-light)
 }
 .profile-picture > img {
     display: block;

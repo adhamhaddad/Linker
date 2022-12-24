@@ -26,12 +26,10 @@ const Main = ({ user_id, username, windowSize, socket }) => {
               title='Home-Page'
               user_id={user_id}
               username={username}
-              windowSize={windowSize}
               socket={socket}
             />
           </Route>
           <Route path='/profile/:username' exact>
-
             <Profile
               title='Profile-Page'
               user_id={user_id}
@@ -40,7 +38,6 @@ const Main = ({ user_id, username, windowSize, socket }) => {
               socket={socket}
             />
           </Route>
-
           <Route path='/requests' exact>
             <Requests socket={socket} />
           </Route>
@@ -71,11 +68,7 @@ const Main = ({ user_id, username, windowSize, socket }) => {
             />
           </Route>
           <Route path='/settings/information/:phone-screen' exact>
-            <Information
-              title='Information-Page'
-              username={username}
-              windowSize={windowSize}
-            />
+            <Information title='Information-Page' />
           </Route>
           <Route path='/settings/privacy/:phone-screen' exact>
             <UnderDevelopment />
@@ -90,11 +83,7 @@ const Main = ({ user_id, username, windowSize, socket }) => {
             <UnderDevelopment />
           </Route>
           <Route path='/settings/account/:phone-screen' exact>
-            <Account
-              title='Account-Page'
-              windowSize={windowSize}
-              username={username}
-            />
+            <Account title='Account-Page' />
           </Route>
           <Route path='/settings/help/:phone-screen' exact>
             <UnderDevelopment />

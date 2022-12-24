@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { pickedHandler } from '../utils/files-util';
 import classes from '../css/FilePicker.module.css';
 
 const reader = new FileReader();
@@ -8,6 +9,7 @@ const FilePicker = ({ onPicture }) => {
   const [previewUrl, setPreviewUrl] = useState();
   const [isValid, setIsValid] = useState(false);
 
+  
   const pickedHandler = (e) => {
     let pickedFile;
     let fileIsValid = isValid;
@@ -22,6 +24,7 @@ const FilePicker = ({ onPicture }) => {
     }
     onPicture(pickedFile);
   };
+
 
   useEffect(() => {
     if (!file) {

@@ -6,8 +6,9 @@ import FilePicker from '../components/FilePicker';
 import apiUrlContext from '../utils/api-urls';
 import classes from '../css/Information.module.css';
 
-const Information = ({ windowSize }) => {
+const Information = () => {
   const [informationData, setInformationData] = useState({
+    profile_picture: '',
     story: '',
     relationship: '',
     location: '',
@@ -195,14 +196,20 @@ const Information = ({ windowSize }) => {
 
   return (
     <div className={classes['information']}>
-      {windowSize <= 600 && <BackButton path='/settings' />}
+      <BackButton path='/settings' />
       <h3>information</h3>
 
       <div>
         <span>Profile Picture</span>
         {!editPicture && (
           <>
-            <div className={classes['profile-picture']}></div>
+            <div className={classes['profile-picture']}>
+              <img
+                src={`${apiCtx.url}/${informationData.profile_picture}`}
+                alt='Profile Picture'
+                crossOrigin='anonymous'
+              />
+            </div>
             <button onClick={editPictureToggle}>edit</button>
           </>
         )}
@@ -226,7 +233,7 @@ const Information = ({ windowSize }) => {
         {editStory && (
           <>
             <textarea
-              className={classes.story}
+              className={classes['story']}
               value={informationData.story}
               onChange={onStoryChange}
             ></textarea>

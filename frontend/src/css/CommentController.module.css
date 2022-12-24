@@ -12,20 +12,26 @@
     cursor: pointer;
     background-color: transparent;
     transition: background .5s ease-in-out;
-
+    
 }
 
 .comment-options {
+    overflow: hidden;
     position: absolute;
     top: 25px;
     right: 0;
     border-radius: 5px;
     border: 2px solid rgb(219, 219, 219);
-    /* box-shadow: 0 0 12px 4px rgb(219, 219, 219); */
     background-color: transparent;
     width: 100px;
 }
-
+.comment-options li {
+    border-bottom: 1px solid rgb(219, 219, 219);
+    
+}
+.comment-options li:last-child {
+    border-bottom: none;
+}
 .comment-options li button {
     display: block;
     text-align: left;
@@ -34,7 +40,6 @@
     height: 35px;
     line-height: 35px;
     text-transform: capitalize;
-    border-bottom: 1px solid rgb(219, 219, 219);
     cursor: pointer;
     padding: 0 5px;
     background-color: var(--base-color-light);

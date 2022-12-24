@@ -34,10 +34,10 @@ class Information {
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT i.*
-      FROM users u, information i
+      SELECT DISTINCT i.*, p.profile_picture
+      FROM users u, information i, pictures p
       WHERE
-      i.user_id=u.user_id AND u.username=$1`;
+      i.user_id=u.user_id AND p.user_id=u.user_id AND u.username=$1`;
       const result = await connection.query(sql, [username]);
       connection.release();
       return result.rows[0];

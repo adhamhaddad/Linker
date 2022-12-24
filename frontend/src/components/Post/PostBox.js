@@ -23,6 +23,7 @@ const PostBox = ({ theme }) => {
       >
         <div className={classes['profile']}>
           {authCtx.user.profile_picture !== undefined &&
+            authCtx.user.profile_picture !== null &&
             authCtx.user.profile_picture.length > 0 && (
               <img
                 crossOrigin='anonymous'

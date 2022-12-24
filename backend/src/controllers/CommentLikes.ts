@@ -55,7 +55,7 @@ const deleteLike = async (req: Request, res: Response) => {
   }
 };
 
-const commentLikes_routes_controller = (
+const comment_likes_routes_controller = (
   app: Application,
   logger: NextFunction
 ) => {
@@ -63,4 +63,4 @@ const commentLikes_routes_controller = (
   app.get('/comment-like', logger, verifyToken, getLikes);
   app.delete('/comment-like', logger, verifyToken, deleteLike);
 };
-export default commentLikes_routes_controller;
+export default comment_likes_routes_controller;

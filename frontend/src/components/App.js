@@ -19,11 +19,8 @@ const App = () => {
   return authCtx.isLoggedIn ? (
     <>
       <Header
-        profile={authCtx.user.profile_picture}
         user_id={authCtx.user.user_id}
-        username={authCtx.user.username}
         socket={socket}
-        theme={authCtx.theme.header_color}
       />
       <Switch>
         <Route path='/' exact>

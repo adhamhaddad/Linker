@@ -8,27 +8,30 @@
 
 .post-info {
     display: flex;
+    /* padding: 5px; */
 }
 
 .profile-image {
+    display: block;
     width: 45px;
     height: 45px;
     border-radius: 50%;
     margin-right: 10px;
-    font-size: 12px;
-    text-align: center;
-    border: 2px solid var(--base-hover-light);
     background-image: url('../images/anonymous_user.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    text-decoration: none;
     overflow: hidden;
 }
 .profile-image > img {
+    display: block;
     width: 100%;
     height: 100%;
+    font-size: 12px;
+    text-align: center;
 }
-.post-info>div {
+.post-details {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -61,7 +64,4 @@
     text-transform: capitalize;
     color: var(--base-color-dark);
     background-color: transparent;
-}
-.discard-update {
-
 }

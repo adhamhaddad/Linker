@@ -7,8 +7,8 @@ import classes from '../../css/PostHeader.module.css';
 
 const PostHeader = ({
   post_id,
-  post_user_id,
   post_profile_picture,
+  post_user_id,
   post_username,
   post_first_name,
   post_last_name,
@@ -18,6 +18,7 @@ const PostHeader = ({
   onSaveChanges
 }) => {
   const apiCtx = useContext(apiUrlContext);
+
   return (
     <div className={classes['post-header']}>
       <div className={classes['post-info']}>
@@ -35,7 +36,7 @@ const PostHeader = ({
             )}
         </Link>
 
-        <div>
+        <div className={classes['post-details']}>
           <Link
             to={`/profile/${post_username}`}
             className={classes['post-username']}

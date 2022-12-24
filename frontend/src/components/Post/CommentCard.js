@@ -8,11 +8,12 @@ import PostDate from '../../Validation/PostDate';
 import LikesController from './LikesController';
 import classes from '../../css/CommentCard.module.css';
 
-const CommentCard = ({ comment, onChangeComment, socket }) => {
+const CommentCard = ({ comment, onChangeComment, onAddReply, socket }) => {
   const apiCtx = useContext(apiUrlContext);
   const authCtx = useContext(AuthenticateContext);
   const [showLikes, setShowLikes] = useState(false);
   const [commentLikes, setCommentLikes] = useState([]);
+  const [commentReplies, setCommentReplies] = useState([]);
   const { sendRequest, isLoading } = useHttp();
 
   const getCommentLikes = () => {
@@ -23,7 +24,14 @@ const CommentCard = ({ comment, onChangeComment, socket }) => {
       setCommentLikes
     );
   };
-
+  const getCommentReplies = () => {
+    sendRequest(
+      `comment-reply?comment_id=${comment.comment_id}`,
+      'GET',
+      {},
+      setCommentReplies
+    );
+  };
   const addLike = () => {
     sendRequest(
       'comment-like',
@@ -47,6 +55,8 @@ const CommentCard = ({ comment, onChangeComment, socket }) => {
 
   useEffect(() => {
     getCommentLikes();
+    getCommentReplies();
+
     socket.on('likes', (data) => {
       if (data.action === 'COMMENT_CREATE_LIKE') {
         newLikeAdded(data.data);
@@ -55,6 +65,7 @@ const CommentCard = ({ comment, onChangeComment, socket }) => {
 
     return () => {
       setCommentLikes([]);
+      setCommentReplies([]);
       setShowLikes(false);
     };
   }, []);
@@ -104,7 +115,15 @@ const CommentCard = ({ comment, onChangeComment, socket }) => {
               {commentLikes.length} <i className='fa-solid fa-heart'></i>
             </span>
           )}
-          <button>reply</button>
+          <button onClick={() => onAddReply(comment.comment_id)}>reply</button>
+          {commentReplies.length > 0 && (
+            <span
+              onClick={showLikesToggle}
+              className={classes['comment-replies']}
+            >
+              {commentReplies.length} <i className='fa-solid fa-comment'></i>
+            </span>
+          )}
         </div>
       </li>
 

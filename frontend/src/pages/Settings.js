@@ -50,7 +50,7 @@ function Settings({ windowSize }) {
               }
               title='Emails'
             >
-              <i className='fa-solid fa-envelope'></i>
+              <i className='fa-regular fa-envelope'></i>
               emails
             </NavLink>
           </li>
@@ -64,7 +64,7 @@ function Settings({ windowSize }) {
               }
               title='Notifications'
             >
-              <i className='fa-solid fa-bell'></i>
+              <i className='fa-regular fa-bell'></i>
               notifications
             </NavLink>
           </li>
@@ -92,7 +92,7 @@ function Settings({ windowSize }) {
               }
               title='Theme'
             >
-              <i className='fa-solid fa-image'></i>
+              <i className='fa-regular fa-image'></i>
               theme
             </NavLink>
           </li>
@@ -107,7 +107,7 @@ function Settings({ windowSize }) {
               }
               title='Account'
             >
-              <i className='fa-solid fa-user'></i>
+              <i className='fa-regular fa-user'></i>
               account
             </NavLink>
           </li>
@@ -121,7 +121,7 @@ function Settings({ windowSize }) {
               }
               title='Help'
             >
-              <i className='fa-solid fa-question-circle'></i>
+              <i className='fa-regular fa-question-circle'></i>
               help
             </NavLink>
           </li>

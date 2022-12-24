@@ -1,14 +1,20 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import AuthenticateContext from '../utils/authentication';
 import apiUrlContext from '../utils/api-urls';
 import classes from '../css/NavigationBar.module.css';
 
-const NavigationBar = ({ username, profile, theme, requests }) => {
+const NavigationBar = ({ requests }) => {
+  const authCtx = useContext(AuthenticateContext);
   const apiCtx = useContext(apiUrlContext);
+
   return (
-    <ul className={classes['navigation']} style={{ color: theme }}>
+    <ul
+      className={classes['navigation']}
+      style={{ color: authCtx.theme.header_color }}
+    >
       <li>
-        <NavLink to='/home' activeClassName={classes.active} title='Home'>
+        <NavLink to='/home' activeClassName={classes['active']} title='Home'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 24 24'
@@ -24,18 +30,19 @@ const NavigationBar = ({ username, profile, theme, requests }) => {
       </li>
       <li>
         <NavLink
-          to={`/profile/${username}`}
-          activeClassName={classes.active}
+          to={`/profile/${authCtx.user.username}`}
+          activeClassName={classes['active']}
           title='Profile'
         >
           <div className={classes['profile-picture']}>
-            {profile !== null && profile.length > 0 && (
-              <img
-                crossOrigin='anonymous'
-                src={`${apiCtx.url}/${profile}`}
-                alt={username}
-              />
-            )}
+            {authCtx.user.profile_picture !== null &&
+              authCtx.user.profile_picture.length > 0 && (
+                <img
+                  crossOrigin='anonymous'
+                  src={`${apiCtx.url}/${authCtx.user.profile_picture}`}
+                  alt={authCtx.user.username}
+                />
+              )}
           </div>
           <span>profile</span>
         </NavLink>
@@ -43,7 +50,7 @@ const NavigationBar = ({ username, profile, theme, requests }) => {
       <li>
         <NavLink
           to='/requests'
-          activeClassName={classes.active}
+          activeClassName={classes['active']}
           title='Friend-Request'
           className={classes['requests']}
         >
@@ -66,7 +73,7 @@ const NavigationBar = ({ username, profile, theme, requests }) => {
       <li>
         <NavLink
           to='/messages'
-          activeClassName={classes.active}
+          activeClassName={classes['active']}
           title='Messages'
         >
           <svg
@@ -86,7 +93,7 @@ const NavigationBar = ({ username, profile, theme, requests }) => {
       <li>
         <NavLink
           title='Notifications'
-          activeClassName={classes.active}
+          activeClassName={classes['active']}
           to='/notifications'
         >
           <svg
@@ -106,7 +113,7 @@ const NavigationBar = ({ username, profile, theme, requests }) => {
       <li className={classes['settings']}>
         <NavLink
           title='Settings'
-          activeClassName={classes.active}
+          activeClassName={classes['active']}
           to='/settings'
         >
           <svg

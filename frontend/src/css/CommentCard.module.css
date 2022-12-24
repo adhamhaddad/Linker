@@ -66,13 +66,14 @@
     margin: 0 6px;
     vertical-align: middle;
 }
-.comment-likes {
+.comment-likes, .comment-replies {
     font-size: 11px;
     padding: 0px 4px;
     border-right: 1px solid var(--base-light-gray);
     margin-right: 4px;
     cursor: pointer;
 }
+.comment-replies { border-right: none;}
 .comment-likes_list {
     width: 200px;
     height: 200px;
