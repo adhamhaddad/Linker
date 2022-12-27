@@ -47,7 +47,10 @@ const getAllMessages = async (req: Request, res: Response) => {
 
 const getMessagesList = async (req: Request, res: Response) => {
   try {
-    const response = await message.getMessagesList(req.query.user_id as string);
+    const response = await message.getMessagesList(
+      req.query.sender_id as string,
+      req.query.receiver_id as string
+    );
     res.status(200).json({
       status: true,
       data: response,
@@ -100,7 +103,7 @@ const deleteMessage = async (req: Request, res: Response) => {
 const messages_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/messages', logger, verifyToken, newMessage);
   app.get('/messages', logger, verifyToken, getAllMessages);
-  app.get('/user/all-messages', logger, verifyToken, getMessagesList);
+  app.get('/user/all-messages', logger, getMessagesList);
   app.patch('/messages', logger, verifyToken, updateMessage);
   app.delete('/messages', logger, verifyToken, deleteMessage);
 };

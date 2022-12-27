@@ -44,6 +44,7 @@ app.use(
   express.static(`${UPLOADS}/profile-pictures`)
 );
 app.use('/uploads/post-pictures', express.static(`${UPLOADS}/post-pictures`));
+app.use('/uploads/post-videos', express.static(`${UPLOADS}/post-videos`));
 app.use(
   '/uploads/comment-pictures',
   express.static(`${UPLOADS}/comment-pictures`)

@@ -1,19 +1,22 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import Post from '../models/Post';
 import verifyToken from '../middlewares/verifyToken';
-import { postUpload } from '../middlewares/imagesHandler';
+import { postPicUpload, postVidUpload } from '../middlewares/imagesHandler';
 import { io } from '../server';
 
 const post = new Post();
 
 const createPost = async (req: Request, res: Response) => {
+  console.log(req.files);
   const postData = {
     user_id: req.body.user_id as string,
     post_caption: req.body.post_caption as string,
-    post_img: req.file?.path as string,
-    post_video: req.body.post_video as string
+    post_img:
+      req.file?.fieldname === 'post_img' ? (req.file?.path as string) : null,
+    post_video:
+      req.file?.fieldname === 'post_video' ? (req.file?.path as string) : null
   };
-
+  console.log(postData);
   try {
     const response = await post.createPost(postData);
     io.emit('posts', { action: 'CREATE_POST', data: { ...response } });
@@ -120,7 +123,11 @@ const posts_controller_routes = (app: Application, logger: NextFunction) => {
     '/posts',
     logger,
     verifyToken,
-    postUpload.single('post_img'),
+    postPicUpload.fields([
+      { name: 'post_img', maxCount: 10 },
+      { name: 'post_video', maxCount: 2 }
+    ]),
+    // postVidUpload.single('post_video'),
     createPost
   );
   app.get('/post', logger, verifyToken, getPost);

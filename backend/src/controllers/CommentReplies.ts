@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction, Application } from 'express';
-import { commentUpload } from '../middlewares/imagesHandler';
+// import { commentUpload } from '../middlewares/imagesHandler';
 import verifyToken from '../middlewares/verifyToken';
 import CommentReply from '../models/CommentReply';
 import { io } from '../server';
@@ -100,7 +100,7 @@ const comment_reply_routes_controller = (
     '/comment-reply',
     logger,
     verifyToken,
-    commentUpload.single('reply_img'),
+    // commentUpload.single('reply_img'),
     createReply
   );
   app.get('/comment-reply', logger, verifyToken, getReplies);
@@ -108,7 +108,7 @@ const comment_reply_routes_controller = (
     '/comment-reply',
     logger,
     verifyToken,
-    commentUpload.single('reply_img'),
+    // commentUpload.single('reply_img'),
     updateReply
   );
   app.delete('/comment-reply', logger, verifyToken, deleteReply);

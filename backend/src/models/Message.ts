@@ -83,27 +83,30 @@ class Message {
     }
   }
 
-  async getMessagesList(user_id: string): Promise<Messages[]> {
+  async getMessagesList(
+    sender_id: string,
+    receiver_id: string
+  ): Promise<Messages[]> {
     try {
       const connection = await database.connect();
-      const user_friends_SQL = `SELECT * FROM friends WHERE sender_id=$1 AND isFriend='1' OR receiver_id=$1 AND isFriend='1'`;
-      const result_SQL = await connection.query(user_friends_SQL, [user_id]);
-      console.log(result_SQL.rows);
-      const receiver_id = result_SQL.rows[0].user_id;
-      const sql = `
-        SELECT DISTINCT p.profile_picture, u.username, u.first_name, u.last_name, m.*
-        FROM messages m, users u, pictures p
-        WHERE
-        m.sender_id=$1 AND m.receiver_id=$2 AND u.user_id=$1
-        OR
-        m.sender_id=$2 AND m.receiver_id=$1 AND u.user_id=$2
-        `;
-      const result = await connection.query(sql, [user_id]);
+      const user_messages_SQL = `
+      SELECT message_id, content, timedate
+      FROM messages
+      WHERE
+      sender_id=$1 AND receiver_id=$2
+      OR
+      sender_id=$2 AND receiver_id=$1
+      ORDER BY timedate DESC LIMIT 1
+      `;
+      const result_SQL = await connection.query(user_messages_SQL, [
+        sender_id,
+        receiver_id
+      ]);
       connection.release();
-      return result.rows;
+      return result_SQL.rows[0];
     } catch (err) {
       throw new Error(
-        `Couldn't get the messages. Error ${(err as Error).message}`
+        `Couldn't get the messages list. Error ${(err as Error).message}`
       );
     }
   }

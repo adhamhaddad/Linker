@@ -73,13 +73,12 @@ class Friend {
   ): Promise<Friends[] | null> {
     try {
       const connection = await database.connect();
-      const sender_id_SQL = 'SELECT user_id FROM users WHERE username=$1';
-      const receiver_id_SQL = 'SELECT user_id FROM users WHERE username=$1';
+      const user_id_SQL = 'SELECT user_id FROM users WHERE username=$1';
 
-      const sender_id_result = await connection.query(sender_id_SQL, [
+      const sender_id_result = await connection.query(user_id_SQL, [
         sender_username
       ]);
-      const receiver_id_result = await connection.query(receiver_id_SQL, [
+      const receiver_id_result = await connection.query(user_id_SQL, [
         receiver_username
       ]);
       const sender_id = sender_id_result.rows[0].user_id;

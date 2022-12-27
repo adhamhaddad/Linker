@@ -29,7 +29,7 @@ class Likes {
     try {
       const connection = await database.connect();
       const sql = `
-      SELECT DISTINCT l.timedate, u.user_id, p.profile_picture, u.username, u.first_name, u.last_name
+      SELECT DISTINCT l.like_id, l.timedate, u.user_id, p.profile_picture, u.username, u.first_name, u.last_name
       FROM users u, likes l, pictures p
       WHERE
       l.post_id=$1 AND l.user_id=p.user_id AND l.user_id=u.user_id
