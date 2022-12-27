@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import apiUrlContext from '../utils/api-urls';
-import PostDate from '../Validation/PostDate';
+import PostDate from '../utils/date-utils';
 import classes from '../css/UserCard.module.css';
 
 const UserCard = ({ value }) => {

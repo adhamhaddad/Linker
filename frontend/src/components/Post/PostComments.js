@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useContext } from 'react';
 import useHttp from '../../hooks/use-http';
 import AuthenticateContext from '../../utils/authentication';
 import apiUrlContext from '../../utils/api-urls';
-import CommentCard from './CommentCard';
+import CommentCard from './Comment/CommentCard';
 import classes from '../../css/PostComments.module.css';
 
 const PostCommments = ({

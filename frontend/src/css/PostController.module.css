@@ -26,6 +26,7 @@
     background-color: var(--base-color-light);
     width: 100px;
     overflow: hidden;
+    z-index: 100;
 }
 
 .post-options > button {

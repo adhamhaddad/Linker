@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import useHttp from '../hooks/use-http';
 import AuthenticateContext from '../utils/authentication';
-import SpinnerLoading from './Loading/Spinner';
 import Error from './Error';
 import apiUrlContext from '../utils/api-urls';
 import classes from '../css/Searchbar.module.css';
@@ -69,7 +68,6 @@ const SearchBar = () => {
       {usersList.length > 0 && (
         <ul className={classes['usersList']}>
           {isError !== null && <Error />}
-          {/* {isLoading && <SpinnerLoading />} */}
           {usersList.length > 0 && usersList}
         </ul>
       )}

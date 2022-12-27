@@ -8,7 +8,7 @@ import PostReactions from '../components/Post/PostReactions';
 import PostCommments from '../components/Post/PostComments';
 import UserCard from '../components/UserCard';
 import AuthenticateContext from '../utils/authentication';
-import * as postController from '../utils/post-utiles';
+import * as postController from '../utils/post-utils';
 import classes from '../css/Post.module.css';
 
 const Post = ({ socket }) => {

@@ -2,20 +2,20 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import AuthenticateContext from '../utils/authentication';
 import useHttp from '../hooks/use-http';
-import PostCard from '../components/Post/PostCard';
-import ProfileInformation from '../components/ProfileInformation';
-import ProfileStory from '../components/ProfileStory';
 import Container from '../components/UI/Container';
-import ProfilePicture from '../components/ProfilePicture';
+import ProfileInformation from '../components/Profile/ProfileInformation';
+import ProfileStory from '../components/Profile/ProfileStory';
+import ProfilePicture from '../components/Profile/ProfilePicture';
+import ProfileName from '../components/Profile/ProfileName';
 import Friends from './Friends';
 import SpinnerLoading from '../components/Loading/Spinner';
 import PostBox from '../components/Post/PostBox';
 import Error from '../components/Error';
 import Modal from '../components/Modal';
 import UserCard from '../components/UserCard';
+import PostCard from '../components/Post/PostCard';
 import PostsList from '../components/PostsList';
-import ProfileName from '../components/ProfileName';
-import * as post from '../utils/post-utiles';
+import * as post from '../utils/post-utils';
 import classes from '../css/Profile.module.css';
 
 const Profile = ({ socket, windowSize }) => {
@@ -139,6 +139,7 @@ const Profile = ({ socket, windowSize }) => {
     );
   };
   const newAcceptedRequest = (data) => {
+    console.log(data);
     setFriendsList((prev) => [...prev, data.sender_user]);
     checkIsFriendHandler(data.result);
   };

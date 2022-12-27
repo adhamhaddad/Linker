@@ -2,6 +2,11 @@
     background-color: var(--base-color-light);
     height: 100%;
 }
+.title {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
 .theme div {
     display: flex;
     align-items: center;

@@ -115,7 +115,10 @@ const Account = () => {
   }, []);
   return (
     <section className={classes.sections}>
-      {windowCtx.windowSize <= 600 && <BackButton path='/settings' />}
+      <h3 className={classes['title']}>
+        <BackButton path='/settings' />
+        Account
+      </h3>
       <form onSubmit={onFormSubmitHandler} className={classes.form}>
         <div className={classes['nameInputs']}>
           <div className={classes['name']}>

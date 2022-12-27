@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import PostDate from '../../Validation/PostDate';
+import PostDate from '../../utils/date-utils';
 import PostController from './PostController';
 import apiUrlContext from '../../utils/api-urls';
 import classes from '../../css/PostHeader.module.css';

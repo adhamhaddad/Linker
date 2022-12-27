@@ -5,6 +5,12 @@
     overflow-y: auto;
 }
 
+.title {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    margin-bottom: 10px;
+}
 .form div {
     color: var(--base-color-dark);
     margin: 0 0 15px 0;

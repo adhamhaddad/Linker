@@ -66,8 +66,11 @@ const PostContent = ({ onClick, content, post_id, isEdit }) => {
               </div>
             )}
             {content.video !== null && content.video.trim().length > 0 && (
-              <video controls>
-                <source src={content.video} onClick={viewContent} />
+              <video crossOrigin='anonymous' controls>
+                <source
+                  src={`${apiCtx.url}/${content.video}`}
+                  onClick={viewContent}
+                />
                 content
               </video>
             )}

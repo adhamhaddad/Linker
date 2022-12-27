@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import AuthenticateContext from '../../utils/authentication';
 import useHttp from '../../hooks/use-http';
-import { NavLink } from 'react-router-dom';
 import SpinnerLoading from '../Loading/Spinner';
 import Error from '../Error';
-import apiUrlContext from '../../utils/api-urls';
+import ChatUsersCard from './ChatUsersCard';
 import classes from '../../css/ChatUsers.module.css';
 
 const ChatUsers = ({ windowSize, socket }) => {
   const authCtx = useContext(AuthenticateContext);
-  const apiCtx = useContext(apiUrlContext);
   const [friendsList, setFriendsList] = useState([]);
   const { isLoading, isError, sendRequest } = useHttp();
 
@@ -17,34 +15,16 @@ const ChatUsers = ({ windowSize, socket }) => {
     friendsList.length > 0 &&
     friendsList.map((friend) => {
       return (
-        <li key={friend.user_id}>
-          <NavLink
-            to={
-              windowSize <= 600
-                ? `/messages/${friend.username}/phone-screen`
-                : `/messages/${friend.username}`
-            }
-            className={classes['user-card']}
-            activeClassName={classes.active}
-          >
-            <div className={classes['profile-picture']}>
-              {friend.profile_picture !== null && (
-                <img
-                  crossOrigin='anonymous'
-                  src={`${apiCtx.url}/${friend.profile_picture}`}
-                  alt={friend.username}
-                />
-              )}
-            </div>
-            <div className={classes['content']}>
-              <span className={classes.username}>
-                {friend.first_name} {friend.last_name}
-              </span>
-              <p className={classes.message}>Call me later</p>
-            </div>
-            <div className={classes.time}>19 m</div>
-          </NavLink>
-        </li>
+        <ChatUsersCard
+          key={friend.friend_id}
+          user_id={friend.user_id}
+          username={friend.username}
+          first_name={friend.first_name}
+          last_name={friend.last_name}
+          profile_picture={friend.profile_picture}
+          windowSize={windowSize}
+          socket={socket}
+        />
       );
     });
 

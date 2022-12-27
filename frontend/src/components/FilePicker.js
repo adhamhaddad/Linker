@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { pickedHandler } from '../utils/files-util';
+import { pickedHandler } from '../utils/files-utils';
 import classes from '../css/FilePicker.module.css';
 
 const reader = new FileReader();

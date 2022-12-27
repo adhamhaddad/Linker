@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import useHttp from '../hooks/use-http';
 import AuthenticateContext from '../utils/authentication';
+import BackButton from '../components/UI/BackButton';
 import classes from '../css/Theme.module.css';
 
 const Theme = () => {
@@ -67,6 +68,10 @@ const Theme = () => {
 
   return (
     <div className={classes['theme']}>
+      <h3 className={classes['title']}>
+        <BackButton path='/settings' />
+        Theme
+      </h3>
       <div>
         <label htmlFor='theme'>Choose theme</label>
         <select id='theme'>
@@ -136,8 +141,8 @@ const Theme = () => {
       </div>
       <div>
         <p>
-          Note: when you change the header or home color you will need to logout and
-          login again to see the changes
+          Note: when you change the header or home color you will need to logout
+          and login again to see the changes
         </p>
       </div>
     </div>

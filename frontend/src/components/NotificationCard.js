@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import NotificationDate from '../Validation/NotificationDate';
+import PostDate from '../utils/date-utils';
 import classes from '../css/NotificationCard.module.css';
 
 const NotificationCard = ({
@@ -27,7 +27,7 @@ const NotificationCard = ({
             onClick={onDeleteNotification}
             className={classes['notification-delete']}
           ></button>
-          <NotificationDate time={time} />
+          <PostDate time={time} />
         </div>
       </Link>
     </li>

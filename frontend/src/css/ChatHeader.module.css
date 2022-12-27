@@ -7,16 +7,18 @@
     align-items: center;
     background-color: var(--base-color-dark);
     color: var(--base-color-light);
+    padding: 0 5px;
 }
 .chat-header > button {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background-color: var(--base-color-dark);
     color: var(--base-color-light);
     transition-property: background, color;
     transition-duration: .4s;
     transition-timing-function: ease-in-out;
+    cursor: pointer;
 }
 .chat-header > button:hover {
     background-color: var(--base-color-light);
@@ -24,6 +26,9 @@
     transition-property: background, color;
     transition-duration: .4s;
     transition-timing-function: ease-in-out;
+}
+.chat-header > .username {
+    margin-left: 10px;
 }
 .username > a {
     display: block;

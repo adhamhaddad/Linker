@@ -7,9 +7,9 @@ import Reactions from './PostReactions';
 import PostContent from './PostContent';
 import PostHeader from './PostHeader';
 import PostBottom from './PostBottom';
-import LikesController from './LikesController';
-import SharesController from './SharesController';
-import * as postController from '../../utils/post-utiles';
+import LikesController from './Like/LikesController';
+import ReactionController from './Share/ReactionController';
+import * as postController from '../../utils/post-utils';
 import classes from '../../css/PostCard.module.css';
 import AuthenticateContext from '../../utils/authentication';
 
@@ -123,7 +123,12 @@ const PostCard = ({
         showCommentsHandler={showCommentsHandler}
       />
       {likesPort && (
-        <LikesController likes={likesList} onHide={showLikesHandler} />
+        <ReactionController
+          title='Likes'
+          id='like_id'
+          values={likesList}
+          onHide={showLikesHandler}
+        />
       )}
       {commentsPort && (
         <PostCommments
@@ -137,7 +142,12 @@ const PostCard = ({
         />
       )}
       {sharesPort && (
-        <SharesController shares={sharesList} onHide={showSharesHandler} />
+        <ReactionController
+          title='Shares'
+          id='share_id'
+          values={sharesList}
+          onHide={showSharesHandler}
+        />
       )}
     </div>
   );

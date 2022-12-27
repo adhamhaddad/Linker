@@ -7,6 +7,7 @@ import ChatForm from './ChatForm';
 import MessageCard from './MessageCard';
 import SpinnerLoading from '../Loading/Spinner';
 import Error from '../Error';
+import * as messageController from '../../utils/message-utils';
 import classes from '../../css/Conversation.module.css';
 
 const Conversation = ({ socket }) => {
@@ -48,19 +49,6 @@ const Conversation = ({ socket }) => {
     setMessage(data);
     setIsEditMessage(true);
   };
-
-  const newMessage = (data) => {
-    setMessages((prev) => [...prev, data]);
-  };
-
-  const newUpdatedMessage = (data) => {
-    setMessages((prev) =>
-      prev.map((message) =>
-        message.message_id === data.message_id ? data : message
-      )
-    );
-  };
-
   // DELETE MESSAGE
   const deleteMessage = (message_id) => {
     sendRequest(
@@ -72,11 +60,6 @@ const Conversation = ({ socket }) => {
         message_id: message_id
       },
       null
-    );
-  };
-  const newDeletedMessage = (data) => {
-    setMessages((prev) =>
-      prev.filter((message) => message.message_id !== data.message_id)
     );
   };
 
@@ -115,7 +98,7 @@ const Conversation = ({ socket }) => {
           (data.data.receiver_username === params.username &&
             data.data.sender_username === authCtx.user.username)
         ) {
-          newMessage(data.data);
+          messageController.newMessage(data.data, setMessages);
         }
       }
       if (data.action === 'UPDATE_MESSAGE') {
@@ -125,7 +108,7 @@ const Conversation = ({ socket }) => {
           (data.data.receiver_username === params.username &&
             data.data.sender_username === authCtx.user.username)
         ) {
-          newUpdatedMessage(data.data);
+          messageController.newUpdatedMessage(data.data, setMessages);
         }
       }
       if (data.action === 'DELETE_MESSAGE') {
@@ -135,7 +118,7 @@ const Conversation = ({ socket }) => {
           (data.data.receiver_username === params.username &&
             data.data.sender_username === authCtx.user.username)
         ) {
-          newDeletedMessage(data.data);
+          messageController.newDeletedMessage(data.data, setMessages);
         }
       }
     });

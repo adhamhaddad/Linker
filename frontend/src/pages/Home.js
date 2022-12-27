@@ -6,7 +6,7 @@ import SpinnerLoading from '../components/Loading/Spinner';
 import PostCard from '../components/Post/PostCard';
 import PostBox from '../components/Post/PostBox';
 import AuthenticateContext from '../utils/authentication';
-import * as post from '../utils/post-utiles';
+import * as post from '../utils/post-utils';
 import PostsList from '../components/PostsList';
 import classes from '../css/Home.module.css';
 

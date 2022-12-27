@@ -196,8 +196,10 @@ const Information = () => {
 
   return (
     <div className={classes['information']}>
-      <BackButton path='/settings' />
-      <h3>information</h3>
+      <h3 className={classes['title']}>
+        <BackButton path='/settings' />
+        information
+      </h3>
 
       <div>
         <span>Profile Picture</span>
@@ -315,8 +317,6 @@ const Information = () => {
           </>
         )}
       </div>
-
-      <h3>education</h3>
       <div>
         <span>Job Title</span>
         {!editJobTitle && (

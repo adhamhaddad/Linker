@@ -5,11 +5,11 @@ import classes from '../../css/PostController.module.css';
 
 function PostController({ post_id, post_user_id, onSavePost, onEditPost }) {
   const authCtx = useContext(AuthenticateContext);
-  const { isLoading, isError, sendRequest } = useHttp();
-  const [sliders, setSliders] = useState(false);
+  const { isLoading, sendRequest } = useHttp();
+  const [ellipsis, setEllipsis] = useState(false);
 
   const slidersHandler = () => {
-    setSliders((prev) => !prev);
+    setEllipsis((prev) => !prev);
   };
 
   const onDeleteHandler = () => {
@@ -21,8 +21,11 @@ function PostController({ post_id, post_user_id, onSavePost, onEditPost }) {
   };
   return (
     <div className={classes['post-controller']}>
-      <button onClick={slidersHandler} className='fa-solid fa-sliders'></button>
-      {sliders && (
+      <button
+        onClick={slidersHandler}
+        className='fa-solid fa-ellipsis-vertical'
+      ></button>
+      {ellipsis && (
         <div className={classes['post-options']}>
           <button onClick={onSavePost}>
             <i className='fa-regular fa-bookmark'></i>

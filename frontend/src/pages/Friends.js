@@ -20,7 +20,7 @@ const Friends = ({ friendsList, onDeleteFriend, isLoading, isError }) => {
         <Link
           to={`/profile/${friend.username}`}
           className={
-            listSize ? classes.max : `${classes.profile} ${classes.min}`
+            listSize ? classes.max : `${classes['profile']} ${classes['min']}`
           }
         >
           <div className={classes['profile-picture']}>
@@ -35,19 +35,19 @@ const Friends = ({ friendsList, onDeleteFriend, isLoading, isError }) => {
                 />
               )}
           </div>
-          <div className={classes.username}>
+          <div className={classes['username']}>
             {friend.first_name} {friend.last_name}
           </div>
           <button
             onClick={() => onDeleteFriend(friend)}
-            className={classes['delete-friend']}
+            className={'fa-solid fa-user-xmark ' + classes['delete-friend']}
           ></button>
         </Link>
       </li>
     ));
 
   return (
-    <section className={classes.friends}>
+    <section className={classes['friends']}>
       <h3>
         <i className='fa-solid fa-users'></i>
         friends {!isLoading && friendsList.length}
@@ -60,7 +60,7 @@ const Friends = ({ friendsList, onDeleteFriend, isLoading, isError }) => {
       {isError !== null && <Error message={isError} />}
       <ul
         className={`${classes['friends-list']} ${
-          listSize ? classes.max : classes.min
+          listSize ? classes['max'] : classes['min']
         }`}
       >
         {isLoading && <FriendsLoader />}

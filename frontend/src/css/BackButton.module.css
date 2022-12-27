@@ -2,12 +2,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background-color: var(--base-color-light);
-    margin: 0px 5px;
-    font-size: 14px;
-    color: var(--base-color-dark);
-    border: 2px solid var(--base-hover-light)
+    background-color: var(--base-color-dark);
+    font-size: 12px;
+    color: var(--base-color-light);
+    border: 2px solid var(--base-color-light);
 }

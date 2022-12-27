@@ -8,11 +8,15 @@
     position: relative;
 }
 
-.information h3 {
+.information .title {
     margin: 25px 0 10px;
+    padding: 5px 0;
     font-size: 16px;
     text-align: center;
     text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    
 }
 
 .information h3:first-of-type {
