@@ -112,3 +112,6 @@ dist
 # Upload Folder
 post-pictures/
 profile-pictures/
+post-videos/
+replies-pictures/
+comment-pictures/

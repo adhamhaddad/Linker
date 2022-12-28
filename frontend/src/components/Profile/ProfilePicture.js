@@ -1,12 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Modal from '../Modal';
-import useHttp from '../../hooks/use-http';
 import apiUrlContext from '../../utils/api-urls';
 import classes from '../../css/ProfilePicture.module.css';
 
-const ProfilePicture = ({ isLoading, user_id, profile_picture }) => {
-  const { sendRequest } = useHttp();
-  const [pickedPicture, setPickedPicture] = useState();
+const ProfilePicture = ({ isLoading, profile_picture }) => {
   const [fPP, setFPP] = useState(false);
   const apiCtx = useContext(apiUrlContext);
 
@@ -14,29 +11,9 @@ const ProfilePicture = ({ isLoading, user_id, profile_picture }) => {
     setFPP((prev) => !prev);
   };
 
-  const consoleResponse = (res) => {
-    console.log(res);
-  };
-
-  const onFormSubmit = (e) => {
-    e.preventDefault();
-    const file = e.target.files[0];
-    const formData = new FormData();
-    setPickedPicture(e.target.files[0]);
-    if (e.target.files[0].length) {
-      formData.append('user_id', user_id);
-      formData.append('profile', user_id);
-      sendRequest(
-        'profile-picture',
-        'PATCH',
-        { user_id: user_id, profile_picture: file },
-        consoleResponse
-      );
-    } else {
-      console.log('Please choose a picture');
-      return;
-    }
-  };
+  useEffect(() => {
+    return () => setFPP(false);
+  }, [profile_picture]);
 
   return (
     <>

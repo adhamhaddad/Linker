@@ -20,12 +20,12 @@ const ChatUsersCard = ({
   const { sendRequest } = useHttp();
 
   const newMessageAdded = (data) => {
-    setMessage({
-      content: data.content,
-      timedate: data.timedate
-    });
+    setMessage(data);
   };
 
+  const newMessageDeleted = (data) => {
+    // setMessage(prev => )
+  };
   useEffect(() => {
     sendRequest(
       `user/all-messages?sender_id=${authCtx.user.user_id}&receiver_id=${user_id}`,
@@ -36,6 +36,16 @@ const ChatUsersCard = ({
 
     socket.on('messages', (data) => {
       if (data.action === 'NEW_MESSAGE') {
+        if (
+          (data.data.receiver_username === authCtx.user.username &&
+            data.data.sender_username === username) ||
+          (data.data.receiver_username === username &&
+            data.data.sender_username === authCtx.user.username)
+        ) {
+          newMessageAdded(data.data);
+        }
+      }
+      if (data.action === 'DELETE_MESSAGE') {
         if (
           (data.data.receiver_username === authCtx.user.username &&
             data.data.sender_username === username) ||
@@ -75,8 +85,18 @@ const ChatUsersCard = ({
           <p className={classes['message']}>
             {message !== undefined &&
               message.content !== undefined &&
-              message.content !== null &&
-              message.content}
+              message.content !== null && (
+                <>
+                  {message.sender_id === authCtx.user.user_id ||
+                    (message.receiver_id === authCtx.user.user_id &&
+                      message.content)}
+
+                  {message.sender_id !== authCtx.user.user_id ||
+                    (message.receiver_id !== authCtx.user.user_id && (
+                      <>You: {message.content}</>
+                    ))}
+                </>
+              )}
 
             {message == null && (
               <>

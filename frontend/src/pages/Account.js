@@ -114,7 +114,7 @@ const Account = () => {
     );
   }, []);
   return (
-    <section className={classes.sections}>
+    <section className={classes['sections']}>
       <h3 className={classes['title']}>
         <BackButton path='/settings' />
         Account

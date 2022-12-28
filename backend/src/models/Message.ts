@@ -90,8 +90,7 @@ class Message {
     try {
       const connection = await database.connect();
       const user_messages_SQL = `
-      SELECT message_id, content, timedate
-      FROM messages
+      SELECT * FROM messages
       WHERE
       sender_id=$1 AND receiver_id=$2
       OR

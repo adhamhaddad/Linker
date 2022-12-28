@@ -23,18 +23,18 @@ const Profile = ({ socket, windowSize }) => {
   const [theme, setTheme] = useState({});
   const [visitors, setVisitors] = useState([]);
   const [visited, setVisited] = useState([]);
-  const [userPosts, setUserPosts] = useState([]);
+  const [visits, setVisits] = useState(false);
+  const [viewVisitors, setViewVisitors] = useState(false);
   const [friendsList, setFriendsList] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
   const [checkFriend, setCheckFriend] = useState({
     isFriend: null,
     sender_id: null,
     receiver_id: null
   });
-  const [visits, setVisits] = useState(false);
   const { isLoading, isError, sendRequest } = useHttp();
   const authCtx = useContext(AuthenticateContext);
   const params = useParams();
-  const [viewVisitors, setViewVisitors] = useState(false);
 
   // PROFILE REQUESTS
   const getUser = () => {
@@ -139,7 +139,6 @@ const Profile = ({ socket, windowSize }) => {
     );
   };
   const newAcceptedRequest = (data) => {
-    console.log(data);
     setFriendsList((prev) => [...prev, data.sender_user]);
     checkIsFriendHandler(data.result);
   };
@@ -389,12 +388,12 @@ const Profile = ({ socket, windowSize }) => {
     return () => {
       setUser({});
       setTheme({});
-      setFriendsList([]);
-      setUserPosts([]);
-      setVisitors([]);
-      setVisited([]);
       setViewVisitors(false);
       setVisits(false);
+      setVisitors([]);
+      setVisited([]);
+      setFriendsList([]);
+      setUserPosts([]);
     };
   }, [params]);
   return (
