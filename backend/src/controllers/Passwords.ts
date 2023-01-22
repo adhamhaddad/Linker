@@ -44,7 +44,7 @@ const resetPassword = async (req: Request, res: Response) => {
     const response = await password.resetPassword(req.body);
     res.status(201).json({
       status: true,
-      data: {...response},
+      data: { ...response },
       message: 'Password changed successfully!'
     });
   } catch (err) {
@@ -55,31 +55,7 @@ const resetPassword = async (req: Request, res: Response) => {
   }
 };
 
-const authenticate = async (req: Request, res: Response) => {
-  try {
-    const response = await password.authenticate(req.body);
-    const token = jwt.sign({ response }, config.token as string);
-    const bodyData = Object.keys(req.body)[0];
-    if (!response) {
-      return res.status(400).json({
-        status: false,
-        message: `${bodyData} doesn't exist`
-      });
-    }
-    res.status(200).json({
-      status: true,
-      data: { ...response, token },
-      message: 'User authenticated successfully!'
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: false,
-      message: (err as Error).message
-    });
-  }
-};
 const password_controller_routes = (app: Application, logger: NextFunction) => {
-  app.post('/authenticate', logger, authenticate);
   app.patch('/password-change', logger, verifyToken, changePassword);
   app.patch('/password-reset', logger, verifyToken, resetPassword);
 };

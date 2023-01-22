@@ -23,7 +23,7 @@ export const transformPosts = (data, setState) => {
       }
     };
   });
-  setState(transformedData);
+  setState((prev) => [...prev, ...transformedData]);
 };
 
 export const newPostAdded = (data, setState) => {
@@ -59,4 +59,3 @@ export const newLikeAdded = (data, setState) => {
 export const newLikeRemoved = (data, setState) => {
   setState((prev) => prev.filter((like) => like.user_id !== data.user_id));
 };
-

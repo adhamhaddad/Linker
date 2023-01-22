@@ -5,9 +5,14 @@ import Passwords from '../models/Password';
 import config from '../configs';
 import verifyToken from '../middlewares/verifyToken';
 import nodemailer from 'nodemailer';
+import { check, validationResult } from 'express-validator';
+import {
+  signinValidation,
+  signupValidation
+} from '../middlewares/validate-user';
 
 const user = new User();
-const passwords = new Passwords();
+const password = new Passwords();
 
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 const transporter = nodemailer.createTransport(
@@ -22,7 +27,7 @@ const transporter = nodemailer.createTransport(
 const createUser = async (req: Request, res: Response) => {
   try {
     const response = await user.createUser(req.body, req.body);
-    await passwords.createPassword({ ...response, ...req.body.password });
+    await password.createPassword({ ...response, password: req.body.password });
     const token = jwt.sign({ response }, config.token as string);
     res.status(201).json({
       status: true,
@@ -159,12 +164,37 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
+const authenticate = async (req: Request, res: Response) => {
+  try {
+    const response = await user.authenticate(req.body);
+    const token = jwt.sign({ response }, config.token as string);
+    const bodyData = Object.keys(req.body)[0];
+    if (!response) {
+      return res.status(400).json({
+        status: false,
+        message: `${bodyData} doesn't exist`
+      });
+    }
+    res.status(200).json({
+      status: true,
+      data: { ...response, token },
+      message: 'User authenticated successfully!'
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: false,
+      message: (err as Error).message
+    });
+  }
+};
+
 const user_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/users', logger, createUser);
   app.get('/users', logger, verifyToken, getUser);
   app.get('/users', logger, verifyToken, getAllUsers);
   app.patch('/users', logger, verifyToken, updateUser);
   app.delete('/users', logger, verifyToken, deleteUser);
+  app.post('/authenticate', logger, authenticate);
   app.get('/user-account', logger, verifyToken, getUserAccount);
   app.post('/search', logger, verifyToken, searchByName);
   app.post('/search/:username', logger, verifyToken, searchByUsername);

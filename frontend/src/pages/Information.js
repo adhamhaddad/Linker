@@ -54,7 +54,7 @@ const Information = () => {
     const formData = new FormData();
     formData.append('user_id', authCtx.user.user_id);
     formData.append('profile', pickedImage);
-    fetch(`${apiCtx.url}/information`, {
+    fetch(`${apiCtx.url}/profile-picture`, {
       method: 'PATCH',
       headers: { Authorization: `Bearer ${authCtx.accessToken}` },
       body: formData
@@ -153,7 +153,6 @@ const Information = () => {
       }
     );
   };
-
   const onPictureChange = (e) => {
     setPickedImage(e);
   };
@@ -217,8 +216,8 @@ const Information = () => {
         )}
         {editPicture && (
           <>
-            <FilePicker onPicture={onPictureChange} />
-            <button onClick={editPictureToggle}>cancel</button>
+            <FilePicker onPicture={setPickedImage} />
+            {/* <button onClick={editPictureToggle}>cancel</button> */}
             <button onClick={savePicture}>save</button>
           </>
         )}

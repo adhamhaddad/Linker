@@ -7,6 +7,18 @@ const PostBottom = ({ post_id, isLiked, theme, showCommentsHandler }) => {
   const { sendRequest } = useHttp();
   const authCtx = useContext(AuthenticateContext);
 
+  const sharePost = () => {
+    sendRequest(
+      'repost',
+      'POST',
+      {
+        post_id: post_id,
+        user_id: authCtx.user.user_id
+      },
+      null
+    );
+  };
+
   // Like Handlers
   const addLike = () => {
     sendRequest(
@@ -77,6 +89,7 @@ const PostBottom = ({ post_id, isLiked, theme, showCommentsHandler }) => {
         className={classes['share-button']}
         title='Share'
         style={{ color: theme }}
+        onClick={sharePost}
       >
         <svg viewBox='0 0 24 24' aria-hidden='true'>
           <g>

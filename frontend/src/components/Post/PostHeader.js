@@ -27,6 +27,7 @@ const PostHeader = ({
           className={classes['profile-image']}
         >
           {post_profile_picture !== undefined &&
+            post_profile_picture !== null &&
             post_profile_picture.length > 0 && (
               <img
                 crossOrigin='anonymous'

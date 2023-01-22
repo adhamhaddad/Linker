@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
-import useHttp from '../../hooks/use-http';
-import AuthenticateContext from '../../utils/authentication';
 import Logo from '../Logo';
 import SearchBar from '../Searchbar';
 import NavigationBar from './NavigationBar';
+import useHttp from '../../hooks/use-http';
 import Container from '../UI/Container';
+import AuthenticateContext from '../../utils/authentication';
 import classes from '../../css/Header.module.css';
 
 const Header = ({ socket }) => {
-  const authCtx = useContext(AuthenticateContext);
   const [requests, setRequests] = useState([]);
   const [messages, setMessages] = useState([]);
   const [posts, setPosts] = useState([]);
+  const authCtx = useContext(AuthenticateContext);
 
   const { sendRequest } = useHttp();
 

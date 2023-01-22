@@ -53,7 +53,7 @@ const PostCard = ({
   const getPost = () => {
     sendRequest(`post/likes?post_id=${post_id}`, 'GET', {}, setLikesList);
     sendRequest(`comments?post_id=${post_id}`, 'GET', {}, setCommentsList);
-    sendRequest(`post/shares?post_id=${post_id}`, 'GET', {}, setSharesList);
+    // sendRequest(`reposts?post_id=${post_id}`, 'GET', {}, setSharesList);
   };
 
   const checkIsLiked = () => {

@@ -5,8 +5,7 @@ class Shares {
   async createShare(share: Share): Promise<Share> {
     try {
       const connection = await database.connect();
-      const sql =
-        'INSERT INTO shares (post_id, user_id, timedate) VALUES ($1, $2, $3) RETURNING *';
+      const sql = `INSERT INTO shares (post_id, user_id, timedate) VALUES ($1, $2, $3) RETURNING *`;
       const result = await connection.query(sql, [
         share.post_id,
         share.user_id,
@@ -21,18 +20,29 @@ class Shares {
     }
   }
 
-  async getAllShares(post_id: string): Promise<Share[]> {
+  async getAllShares(username: string): Promise<Share[]> {
     try {
       const connection = await database.connect();
-      const sql = `
-      SELECT DISTINCT p.profile_picture, u.username, u.first_name, u.last_name
+      const user_SQL = 'SELECT user_id FROM users WHERE username=$1';
+      const user_result = await connection.query(user_SQL, [username]);
+      const user_id = user_result.rows[0].user_id;
+
+      const shares_SQL = `
+      SELECT DISTINCT u.user_id, u.username, u.first_name, u.last_name, p.profile_picture, s.*
       FROM users u, shares s, pictures p
       WHERE
-      s.post_id=$1 AND s.user_id=p.user_id AND s.user_id=u.user_id
+      p.user_id=u.user_id AND u.user_id=s.user_id AND s.user_id=$1
       `;
-      const result = await connection.query(sql, [post_id]);
+      const shares_result = await connection.query(shares_SQL, [user_id]);
+
+      // ///////////////////////////
+      const post_SQL = `
+      SELECT DISTINCT u.user_id, u.username, u.first_name, u.last_name, p.profile_picture, post.*
+      FROM users u, pictures p, posts post
+      WHERE p.user_id=u.user_id AND u.user_id=post.user_id AND post.post_id=$1
+      `;
       connection.release();
-      return result.rows;
+      return shares_result.rows;
     } catch (error) {
       throw new Error(
         `Could not get the shares. Error ${(error as Error).message}`

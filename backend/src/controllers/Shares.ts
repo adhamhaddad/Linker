@@ -22,7 +22,7 @@ const addShare = async (req: Request, res: Response) => {
 
 const getAllShares = async (req: Request, res: Response) => {
   try {
-    const response = await share.getAllShares(req.query.post_id as string);
+    const response = await share.getAllShares(req.query.username as string);
     res.status(200).json({
       status: true,
       data: response,
@@ -52,8 +52,8 @@ const removeSshare = async (req: Request, res: Response) => {
 };
 
 const shares_controller_routes = (app: Application, logger: NextFunction) => {
-  app.post('/post/share', logger, verifyToken, addShare);
-  app.get('/post/shares', logger, verifyToken, getAllShares);
-  app.delete('/post/share', logger, verifyToken, removeSshare);
+  app.post('/repost', logger, verifyToken, addShare);
+  app.get('/reposts', logger, getAllShares);
+  app.delete('/repost', logger, verifyToken, removeSshare);
 };
 export default shares_controller_routes;

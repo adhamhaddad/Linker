@@ -50,6 +50,12 @@ const Profile = ({ socket, windowSize }) => {
   const getVisited = () => {
     sendRequest(`visited?username=${params.username}`, 'GET', {}, setVisited);
   };
+  // GET REPOSTS
+  const getUserReposts = () => {
+    sendRequest(`reposts?username=${params.username}`, 'GET', {}, (data) =>
+      post.transformPosts(data, setUserPosts)
+    );
+  };
 
   // FREINDS
   const getFriends = () => {
@@ -281,6 +287,7 @@ const Profile = ({ socket, windowSize }) => {
     getUserTheme();
     getFriends();
     getUserPosts();
+    // getUserReposts();
     getVisitors();
     getVisited();
 

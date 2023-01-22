@@ -103,7 +103,7 @@ const deleteMessage = async (req: Request, res: Response) => {
 const messages_controller_routes = (app: Application, logger: NextFunction) => {
   app.post('/messages', logger, verifyToken, newMessage);
   app.get('/messages', logger, verifyToken, getAllMessages);
-  app.get('/user/all-messages', logger, getMessagesList);
+  app.get('/user/all-messages', logger, verifyToken, getMessagesList);
   app.patch('/messages', logger, verifyToken, updateMessage);
   app.delete('/messages', logger, verifyToken, deleteMessage);
 };
