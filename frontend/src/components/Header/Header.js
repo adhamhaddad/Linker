@@ -7,7 +7,7 @@ import Container from '../UI/Container';
 import AuthenticateContext from '../../utils/authentication';
 import classes from '../../css/Header.module.css';
 
-const Header = ({ socket }) => {
+const Header = ({ socket, translation }) => {
   const [requests, setRequests] = useState([]);
   const [messages, setMessages] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -91,7 +91,12 @@ const Header = ({ socket }) => {
         <div className={classes['searchbar']}>
           <SearchBar />
         </div>
-        <NavigationBar requests={requests} messages={messages} posts={posts} />
+        <NavigationBar
+          requests={requests}
+          messages={messages}
+          posts={posts}
+          translation={translation}
+        />
       </Container>
     </nav>
   );

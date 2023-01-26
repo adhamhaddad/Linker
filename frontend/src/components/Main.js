@@ -15,8 +15,9 @@ const Theme = lazy(() => import('../pages/Theme'));
 const Conversation = lazy(() => import('../components/Messages/Conversation'));
 const Post = lazy(() => import('../pages/Post'));
 const Notifications = lazy(() => import('../pages/Notifications'));
+const Language = lazy(() => import('../pages/Language'));
 
-const Main = ({ user_id, username, windowSize, socket }) => {
+const Main = ({ user_id, username, windowSize, socket, translation }) => {
   return (
     <main className={classes.main}>
       <Suspense fallback={<SpinnerLoading />}>
@@ -65,6 +66,7 @@ const Main = ({ user_id, username, windowSize, socket }) => {
               title='Settings-Page'
               username={username}
               windowSize={windowSize}
+              translation={translation}
             />
           </Route>
           <Route path='/settings/information/:phone-screen' exact>

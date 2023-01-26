@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Authenticate from './utils/authentication';
 import apiUrlContext from './utils/api-urls';
 import WindowContext from './store/windowSize';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
 import Header from './components/Header/Header';
-import MiniNavigationBar from './components/Header/MiniNavigationBar';
 import Main from './components/Main';
 import io from 'socket.io-client';
 import './css/App.css';
@@ -16,12 +16,11 @@ const App = () => {
   const socket = io.connect(apiCtx.url);
   const authCtx = useContext(Authenticate);
   const windowSize = useContext(WindowContext);
+  const { t: translation } = useTranslation();
+
   return authCtx.isLoggedIn ? (
     <>
-      <Header
-        user_id={authCtx.user.user_id}
-        socket={socket}
-      />
+      <Header socket={socket} translation={translation} />
       <Switch>
         <Route path='/' exact>
           <Redirect to='/home' />
@@ -32,10 +31,10 @@ const App = () => {
             username={authCtx.user.username}
             windowSize={windowSize.windowSize}
             socket={socket}
+            translation={translation}
           />
         </Route>
       </Switch>
-      {windowSize.windowSize <= 600 && <MiniNavigationBar />}
     </>
   ) : (
     <>

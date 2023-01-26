@@ -5,9 +5,10 @@ import Information from './Information';
 import Theme from './Theme';
 import Account from './Account';
 import UnderDevelopment from './NotAvailable';
+import Language from './Language';
 import classes from '../css/Settings.module.css';
 
-function Settings({ windowSize }) {
+function Settings({ windowSize, translation }) {
   return (
     <Container className='settings'>
       <section className={classes['settings-navigation']}>
@@ -20,10 +21,10 @@ function Settings({ windowSize }) {
                   ? '/settings/information/phone-screen'
                   : '/settings/information'
               }
-              title='Information'
+              title={translation('sidebar.information')}
             >
               <i className='fa-solid fa-info-circle'></i>
-              information
+              {translation('sidebar.information')}
             </NavLink>
           </li>
           <li>
@@ -34,10 +35,10 @@ function Settings({ windowSize }) {
                   ? '/settings/privacy/phone-screen'
                   : '/settings/privacy'
               }
-              title='Privacy & Security'
+              title={translation('sidebar.privacy')}
             >
               <i className='fa-solid fa-lock'></i>
-              privacy & security
+              {translation('sidebar.privacy')}
             </NavLink>
           </li>
           <li>
@@ -48,10 +49,10 @@ function Settings({ windowSize }) {
                   ? '/settings/emails/phone-screen'
                   : '/settings/emails'
               }
-              title='Emails'
+              title={translation('sidebar.email')}
             >
               <i className='fa-regular fa-envelope'></i>
-              emails
+              {translation('sidebar.email')}
             </NavLink>
           </li>
           <li>
@@ -62,10 +63,10 @@ function Settings({ windowSize }) {
                   ? '/settings/notifications/phone-screen'
                   : '/settings/notifications'
               }
-              title='Notifications'
+              title={translation('sidebar.notifications')}
             >
               <i className='fa-regular fa-bell'></i>
-              notifications
+              {translation('sidebar.notifications')}
             </NavLink>
           </li>
           <li>
@@ -76,10 +77,10 @@ function Settings({ windowSize }) {
                   ? '/settings/language/phone-screen'
                   : '/settings/language'
               }
-              title='Language'
+              title={translation('sidebar.language')}
             >
               <i className='fa-solid fa-language'></i>
-              language
+              {translation('sidebar.language')}
             </NavLink>
           </li>
           <li>
@@ -90,10 +91,10 @@ function Settings({ windowSize }) {
                   ? '/settings/theme/phone-screen'
                   : '/settings/theme'
               }
-              title='Theme'
+              title={translation('sidebar.theme')}
             >
               <i className='fa-regular fa-image'></i>
-              theme
+              {translation('sidebar.theme')}
             </NavLink>
           </li>
 
@@ -105,10 +106,10 @@ function Settings({ windowSize }) {
                   ? '/settings/account/phone-screen'
                   : '/settings/account'
               }
-              title='Account'
+              title={translation('sidebar.account')}
             >
               <i className='fa-regular fa-user'></i>
-              account
+              {translation('sidebar.account')}
             </NavLink>
           </li>
           <li>
@@ -119,10 +120,10 @@ function Settings({ windowSize }) {
                   ? '/settings/help/phone-screen'
                   : '/settings/help'
               }
-              title='Help'
+              title={translation('sidebar.help')}
             >
               <i className='fa-regular fa-question-circle'></i>
-              help
+              {translation('sidebar.help')}
             </NavLink>
           </li>
         </ul>
@@ -142,7 +143,7 @@ function Settings({ windowSize }) {
             <UnderDevelopment color='light' />
           </Route>
           <Route path='/settings/language' exact>
-            <UnderDevelopment color='light' />
+            <Language />
           </Route>
           <Route path='/settings/theme' exact>
             <Theme windowSize={windowSize} />

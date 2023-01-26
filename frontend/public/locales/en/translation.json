@@ -1,0 +1,20 @@
+{
+  "header": {
+    "home": "Home",
+    "profile": "Profile",
+    "messages": "Messages",
+    "notifications": "Notifications",
+    "requests": "Requests",
+    "settings": "Settings"
+  },
+  "sidebar": {
+    "information": "Information",
+    "privacy": "Privacy & Security",
+    "email": "Email",
+    "notifications": "Notification",
+    "language": "Language",
+    "theme": "Theme",
+    "account": "Account",
+    "help": "Help"
+  }
+}

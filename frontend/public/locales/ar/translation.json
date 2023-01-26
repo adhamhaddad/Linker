@@ -1,0 +1,20 @@
+{
+  "header": {
+    "home": "الرئيسية",
+    "profile": "الملف",
+    "messages": "الرسائل",
+    "notifications": "الاشعارات",
+    "requests": "الطلبات",
+    "settings": "الاعدادات"
+  },
+  "sidebar": {
+    "information": "المعلومات",
+    "privacy": "الحماية والخصوصية",
+    "email": "البريد",
+    "notifications": "الاشعارات",
+    "language": "اللغة",
+    "theme": "الخلفية",
+    "account": "الحساب",
+    "help": "مركز المساعدة"
+  }
+}
