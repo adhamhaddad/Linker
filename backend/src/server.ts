@@ -1,4 +1,4 @@
-import express, { Application, NextFunction } from 'express';
+import express, { Request, Response, Application, NextFunction } from 'express';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import cors from 'cors';
@@ -16,6 +16,7 @@ import profile_controller_routes from './controllers/Picture';
 import theme_controller_routes from './controllers/Themes';
 import visitor_controller_routes from './controllers/Visitor';
 import comment_likes_routes_controller from './controllers/CommentLikes';
+import { checkToken } from './middlewares/verifyToken';
 import configs from './configs';
 import os from 'os';
 import path from 'path';
@@ -63,6 +64,7 @@ app.use(
 // }))
 
 // Express Requests Handler
+app.get('/check-token', checkToken);
 user_controller_routes(app, logger as NextFunction);
 information_controller_routes(app, logger as NextFunction);
 posts_controller_routes(app, logger as NextFunction);

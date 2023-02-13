@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Logo from '../Logo';
 import SearchBar from '../Searchbar';
 import NavigationBar from './NavigationBar';
+import MiniNavigationBar from './MiniNavigationBar';
 import useHttp from '../../hooks/use-http';
 import Container from '../UI/Container';
 import AuthenticateContext from '../../utils/authentication';
@@ -41,7 +42,6 @@ const Header = ({ socket, translation }) => {
 
   // IGNORE REQUEST
   const newRequestIgnored = (data) => {
-    // console.log(data)
     setRequests((prev) =>
       prev.filter((request) => request.user_id !== data.user_id)
     );
@@ -85,12 +85,7 @@ const Header = ({ socket, translation }) => {
   return (
     <nav className={classes['navbar']}>
       <Container className='header'>
-        <div className={classes['logo']}>
-          <Logo />
-        </div>
-        <div className={classes['searchbar']}>
-          <SearchBar />
-        </div>
+        <MiniNavigationBar style='hide' />
         <NavigationBar
           requests={requests}
           messages={messages}

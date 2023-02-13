@@ -3,7 +3,6 @@ import CL from '../types/CommentLikes';
 
 class CommentLike {
   async createLike(l: CL): Promise<CL[]> {
-    console.log(l);
     try {
       const connection = await database.connect();
       const sql = `INSERT INTO comment_likes (comment_id, user_id, timedate) VALUES ($1, $2, $3) RETURNING *`;
@@ -13,7 +12,6 @@ class CommentLike {
         new Date()
       ]);
       connection.release();
-      console.log(result.rows[0]);
       return result.rows[0];
     } catch (err) {
       throw new Error(`Could'nt create like. Error ${(err as Error).message}`);

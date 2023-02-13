@@ -49,7 +49,6 @@ const CommentCard = ({ comment, onChangeComment, onAddReply, socket }) => {
   };
 
   const newLikeAdded = (data) => {
-    console.log(data);
     setCommentLikes((prev) => [...prev, data]);
   };
 

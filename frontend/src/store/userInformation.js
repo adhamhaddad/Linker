@@ -28,9 +28,8 @@ export const UserContextProvider = (props) => {
     localStorage.setItem('lname', data.lname);
   };
   useEffect(() => {
-    console.log('Fired')
     sendRequest(
-      `user/information?user_id=${user.user_id}`,
+      `user/information?user_id=${userContext.user_id}`,
       'GET',
       {},
       userInfo

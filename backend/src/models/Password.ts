@@ -9,7 +9,6 @@ const hash = (pass: string) =>
   // hash(, (error) => {})
 class Password {
   async createPassword(u: Users): Promise<Passwords[]> {
-    console.log(u);
     try {
       const connection = await database.connect();
       const sql = `

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Authenticate from './utils/authentication';
@@ -7,6 +7,7 @@ import WindowContext from './store/windowSize';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
 import Header from './components/Header/Header';
+import MiniNavigationBar from './components/Header/MiniNavigationBar';
 import Main from './components/Main';
 import io from 'socket.io-client';
 import './css/App.css';
@@ -35,6 +36,7 @@ const App = () => {
           />
         </Route>
       </Switch>
+      <MiniNavigationBar />
     </>
   ) : (
     <>

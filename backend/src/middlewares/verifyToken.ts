@@ -19,4 +19,24 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     });
   }
 };
+
+export const checkToken = (req: Request, res: Response) => {
+  try {
+    const token = req.query.accessToken;
+    console.log(token)
+    const decode = jwt.verify(token as string, configs.token as string);
+    if (decode) {
+      return res.status(200).json({
+        data: { status: true }
+      });
+    }
+  } catch (err) {
+    res.status(400).json({
+      status: false,
+      message: (err as Error).message.includes('jwt must be provided')
+        ? 'You must login first.'
+        : (err as Error).message
+    });
+  }
+};
 export default verifyToken;
