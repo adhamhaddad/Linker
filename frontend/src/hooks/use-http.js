@@ -8,7 +8,7 @@ const useHttp = () => {
   const authCtx = useContext(AuthenticateContext);
   const apiCtx = useContext(apiUrlContext);
 
-  const sendRequest = useCallback(async (url, method, body, responseData) => {
+  const sendRequest = useCallback(async (url, method, body, cb) => {
     try {
       setIsLoading(true);
       const response = await fetch(`${apiCtx.url}/${url}`, {
@@ -24,8 +24,9 @@ const useHttp = () => {
         throw new Error(data.message);
       }
       setIsError(null);
-      responseData !== null && responseData(data.data);
+      return cb !== null && cb(data.data);
     } catch (error) {
+      setIsLoading(false);
       setIsError(error.message);
     } finally {
       setIsLoading(false);
