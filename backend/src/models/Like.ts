@@ -1,10 +1,11 @@
-import database from '../database';
+import { database } from '../database';
 import Like from '../types/Likes';
 class Likes {
   async createLike(l: Like): Promise<Like[]> {
     try {
       const connection = await database.connect();
-      const like_SQL = `INSERT INTO likes (post_id, user_id, timedate) VALUES ($1, $2, $3) RETURNING post_id, timedate`;
+      const like_SQL =
+        'INSERT INTO likes (post_id, user_id, timedate) VALUES ($1, $2, $3) RETURNING post_id, timedate';
       const user_SQL = `
         SELECT DISTINCT u.user_id, u.username, u.first_name, u.last_name, p.profile_picture
         FROM users u, pictures p
@@ -67,7 +68,8 @@ class Likes {
   async deleteLike(l: Like): Promise<Like> {
     try {
       const connection = await database.connect();
-      const like_SQL = `DELETE FROM likes WHERE post_id=$1 AND user_id=$2 RETURNING post_id, user_id`;
+      const like_SQL =
+        'DELETE FROM likes WHERE post_id=$1 AND user_id=$2 RETURNING post_id, user_id';
       const like_result = await connection.query(like_SQL, [
         l.post_id,
         l.user_id

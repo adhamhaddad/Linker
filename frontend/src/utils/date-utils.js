@@ -1,7 +1,7 @@
 import React from 'react';
 import { TimeDiff, DateDiff } from '../Validation/DateControllers';
 
-const PostDate = (props) => {
+const PostDate = ({timedate}) => {
   const postDate = (time) => {
     if (TimeDiff.inSeconds(time) <= 60) {
       return 'just now';
@@ -27,7 +27,7 @@ const PostDate = (props) => {
     }
   };
 
-  return postDate(props.timedate);
-}
+  return postDate(timedate);
+};
 
 export default PostDate;

@@ -29,7 +29,9 @@ const UserCard = ({ value }) => {
       {value.timedate !== undefined &&
         value.timedate !== null &&
         value.timedate.length > 0 && (
-          <div className={classes['card-time']}><PostDate timedate={value.timedate} /></div>
+          <div className={classes['card-time']}>
+            <PostDate timedate={value.timedate} />
+          </div>
         )}
     </li>
   );

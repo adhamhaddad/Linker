@@ -1,6 +1,5 @@
-import express, { Request, Response, Application, NextFunction } from 'express';
+import express, { Application, NextFunction } from 'express';
 import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
 import cors from 'cors';
 import logger from './middlewares/logger';
 import user_controller_routes from './controllers/User';
@@ -16,7 +15,6 @@ import profile_controller_routes from './controllers/Picture';
 import theme_controller_routes from './controllers/Themes';
 import visitor_controller_routes from './controllers/Visitor';
 import comment_likes_routes_controller from './controllers/CommentLikes';
-import { checkToken } from './middlewares/verifyToken';
 import configs from './configs';
 import os from 'os';
 import path from 'path';
@@ -25,10 +23,12 @@ import comment_reply_routes_controller from './controllers/CommentReplies';
 
 // Express App
 const app: Application = express();
-export const port = configs.port || 8080;
-const ip = os.networkInterfaces()['wlan0']?.[0].address;
+const port: number = configs.port || 8080;
 
-export const corsOptions = {
+const ip =
+  os.networkInterfaces()['wlan0']?.[0].address ||
+  os.networkInterfaces()['eth0']?.[0].address;
+const corsOptions = {
   origin: '*',
   optionsSucessStatus: 200,
   methods: 'GET, POST, PATCH, DELETE, HEAD, PUT'
@@ -55,16 +55,7 @@ app.use(
   express.static(`${UPLOADS}/replies-pictures`)
 );
 
-// app.use(rateLimit({
-//     windowMs: 30 * 1000, // 30 seconds
-//     max: 10, // Limit each IP to 100 requests per `window`
-//     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-//     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-//     message: 'Too many requests. try again with different email or password after 30 seconds'
-// }))
-
 // Express Requests Handler
-app.get('/check-token', checkToken);
 user_controller_routes(app, logger as NextFunction);
 information_controller_routes(app, logger as NextFunction);
 posts_controller_routes(app, logger as NextFunction);
@@ -79,14 +70,20 @@ theme_controller_routes(app, logger as NextFunction);
 visitor_controller_routes(app, logger as NextFunction);
 comment_likes_routes_controller(app, logger as NextFunction);
 comment_reply_routes_controller(app, logger as NextFunction);
-// Express Server
-
-const server = app.listen(port, () => {
-  console.log(`Backend server is listening on http://${ip}:${configs.port}`);
-  console.log(`press CTRL+C to stop the server`);
+app.use((_req, res) => {
+  res.status(404).json({
+    status: false,
+    message: 'Page not found!'
+  });
 });
 
-export const io = new Server(server, {
+// Express Server
+const server = app.listen(port, () => {
+  console.log(`Backend server is listening on http://${ip}:${configs.port}`);
+  console.log('press CTRL+C to stop the server');
+});
+
+const io = new Server(server, {
   cors: corsOptions
 });
 
@@ -96,5 +93,5 @@ io.on('connection', (socket) => {
     console.log('User is disconnected');
   });
 });
-
+export { port, corsOptions, io };
 export default app;

@@ -1,4 +1,4 @@
-import database from '../database';
+import { database } from '../database';
 import Messages from '../types/Messages';
 class Message {
   async newMessage(
@@ -8,7 +8,8 @@ class Message {
   ): Promise<Messages | {}> {
     try {
       const connection = await database.connect();
-      const user_id_SQL = `SELECT user_id, username FROM users WHERE username=$1`;
+      const user_id_SQL =
+        'SELECT user_id, username FROM users WHERE username=$1';
       const receiver_id_result = await connection.query(user_id_SQL, [
         receiver_username
       ]);
@@ -17,7 +18,8 @@ class Message {
       ]);
       const sender_id = sender_id_result.rows[0].user_id;
       const receiver_id = receiver_id_result.rows[0].user_id;
-      const user_picture_SQL = `SELECT profile_picture FROM pictures WHERE user_id=$1`;
+      const user_picture_SQL =
+        'SELECT profile_picture FROM pictures WHERE user_id=$1';
       const user_picture_result = await connection.query(user_picture_SQL, [
         sender_id
       ]);
@@ -132,7 +134,8 @@ class Message {
   ): Promise<Messages[]> {
     try {
       const connection = await database.connect();
-      const sql = `DELETE FROM messages WHERE message_id=$1 RETURNING message_id`;
+      const sql =
+        'DELETE FROM messages WHERE message_id=$1 RETURNING message_id';
       const result = await connection.query(sql, [message_id]);
       connection.release();
       return { ...result.rows[0], sender_username, receiver_username };

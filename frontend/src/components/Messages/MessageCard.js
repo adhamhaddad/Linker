@@ -40,12 +40,18 @@ const MessageCard = ({
     <>
       {new Date().getDate() == new Date(timedate).getDate() && (
         <p className={classes['new-day']}>
-          {new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}
+          {new Date().toLocaleString('en-US', {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+          })}
         </p>
       )}
       {new Date().getDate() !== new Date(timedate).getDate() && (
         <p className={classes['new-day']}>
-          {new Date(timedate).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}
+          {new Date(timedate).toLocaleString('en-US', {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+          })}
         </p>
       )}
       <div

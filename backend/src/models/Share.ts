@@ -1,11 +1,12 @@
-import database from '../database';
+import { database } from '../database';
 import Share from '../types/Shares';
 
 class Shares {
   async createShare(share: Share): Promise<Share> {
     try {
       const connection = await database.connect();
-      const sql = `INSERT INTO shares (post_id, user_id, timedate) VALUES ($1, $2, $3) RETURNING *`;
+      const sql =
+        'INSERT INTO shares (post_id, user_id, timedate) VALUES ($1, $2, $3) RETURNING *';
       const result = await connection.query(sql, [
         share.post_id,
         share.user_id,

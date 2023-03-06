@@ -1,4 +1,4 @@
-import database from '../database';
+import { database } from '../database';
 import Visitors from '../types/Visitors';
 
 class Visitor {
@@ -8,7 +8,8 @@ class Visitor {
       const user_id = 'SELECT user_id from users WHERE username=$1';
       const user_id_result = await connection.query(user_id, [v.profile_id]);
 
-      const check_SQL = `SELECT * FROM visitors WHERE visitor_id=$1 AND profile_id=$2`;
+      const check_SQL =
+        'SELECT * FROM visitors WHERE visitor_id=$1 AND profile_id=$2';
       const check_result = await connection.query(check_SQL, [
         v.visitor_id,
         user_id_result.rows[0].user_id
@@ -24,7 +25,8 @@ class Visitor {
       ]);
 
       if (check_result.rows.length) {
-        const update_SQL = `UPDATE visitors SET timedate=$3 WHERE visitor_id=$1 AND profile_id=$2 RETURNING *`;
+        const update_SQL =
+          'UPDATE visitors SET timedate=$3 WHERE visitor_id=$1 AND profile_id=$2 RETURNING *';
         const update_result = await connection.query(update_SQL, [
           v.visitor_id,
           user_id_result.rows[0].user_id,
@@ -33,7 +35,8 @@ class Visitor {
         connection.release();
         return { ...user_result.rows[0], ...update_result.rows[0] };
       }
-      const create_SQL = `INSERT INTO visitors (visitor_id, profile_id, timedate) VALUES ($1, $2, $3) RETURNING *`;
+      const create_SQL =
+        'INSERT INTO visitors (visitor_id, profile_id, timedate) VALUES ($1, $2, $3) RETURNING *';
       const create_result = await connection.query(create_SQL, [
         v.visitor_id,
         user_id_result.rows[0].user_id,

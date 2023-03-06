@@ -10,7 +10,11 @@ const ProfileName = ({
 }) => {
   return (
     <span className={classes['name-section']}>
-      <span className={`${classes['username']} ${isLoading ? classes['loading'] : null}`}>
+      <span
+        className={`${classes['username']} ${
+          isLoading ? classes['loading'] : null
+        }`}
+      >
         {first_name} {last_name}
       </span>
       <span

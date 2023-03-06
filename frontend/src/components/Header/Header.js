@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Logo from '../Logo';
-import SearchBar from '../Searchbar';
 import NavigationBar from './NavigationBar';
 import MiniNavigationBar from './MiniNavigationBar';
 import useHttp from '../../hooks/use-http';
@@ -85,7 +83,9 @@ const Header = ({ socket, translation }) => {
   return (
     <nav className={classes['navbar']}>
       <Container className='header'>
-        <MiniNavigationBar style='hide' />
+        <div className={classes['minibar']}>
+          <MiniNavigationBar />
+        </div>
         <NavigationBar
           requests={requests}
           messages={messages}

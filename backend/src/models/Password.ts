@@ -1,4 +1,4 @@
-import database from '../database';
+import { database } from '../database';
 import configs from '../configs';
 import bcrypt from 'bcrypt';
 import Passwords from '../types/Passwords';
@@ -6,9 +6,9 @@ import Users from '../types/Users';
 
 const hash = (pass: string) =>
   bcrypt.hashSync(`${pass}${configs.peper}`, configs.salt);
-  // hash(, (error) => {})
+// hash(, (error) => {})
 class Password {
-  async createPassword(u: Users): Promise<Passwords[]> {
+  async createPassword(p: Users): Promise<Passwords[]> {
     try {
       const connection = await database.connect();
       const sql = `
@@ -19,10 +19,10 @@ class Password {
         RETURNING *
         `;
       const result = await connection.query(sql, [
-        u.user_id,
+        p.user_id,
         null,
-        hash(u.password),
-        new Date()
+        hash(p.password),
+        Date.now()
       ]);
       connection.release();
       return result.rows[0];
@@ -36,7 +36,8 @@ class Password {
   async changePassword(p: Passwords): Promise<Passwords[]> {
     try {
       const connection = await database.connect();
-      const sql = `UPDATE passwords SET old_password=$2, current_password=$3, changed=$4 WHERE user_id=$1 RETURNING changed`;
+      const sql =
+        'UPDATE passwords SET old_password=$2, current_password=$3, changed=$4 WHERE user_id=$1 RETURNING changed';
       const result = await connection.query(sql, [
         p.user_id,
         hash(p.old_password),
@@ -55,7 +56,8 @@ class Password {
   async resetPassword(p: Passwords): Promise<Passwords[]> {
     try {
       const connection = await database.connect();
-      const sql = `UPDATE passwords SET old_password=$2, current_password=$3, changed=$4 WHERE user_id=$1 RETURNING changed`;
+      const sql =
+        'UPDATE passwords SET old_password=$2, current_password=$3, changed=$4 WHERE user_id=$1 RETURNING changed';
       const result = await connection.query(sql, [
         p.user_id,
         hash(p.current_password),

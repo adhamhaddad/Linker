@@ -1,4 +1,4 @@
-import database from '../database';
+import { database } from '../database';
 import Comment from '../types/Comments';
 
 class Comments {
@@ -27,7 +27,7 @@ class Comments {
         c.comment_video
       ]);
       connection.release();
-      return {...user_result.rows[0], ...comment_result.rows[0]};
+      return { ...user_result.rows[0], ...comment_result.rows[0] };
     } catch (error) {
       throw new Error(
         `Could not create the comment. Error ${(error as Error).message}`
@@ -82,7 +82,8 @@ class Comments {
   async deleteComment(comment_id: string): Promise<Comment[]> {
     try {
       const connection = await database.connect();
-      const sql = `DELETE FROM comments WHERE comment_id=$1 RETURNING post_id, comment_id`;
+      const sql =
+        'DELETE FROM comments WHERE comment_id=$1 RETURNING post_id, comment_id';
       const result = await connection.query(sql, [comment_id]);
       connection.release();
       return result.rows[0];

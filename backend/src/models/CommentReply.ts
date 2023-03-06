@@ -1,4 +1,4 @@
-import database from '../database';
+import { database } from '../database';
 import CR from '../types/CommentReplies';
 
 class CommentReply {
@@ -44,7 +44,7 @@ class CommentReply {
   async deleteReply(r: CR): Promise<CR[]> {
     try {
       const connection = await database.connect();
-      const sql = `DELETE FROM comment_replies WHERE reply_id=$1 RETURNING *`;
+      const sql = 'DELETE FROM comment_replies WHERE reply_id=$1 RETURNING *';
       const result = await connection.query(sql, [r.comment_id]);
       connection.release();
       return result.rows[0];

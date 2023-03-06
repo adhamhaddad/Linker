@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { Pool, PoolClient } from 'pg';
 import configs from '../configs';
 
 const database = new Pool({
@@ -8,4 +8,11 @@ const database = new Pool({
   user: configs.db_user,
   password: configs.db_password
 });
-export default database;
+
+database.on('connect', (err) => {
+  console.log('DB Connected');
+});
+database.on('error', (err) => {
+  console.log('ERROR');
+});
+export { database };

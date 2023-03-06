@@ -1,10 +1,9 @@
 import React, { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Home from '../pages/Home';
-import UnderDevelopment from '../pages/NotAvailable';
 import SpinnerLoading from './Loading/Spinner';
 import classes from '../css/Main.module.css';
 
+const Home = lazy(() => import('../pages/Home'));
 const Profile = lazy(() => import('../pages/Profile'));
 const Requests = lazy(() => import('../pages/Requests'));
 const Messages = lazy(() => import('../pages/Messages'));
@@ -17,7 +16,7 @@ const Post = lazy(() => import('../pages/Post'));
 const Notifications = lazy(() => import('../pages/Notifications'));
 const Language = lazy(() => import('../pages/Language'));
 
-const Main = ({ user_id, username, windowSize, socket, translation }) => {
+const Main = ({ user_id, username, socket, translation }) => {
   return (
     <main className={classes.main}>
       <Suspense fallback={<SpinnerLoading />}>
@@ -35,7 +34,6 @@ const Main = ({ user_id, username, windowSize, socket, translation }) => {
               title='Profile-Page'
               user_id={user_id}
               username={username}
-              windowSize={windowSize}
               socket={socket}
             />
           </Route>
@@ -43,54 +41,39 @@ const Main = ({ user_id, username, windowSize, socket, translation }) => {
             <Requests socket={socket} />
           </Route>
 
-          <Route path='/messages' exact={windowSize <= 600 && true}>
+          <Route path='/messages'>
             <Messages
               title='Messages-Page'
               user_id={user_id}
               username={username}
-              windowSize={windowSize}
               socket={socket}
             />
           </Route>
-          <Route path='/messages/:username/:phone-screen' exact>
+          {/* <Route path='/messages/:username'>
             <Conversation user_id={user_id} socket={socket} />
-          </Route>
+          </Route> */}
 
           <Route path='/notifications'>
-            <UnderDevelopment />
-            {/* <Notifications /> */}
+            <Notifications />
           </Route>
 
-          <Route path='/settings' exact={windowSize <= 600 && true}>
+          <Route path='/settings' exact>
             <Settings
               title='Settings-Page'
               username={username}
-              windowSize={windowSize}
               translation={translation}
             />
           </Route>
-          <Route path='/settings/information/:phone-screen' exact>
+          <Route path='/settings/information' exact>
             <Information title='Information-Page' />
           </Route>
-          <Route path='/settings/privacy/:phone-screen' exact>
-            <UnderDevelopment />
+          <Route path='/settings/language' exact>
+            <Language />
           </Route>
-          <Route path='/settings/emails/:phone-screen' exact>
-            <UnderDevelopment />
-          </Route>
-          <Route path='/settings/notifications/:phone-screen' exact>
-            <UnderDevelopment />
-          </Route>
-          <Route path='/settings/language/:phone-screen' exact>
-            <UnderDevelopment />
-          </Route>
-          <Route path='/settings/account/:phone-screen' exact>
+          <Route path='/settings/account' exact>
             <Account title='Account-Page' />
           </Route>
-          <Route path='/settings/help/:phone-screen' exact>
-            <UnderDevelopment />
-          </Route>
-          <Route path='/settings/theme/:phone-screen' exact>
+          <Route path='/settings/theme' exact>
             <Theme />
           </Route>
           <Route path='/:username/:post_id' exact>

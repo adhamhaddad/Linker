@@ -1,14 +1,14 @@
 .minibar {
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: center;
     border-bottom: 1px solid rgb(219, 219, 219);
 }
-.hide {
-    display: none;
-}
+
 @media only screen and (max-width: 600px) {
+
     .minibar {
+        display: flex;
         justify-content: space-between;
         border-top: none;
         border-bottom: 1px solid #DCDCDC;

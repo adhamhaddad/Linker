@@ -1,14 +1,13 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import classes from '../css/Logo.module.css';
-
 
 const Logo = () => {
   const history = useHistory();
-  
+
   const onLogoClick = () => {
-    history.push('/settings')
-  }
+    history.push('/settings');
+  };
   return (
     <div className={classes['app-logo']} onClick={onLogoClick}>
       <span className={classes.logo}>
@@ -16,5 +15,5 @@ const Logo = () => {
       </span>
     </div>
   );
-}
+};
 export default Logo;

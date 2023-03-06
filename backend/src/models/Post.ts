@@ -1,10 +1,11 @@
-import database from '../database';
+import { database } from '../database';
 import Posts from '../types/Posts';
 class Post {
   async createPost(p: Posts): Promise<Posts[]> {
     try {
       const connection = await database.connect();
-      const post_SQL = `INSERT INTO posts (user_id, timedate, post_caption, post_img, post_video) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+      const post_SQL =
+        'INSERT INTO posts (user_id, timedate, post_caption, post_img, post_video) VALUES ($1, $2, $3, $4, $5) RETURNING *';
       const user_SQL = `
         SELECT DISTINCT u.username, u.first_name, u.last_name, p.profile_picture
         FROM users u, pictures p
@@ -116,7 +117,8 @@ class Post {
   async updatePost(p: Posts): Promise<Posts[]> {
     try {
       const connection = await database.connect();
-      const sql = `UPDATE posts SET post_caption=$2 WHERE post_id=$1 RETURNING *`;
+      const sql =
+        'UPDATE posts SET post_caption=$2 WHERE post_id=$1 RETURNING *';
       const result = await connection.query(sql, [p.post_id, p.post_caption]);
       connection.release();
       return result.rows[0];
@@ -130,7 +132,7 @@ class Post {
   async deletePost(post_id: string): Promise<Posts[]> {
     try {
       const connection = await database.connect();
-      const sql = `DELETE FROM posts WHERE post_id=$1 RETURNING post_id`;
+      const sql = 'DELETE FROM posts WHERE post_id=$1 RETURNING post_id';
       const result = await connection.query(sql, [post_id]);
       connection.release();
       return result.rows[0];

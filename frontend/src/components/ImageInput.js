@@ -23,9 +23,7 @@ const ImageInput = ({ className, name, id }) => {
     const file = event.target.files[0];
 
     if (file && file.type.match(/^image\//)) {
-      readFileAsDataURL(file).then((originalURL) => {
-
-      });
+      readFileAsDataURL(file).then((originalURL) => {});
     } else {
       setValue('');
     }

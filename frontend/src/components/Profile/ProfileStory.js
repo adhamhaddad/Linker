@@ -11,5 +11,5 @@ const ProfileStory = ({ story }) => {
       <p>{story}</p>
     </div>
   );
-}
+};
 export default ProfileStory;

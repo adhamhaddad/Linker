@@ -13,6 +13,9 @@
     --post-comments-content-size: 12px;
     --post-comments-bottom-size: 12px;
 }
+a, button {
+    background-color: inherit;
+}
 * {
     padding: 0;
     margin: 0;

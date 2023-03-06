@@ -1,5 +1,4 @@
 import React, { useReducer, useContext, useEffect, useState } from 'react';
-import WindowContext from '../store/windowSize';
 import AuthenticateContext from '../utils/authentication';
 import useHttp from '../hooks/use-http';
 import Button from '../components/UI/Button';
@@ -59,7 +58,6 @@ const Account = () => {
     changed: ''
   });
   const { isLoading, isError, sendRequest } = useHttp();
-  const windowCtx = useContext(WindowContext);
   const authCtx = useContext(AuthenticateContext);
 
   const [accountForm, dispatch] = useReducer(accountFormReducer, {

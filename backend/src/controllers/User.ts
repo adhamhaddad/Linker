@@ -10,6 +10,9 @@ import {
   signinValidation,
   signupValidation
 } from '../middlewares/validate-user';
+import { limit } from '../middlewares/rateLimit';
+import fs from 'fs';
+import path from 'path';
 
 const user = new User();
 const password = new Passwords();
@@ -24,7 +27,7 @@ const transporter = nodemailer.createTransport(
   })
 );
 
-const createUser = async (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response) => {
   try {
     const response = await user.createUser(req.body, req.body);
     await password.createPassword({ ...response, password: req.body.password });
@@ -52,7 +55,7 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-const getAllUsers = async (_req: Request, res: Response) => {
+export const getAllUsers = async (_req: Request, res: Response) => {
   try {
     const response = await user.getAllUsers();
     res.status(200).json({
@@ -68,7 +71,7 @@ const getAllUsers = async (_req: Request, res: Response) => {
   }
 };
 
-const getUser = async (req: Request, res: Response) => {
+export const getUser = async (req: Request, res: Response) => {
   try {
     const response = await user.getUser(req.query.username as string);
     res.status(200).json({
@@ -83,7 +86,7 @@ const getUser = async (req: Request, res: Response) => {
     });
   }
 };
-const getUserAccount = async (req: Request, res: Response) => {
+export const getUserAccount = async (req: Request, res: Response) => {
   try {
     const response = await user.getUserAccount(req.query.username as string);
     res.status(200).json({
@@ -98,7 +101,7 @@ const getUserAccount = async (req: Request, res: Response) => {
     });
   }
 };
-const updateUser = async (req: Request, res: Response) => {
+export const updateUser = async (req: Request, res: Response) => {
   try {
     const response = await user.updateUser(req.body);
     res.status(201).json({
@@ -114,7 +117,7 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-const searchByUsername = async (req: Request, res: Response) => {
+export const searchByUsername = async (req: Request, res: Response) => {
   try {
     const response = await user.searchByUsername(req.body);
     res.status(200).json({
@@ -130,7 +133,7 @@ const searchByUsername = async (req: Request, res: Response) => {
   }
 };
 
-const searchByName = async (req: Request, res: Response) => {
+export const searchByName = async (req: Request, res: Response) => {
   try {
     const response = await user.searchByName(
       req.body.query.split(' ')[0],
@@ -149,7 +152,7 @@ const searchByName = async (req: Request, res: Response) => {
     });
   }
 };
-const deleteUser = async (req: Request, res: Response) => {
+export const deleteUser = async (req: Request, res: Response) => {
   try {
     await user.deleteUser(req.body.user_id);
     res.status(200).json({
@@ -164,10 +167,9 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-const authenticate = async (req: Request, res: Response) => {
+export const authenticate = async (req: Request, res: Response) => {
   try {
     const response = await user.authenticate(req.body);
-    const token = jwt.sign({ response }, config.token as string);
     const bodyData = Object.keys(req.body)[0];
     if (!response) {
       return res.status(400).json({
@@ -175,11 +177,31 @@ const authenticate = async (req: Request, res: Response) => {
         message: `${bodyData} doesn't exist`
       });
     }
-    res.status(200).json({
-      status: true,
-      data: { ...response, token },
-      message: 'User authenticated successfully!'
-    });
+    fs.readFile(
+      path.join(__dirname, '..', 'keys', 'private.key'),
+      { encoding: 'utf8' },
+      (err, privateKey) => {
+        if (err) console.log(err);
+        jwt.sign(
+          { ...response },
+          privateKey,
+          { algorithm: 'RS256' },
+          (err, token) => {
+            if (err) {
+              return res.status(401).json({
+                status: false,
+                message: err.message
+              });
+            }
+            res.status(200).json({
+              status: true,
+              data: { ...response, token },
+              message: 'User authenticated successfully!'
+            });
+          }
+        );
+      }
+    );
   } catch (err) {
     res.status(400).json({
       status: false,
@@ -194,7 +216,7 @@ const user_controller_routes = (app: Application, logger: NextFunction) => {
   app.get('/users', logger, verifyToken, getAllUsers);
   app.patch('/users', logger, verifyToken, updateUser);
   app.delete('/users', logger, verifyToken, deleteUser);
-  app.post('/authenticate', logger, authenticate);
+  app.post('/authenticate', logger, limit, authenticate);
   app.get('/user-account', logger, verifyToken, getUserAccount);
   app.post('/search', logger, verifyToken, searchByName);
   app.post('/search/:username', logger, verifyToken, searchByUsername);

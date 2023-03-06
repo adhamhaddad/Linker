@@ -1,15 +1,12 @@
 import { Request, Response, NextFunction, Application } from 'express';
 import verifyToken from '../middlewares/verifyToken';
-import config from '../configs';
 import Password from '../models/Password';
-import jwt from 'jsonwebtoken';
 
 const password = new Password();
 
-/*
 const createPassword = async (req: Request, res: Response) => {
   try {
-    const response = await password.createPassword();
+    const response = await password.createPassword(req.body);
     res.status(201).json({
       status: true,
       message: 'Password created successfully!'
@@ -21,7 +18,6 @@ const createPassword = async (req: Request, res: Response) => {
     });
   }
 };
-*/
 
 const changePassword = async (req: Request, res: Response) => {
   try {

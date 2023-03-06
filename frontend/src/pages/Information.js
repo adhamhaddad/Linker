@@ -59,6 +59,7 @@ const Information = () => {
       headers: { Authorization: `Bearer ${authCtx.accessToken}` },
       body: formData
     });
+    setEditPicture(false);
   };
 
   const saveStory = () => {

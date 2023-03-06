@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction, Application } from 'express';
+import { checkProfile } from '../middlewares/checks';
 import { profileUpload } from '../middlewares/imagesHandler';
 import verifyToken from '../middlewares/verifyToken';
 import Picture from '../models/Picture';
@@ -82,6 +83,7 @@ const profile_controller_routes = (app: Application, logger: NextFunction) => {
     '/profile-picture',
     logger,
     verifyToken,
+    checkProfile,
     profileUpload.single('profile'),
     updateProfile
   );

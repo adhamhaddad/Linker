@@ -9,7 +9,6 @@ const FilePicker = ({ onPicture }) => {
   const [previewUrl, setPreviewUrl] = useState();
   const [isValid, setIsValid] = useState(false);
 
-  
   const pickedHandler = (e) => {
     let pickedFile;
     let fileIsValid = isValid;
@@ -24,7 +23,6 @@ const FilePicker = ({ onPicture }) => {
     }
     onPicture(pickedFile);
   };
-
 
   useEffect(() => {
     if (!file) {

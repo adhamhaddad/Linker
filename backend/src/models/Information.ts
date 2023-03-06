@@ -1,4 +1,4 @@
-import database from '../database';
+import { database } from '../database';
 import Info from '../types/Information';
 
 class Information {

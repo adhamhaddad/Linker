@@ -1,4 +1,4 @@
-import database from '../database';
+import { database } from '../database';
 import Users from '../types/Users';
 import Info from '../types/Information';
 import bcrypt from 'bcrypt';
@@ -62,7 +62,7 @@ class User {
     } catch (err) {
       if ((err as Error).message.includes('duplicate key')) {
         throw new Error(
-          `This username is used before. please enter a different username`
+          'This username is used before. please enter a different username'
         );
       }
       throw new Error(`Could not create user. Error ${(err as Error).message}`);
@@ -104,7 +104,8 @@ class User {
   async getUserAccount(username: string): Promise<Users[] | {}> {
     try {
       const connection = await database.connect();
-      const userSQL = `SELECT user_id, username, first_name, last_name, email, gender, joined FROM users WHERE username=$1`;
+      const userSQL =
+        'SELECT user_id, username, first_name, last_name, email, gender, joined FROM users WHERE username=$1';
       const passSQL = 'SELECT changed FROM passwords WHERE user_id=$1';
       const user_result = await connection.query(userSQL, [username]);
       const pass_result = await connection.query(passSQL, [
@@ -230,7 +231,8 @@ class User {
             FROM pictures p, users u
             WHERE p.user_id=u.user_id AND u.user_id=$1
           `;
-          const theme_SQL = `SELECT profile_cover, header_color, home_color FROM themes WHERE user_id=$1`;
+          const theme_SQL =
+            'SELECT profile_cover, header_color, home_color FROM themes WHERE user_id=$1';
           const theme_result = await connection.query(theme_SQL, [
             user_id_result.rows[0].user_id
           ]);

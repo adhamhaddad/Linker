@@ -15,12 +15,15 @@ const NotificationCard = ({
   return (
     <li>
       <Link to='/' className={classes['notification-card']}>
-        <div
+        <Link
           to={`/profile/${username}`}
           className={classes['notification-profile']}
         >
+          <img src='#' alt='Profile Picture' />
+        </Link>
+        <span className={classes['notification-username']}>
           {fname} {lname}
-        </div>
+        </span>
         <div className={classes['notification-content']}>{content}</div>
         <div className={classes['notification-controller']}>
           <button

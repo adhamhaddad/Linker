@@ -5,6 +5,9 @@
 }
 
 @media only screen and (max-width: 600px) {
+    .minibar {
+        display: none;
+    }
     .navbar {
         border-bottom: none;
         border-top: 1px solid #DCDCDC

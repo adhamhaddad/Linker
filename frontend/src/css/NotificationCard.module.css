@@ -4,9 +4,7 @@
     flex-direction: row;
     color: var(--base-color-dark);
     padding: 10px 5px;
-    border-bottom: 1px solid rgb(219, 219, 219);
-    border-left: 1px solid rgb(219, 219, 219);
-    border-right: 1px solid rgb(219, 219, 219);
+    border: 1px solid rgb(219, 219, 219);
 }
 
 .notification-profile {
@@ -15,26 +13,26 @@
     height: 40px;
     border-radius: 50%;
     margin-right: 5px;
-    background-image: url('../images/anonymous_user.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: green;
+    overflow: hidden;
+}
+
+.notification-profile img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
 }
 
 .notification-username {
     width: fit-content;
-    width: 25%;
     font-size: 14px;
     color: var(--base-color-dark);
-    font-weight: bold;
     background-color: red;
+    margin-right: 5px;
 }
 
 .notification-content {
-    /* width: 100%; */
-    /* width: fit-content; */
-
-    padding: 10px;
     overflow: hidden;
     font-size: 14px;
     word-wrap: break-word;
@@ -45,6 +43,7 @@
     display: flex;
     flex-direction: column;
     margin-left: auto;
+    background-color: green;
 }
 
 .notification-delete {
@@ -52,11 +51,6 @@
     height: 40px;
     border-radius: 50%;
     line-height: 40px;
-    /* background-image: url('../icons/trash-can-solid.svg'); */
-    /* background-position: center; */
-    /* background-repeat: no-repeat; */
-    /* background-size: 15px; */
-    background-color: transparent;
     cursor: pointer
 }
 
