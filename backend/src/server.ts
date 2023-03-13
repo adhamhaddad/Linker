@@ -1,7 +1,13 @@
-import express, { Application, NextFunction } from 'express';
+import express, { Application, json, urlencoded, NextFunction } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
+import https from 'https';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
+import { Server } from 'socket.io';
 import logger from './middlewares/logger';
+import configs from './configs';
 import user_controller_routes from './controllers/User';
 import information_controller_routes from './controllers/Information';
 import posts_controller_routes from './controllers/Posts';
@@ -15,10 +21,6 @@ import profile_controller_routes from './controllers/Picture';
 import theme_controller_routes from './controllers/Themes';
 import visitor_controller_routes from './controllers/Visitor';
 import comment_likes_routes_controller from './controllers/CommentLikes';
-import configs from './configs';
-import os from 'os';
-import path from 'path';
-import { Server } from 'socket.io';
 import comment_reply_routes_controller from './controllers/CommentReplies';
 
 // Express App
@@ -28,18 +30,20 @@ const port: number = configs.port || 8080;
 const ip =
   os.networkInterfaces()['wlan0']?.[0].address ||
   os.networkInterfaces()['eth0']?.[0].address;
+
 const corsOptions = {
   origin: '*',
   optionsSucessStatus: 200,
-  methods: 'GET, POST, PATCH, DELETE, HEAD, PUT'
+  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'HEAD', 'PUT']
 };
+
 const UPLOADS = path.join(__dirname, '..', 'uploads');
 
 // Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(cors(corsOptions));
+app.use(json());
+app.use(urlencoded({ extended: false }));
 app.use(
   '/uploads/profile-pictures',
   express.static(`${UPLOADS}/profile-pictures`)
@@ -78,10 +82,24 @@ app.use((_req, res) => {
 });
 
 // Express Server
-const server = app.listen(port, () => {
-  console.log(`Backend server is listening on http://${ip}:${configs.port}`);
-  console.log('press CTRL+C to stop the server');
-});
+const server = https
+  .createServer(
+    {
+      key: fs.readFileSync(
+        path.join(__dirname, '..', 'certificate', 'key.pem')
+      ),
+      cert: fs.readFileSync(
+        path.join(__dirname, '..', 'certificate', 'cert.pem')
+      )
+    },
+    app
+  )
+  .listen(port, () => {
+    console.log(`Backend listening on https://${ip}:${configs.port}`);
+    // console.log(`Backend server is listening on ${configs.backend_host}`);
+    console.log(`Frontend server is listening on ${configs.fronend_host}`);
+    console.log('Press CTRL+C to stop the server.');
+  });
 
 const io = new Server(server, {
   cors: corsOptions

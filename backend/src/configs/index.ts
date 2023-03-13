@@ -14,6 +14,8 @@ const configs = {
   token: process.env.SECRET_TOKEN,
   peper: process.env.SECRET_PEPER,
   salt: Number(process.env.SALT_ROUNDS),
-  url: process.env.URL
+  url: process.env.URL,
+  backend_host: process.env.BACKEND_SERVER_HOST,
+  fronend_host: process.env.FRONTEND_SERVER_HOST
 };
 export default configs;

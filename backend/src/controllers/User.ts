@@ -178,7 +178,7 @@ export const authenticate = async (req: Request, res: Response) => {
       });
     }
     fs.readFile(
-      path.join(__dirname, '..', 'keys', 'private.key'),
+      path.join(__dirname, '..', '..', 'keys', 'private.key'),
       { encoding: 'utf8' },
       (err, privateKey) => {
         if (err) console.log(err);
